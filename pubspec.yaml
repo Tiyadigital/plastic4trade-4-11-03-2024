@@ -1,0 +1,301 @@
+name: Plastic4trade
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.0
+  retrofit: any
+  dio: any
+  charts_flutter: any
+  provider: any
+  fluttertoast: any
+  shared_preferences: any
+ # file_picker: ^4.0.0
+  file_picker: ^5.2.7
+  url_launcher: ^6.0.10
+  #country_code_picker: any
+  #country_code_picker : any
+  #country_code_picker_x: ^2.0.5
+  #country_phone_code_picker: ^0.0.43
+
+  intl: any
+  flutter_slidable: any
+  pointer_interceptor: any
+  #visibility_detector: any
+  youtube_player_flutter: any
+  image_picker: ^0.8.9 #^0.8.9
+  flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
+  google_api_headers: ^1.1.1
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  google_maps_flutter: ^2.1.1
+  connectivity_plus: any
+  #flutter_progress_hud: any
+  flutter_image_compress: any
+  webview_flutter: any
+  share: any
+  path_provider: ^2.0.15
+  package_info_plus: any
+  flutter_html: ^0.8.2
+  flutter_typeahead: any
+  google_maps_flutter_ios: ^2.2.3
+  #url_launcher_ios: any
+  #firebase_messaging: any
+  #firebase_core: ^1.20.0
+  #flutter_local_notifications: any
+  #firebase_core_platform_interface: 4.5.1
+  #firebase_auth: any
+  firebase_messaging: ^12.0.1
+  firebase_core: ^1.20.0
+  flutter_local_notifications: ^9.3.2
+  firebase_core_platform_interface: 4.5.1
+  firebase_auth: any
+  flutter_firebase_chat_core: any
+  #firebase_messaging: any
+  #firebase_core: ^1.20.0
+  #flutter_local_notifications: any
+  #firebase_core_platform_interface: 4.5.1
+
+
+  cloud_firestore: any
+  device_info_plus: any
+  country_calling_code_picker: ^2.0.1
+  android_id : any
+ # overlay_support: ^1.0.0
+  syncfusion_flutter_charts: any
+  firebase_storage: any
+  cached_network_image: ^3.2.3
+  shared_value: ^3.0.0
+  firebase_database: any
+  photo_view : any
+  responsive_grid_list: ^1.3.2
+  #country_list_pick: ^1.0.1+6
+  flutter_localizations:
+    sdk: flutter
+
+
+
+  #image_picker: any
+ # image_cropper: ^1.0.2
+#  flutter_image_compress: any
+
+  #intl_phone_number_input: any
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+      #remoce
+  #intl_phone_field: ^3.1.0
+  getwidget: any
+  marquee: ^2.2.3
+  fluttertoast: any
+  email_validator: any
+  flutter_rating_bar: any
+  youtube_player_iframe: ^4.0.4
+  #fl_chart: ^0.10.1
+  badges: ^3.0.2
+  http: any
+  flutter_image_compress: ^2.0.4
+  #country_phone_code_picker: any
+  shared_preferences: any
+  slide_switcher: ^1.1.2
+  image_cropper: ^4.0.0
+
+
+
+
+
+  #modal_bottom_sheet: any
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+      - assets/plastic4trade logo final.png
+      - assets/plastic4trade logo final 1 (2).png
+      - assets/image 1.png
+      - assets/image 2.png
+      - assets/Vector.png
+      - assets/Ellipse 1.png
+      - assets/Ellipse 6.png
+      - assets/Vector (1).png
+      - assets/Notification.png
+      - assets/homemsg.png
+      - assets/Home.png
+      - assets/sale.png
+      - assets/Buyer.png
+      - assets/more.png
+      - assets/news.png
+      - assets/register_title.png
+      - assets/back.png
+      - assets/homegrid.png
+      - assets/homeslider.png
+      - assets/search.png
+      - assets/location.png
+      - assets/homefiltter.png
+      - assets/image 3.png
+      - assets/like.png
+      - assets/Send.png
+      - assets/price.png
+      - assets/hidepassword.png
+      - assets/homeprice.png
+      - assets/Ellipse 13.png
+      - assets/bag-2.png
+      - assets/clipboard-text.png
+      - assets/directbox-default.png
+      - assets/document-text.png
+      - assets/play-circle.png
+      - assets/forward.png
+      - assets/box.png
+      - assets/shop.png
+      - assets/shopping-cart.png
+      - assets/video.png
+      - assets/bag-tick.png
+      - assets/heart-circle.png
+      - assets/profile-2user.png
+      - assets/star.png
+      - assets/premium_mem.png
+      - assets/award.png
+      - assets/send-2.png
+      - assets/whatsapp.png
+      - assets/youtube.png
+      - assets/Telegram.png
+      - assets/Twitter.png
+      - assets/instagram.png
+      - assets/linkdin.png
+      - assets/LinkedIn.png
+      - assets/facebook.png
+      - assets/Facebook (1).png
+      - assets/YouTube (1).png
+      - assets/Twitter.png
+      - assets/edit.png
+      - assets/edit1.png
+      - assets/user.png
+      - assets/call.png
+      - assets/verify.png
+      - assets/sms.png
+      - assets/follwe.png
+      - assets/star.png
+      - assets/hori_line.png
+      - assets/add_document.png
+      - assets/flag.png
+      - assets/password.png
+      - assets/forgetPassword.png
+      - assets/Otpverification.png
+      - assets/flash.png
+      - assets/Delete.png
+      - assets/delete.png
+      - assets/addphoto.png
+      - assets/addphoto1.png
+      - assets/fav.png
+      - assets/call1.png
+      - assets/contactus_back.png
+      - assets/contactus_loc.png
+      - assets/msg1.png
+      - assets/delete1.png
+      - assets/delete2.png
+      - assets/Setting.png
+      - assets/PaidPost.png
+      - assets/Play.png
+      - assets/buyer_seller_detail.png
+      - assets/like1.png
+      - assets/send2.png
+      - assets/view1.png
+      - assets/call1.png
+      - assets/user_chat.png
+      - assets/follow1.png
+      - assets/floating.png
+      - assets/floating_back.png
+      - assets/call2.png
+      - assets/web.png
+      - assets/verify1.png
+      - assets/trust.png
+      - assets/Premium1.png
+      - assets/Premium2.png
+      - assets/add_image.png
+      - assets/add_doc.png
+      - assets/pdf_file_icon.png
+      - assets/share1.png
+      - assets/graph.png
+      - assets/list_data.png
+      - assets/diagram.png
+      - assets/show.png
+      - assets/bussines_profile.png
+      - assets/Line.png
+      - assets/round.png
+      - assets/account.png
+
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+        - family: Metropolis
+          fonts:
+            - asset: assets\fonst\Metropolis-Regular.otf
+            - asset: assets\fonst\Metropolis-Black.otf
+            - asset: assets\fonst\Metropolis-SemiBold.otf
+          # style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "929685037367",
+    "firebase_url": "https://plastic4trade-55372-default-rtdb.firebaseio.com",
+    "project_id": "plastic4trade-55372",
+    "storage_bucket": "plastic4trade-55372.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929685037367:android:6285edc102db785b92fab2",
+        "android_client_info": {
+          "package_name": "com.example.fireabsefcm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929685037367-6mqh9e28fbcsq5dbasvn6ju7r9o57f4p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fireabsefcm",
+            "certificate_hash": "d4e4c174d7d9d11e2c248d0e9d88b786e3fbe499"
+          }
+        },
+        {
+          "client_id": "929685037367-g5o03chh1u5pqpjdjs7fk3ndcg1n1caj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fireabsefcm",
+            "certificate_hash": "920181ff8293d2bdf2c9fdc23c8fc20fb55840d1"
+          }
+        },
+        {
+          "client_id": "929685037367-cf0hkmu6u5vqu29eh1aen8c0ii7hm4n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpRdH6g4BDslNRTKwWIJqnp8UY4BbMgWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929685037367-cf0hkmu6u5vqu29eh1aen8c0ii7hm4n3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "929685037367-78ckjjd99pgbmpdapuum86kqf2tbfeum.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.p4t.plastic4trade"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929685037367:android:4ee71ab0f0e0608492fab2",
+        "android_client_info": {
+          "package_name": "com.p4t.plastic4trade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929685037367-tpt1fsfh0u0dds7jqv3du575telt247e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.p4t.plastic4trade",
+            "certificate_hash": "d4e4c174d7d9d11e2c248d0e9d88b786e3fbe499"
+          }
+        },
+        {
+          "client_id": "929685037367-cf0hkmu6u5vqu29eh1aen8c0ii7hm4n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpRdH6g4BDslNRTKwWIJqnp8UY4BbMgWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929685037367-cf0hkmu6u5vqu29eh1aen8c0ii7hm4n3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "929685037367-78ckjjd99pgbmpdapuum86kqf2tbfeum.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.p4t.plastic4trade"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
