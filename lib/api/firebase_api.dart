@@ -94,15 +94,15 @@ class FirebaseApi {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       //_context=context;
-      // Fluttertoast.showToast(msg: 'i m notification');
+      // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m notification');
       final notification = message.notification;
-      Fluttertoast.showToast(
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,
           msg: 'notification.title${notification!.title.toString()}');
       print('notification.title${notification!.title.toString()}');
       if (notification == null) return;
       print('notification.title');
       print(message.data);
-      Fluttertoast.showToast(msg: 'i m notification');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m notification');
 
       _localNotification.show(
           notification.hashCode,
@@ -229,8 +229,8 @@ class FirebaseApi {
                       other_user_profile(int.parse(user_id.toString()))));
         } catch (e, stackTrace) {
           // Handle the exception or error
-          // Fluttertoast.showToast(msg:'Exception: $e');
-          // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
+          // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Exception: $e');
+          // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Stack trace: $stackTrace');
           print('Exception: $e');
           print('Stack trace: $stackTrace');
         }

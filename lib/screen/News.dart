@@ -310,12 +310,12 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           itemBuilder: (context, index) {
             getnews.Result result = getnewsdata[index];
 
-            //Fluttertoast.showToast(msg: result.isLike.toString());
+            //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: result.isLike.toString());
             return GestureDetector(
               onTap: (() {
                 // cate_name = record.name.toString();
                 // cate_id = record.id.toString();
-                // Fluttertoast.showToast(
+                // Fluttertoast.showToast(timeInSecForIosWeb: 2,
                 //     msg: cate_id.toString());
                 // Navigator.push(
                 //     context,
@@ -535,7 +535,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                   onTap: (() {
                     // cate_name = record.name.toString();
                     // cate_id = record.id.toString();
-                    // Fluttertoast.showToast(
+                    // Fluttertoast.showToast(timeInSecForIosWeb: 2,
                     //     msg: cate_id.toString());
                     // Navigator.push(
                     //     context,
@@ -694,7 +694,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(msg: 'Internet Connection not available');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       getPackage();
@@ -738,7 +738,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     return jsonarray;
     setState(() {});
@@ -778,7 +778,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
 
     return jsonarray;
@@ -809,7 +809,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     setState(() {});
     return jsonarray;

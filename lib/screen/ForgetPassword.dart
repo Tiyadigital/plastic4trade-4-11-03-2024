@@ -74,7 +74,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
   Widget initwidget() {
     return Scaffold(
       // backgroundColor: Color.fromARGB(255, 218, 218, 218),
-      resizeToAvoidBottomInset: false,
+
 
       body: Container(
         // height: MediaQuery.of(context).size.height,
@@ -90,10 +90,16 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
               child: Column(children: [
                 header(),
 
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SlideSwitcher(
+
+                  containerColor: Color.fromARGB(255, 0, 91, 148),
+                  onSelect: (int index) =>
+                      setState(() => switcherIndex2 = index),
+                  containerHeight: 40,
+                  containerWight: 350,
 
                   children: [
                     Text(
@@ -119,11 +125,6 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                       ),
                     ),
                   ],
-                  containerColor: Color.fromARGB(255, 0, 91, 148),
-                  onSelect: (int index) =>
-                      setState(() => switcherIndex2 = index),
-                  containerHeight: 40,
-                  containerWight: 350,
                 ),
                 switcherIndex2 == 0 ? email_otp() : phone_otp()
                 //_subtabSection(context),
@@ -139,9 +140,9 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
         child: TextButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
           },
-          child: Text('Log in',
+          child: const Text('Log in',
               style:  TextStyle(
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
@@ -235,7 +236,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Container(
@@ -243,7 +244,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
           decoration: BoxDecoration(
               border: Border.all(width: 1),
               borderRadius: BorderRadius.circular(50.0),
-              color: Color.fromARGB(255, 0, 91, 148)),
+              color: const Color.fromARGB(255, 0, 91, 148)),
           child: TextButton(
             onPressed: () {
               _isValid = EmailValidator.validate(_useremail.text);
@@ -261,9 +262,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                                 countrycode:'',
                                 email: _useremail.text.toString(),
                               )));
-                    } else {
-
-                    }
+                    } else { }
                   });
                 } else {
                   setState(() {
@@ -272,16 +271,15 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
                   Fluttertoast.showToast(msg: 'Please Enter Correct Email');
                 }
-
                 print(_useremail.text);
               } else {
-                // Fluttertoast.showToast(msg: 'Email is Required');
+                Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 setState(() {
                   _color2 = Colors.red;
                 });
               }
             },
-            child: Text('Submit',
+            child: const Text('Submit',
                 style: TextStyle(
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
@@ -467,13 +465,13 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 child: TextFormField(
                   // controller: _usernm,
                   controller: _usermbl,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.w700,
                       color: Color.fromARGB(255, 0, 91, 148),
                       fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(13),
+                    LengthLimitingTextInputFormatter(11),
                   ],
                   keyboardType: TextInputType.phone,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -484,7 +482,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Mobile Number",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                             fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
@@ -517,7 +515,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   },*/
                   onFieldSubmitted: (value) {
                     var numValue = value.length;
-                    if (numValue >= 6 && numValue < 13) {
+                    if (numValue >= 6 && numValue < 12) {
                       _color3 = Colors.green.shade600;
                     } else {
                       WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
@@ -537,7 +535,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                       WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
                       Fluttertoast.showToast(msg: 'Please Enter Your Number');
                       setState(() {
-                        _color3 = Colors.red;
+                        _color2 = Colors.red;
                       });
                     } else {
                       setState(() {
@@ -566,7 +564,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 print(country_code);
                 print(_usermbl.text.toString());
                 var numValue = _usermbl.text.length;
-                if (numValue >= 6 && numValue < 11) {
+                if (numValue >= 6 && numValue < 12) {
                   _color3 = Colors.green.shade600;
                   _onLoading();
                   print('======');
@@ -597,7 +595,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 //Fluttertoast.showToast(msg: 'Moblie Number  is Required');
                 Fluttertoast.showToast(msg: 'Please Enter Your Number');
                 setState(() {
-                  _color2 = Colors.red;
+                  _color3 = Colors.red;
                 });
               }
             },

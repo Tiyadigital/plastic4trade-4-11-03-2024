@@ -41,6 +41,7 @@ dependencies:
   provider: any
   fluttertoast: any
   shared_preferences: any
+  flutter_otp_text_field: ^1.1.1
  # file_picker: ^4.0.0
   file_picker: ^5.2.7
   url_launcher: ^6.0.10
@@ -66,7 +67,7 @@ dependencies:
   share: any
   path_provider: ^2.0.15
   package_info_plus: any
-  flutter_html: ^0.8.2
+  flutter_html: any
   flutter_typeahead: any
   google_maps_flutter_ios: ^2.2.3
   #url_launcher_ios: any

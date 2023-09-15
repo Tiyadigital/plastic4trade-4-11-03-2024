@@ -129,7 +129,7 @@ class _managebuypostState extends State<managebuypost> {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(msg: 'i m category');
+                //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";

@@ -1,8 +1,7 @@
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:Plastic4trade/utill/constant.dart';
 
 String baseurl = 'https://www.plastic4trade.com/api/';

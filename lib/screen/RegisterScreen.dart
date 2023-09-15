@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:android_id/android_id.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -146,9 +147,9 @@ class _RegisterState extends State<Register> {
     }
     init(context);
     return Material(
-        child: Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
           child: Form(
               key: _formKey,
               child: Container(
@@ -170,7 +171,7 @@ class _RegisterState extends State<Register> {
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 height: 170,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                             child: Text(
                               'Create Account',
@@ -182,7 +183,7 @@ class _RegisterState extends State<Register> {
                                       'assets\fonst\Metropolis-Black.otf'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               height: 25.0,
                               child: Text(
                                 'It' r"'" 's free and always',
@@ -194,13 +195,14 @@ class _RegisterState extends State<Register> {
                                         'assets\fonst\Metropolis-Black.otf'),
                               )),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 5.0),
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 25.0, 25.0, 5.0),
                             child: TextFormField(
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               controller: _usernm,
                               keyboardType: TextInputType.name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
@@ -223,7 +225,7 @@ class _RegisterState extends State<Register> {
                                 hintText: 'Your Name',
 
                                 enabled: verify_phone == 1 ? false : true,
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black45,
@@ -358,28 +360,24 @@ class _RegisterState extends State<Register> {
                                         height: 57,
                                         /*width: MediaQuery.of(context).size.width /
                                             1.58,*/
-                                        margin: EdgeInsets.only(
+                                        margin: const EdgeInsets.only(
                                             left: 5.0, right: 25),
                                         child: TextFormField(
-                                          // controller: _usernm,
-                                          //validator: _validateText(_usermbl.text.toString()),
                                           controller: _usermbl,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
                                                   'assets\fonst\Metropolis-Black.otf'),
-
                                           keyboardType: TextInputType.phone,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
                                           textInputAction: TextInputAction.next,
                                           inputFormatters: [
                                             LengthLimitingTextInputFormatter(
-                                                13),
+                                                11),
                                           ],
-
                                           decoration: InputDecoration(
                                             // labelText: 'Your phone *',
                                             // labelStyle: TextStyle(color: Colors.red),
@@ -396,7 +394,7 @@ class _RegisterState extends State<Register> {
                                                         Colors.green.shade600,
                                                   )
                                                 : null,
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black45,
@@ -421,31 +419,16 @@ class _RegisterState extends State<Register> {
                                                     BorderRadius.circular(
                                                         10.0)),
                                           ),
-                                          /*validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  */ /*  Fluttertoast.showToast(
-                                              msg: 'Enter a Mobile Number!');*/ /*
-                                                  _color2 = Colors.red;
-                                                  // return '';
-                                                } else {
-                                                  // setState(() {
-                                                  _color2 =
-                                                      Colors.green.shade600;
-                                                  //});
-                                                }
-
-                                                return null;
-                                              },*/
                                           onFieldSubmitted: (value) {
                                             var numValue = value.length;
-                                            if (numValue >= 7 &&
-                                                numValue < 13) {
+                                            if (numValue >= 6 &&
+                                                numValue < 12) {
                                               _color2 = Colors.green.shade600;
                                               setState(() {});
                                             } else {
                                               _color2 = Colors.red;
                                               WidgetsBinding.instance
-                                                  ?.focusManager.primaryFocus
+                                                  .focusManager.primaryFocus
                                                   ?.unfocus();
                                               Fluttertoast.showToast(
                                                   msg:
@@ -456,7 +439,7 @@ class _RegisterState extends State<Register> {
                                           onChanged: (value) {
                                             if (value.isEmpty) {
                                               WidgetsBinding.instance
-                                                  ?.focusManager.primaryFocus
+                                                  .focusManager.primaryFocus
                                                   ?.unfocus();
                                               Fluttertoast.showToast(
                                                   msg:
@@ -480,39 +463,25 @@ class _RegisterState extends State<Register> {
                               ? Column(
                                   children: [
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
+                                      width: MediaQuery.of(context).size.width * 0.9,
                                       height: 60,
-                                      margin: EdgeInsets.only(top: 15),
-                                      /*  decoration: BoxDecoration(
-                                        border: Border.all(width: 1),
-                                        borderRadius:
-                                        BorderRadius.circular(50.0),
-                                        color:
-                                        Color.fromARGB(255, 0, 91, 148)),*/
+                                      margin: const EdgeInsets.only(top: 15),
                                       child: _isResendButtonEnabled &&
                                               _countdown != 0
                                           ? Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.9,
+                                              width: MediaQuery.of(context).size.width * 0.9,
                                               height: 60,
                                               decoration: BoxDecoration(
                                                   border: Border.all(width: 1),
                                                   borderRadius:
-                                                      BorderRadius.circular(
-                                                          50.0),
-                                                  color: Color.fromARGB(
-                                                          255, 0, 91, 148)
-                                                      .withOpacity(0.8)),
-                                              margin: EdgeInsets.only(
-                                                  top:
-                                                      5.0), // Set the height of the container
+                                                      BorderRadius.circular(50.0),
+                                                  color: const Color.fromARGB(255, 0, 91, 148).withOpacity(0.8)),
+                                              margin: const EdgeInsets.only(top: 5.0),
+                                              // Set the height of the container
                                               alignment: Alignment.center,
                                               child: Text(
                                                 '0:$_countdown',
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 15.0,
                                                   color: Colors.white,
                                                   fontFamily:
@@ -521,7 +490,7 @@ class _RegisterState extends State<Register> {
                                                     fontWeight: FontWeight.w800,
                                                     fontSize: 17),
                                               ))
-                                          : Container(
+                                          : Container (
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
@@ -532,15 +501,14 @@ class _RegisterState extends State<Register> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           50.0),
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 0, 91, 148)),
-                                              margin: EdgeInsets.only(
-                                                  top:
-                                                      5.0), // Set the height of the container
+                                              margin: EdgeInsets.only(top: 5.0),
+                                              // Set the height of the container
                                               alignment: Alignment.center,
                                               child: TextButton(
                                                 onPressed: () async {
-                                                  //Fluttertoast.showToast(msg: 'dsdderfr');
+                                                  //Flutter toast.showToast(msg: 'dsdderfr');
                                                   if (_usernm.text.isEmpty) {
                                                     _color1 = Colors.red;
                                                     setState(() {});
@@ -562,9 +530,9 @@ class _RegisterState extends State<Register> {
                                                   } else if (_usermbl
                                                       .text.isNotEmpty) {
                                                     if (_usermbl.text.length >=
-                                                            7 &&
+                                                            6 &&
                                                         _usermbl.text.length <
-                                                            13) {
+                                                            12) {
                                                       _color2 =
                                                           Colors.green.shade600;
                                                       if (_usernm.text
@@ -613,10 +581,6 @@ class _RegisterState extends State<Register> {
                                                       setState(() {});
                                                     }
                                                   }
-                                                  /*  if(_usernm
-                                                          .text.isEmpty && _usermbl.text.isEmpty){
-
-                                                      }*/
                                                   else if (_usernm
                                                           .text.isNotEmpty &&
                                                       _usermbl
@@ -651,7 +615,7 @@ class _RegisterState extends State<Register> {
                                                   }
                                                 },
                                                 child: Text('Resend OTP ',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 15.0,
                                                       color: Colors.white,
                                                       fontFamily:
@@ -664,12 +628,12 @@ class _RegisterState extends State<Register> {
                                             ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           15.0, 15.0, 15.0, 5.0),
                                       child: TextFormField(
                                         controller: _mbloto,
                                         autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.onUserInteraction,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: [
                                           FilteringTextInputFormatter
@@ -677,54 +641,43 @@ class _RegisterState extends State<Register> {
                                           LengthLimitingTextInputFormatter(4),
                                           _CloseKeyboardFormatter(),
                                         ],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonst\Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your Password',
                                           // labelStyle: TextStyle(color: Colors.red),
 
                                           hintText: "Enter OTP ",
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                              'assets\fonst\Metropolis-Black.otf'),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                                  BorderRadius.circular(15.0)),
+                                              BorderRadius.circular(15.0)),
                                           border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                                  BorderRadius.circular(15.0)),
+                                              BorderRadius.circular(15.0)),
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                                  BorderRadius.circular(15.0)),
+                                              BorderRadius.circular(15.0)),
                                           //errorText: _validusernm ? 'Name is not empty' : null),
                                         ),
-                                        /*validator: (value) {
-                                        if (value!.isEmpty) {
 
-                                          _color6=Colors.green.shade600;
-                                          setState(() {
-                                          });
-                                        } else{
-                                          _color6=Colors.red;
-                                          setState(() {
-                                          });
-                                        }
-                                      },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
@@ -765,8 +718,8 @@ class _RegisterState extends State<Register> {
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
                                       height: 60,
-                                      margin: EdgeInsets.only(top: 10),
-                                      padding: EdgeInsets.fromLTRB(
+                                      margin: const EdgeInsets.only(top: 10),
+                                      padding: const EdgeInsets.fromLTRB(
                                           35.0, 5.0, 35.0, 5.0),
                                       decoration: BoxDecoration(
                                           border: Border.all(width: 1),
@@ -788,8 +741,7 @@ class _RegisterState extends State<Register> {
                                               //setState(() {
                                               _color6 = Colors.red;
                                               // });
-                                            } else if (_mbloto
-                                                    .text.isNotEmpty &&
+                                            } else if (_mbloto.text.isNotEmpty &&
                                                 _usermbl.text.isNotEmpty) {
                                               _isloading = false;
                                               _onLoading();
@@ -817,7 +769,7 @@ class _RegisterState extends State<Register> {
                                           });
                                         },
                                         child: Text('Verify OTP',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 15.0,
                                               color: Colors.white,
                                               fontFamily:
@@ -831,7 +783,7 @@ class _RegisterState extends State<Register> {
                                 )
                               : verify_phone == 0
                                   ? Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           35.0, 15.0, 35.0, 5.0),
                                       child: Column(
                                         children: [
@@ -845,7 +797,7 @@ class _RegisterState extends State<Register> {
                                                 border: Border.all(width: 1),
                                                 borderRadius:
                                                     BorderRadius.circular(50.0),
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 0, 91, 148)),
                                             child: TextButton(
                                               onPressed: () async {
@@ -891,9 +843,9 @@ class _RegisterState extends State<Register> {
                                                   } else if (_usermbl
                                                       .text.isNotEmpty) {
                                                     if (_usermbl.text.length >=
-                                                            7 &&
+                                                            6 &&
                                                         _usermbl.text.length <
-                                                            13) {
+                                                            12) {
                                                       _color2 =
                                                           Colors.green.shade600;
                                                       if (_usernm.text
@@ -930,10 +882,6 @@ class _RegisterState extends State<Register> {
                                                       setState(() {});
                                                     }
                                                   }
-                                                  /*  if(_usernm
-                                                        .text.isEmpty && _usermbl.text.isEmpty){
-
-                                                    }*/
                                                   else if (_usernm
                                                           .text.isNotEmpty &&
                                                       _usermbl
@@ -959,7 +907,7 @@ class _RegisterState extends State<Register> {
                                                 }
                                               },
                                               child: Text('Send OTP',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 15.0,
                                                     color: Colors.white,
                                                     fontFamily:
@@ -1076,7 +1024,8 @@ class _RegisterState extends State<Register> {
                                                 msg:
                                                     'Please Enter Correct Email');
                                             // setState(() {});
-                                          } /*else if (value.isEmpty) {
+                                          }
+                                          /*else if (value.isEmpty) {
                                             */ /* Fluttertoast.showToast(
                                                 msg: 'Please Your Email');*/ /*
                                             WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
@@ -1181,7 +1130,7 @@ class _RegisterState extends State<Register> {
                                                       }
                                                     },
                                                     child: Text('Send OTP',
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 15.0,
                                                           color: Colors.white,
                                                           fontFamily:
@@ -1216,9 +1165,10 @@ class _RegisterState extends State<Register> {
                                                                         148)
                                                                     .withOpacity(
                                                                         0.8)),
-                                                            margin: EdgeInsets.only(
-                                                                top:
-                                                                    5.0), // Set the height of the container
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    top: 5.0),
+                                                            // Set the height of the container
                                                             alignment: Alignment
                                                                 .center,
                                                             child: Text(
@@ -1359,7 +1309,7 @@ class _RegisterState extends State<Register> {
                                                               4),
                                                           _CloseKeyboardFormatter(),
                                                         ],
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 15.0,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -1420,21 +1370,6 @@ class _RegisterState extends State<Register> {
                                                                           15.0)),
                                                           //errorText: _validusernm ? 'Name is not empty' : null),
                                                         ),
-                                                        /*validator: (value) {
-                                                if (value!.isEmpty) {
-                                                 // WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                      'Please Enter OTP');
-                                                  //  setState(() {
-                                                  _color7 =
-                                                      Colors.red;
-                                                  //  });
-                                                } else {
-                                                  _color7 = Colors
-                                                      .green.shade600;
-                                                }
-                                              },*/
                                                         onChanged: (value) {
                                                           if (value.isEmpty) {
                                                             WidgetsBinding
@@ -1487,10 +1422,10 @@ class _RegisterState extends State<Register> {
                                                                   .width *
                                                               0.9,
                                                       height: 60,
-                                                      margin: EdgeInsets.only(
+                                                      margin: const EdgeInsets.only(
                                                           top: 10),
                                                       padding:
-                                                          EdgeInsets.fromLTRB(
+                                                          const EdgeInsets.fromLTRB(
                                                               35.0,
                                                               5.0,
                                                               35.0,
@@ -1520,6 +1455,15 @@ class _RegisterState extends State<Register> {
                                                                     'Net Connection not available');
                                                           } else {
                                                             //this.getData();
+                                                            if(_emailotp.text
+                                                                .isEmpty){
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          "Please Enter OTP");
+                                                            }
+
+
                                                             if (_formKey
                                                                 .currentState!
                                                                 .validate()) {
@@ -1563,8 +1507,7 @@ class _RegisterState extends State<Register> {
                                                                     _isloading =
                                                                         false;
                                                                   } else {
-                                                                    _isloading =
-                                                                        false;
+                                                                    _isloading = false;
                                                                   }
                                                                 });
                                                                 ;
@@ -1938,52 +1881,48 @@ class _RegisterState extends State<Register> {
                         ],
                       ),
                     )
-                  ])))),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Already have Account?',
-              style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
-                  fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-          TextButton(
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-              child: Text('Log in',
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 0, 91, 148),
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf'))),
-        ],
+                  ]))),
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Already have Account?',
+                style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                child: Text('Log in',
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 0, 91, 148),
+                        fontFamily: 'assets\fonst\Metropolis-Black.otf'))),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   vaild_data() {
     _isValid = EmailValidator.validate(_useremail.text);
     WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-    if(_userpass.text.isEmpty){
-      Fluttertoast.showToast(
-          msg:
-          'Please Enter Your Password');
+    if (_userpass.text.isEmpty) {
+      Fluttertoast.showToast(msg: 'Please Enter Your Password');
       setState(() {
-        _color4=Colors.red;
+        _color4 = Colors.red;
       });
-    }else if(_usercpass.text.isEmpty){
-      Fluttertoast.showToast(
-          msg:
-          'Please Enter Confirm Password');
+    } else if (_usercpass.text.isEmpty) {
+      Fluttertoast.showToast(msg: 'Please Enter Confirm Password');
       setState(() {
-        _color5=Colors.red;
+        _color5 = Colors.red;
       });
-
-    }
-    else if (_userpass.text.isNotEmpty) {
+    } else if (_userpass.text.isNotEmpty) {
       if (_userpass.text.length < 6) {
         Fluttertoast.showToast(msg: 'Password must be 6 charecter');
       } else if (_userpass.text != _usercpass.text) {
@@ -1991,7 +1930,7 @@ class _RegisterState extends State<Register> {
             msg: "Password and Confirm Password Doesn't Match");
       } else if (!check_value) {
         Fluttertoast.showToast(msg: "Please Select Terms and Condition ");
-      }  else if (_usernm.text.isNotEmpty &&
+      } else if (_usernm.text.isNotEmpty &&
           _useremail.text.isNotEmpty &&
           _usermbl.text.isNotEmpty &&
           _userpass.text.isNotEmpty &&
@@ -2137,6 +2076,7 @@ class _RegisterState extends State<Register> {
     String apiToken,
     String step,
   ) async {
+    log("VERIFY OTP PRESSED");
     common_par common = common_par();
 
     var res = await reg_mo_verifyotp(otp, userId, phoneno, apiToken, step);
@@ -2152,9 +2092,10 @@ class _RegisterState extends State<Register> {
     } else {
       _isloading = true;
       Fluttertoast.showToast(msg: res['message']);
+      _isResendButtonEnabled = false;
+      _countdown = 30;
     }
-    _isResendButtonEnabled = true;
-    _countdown = 30;
+
     setState(() {});
     return _isloading;
   }
@@ -2232,6 +2173,8 @@ class _RegisterState extends State<Register> {
     String email,
     String step,
   ) async {
+
+    log("VERIFY EMAIL OTP PRESSED..!");
     common_par common = common_par();
 
     var res = await reg_email_verifyotp(otp, userId, apiToken, email, step);
@@ -2412,13 +2355,13 @@ class _RegisterState extends State<Register> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,

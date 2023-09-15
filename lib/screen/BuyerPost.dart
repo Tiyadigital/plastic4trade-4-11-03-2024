@@ -340,7 +340,7 @@ class _BuyerPostState extends State<BuyerPost> {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(msg: 'i m category');
+                //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
@@ -359,7 +359,7 @@ class _BuyerPostState extends State<BuyerPost> {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(msg: 'i m category');
+                //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                 //categoryDialog(context);
                 /* Navigator.push(
                         context,
@@ -618,7 +618,7 @@ class _BuyerPostState extends State<BuyerPost> {
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -642,7 +642,7 @@ class _BuyerPostState extends State<BuyerPost> {
                      /*   if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1212,7 +1212,7 @@ class _BuyerPostState extends State<BuyerPost> {
 
     if (connectivityResult ==
         ConnectivityResult.none) {
-      Fluttertoast.showToast(
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,
           msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
@@ -1259,7 +1259,7 @@ class _BuyerPostState extends State<BuyerPost> {
         setState(() {});
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     return jsonarray;
     setState(() {});
@@ -1305,7 +1305,7 @@ class _BuyerPostState extends State<BuyerPost> {
       }
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
 
       setState(() {});
     }*/
@@ -1363,7 +1363,7 @@ class _BuyerPostState extends State<BuyerPost> {
 
 
     }else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     return jsonarray;
     setState(() {

@@ -314,7 +314,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                               category1 = true;
                                               type_post = sampleData1
                                                   .first.buttonText;
-                                              //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
+                                              //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hell $sampleData.last.isSelected');
                                             });
                                           },
                                         ),
@@ -328,7 +328,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                               category1 = true;
                                               type_post = sampleData1
                                                   .last.buttonText;
-                                              //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
+                                              //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hell $sampleData.last.isSelected');
                                             });
                                           },
                                           child: SizedBox(
@@ -355,7 +355,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                                             .isSelected = false;
                                                         category1 = true;
                                                         type_post = 'SalePost';*/
-                                                        //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
+                                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hell $sampleData.last.isSelected');
                                                       });
                                                     },
                                                   ),
@@ -394,7 +394,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                       'assets\fonst\Metropolis-Black.otf'),
                                   onChanged: (value) {
                                     if (value!.isEmpty) {
-                                      Fluttertoast.showToast(
+                                      Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                           msg:
                                           'Please Add Your Product Name');
                                       _color1 = Colors.red;
@@ -406,7 +406,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                   },
                                   onSubmitted: (value) {
                                     if (value.isEmpty) {
-                                      /* Fluttertoast.showToast(
+                                      /* Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                 msg: 'Please Add Your Product Name');*/
                                       _color1 = Colors.red;
                                       setState(() {});
@@ -422,7 +422,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                           //   return 'Please enter a valid email';
                                           // }
                                           if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
+                                            Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                 msg: 'Please Add Your Product Name');
                                             _color1 = Colors.red;
                                           } else {
@@ -547,7 +547,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         //   return 'Please enter a valid email';
                                         // }
                                         if (value!.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Product Category');
                                           _color2 = Colors.red;
@@ -560,17 +560,17 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         return null;
                                       },*/
                                       onTap: () {
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         /*InkWell(
                                       onTap: () {*/
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         Viewproduct(context);
                                         //},
                                         //);
                                       },
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Product Category');
                                           setState(() {});
@@ -631,7 +631,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         // }
                                         if (value!.isEmpty) {
                                           _color3 = Colors.red;
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Product Category');
                                           //return 'Enter a Color!';
@@ -643,17 +643,17 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         return null;
                                       },*/
                                       onTap: () {
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         /*InkWell(
                                       onTap: () {*/
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         Viewtype(context);
                                         //},
                                         //);
                                       },
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Product Category');
                                           setState(() {});
@@ -712,7 +712,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         //   return 'Please enter a valid email';
                                         // }
                                         if (value!.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg: 'Please Your Product Grade');
                                           _color4 = Colors.red;
                                           //return 'Enter a Color!';
@@ -724,10 +724,10 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         return null;
                                       },*/
                                       onTap: () {
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         /*InkWell(
                                       onTap: () {*/
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         Viewgrade(context);
                                         //},
                                         //);
@@ -735,7 +735,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
                                           _color4 = Colors.red;
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Product Category');
                                           setState(() {});
@@ -794,7 +794,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        /*  Fluttertoast.showToast(
+                                        /*  Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg:
                                                       'Please Add Your Product Price');*/
                                       } else {
@@ -805,7 +805,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        /*  Fluttertoast.showToast(
+                                        /*  Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg:
                                                       'Please Add Your Product Price');*/
                                         setState(() {});
@@ -813,7 +813,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        /* Fluttertoast.showToast(
+                                        /* Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg:
                                                       'Please Add Your Product Price');*/
                                         setState(() {});
@@ -888,7 +888,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         border: InputBorder.none),
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        /*Fluttertoast.showToast(
+                                        /*Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg:
                                                       'Please Add Your Product Quantity');*/
                                       } else {
@@ -899,7 +899,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        /*  Fluttertoast.showToast(
+                                        /*  Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg:
                                                       'Please Add Your Product Quantity');*/
                                         setState(() {});
@@ -907,7 +907,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        /*Fluttertoast.showToast(
+                                        /*Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                   msg: 'Please Add Your Product Quantity');*/
                                         setState(() {});
                                       } else {
@@ -972,7 +972,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         //   return 'Please enter a valid email';
                                         // }
                                         if (value!.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg: 'Please Your Color');
                                           _color5 = Colors.red;
                                         } else {
@@ -983,17 +983,17 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                         return null;
                                       },*/
                                       onTap: () {
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         /*InkWell(
                                       onTap: () {*/
-                                        //Fluttertoast.showToast(msg: 'hello');
+                                        //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                         ViewItem(context);
                                         //},
                                         //);
                                       },
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg: 'Please Your Color');
                                           _color5 = Colors.red;
                                           setState(() {});
@@ -1141,7 +1141,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },*/
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg: 'Please Your Location');
                                         setState(() {
                                           _color6 = Colors.red;
@@ -1205,7 +1205,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                       //   return 'Please enter a valid email';
                                       // }
                                       if (value!.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Your Product Description');
                                         _color7 = Colors.red;
@@ -1218,7 +1218,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
                                     },*/
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Your Product Description');
                                         _color7 = Colors.red;

@@ -50,7 +50,7 @@ class _BlogDetailState extends State<BlogDetail> {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(msg: 'Internet Connection not available');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       getPackage();
@@ -270,7 +270,7 @@ class _BlogDetailState extends State<BlogDetail> {
   Future<void> get_Blogdetail() async {
     GetBlogDetail commonPostdetail = GetBlogDetail();
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    Fluttertoast.showToast(msg: widget.blog_id.toString());
+    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: widget.blog_id.toString());
     var res = await getblogsdetail(_pref.getString('user_id').toString(),
         _pref.getString('api_token').toString(), widget.blog_id.toString());
     var jsonarray, subjsonarray, simmilar_list, color_array;
@@ -300,7 +300,7 @@ class _BlogDetailState extends State<BlogDetail> {
         isload=true;
         setState(() {});
       } else {
-        Fluttertoast.showToast(msg: res['message']);
+        Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
       }
       return jsonarray;
       setState(() {});

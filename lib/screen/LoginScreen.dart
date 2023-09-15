@@ -159,16 +159,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   )),
                               Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
+                                const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
                                 child: TextFormField(
                                   controller: _usernm,
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
-                                  style: TextStyle(fontSize: 15.0,  fontFamily: 'assets\fonst\Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
+                                  style: const TextStyle(fontSize: 15.0,  fontFamily: 'assets\fonst\Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
                                   decoration: InputDecoration(
-                                    hintText: "Enter Your Email/Moblie ",
+                                    hintText: "Enter Your Email/Mobile ",
                                     hintStyle:
-                                    TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                    const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             width: 1, color: _color2),
@@ -236,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: TextFormField(
                                   controller: _userpass,
                                   obscureText: !_passwordVisible,
-                                  style:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                  style:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
@@ -314,15 +314,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                         _color3 = Colors.green.shade600;
                                       });
                                     }
-                                    var numValue = value.length;
-                                    if (numValue < 6) {
-                                      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                                      Fluttertoast.showToast(
-                                          msg: 'Password must be 6 charecter');
-                                      _color3 = Colors.red;
-                                    } else {
-                                      _color3 = Colors.green.shade600;
-                                    }
+                                    // var numValue = value.length;
+                                    // if (numValue < 6) {
+                                    //   WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                    //   Fluttertoast.showToast(
+                                    //       msg: 'Password must be 6 charecter');
+                                    //   _color3 = Colors.red;
+                                    // } else {
+                                    //   _color3 = Colors.green.shade600;
+                                    // }
                                   },
                                 ),
                               ),
@@ -335,7 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               builder: (context) =>
                                                   ForgetPasswprd()));
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Forgot Password?',
                                       style: TextStyle(fontSize: 15.0,  fontFamily: 'assets\fonst\Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
                                     )),
@@ -352,13 +352,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Color.fromARGB(255, 0, 91, 148)),
                                   child: TextButton(
                                       onPressed: () async {
-
-                                        /*var connectivityResult = new Connectivity()
-                                            .checkConnectivity(); */ // User defined class
-                                        final connectivityResult =
-                                        await Connectivity()
-                                            .checkConnectivity();
-
+                                        final connectivityResult = await Connectivity().checkConnectivity();
                                         if (connectivityResult ==
                                             ConnectivityResult.none) {
                                           //this.getData();
@@ -368,8 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         } else {
                                           if (_formKey.currentState!
                                               .validate()) {
-                                           /* Fluttertoast.showToast(
-                                                msg: "Data Proccess");*/
+
                                           }
                                           setState(() {
                                             WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
@@ -475,25 +468,8 @@ class _LoginScreenState extends State<LoginScreen> {
           constanst.ios_device_id = iosinfo.identifierForVendor!;
           print('ios device_id ${constanst.ios_device_id}');
           add_ios_device();
-
-
-      //  }
       }
 
-
-
-
-      // verify = res['data']['mbl_verified'];
-      // print(login.data!.mblVerified.toString());
-      /* if (login.data!.mblVerified == "1") {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Homepage()));
-      } else {
-        otpvalue = login.otp.toString();
-        Fluttertoast.showToast(msg: "$otpvalue");
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => otp(name: otpvalue)));
-      }*/
     } else {
       _isloading=true;
       Fluttertoast.showToast(msg: res['message']);
@@ -597,11 +573,11 @@ class _LoginScreenState extends State<LoginScreen> {
         Fluttertoast.showToast(msg: 'Please Enter Your Password');
       });
     } else if (_userpass.text.isNotEmpty) {
-      if (numValue < 6) {
-        Fluttertoast.showToast(msg: 'Your Password Require Minimum 6 Character ');
-        _color3 = Colors.red;
-        //_isloading=true;
-      }
+      // if (numValue < 6) {
+      //   Fluttertoast.showToast(msg: 'Your Password Require Minimum 6 Character ');
+      //   _color3 = Colors.red;
+      //   //_isloading=true;
+      // }
       //_isloading=true;
     }
 

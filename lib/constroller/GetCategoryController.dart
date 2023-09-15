@@ -31,7 +31,7 @@ class GetCategoryController {
    print(cat_data);
 
   }else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     return cat_data;
   }

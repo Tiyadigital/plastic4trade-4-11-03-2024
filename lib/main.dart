@@ -1,4 +1,6 @@
 // @dart=2.19
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:math';
 import 'package:Plastic4trade/utill/AppLifecycleObserver.dart';
@@ -135,9 +137,9 @@ add_android_device() async {
         context,
         MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
         ModalRoute.withName('/'));*/
-    Fluttertoast.showToast(msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
   } else {
-    Fluttertoast.showToast(msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
   }
 }
 
@@ -150,7 +152,7 @@ add_ios_device() async {
   if (res['status'] == 1) {
     login1 = Login.fromJson(res);
 
-    Fluttertoast.showToast(msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     /* SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.setString('user_id', login.result!.userid.toString());
     _pref.setString('name', login.result!.userName.toString());
@@ -163,7 +165,7 @@ add_ios_device() async {
     _pref.setBool('islogin', true);
     Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
   } else {
-    Fluttertoast.showToast(msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
   }
 }
 
@@ -202,7 +204,7 @@ void main() async {
     int appOpenCount =  getAppOpenCount() as int ;
     // appOpenCount++;
     saveAppOpenCount(appOpenCount);
-    /*  Fluttertoast.showToast(
+    /*  Fluttertoast.showToast(timeInSecForIosWeb: 2,
       msg: 'Welcome to the app!',
       gravity: ToastGravity.CENTER,
     );*/
@@ -217,7 +219,7 @@ Future<int>  getAppOpenCount() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   constanst.appopencount=prefs.getInt('appOpenCount') ?? 1;
-  // Fluttertoast.showToast(msg: 'rtt ${constanst.appopencount}');
+  // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'rtt ${constanst.appopencount}');
   return prefs.getInt('appOpenCount') ?? 0;
 }
 Future<void> saveAppOpenCount(int count) async {
@@ -247,7 +249,7 @@ Future<void> init(BuildContext context) async {
     onSelectNotification: (String? payload) async {
       if (payload != null) {
 
-        Fluttertoast.showToast(msg: 'rfsrsfrfr');
+        Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'rfsrsfrfr');
         print('jfjjfrfjfjkfg');
         print(payload);
       }
@@ -274,13 +276,13 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,*/
       theme: ThemeData(
         primaryColor: Colors.white,
-        accentColor: Color.fromARGB(255, 0, 91, 148),
+        accentColor: const Color.fromARGB(255, 0, 91, 148),
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         // useMaterial3: true,
         fontFamily: 'Metropolis',
 
-        // Define the default `TextTheme`. Use this to specify the default
-        // text styling for headlines, titles, bodies of text, and more.
+
+
         textTheme: const TextTheme(
             titleLarge: TextStyle(
                 fontSize: 26.0,
@@ -362,33 +364,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String notificationMessge = 'Notification Waiting ';
   String token = "";
-  String _lastMessage = "";
-  String _homeScreenText = "Waiting for token...";
-  String _messageText = "Waiting for message...";
 
   @override
   void initState() {
     super.initState();
     startTimer();
   }
-/*  void initMessaging() {
-    var androiInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iosInit = IOSInitializationSettings();
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-    fltNotification = FlutterLocalNotificationsPlugin();
-    fltNotification.initialize(initSetting);
-    var androidDetails =
-    AndroidNotificationDetails('1', 'channelName');
-    var iosDetails = IOSNotificationDetails();
-    var generalNotificationDetails =
-    NotificationDetails(android: androidDetails, iOS: iosDetails);
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification=message.notification;
-      AndroidNotification? android=message.notification?.android;
-      if(notification!=null && android!=null){
-        fltNotification.show(
-            notification.hashCode, notification.title, notification.body, generalNotificationDetails);
-      }});}*/
 
   @override
   Widget build(BuildContext context) {
@@ -414,93 +395,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  /*Future<void> _requestNotificationPermissions() async {
-    NotificationSettings settings = await _firebaseMessaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission for notifications.');
-    } else {
-      print('User declined or has not granted permission for notifications.');
-    }
-  }*/
-
-/*  void _configureFirebaseListeners() {
-
-    print('inside _configureFirebaseListeners');
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Received foreground notification: ${message.notification?.body}');
-      _showNotificationWithSound();
-    });
-
-
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('User tapped on the notification when the app was in the background: ${message.notification?.body}');
-    });
-  }*/
-  /*Future _showNotificationWithSound() async {
-     const AndroidNotificationChannel _androidChannel =
-    AndroidNotificationChannel(
-      "high_importance_channel",
-      "high_importance_channel",
-      description: 'description',
-      importance: Importance.max,
-      playSound: true,
-    );
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        _androidChannel.id, _androidChannel.name,
-        importance: Importance.max,
-        priority: Priority.high
-    );
-    var iOSPlatformChannelSpecifics =
-    new IOSNotificationDetails(sound: "slow_spring_board.aiff");
-    var platformChannelSpecifics = new NotificationDetails(
-        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin?.show(0,
-      'New Post',
-      'How to Show Notification in Flutter',
-      platformChannelSpecifics,
-      payload: 'Custom_Sound',
-    );
-  }*/
 
   startTimer() async {
-    var duration = Duration(seconds: 3);
-    return new Timer(duration, registerpage);
+    var duration = const Duration(seconds: 3);
+    return Timer(duration, registerpage);
   }
 
   void registerpage() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    //_pref.clear();
-    //if (_pref.getBool('islogin') == Null && _pref.getBool('islogin')!) {
-    /* Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ));*/
-    // } else {
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => Homepage(),
-    //
-    //     ));
-    //var islong=_pref.getBool('islogin');
-    //Fluttertoast.showToast(msg:islong.toString());
+
     if (_pref.getBool('islogin') != true) {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginScreen(),
+            builder: (context) => const LoginScreen(),
           ));
     } else {
       Navigator.push(

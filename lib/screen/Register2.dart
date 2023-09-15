@@ -263,7 +263,7 @@ class _Register2State extends State<Register2> {
                                     },
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Add Your Business Name');
                                         setState(() {
@@ -277,7 +277,7 @@ class _Register2State extends State<Register2> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg: 'Please Enter Bussiness Name');
                                         setState(() {
                                           _color1 = Colors.red;
@@ -340,7 +340,7 @@ class _Register2State extends State<Register2> {
 
                                         if (connectivityResult ==
                                             ConnectivityResult.none) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Internet Connection not available');
                                         } else {
@@ -360,7 +360,7 @@ class _Register2State extends State<Register2> {
                                   },*/
                                       onChanged: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Select Nature Of Business');
                                           setState(() {
@@ -374,7 +374,7 @@ class _Register2State extends State<Register2> {
                                       },
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(
+                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Select Nature Of Business');
                                           setState(() {
@@ -503,7 +503,7 @@ class _Register2State extends State<Register2> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(
+                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Search and Save your Business Location');
                                         setState(() {
@@ -536,10 +536,10 @@ class _Register2State extends State<Register2> {
                                   ),
                                 ],
                                 onTap: () {
-                                  //Fluttertoast.showToast(msg: 'hello');
+                                  //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                   */ /*InkWell(
                                       onTap: () {*/ /*
-                                  //Fluttertoast.showToast(msg: 'hello');
+                                  //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
                                   ViewItem(context);
                                   //},
                                   //);
@@ -593,7 +593,7 @@ class _Register2State extends State<Register2> {
                                 },
                                 onChanged: (value) {
                                   if (value.isEmpty) {
-                                    Fluttertoast.showToast(
+                                    Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                         msg: 'Please Enter Nature Of Business');
                                     setState(() {
                                       _color8 = Colors.red;
@@ -606,7 +606,7 @@ class _Register2State extends State<Register2> {
                                 },
                                 onFieldSubmitted: (value) {
                                   if (value.isEmpty) {
-                                    Fluttertoast.showToast(
+                                    Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                         msg: 'Please Nature Of Business');
                                     setState(() {
                                       _color8 = Colors.red;
@@ -789,14 +789,14 @@ class _Register2State extends State<Register2> {
                                                       Colors.green.shade600;
                                                 } else {
                                                   _color8 = Colors.red;
-                                                  Fluttertoast.showToast(
+                                                  Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                                       msg:
                                                           'Please Enter Correct Number');
                                                 }
                                               },
                                               onChanged: (value) {
                                                 if (value.isEmpty) {
-                                                  /* Fluttertoast.showToast(
+                                                  /* Fluttertoast.showToast(timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Your Bussiness Mobile Number');*/
                                                   setState(() {

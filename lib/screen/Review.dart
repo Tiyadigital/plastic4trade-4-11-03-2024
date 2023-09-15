@@ -1157,7 +1157,7 @@ class _reviewState extends State<review> {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(msg: 'Internet Connection not available');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       get_reviewlist();
@@ -1181,11 +1181,11 @@ class _reviewState extends State<review> {
 
     print(res);
     if (res['status'] == 1) {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
 
 
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
   }
   get_reviewlist() async {
@@ -1249,7 +1249,7 @@ class _reviewState extends State<review> {
       }
     } else {
       isload = true;
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     setState(() {});
     return jsonarray;
@@ -1379,7 +1379,7 @@ class _YourWidgetState extends State<YourWidget> {
                     Navigator.pop(context);
                     add_Review();
                   } else {
-                    Fluttertoast.showToast(msg: 'plz select rating ');
+                    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'plz select rating ');
                   }
                 },
                 child: Text('Publish',

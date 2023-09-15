@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:Plastic4trade/screen/ResetPassword.dart';
 import 'dart:io' show Platform;
@@ -11,12 +14,14 @@ import 'homepage.dart';
 class otp extends StatefulWidget {
   late String phone, countrycode, email;
   String? myotp;
+
   otp(
       {Key? key,
       required this.phone,
       required this.countrycode,
       required this.email})
       : super(key: key);
+
   @override
   State<otp> createState() =>
       _otpState(phone1: phone, countrycode1: countrycode, email1: email);
@@ -29,16 +34,25 @@ class _otpState extends State<otp> {
   final TextEditingController _twofield = TextEditingController();
   final TextEditingController _threefield = TextEditingController();
   final TextEditingController _fourfield = TextEditingController();
+
+  TextEditingController otpController = TextEditingController();
+
+  var otp = "";
+  var enteredOTP = "";
+  bool otpError = false;
+
   BuildContext? dialogContext;
   bool isloading = false;
+  var _formKey = GlobalKey<FormState>();
 
   _otpState(
       {Key? key, required phone1, required countrycode1, required email1});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body: Container(
+        body: SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SafeArea(
                 top: true,
@@ -46,12 +60,12 @@ class _otpState extends State<otp> {
                 right: true,
                 bottom: true,
                 child: SingleChildScrollView(
-                    child: Container(
-                        child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                      Container(
-                        child: Align(
+                    child: Form(
+                  key: _formKey,
+                  child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
                           alignment: Alignment.topLeft,
                           child: GestureDetector(
                             child: Image.asset('assets/back.png',
@@ -61,175 +75,211 @@ class _otpState extends State<otp> {
                             },
                           ),
                         ),
-                      ),
-                      Container(
-                        //height: MediaQuery.of(context).size.height,
-                        margin: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Image.asset('assets/Otpverification.png',
-                                  alignment: Alignment.topCenter,
-                                  height: 150,
-                                  width: 100),
-                            ),
-                            Column(children: [
-                              Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      0, 20.0, 0, 20.0),
-                                  child: Text('OTP Verification',
+                        Container(
+                          //height: MediaQuery.of(context).size.height,
+                          margin: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Image.asset('assets/Otpverification.png',
+                                    alignment: Alignment.topCenter,
+                                    height: 150,
+                                    width: 100),
+                              ),
+                              Column(children: [
+                                const Padding(
+                                    padding:
+                                        EdgeInsets.fromLTRB(0, 20.0, 0, 20.0),
+                                    child: Text('OTP Verification',
+                                        style: TextStyle(
+                                            fontSize: 26.0,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets\fonst\Metropolis-Black.otf'))),
+                                widget.email.isEmpty
+                                    ? Container(
+                                        height: 20.0,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.15,
+                                  alignment: Alignment.center,
+                                        child: Text(
+                                            'Enter OTP Sent To ${widget.countrycode}${widget.phone}',
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        'assets\fonst\Metropolis-Black.otf')
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 17)),
+                                      )
+                                    : Container(
+                                        //height: 20.0,
+                                        //width: MediaQuery.of(context).size.width / 1.15,
+                                  alignment: Alignment.center,
+                                        margin: EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Text(
+                                            'Enter OTP Sent To ${widget.email}',
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        'assets\fonst\Metropolis-Black.otf')
+                                                ?.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 17,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            textAlign: TextAlign.center),
+                                      ),
+
+                                const SizedBox(
+                                  height: 30,
+                                )
+                                //alignment: Alignment.center,
+
+                                /*  SizedBox(
+                              height: 30.0,
+                              width: MediaQuery.of(context).size.width / 1.95,
+                              child: Text('and jack@gmail.com',
+                                  //maxLines: 2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(fontWeight: FontWeight.w400,fontSize: 17)),
+                            ),*/
+                              ]),
+                              OtpTextField(
+
+                                enabledBorderColor:
+                                    otpError ? Colors.red : Colors.black26,
+                                onSubmit: (String verificationCode) {
+                                  setState(() {
+                                    enteredOTP = verificationCode;
+                                  });
+                                  log("VERIFICATION CODE == $verificationCode");
+                                },
+                                onCodeChanged: (code) {
+                                  otp = code;
+                                  setState(() {
+                                    otpError = false; // Reset the error when the OTP field changes
+                                  });
+                                },
+                                numberOfFields: 4,
+                                fieldWidth: 50,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                cursorColor: Colors.black26,
+                                borderRadius: BorderRadius.circular(20),
+                                borderColor:
+                                    otpError ? Colors.red : Colors.black26,
+                                focusedBorderColor: Colors.blue,
+                                showFieldAsBox: true,
+                                textStyle: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Did’t Received the OTP?',
                                       style: TextStyle(
-                                          fontSize: 26.0,
-                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf'))),
-                              widget.email.isEmpty
-                                  ? SizedBox(
-                                      height: 20.0,
-                                      width: MediaQuery.of(context).size.width /
-                                          1.15,
-                                      child: Text(
-                                          'Enter OTP Sent To ${widget.countrycode}${widget.phone}',
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 17)),
-                                    )
-                                  : Container(
-                                      //height: 20.0,
-                                      //width: MediaQuery.of(context).size.width / 1.15,
-                                      margin:
-                                          EdgeInsets.only(left: 10, right: 10),
-                                      child: Text(
-                                          'Enter OTP Sent To ' + widget.email,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 17,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          textAlign: TextAlign.center),
-                                    ),
-
-                              SizedBox(
-                                height: 30,
-                              )
-                              //alignment: Alignment.center,
-
-                              /*  SizedBox(
-                                height: 30.0,
-                                width: MediaQuery.of(context).size.width / 1.95,
-                                child: Text('and jack@gmail.com',
-                                    //maxLines: 2,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(fontWeight: FontWeight.w400,fontSize: 17)),
-                              ),*/
-                            ]),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                OtpInput(_onefield, true),
-                                OtpInput(_twofield, false),
-                                OtpInput(_threefield, true),
-                                OtpInput(_fourfield, false),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Did’t Received the OTP?',
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
-                                Container(
-                                  //margin: EdgeInsets.fromLTRB(250.0, 0.0, 0.0, 0.0),
-                                  child: TextButton(
-                                    child: Text(
-                                      'Resend Otp ',
+                                              'assets\fonst\Metropolis-Black.otf')),
+                                  TextButton(
+                                    child: const Text(
+                                      'Resend Otp',
                                     ),
                                     onPressed: () {
-                                      //resendotp();
                                       _onLoading();
                                       get_otp(widget.phone, widget.countrycode,
-                                          widget.email).then((value) {
-                                            if(value){
-
-                                            }else{
-
-                                            }
+                                              widget.email)
+                                          .then((value) {
+                                        if (value) {
+                                        } else {}
                                       });
                                     },
                                   ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: 1),
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  color: Color.fromARGB(255, 0, 91, 148)),
-                              child: TextButton(
-                                onPressed: () {
-                                  WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                                  widget.myotp = _onefield.text.toString() +
-                                      _twofield.text.toString() +
-                                      _threefield.text.toString() +
-                                      _fourfield.text.toString();
-                                  _onLoading();
-                                  verify_otp(
-                                          widget.myotp.toString(),
-                                          widget.phone,
-                                          widget.countrycode,
-                                          widget.email)
-                                      .then((value) {
-                                    Navigator.of(dialogContext!).pop();
-                                    if (value) {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ResetPassword(
-                                                    country_code:
-                                                        widget.countrycode,
-                                                    phone: widget.phone,
-                                                    email: widget.email,
-                                                  )));
-                                    } else {}
-                                  });
-                                },
-                                child: Text('Submit',
-                                    style: TextStyle(
-                                        fontSize: 19.0,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.white,
-                                        fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
+                                ],
                               ),
-                            ),
-                          ],
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1),
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    color:
+                                        const Color.fromARGB(255, 0, 91, 148)),
+                                child: TextButton(
+                                  onPressed: () {
+                                    log("ENTERED OTP LENGTH = ${otp.length}");
+                                    log("ENTERED OTP = $otp");
+
+
+                                    if (enteredOTP.isEmpty || enteredOTP.length < 4) {
+                                      Fluttertoast.showToast(
+                                          msg: 'Please Enter Your OTP');
+                                      setState(() {
+                                        otpError = true; // Set error to true if OTP is empty
+                                      });
+                                    } else {
+                                      WidgetsBinding
+                                          .instance?.focusManager.primaryFocus
+                                          ?.unfocus();
+                                      _onLoading();
+                                      verify_otp(
+                                              enteredOTP.toString(),
+                                              widget.phone,
+                                              widget.countrycode,
+                                              widget.email)
+                                          .then((value) {
+                                        Navigator.of(dialogContext!).pop();
+                                        if (value) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ResetPassword(
+                                                        country_code:
+                                                            widget.countrycode,
+                                                        phone: widget.phone,
+                                                        email: widget.email,
+                                                      )));
+                                        } else {}
+                                      });
+
+                                      // if (/* Your OTP validation logic */) {
+                                      //   // OTP is valid, proceed with your logic
+                                      // } else {
+                                      //   setState(() {
+                                      //     otpError = true; // Set error to true if OTP is invalid
+                                      //   });
+                                      // }
+                                    }
+                                  },
+                                  child: const Text('Submit',
+                                      style: TextStyle(
+                                          fontSize: 19.0,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
+                                          fontFamily:
+                                              'assets\fonst\Metropolis-Black.otf')),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ]))))));
+                      ]),
+                )))));
   }
 
   void _onLoading() {
@@ -252,13 +302,13 @@ class _otpState extends State<otp> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
@@ -270,11 +320,12 @@ class _otpState extends State<otp> {
       },
     );
 
-    /*Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
+      Navigator.of(dialogContext!)
+          .pop(); // Use dialogContext to close the dialog
       print('exit1'); // Dialog closed
-    });*/
+    });
   }
 
   Future<bool> get_otp(phone, conutry_code, email) async {
@@ -285,28 +336,10 @@ class _otpState extends State<otp> {
     //Fluttertoast.showToast(msg: "$msg");
     if (res['status'] == 1) {
       login = common_par.fromJson(res);
-      isloading=true;
+      isloading = true;
       Fluttertoast.showToast(msg: res['message']);
-
-      /* if (login.data!.image_url != null) {
-        _pref.setString('image', login.data!.image_url.toString());
-      } else {
-        _pref.setString('image', '');
-      }*/
-
-      // verify = res['data']['mbl_verified'];
-      // print(login.data!.mblVerified.toString());
-      /* if (login.data!.mblVerified == "1") {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Homepage()));
-      } else {
-        otpvalue = login.otp.toString();
-        Fluttertoast.showToast(msg: "$otpvalue");
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => otp(name: otpvalue)));
-      }*/
     } else {
-      isloading=false;
+      isloading = false;
       Fluttertoast.showToast(msg: res['message']);
     }
     return isloading;
@@ -317,7 +350,7 @@ class _otpState extends State<otp> {
 
     var res = await verifyforgototp(myotp, phone, conutry_code, email);
     String? msg = res['message'];
-   // Fluttertoast.showToast(msg: "$msg");
+    // Fluttertoast.showToast(msg: "$msg");
     if (res['status'] == 1) {
       login = common_par.fromJson(res);
 
@@ -328,71 +361,5 @@ class _otpState extends State<otp> {
       Fluttertoast.showToast(msg: res['message']);
     }
     return isloading;
-  }
-  // void verifyotp() async {
-  //   print(constanst.api_token);
-  //
-  //   VerifyOtp verifyOtp = VerifyOtp();
-  //   var res = await verify_otp(constanst.api_token);
-  //   print("mannnnnn  $res");
-  //   var msg = res['message'];
-  //   Fluttertoast.showToast(msg: "$msg");
-  //
-  //   if (res['result'] == "1") {
-  //     verifyOtp = VerifyOtp.fromJson(res);
-  //   } else {
-  //     //String alert = isReturningCustomer ? 'Welcome back to our site!' : 'Welcome, please sign up.';
-  //     if (msg.isNotEmpty) {
-  //       Fluttertoast.showToast(msg: "$msg");
-  //     } else {
-  //       Fluttertoast.showToast(msg: "Something Wrong");
-  //     }
-  //   }
-  // }
-}
-
-// resendotp() async {
-//   ResendOtp resendOtp = ResendOtp();
-//   SharedPreferences pref = await SharedPreferences.getInstance();
-//   String mbl = pref.getString('mbl').toString();
-//   resendOtp = await resend_otp(mbl);
-//   var msg = resendOtp.message;
-//   String otp1 = resendOtp.otp.toString();
-//   constanst.otp = otp1;
-//   print(constanst.otp);
-//   print(" hello 123 $constanst.api_token");
-//   Fluttertoast.showToast(msg: " $msg");
-//   Fluttertoast.showToast(msg: " $otp1");
-//   print(resendOtp);
-// }
-
-class OtpInput extends StatelessWidget {
-  final TextEditingController controller;
-  final bool autoFocus;
-  const OtpInput(this.controller, this.autoFocus, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      width: 50,
-      child: TextField(
-        autofocus: autoFocus,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        controller: controller,
-        maxLength: 1,
-        cursorColor: Colors.white,
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            counterText: '',
-            hintStyle: TextStyle(color: Colors.black, fontSize: 20.0)),
-        onChanged: (value) {
-          if (value.length == 1) {
-            FocusScope.of(context).nextFocus();
-          }
-        },
-      ),
-    );
   }
 }

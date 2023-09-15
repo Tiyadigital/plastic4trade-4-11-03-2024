@@ -24,7 +24,7 @@ class _aboutplasticState extends State<aboutplastic> {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(msg: 'Internet Connection not available');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       get_aboutus();
@@ -151,7 +151,7 @@ class _aboutplasticState extends State<aboutplastic> {
         load = true;
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     return jsonarray;
     setState(() {});

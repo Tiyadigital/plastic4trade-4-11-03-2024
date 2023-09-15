@@ -163,7 +163,7 @@ class _moreState extends State<more> {
                                                           context);
                                                     } /*else if (constanst
                                                         .iscategory) {
-                                                      //Fluttertoast.showToast(msg: 'i m category');
+                                                      //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                                                       categoryDialog(context);
                                                     } else if (constanst
                                                         .isgrade) {
@@ -191,7 +191,7 @@ class _moreState extends State<more> {
                                                           context);
                                                     } else if (constanst
                                                         .iscategory) {
-                                                      //Fluttertoast.showToast(msg: 'i m category');
+                                                      //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                                                       categoryDialog(context);
                                                     } else if (constanst
                                                         .isgrade) {
@@ -1051,11 +1051,11 @@ class _moreState extends State<more> {
 
     if (res['status'] == 1) {
       login = Login.fromJson(res);
-      //  Fluttertoast.showToast(msg: res['message']);
+      //  Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
   }
 
@@ -1122,7 +1122,7 @@ class _moreState extends State<more> {
                                 builder: (context) => Bussinessinfo(),
                               ));
                         } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1145,7 +1145,7 @@ class _moreState extends State<more> {
                                 builder: (context) => Bussinessinfo(),
                               ));
                         } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1206,7 +1206,7 @@ class _moreState extends State<more> {
                                     managesellpost(Title: "Manage_Sell_Posts"),
                               ));
                         } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1231,7 +1231,7 @@ class _moreState extends State<more> {
                                     managesellpost(Title: "Manage_Sell_Posts"),
                               ));
                         } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1279,7 +1279,7 @@ class _moreState extends State<more> {
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1302,7 +1302,7 @@ class _moreState extends State<more> {
                         if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1360,7 +1360,7 @@ class _moreState extends State<more> {
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1382,7 +1382,7 @@ class _moreState extends State<more> {
                     /*    if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
+                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1519,8 +1519,8 @@ class _moreState extends State<more> {
       /*Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
-      Fluttertoast.showToast(msg: res['message']);
-      // Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+      // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
 
     setState(() {});

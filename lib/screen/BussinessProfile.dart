@@ -96,7 +96,7 @@ class _bussinessprofileState extends State<bussinessprofile>
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(msg: 'Internet Connection not available');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       getPackage();
