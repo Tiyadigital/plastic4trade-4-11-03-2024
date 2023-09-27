@@ -7,6 +7,7 @@ import 'package:Plastic4trade/screen/Liveprice.dart';
 import 'package:Plastic4trade/screen/Notifications.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:Plastic4trade/utill/constant.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screen/AddPost.dart';
 import '../screen/Register2.dart';
@@ -210,11 +211,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Contact Us',
+              const Text('Contact Us',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -262,30 +263,29 @@ Widget myAppbar(String title, context) {
                     child: Image.asset(
                       'assets/Play.png',
                     ))),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           GestureDetector(
               onTap: () {
                 constanst.redirectpage="live_price";
                 if (constanst.appopencount == constanst.appopencount1) {
-                  print(constanst.step);
+                  print("APP OPEN 1st = ${constanst.appopencount}");
+                  print("APP OPEN 1st = ${constanst.appopencount1}");
+
                   if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
                       !constanst.isprofile &&
                       constanst.step == 11) {
-                    print(constanst.step);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LivepriceScreen(),
+                          builder: (context) => const LivepriceScreen(),
                         ));
                   } else if (constanst.isprofile) {
                     showInformationDialog(context);
                   } else if (constanst.iscategory) {
-                    //Fluttertoast.showToast(msg: 'i m category');
                     categoryDialog(context);
                   } else if (constanst.isgrade) {
                     categoryDialog(context);
@@ -293,43 +293,25 @@ Widget myAppbar(String title, context) {
                     categoryDialog(context);
                   } else if (constanst.step != 11) {
                     addPostDialog(context);
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LivepriceScreen(),
-                        ));
                   }
-                } else {
+                }
+                else if (constanst.isprofile) {
+                  print("APP OPEN 2nd = ${constanst.appopencount}");
+                  print("APP OPEN 2nd = ${constanst.appopencount1}");
+                  showInformationDialog(context);
+                }else if(constanst.appopencount == constanst.appopencount1){
+                  print("APP OPEN 3rd= ${constanst.appopencount}");
+                  print("APP OPEN 3rd= ${constanst.appopencount1}");
+                  categoryDialog(context);
+                }
+                else {
+                  print("APP OPEN 4th= ${constanst.appopencount}");
+                  print("APP OPEN 4th= ${constanst.appopencount1}");
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LivepriceScreen(),
+                        builder: (context) => const LivepriceScreen(),
                       ));
-                  /*if (constanst.isprofile) {
-                    showInformationDialog(context);
-                  } else if (constanst.iscategory) {
-                    //Fluttertoast.showToast(msg: 'i m category');
-                    categoryDialog(context);
-                  } else if (constanst.isgrade) {
-                    categoryDialog(context);
-                  } else if (constanst.istype) {
-                    categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  } else if (!constanst.isgrade &&
-                      !constanst.istype &&
-                      !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
-                    print(constanst.step);
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LivepriceScreen(),
-                        ));
-                  }*/
                 }
               },
               child: SizedBox(
@@ -339,7 +321,7 @@ Widget myAppbar(String title, context) {
                   'assets/homeprice.png',
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           GestureDetector(
@@ -347,78 +329,9 @@ Widget myAppbar(String title, context) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Chat(),
+                      builder: (context) => const Chat(),
                     ));
               },
-              /*onTap: () {
-                constanst.redirectpage=="chat";
-               // constanst.productId=result.productId.toString();
-              //  constanst.post_type=result.postType.toString();
-               // constanst.redirectpage="sale_buy";
-                print(constanst.appopencount);
-                print(constanst.appopencount1);
-                print(constanst.isprofile);
-                print(constanst.iscategory);
-                if(constanst.appopencount==constanst.appopencount1) {
-                  print(constanst.step);
-                  if (!constanst.isgrade &&
-                      !constanst.istype &&
-                      !constanst.iscategory &&
-                      !constanst.isprofile && constanst.step == 11) {
-                    print(constanst.step);
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>Chat(),
-                        ));
-                  } else if (constanst.isprofile) {
-                    showInformationDialog(context);
-                  } else if (constanst.iscategory) {
-                    //Fluttertoast.showToast(msg: 'i m category');
-                    categoryDialog(context);
-                  } else if (constanst.isgrade) {
-                    categoryDialog(context);
-                  } else if (constanst.istype) {
-                    categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  }else{
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>Chat(),
-                        ));
-                  }
-                  */ /* else {
-                   showInformationDialog(context);
-                 }*/ /*
-                }else{
-                  if (constanst.isprofile) {
-                    showInformationDialog(context);
-                  } else if (constanst.iscategory) {
-                    //Fluttertoast.showToast(msg: 'i m category');
-                    categoryDialog(context);
-                  } else if (constanst.isgrade) {
-                    categoryDialog(context);
-                  } else if (constanst.istype) {
-                    categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  }else  if (!constanst.isgrade &&
-                      !constanst.istype &&
-                      !constanst.iscategory &&
-                      !constanst.isprofile && constanst.step == 11) {
-                    print(constanst.step);
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>Chat(),
-                        ));
-                  }
-                }
-              },*/
               child: SizedBox(
                 width: 40,
                 height: 50,
@@ -426,17 +339,17 @@ Widget myAppbar(String title, context) {
                   'assets/homemsg.png',
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Align(
             child: badges.Badge(
               position: badges.BadgePosition.topEnd(top: 0, end: 3),
-              badgeStyle: badges.BadgeStyle(badgeColor: Colors.red),
-              badgeAnimation: badges.BadgeAnimation.slide(
+              badgeStyle: const badges.BadgeStyle(badgeColor: Colors.red),
+              badgeAnimation: const badges.BadgeAnimation.slide(
                   animationDuration: Duration(milliseconds: 300)),
               badgeContent: Text(constanst.notification_count.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 8,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
@@ -445,11 +358,10 @@ Widget myAppbar(String title, context) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => notification()));
+                            builder: (context) => const notification()));
                   },
                   child: SizedBox(
                     width: 40,
-                    //child: Icon(Icons.notifications_none_rounded,),
                     child: Image.asset(
                       'assets/Notification.png',
                       height: 34,
@@ -457,31 +369,12 @@ Widget myAppbar(String title, context) {
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
         ],
       )
     ],
-
-    // actions: [
-    //   Align(
-    //     child: badges.Badge(
-    //       position: badges.BadgePosition.topEnd(top: 3, end: 3),
-    //       badgeStyle: badges.BadgeStyle(badgeColor: Colors.white),
-    //       badgeAnimation: badges.BadgeAnimation.slide(
-    //           animationDuration: Duration(milliseconds: 300)),
-    //       badgeContent: Text(constanst.cartitem_count,
-    //           style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)),
-    //       child: IconButton(
-    //           onPressed: () {
-    //             Navigator.push(context,
-    //                 MaterialPageRoute(builder: (context) => cart_screen()));
-    //           },
-    //           icon: Icon(Icons.shopping_cart)),
-    //     ),
-    //   )
-    // ],
   );
 }
 
@@ -490,7 +383,7 @@ Future<void> showInformationDialog(BuildContext context) async {
     context: context,
     barrierDismissible: false,
     builder: (context) {
-      return BussinessPro_dialog();
+      return const BussinessPro_dialog();
     },
   );
 }

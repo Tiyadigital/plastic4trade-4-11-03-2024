@@ -8,8 +8,6 @@ class AppLifecycleObserver extends WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
-    //if (state == AppLifecycleState.resumed) {
-      // Increment the app open count
       int appOpenCount = await getAppOpenCount();
       appOpenCount++;
       await saveAppOpenCount(appOpenCount);

@@ -30,7 +30,7 @@ class _TypeState extends State<Grade> {
   @override
   void initState() {
     super.initState();
-    print('init');
+
     checknetwork();
   }
 
@@ -63,13 +63,13 @@ class _TypeState extends State<Grade> {
                 alignment: Alignment.center,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                       value: null,
                       strokeWidth: 2.0,
                       color: Color.fromARGB(255, 0, 91, 148),
                     )
                         : Platform.isIOS
-                        ? CupertinoActivityIndicator(
+                        ? const CupertinoActivityIndicator(
                       color: Color.fromARGB(255, 0, 91, 148),
                       radius: 20,
                       animating: true,
@@ -139,9 +139,9 @@ class _TypeState extends State<Grade> {
                                           print('12346 $value');
                                           Navigator.of(dialogContext!).pop();
                                           if(value){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => AddPost()));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
                                           }else{
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => AddPost()));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) =>MainScreen(0)));
                                           }
 
                                         });
@@ -385,9 +385,9 @@ class _TypeState extends State<Grade> {
                                     print('12346 $value');
                                     Navigator.of(dialogContext!).pop();
                                     if(value){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddPost()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
                                     }else{
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddPost()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
                                     }
 
                                   });
@@ -455,6 +455,9 @@ class _TypeState extends State<Grade> {
     });*/
   }
   void get_data() async {
+    // Clear the existing cat_grade_data list
+    constanst.cat_grade_data.clear();
+
     GetCategoryGradeController bt = await GetCategoryGradeController();
     constanst.cat_gradedata = bt.setGrade();
     _isloading = true;
@@ -468,8 +471,8 @@ class _TypeState extends State<Grade> {
       _isloading = false;
       setState(() {});
     });
-    //
   }
+
 
   checknetwork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -506,11 +509,7 @@ class _TypeState extends State<Grade> {
       Fluttertoast.showToast(msg: 'Interest Selected Successfully');
       constanst.isgrade = false;
       _isloading1=true;
-      /* Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-          ModalRoute.withName('/'));*/
-     /* Navigator.push(context, MaterialPageRoute(builder: (context) => AddPost()));*/
+
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }

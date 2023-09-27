@@ -86,7 +86,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
             backgroundColor: Colors.white,
             centerTitle: true,
             elevation: 0,
-            title: Text('Profile Settings',
+            title: const Text('Profile Settings',
                 softWrap: false,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -102,7 +102,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                     MaterialPageRoute(
                         builder: (context) => MainScreen(4)));
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
@@ -129,7 +129,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
               ),
               Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
                   child: Column(
                       //mainAxisSize: MainAxisSize.min,
                       children: [
@@ -139,7 +139,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        EditBussinessProfile()));
+                                        const EditBussinessProfile()));
                           },
                           child: Card(
                               elevation: 2,
@@ -151,7 +151,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                EditBussinessProfile()));
+                                                const EditBussinessProfile()));
                                   },
                                   child: Row(
                                       mainAxisAlignment:
@@ -206,7 +206,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        Bussinessverification()));
+                                        const Bussinessverification()));
                           },
                           child: Card(
                               elevation: 2,
@@ -232,7 +232,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                                       CrossAxisAlignment.center,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
-                                                  children: [
+                                                  children: const [
                                                 Align(
                                                   child: Padding(
                                                     padding:
@@ -257,7 +257,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                     ]),
                               )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         GestureDetector(
@@ -314,7 +314,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                         )
                                       ]))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         GestureDetector(
@@ -322,7 +322,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginDetail()));
+                                    builder: (context) => const LoginDetail()));
                           },
                           child: Card(
                               elevation: 2,
@@ -333,7 +333,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LoginDetail()));
+                                            builder: (context) => const LoginDetail()));
                                   },
                                   child: Row(
                                       mainAxisAlignment:
@@ -347,7 +347,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                                         CrossAxisAlignment.center,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.center,
-                                                    children: [
+                                                    children: const [
                                                   Align(
                                                     child: Padding(
                                                       padding: EdgeInsets.only(
@@ -362,7 +362,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                                                   'assets\fonst\Metropolis-Black.otf')),
                                                     ),
                                                   ),
-                                                ]))),
+                                                ],),),),
                                         Image.asset(
                                           'assets/forward.png',
                                           height: 18,
@@ -374,7 +374,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
             ],
           )): Center(
               child: Platform.isAndroid
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                 value: null,
                 strokeWidth: 2.0,
                 color: Color.fromARGB(255, 0, 91, 148),

@@ -30,249 +30,213 @@ class _BussinessPro_dialogState extends State<AddPost_dialog> {
     return Dialog(
       alignment: Alignment.bottomCenter,
       elevation: 0,
-
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35.0),
       ),
-      child :
-      Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            margin: EdgeInsets.only(right: 15,top: 15),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Icon(Icons.clear),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 15, top: 15),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Icon(Icons.clear),
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 10,),
-        Image(image:AssetImage('assets/bussines_profile.png'),height:MediaQuery.of(context).size.height/5.8,width: MediaQuery.of(context).size.width, ),
-        SizedBox(height: 30,),
-        Text('Buy & Sell - \n Digital Product Catalogue ',maxLines: 2,textAlign: TextAlign.center,style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontSize: 23)),
-        SizedBox(height: 20,),
-        Text('Please Add Your Buy Post or Sell Post to \n Make Your Digital Product Catalogue & Find \n Buyers or Suppliers Worldwide.',maxLines: 4,textAlign: TextAlign.center,style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 14)),
-       /* SizedBox(height: 10,),
-        Text('Add Business Profile \n Select your product interests \n Add at least 1 sale post or buy post',maxLines: 3,textAlign: TextAlign.center,style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 14,color: Colors.grey,height: 2),),
-        SizedBox(height: 10,),*/
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 3.5,
-              height: 55,
-              margin: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                border: Border.all(width: 1,color: Color.fromARGB(255, 0, 91, 148)),
-                borderRadius: BorderRadius.circular(50.0),
-                // color: Color.fromARGB(255, 0, 91, 148)
-              ),
-              child: TextButton(
-                onPressed: () {
+          const SizedBox(
+            height: 10,
+          ),
+          Image(
+            image: const AssetImage('assets/bussines_profile.png'),
+            height: MediaQuery.of(context).size.height / 5.8,
+            width: MediaQuery.of(context).size.width,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Text('Buy & Sell - \n Digital Product Catalogue ',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                      fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                  .copyWith(fontSize: 23)),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+              'Please Add Your Buy Post or Sell Post to \n Make Your Digital Product Catalogue & Find \n Buyers or Suppliers Worldwide.',
+              maxLines: 4,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                  .copyWith(fontSize: 14)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width / 3.5,
+                height: 55,
+                margin: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1,
+                    color: const Color.fromARGB(255, 0, 91, 148),
+                  ),
+                  borderRadius: BorderRadius.circular(50.0),
+                  // color: Color.fromARGB(255, 0, 91, 148)
+                ),
+                child: TextButton(
+                  onPressed: () {
 
-                  print(constanst.redirectpage);
-                  constanst.appopencount1=2;
-                  Navigator.pop(context);
-                  if(constanst.isprofile){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Register2(),
-                        ));
-                  } else{
-                    if(constanst.redirectpage=="sale_buy"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)));
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ));
-                      /*Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)));*/
-                    }else if(constanst.redirectpage=="add_post"){
-                     /* Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => AddPost()));*/
-                     /* Navigator.of(context).pop();*/
-                    }else if(constanst.redirectpage=="chat"){
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => Chat()));
-                    }else if(constanst.redirectpage=="live_price"){
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => LivepriceScreen()));
-                    }else if(constanst.redirectpage=="Manage_Sell_Posts"){
+                    constanst.appopencount1 = 2;
+                    Navigator.pop(context);
+                    if (constanst.isprofile) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => managesellpost(Title: 'Manage Sell Posts'),
+                            builder: (context) => Register2(),
                           ));
-                    }else if(constanst.redirectpage=="Manage_Buy_Posts"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => managebuypost(Title: 'Manage Buy Posts'),
-                          ));
-                    }else if(constanst.redirectpage=="update_category"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UpdateCategoryScreen(),
-                          ));
-                    }else if(constanst.redirectpage=="edit_profile"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Bussinessinfo(),
-                          ));
-                    }
-                    /*Navigator.pushAndRemoveUntil(
+                    } else {
+                      if (constanst.redirectpage == "sale_buy") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    Buyer_sell_detail(
+                                      prod_id: constanst.productId,
+                                      post_type: constanst.post_type,
+                                    ),),);
+                      } else if (constanst.redirectpage == "add_post") {
+                      } else if (constanst.redirectpage == "chat") {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Chat()));
+                      } else if (constanst.redirectpage == "live_price") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LivepriceScreen()));
+                      } else if (constanst.redirectpage ==
+                          "Manage_Sell_Posts") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const managesellpost(Title: 'Manage Sell Posts'),
+                            ));
+                      } else if (constanst.redirectpage == "Manage_Buy_Posts") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const managebuypost(Title: 'Manage Buy Posts'),
+                            ));
+                      } else if (constanst.redirectpage == "update_category") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UpdateCategoryScreen(),
+                            ));
+                      } else if (constanst.redirectpage == "edit_profile") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Bussinessinfo(),
+                            ));
+                      }
+                      /*Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)),
                         ModalRoute.withName('/'));*/
-                  }
+                    }
 
 
-                },
-                child: Text('Skip',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    print("STEP === ${constanst.step}");
+                  },
+                  child: const Text('Skip',
+                      style: TextStyle(
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                          fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width / 3.5,
-              height: 55,
-              margin: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Color.fromARGB(255, 0, 91, 148)
+              Container(
+                width: MediaQuery.of(context).size.width / 3.5,
+                height: 55,
+                margin: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(50.0),
+                    color: const Color.fromARGB(255, 0, 91, 148)),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    getBussinessProfile();
+                    if (constanst.isprofile) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Register2(),
+                          ));
+                    } else if (constanst.iscategory) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CategoryScreen(),
+                          ));
+                    } else if (constanst.istype) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Type(),
+                          ));
+                    } else if (constanst.isgrade) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Grade(),
+                          ));
+                    } else if (constanst.step != 11) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AddPost(),
+                          ));
+                    }
+                  },
+                  child: const Text('Proceed',
+                      style: TextStyle(
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                ),
               ),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  constanst.appopencount1=2;
-                  getBussinessProfile();
-                  print('bottom');
-                  print(constanst.isgrade );
-                  print(constanst.isprofile );
-                  print(constanst.istype );
-                  print(constanst.iscategory);
-                  if(constanst.isprofile){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Register2(),
-                        ));
-                  }
-                  else if(constanst.iscategory){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));
-                  } else if(constanst.istype){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));
-                  } else if(constanst.isgrade){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Grade(),
-                        ));
-                  } else if (constanst.step != 11) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddPost(),
-                        ));
-                  }/*else if(constanst.redirectpage=="sale_buy"){
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)),
-                        ModalRoute.withName('/'));
-
-                  }*/
-                  /*else if(constanst.iscategory){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));
-                  }else if(constanst.istype){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));
-                  }else if(constanst.isgrade){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Grade(),
-                        ));
-                  }else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddPost(),
-                        ));
-                  }*/
-
-                },
-                child: Text('Proceed',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-              ),
-            ),
-          ],
-        )
-      ],
-    ),);
+            ],
+          )
+        ],
+      ),
+    );
   }
+
   getBussinessProfile() async {
-    /* Getmybusinessprofile register = Getmybusinessprofile();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-
-
-    var res = await getbussinessprofile(_pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),);
-
-    if (res['status'] == 1) {
-      register = Getmybusinessprofile.fromJson(res);
-      if(register.profile==null){
-        constanst.isprofile=true;
-      }else if(register.user!.categoryId.isEmpty){
-        constanst.iscategory=true;
-      }else if(register.user!.typeId.isEmpty){
-        constanst.istype=true;
-      }else if(register.user!.gradeId.isEmpty){
-        constanst.isgrade=true;
-      }
-      setState(() {});
-    } else {
-      Fluttertoast.showToast(msg: res['message']);
-
-      setState(() {});
-    }*/
     GetmybusinessprofileController bt = await GetmybusinessprofileController();
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    constanst.getmyprofile = bt.Getmybusiness_profile(_pref.getString('user_id').toString(),
+    constanst.getmyprofile = bt.Getmybusiness_profile(
+        _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
 
-
-    // setState(() {});
-    // print(constanst.btype_data);
   }
 }

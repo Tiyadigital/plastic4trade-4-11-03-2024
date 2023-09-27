@@ -36,6 +36,7 @@ class _socialmediaState extends State<socialmedia> {
     // TODO: implement initState
     checknetowork();
     super.initState();
+    print(instat);
   }
 
 

@@ -160,7 +160,7 @@ class _Type_updateState extends State<Type_update> {
                           ),
 
                           Center(
-                              child: Text('Type',style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 20.0),)
+                              child: Text('Update Type',style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 20.0),)
                           ),
 
                           Container(
@@ -173,39 +173,32 @@ class _Type_updateState extends State<Type_update> {
                                 color: Color.fromARGB(255, 0, 91, 148)),
                             child: TextButton(
                               onPressed: () {
-
-                                // if (_formKey.currentState!.validate()) {
-                                //   Fluttertoast.showToast(
-                                //       msg: "Data Proccess");
-                                //   vaild_data();
-                                // }
-                                // setState(() {});
-                                /* Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        Type()));*/
                                 setState(() {
-                                  /* if(!category3){
-                              Fluttertoast.showToast(msg: 'Select yor category');
-                            }else {*/
-                                  constanst.itemsCheck.clear();
-                                  _onLoading();
-                                  setType().then((value) {
-                                    print('12346 $value');
-                                    Navigator.of(dialogContext!).pop();
-                                    if(value){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Grade_update()));
-                                    }else{
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Grade_update()));
-                                    }
-
-                                  });
-
-                                  // }
+                                  print(constanst.select_typeId);
+                                  if (constanst.select_typeId.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: 'Select Minimum 1 Type');
+                                  } else {
+                                    _onLoading();
+                                    setType().then((value) {
+                                      print('12346 $value');
+                                      Navigator.of(dialogContext!).pop();
+                                      if (value) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Grade_update()));
+                                      } else {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Grade_update()));
+                                      }
+                                    });
+                                  }
                                 });
                               },
-                              child: Text('Continue',
+                              child: const Text('Continue',
                                   style: TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w800,
@@ -360,36 +353,29 @@ class _Type_updateState extends State<Type_update> {
                           color: Color.fromARGB(255, 0, 91, 148)),
                       child: TextButton(
                         onPressed: () {
-
-                          // if (_formKey.currentState!.validate()) {
-                          //   Fluttertoast.showToast(
-                          //       msg: "Data Proccess");
-                          //   vaild_data();
-                          // }
-                          // setState(() {});
-                          /* Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        Type()));*/
                           setState(() {
-                           /* if(!category3){
-                              Fluttertoast.showToast(msg: 'Select yor category');
-                            }else {*/
-                              constanst.itemsCheck.clear();
+                            print(constanst.select_typeId);
+                            if (constanst.select_typeId.isEmpty) {
+                              Fluttertoast.showToast(
+                                  msg: 'Select Minimum 1 Type');
+                            } else {
                               _onLoading();
                               setType().then((value) {
                                 print('12346 $value');
                                 Navigator.of(dialogContext!).pop();
-                                if(value){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Grade_update()));
-                                }else{
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Grade_update()));
+                                if (value) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Grade_update()));
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Grade_update()));
                                 }
-
                               });
-
-                           // }
+                            }
                           });
                         },
                         child: Text('Continue',

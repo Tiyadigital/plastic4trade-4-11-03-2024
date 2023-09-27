@@ -127,23 +127,6 @@ class _SalePostState extends State<SalePost> {
                                         constanst.location =
                                             place.description.toString();
                                         _loc.text = location!;
-
-                                        /*
-
-                                List<String> list = place.description.toString().split(",");
-                                list.length>2?state =list[1].toString():state ='';
-                                list.length>=3?country =list[2].toString():country ='';
-                                city=list[0];
-                                print(list);
-                                print(state);
-                                print(city);
-                                print(country);
-
-                                _color5=Colors.green.shade600;
-                                // print(location);
-                                setState(() {
-
-                                });*/
                                       });
 
                                       //form google_maps_webservice package
@@ -338,32 +321,21 @@ class _SalePostState extends State<SalePost> {
             child: IconButton(
               onPressed: () {
                 constanst.redirectpage = "add_post";
-                /* constanst.productId=result.productId.toString();
-                constanst.post_type=result.postType.toString();*/
-                //constanst.redirectpage="sale_buy";
-                print(constanst.appopencount);
-                print(constanst.appopencount1);
-                print(constanst.isprofile);
-                print(constanst.iscategory);
                 if (constanst.appopencount == constanst.appopencount1) {
-                  print(constanst.step);
                   if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
                       !constanst.isprofile &&
                       constanst.step == 11) {
-                    print(constanst.step);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddPost(),
+                          builder: (context) => const AddPost(),
                         ));
                   } else if (constanst.isprofile) {
                     showInformationDialog(context);
                   } else if (constanst.iscategory) {
                     constanst.redirectpage = "add_cat";
-                    //Fluttertoast.showToast(msg: 'i m category');
                     categoryDialog(context);
                   } else if (constanst.isgrade) {
                     constanst.redirectpage = "add_type";
@@ -374,57 +346,33 @@ class _SalePostState extends State<SalePost> {
                   } else if (constanst.step != 11) {
                     addPostDialog(context);
                   }
-                  /* else {
-                   showInformationDialog(context);
-                 }*/
                 } else {
                   if (constanst.isprofile) {
                     showInformationDialog(context);
                   } else if (constanst.iscategory) {
                     constanst.redirectpage = "add_cat";
-                    //Fluttertoast.showToast(msg: 'i m category');
-                    //categoryDialog(context);
-                    /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));*/
                     categoryDialog(context);
                   } else if (constanst.isgrade) {
                     constanst.redirectpage = "add_type";
-                    /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));*/
                     categoryDialog(context);
-                    //categoryDialog(context);
                   } else if (constanst.istype) {
                     constanst.redirectpage = "add_grade";
-                    //categoryDialog(context);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Grade(),
+                          builder: (context) => const Grade(),
                         ));
                   } else if (constanst.step != 11) {
-                    // addPostDialog(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddPost(),
-                        ));
+                    addPostDialog(context);
                   } else if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
                       !constanst.isprofile &&
                       constanst.step == 11) {
-                    print(constanst.step);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddPost(),
+                          builder: (context) => const AddPost(),
                         ));
                   }
                 }
@@ -433,11 +381,7 @@ class _SalePostState extends State<SalePost> {
             ),
             //
           ),
-          // bottomNavigationBar: BottomMenu(
-          //   selectedIndex: selectedIndex,
-          //   onClicked: onClicked,
-          // ),
-          // ),
+
         ));
   }
 
@@ -601,17 +545,13 @@ class _SalePostState extends State<SalePost> {
                 return GridView.builder(
                   padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-                    // childAspectRatio: 0.65,
+
                     childAspectRatio: MediaQuery.of(context).size.width /
                         620, //MediaQuery.of(context).size.aspectRatio * 1.3,
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: salepost_data.length,
                   shrinkWrap: true,
@@ -619,26 +559,20 @@ class _SalePostState extends State<SalePost> {
                     salepost.Result result = salepost_data[index];
                     return GestureDetector(
                       onTap: (() {
-                        Fluttertoast.showToast(msg:result.productId.toString() );
                         constanst.productId = result.productId.toString();
                         constanst.post_type = result.postType.toString();
                         constanst.redirectpage = "sale_buy";
-                        print(constanst.appopencount);
-                        print(constanst.appopencount1);
 
-                        print(constanst.isprofile);
-                        print(constanst.iscategory);
-                        print(constanst.istype);
-                        print(constanst.isgrade);
+
                         if (constanst.appopencount == constanst.appopencount1) {
-                          print(constanst.step);
+                          print("APP OPEN 1st = ${constanst.appopencount}");
+                          print("APP OPEN 1st = ${constanst.appopencount1}");
+
                           if (!constanst.isgrade &&
                               !constanst.istype &&
                               !constanst.iscategory &&
                               !constanst.isprofile &&
                               constanst.step == 11) {
-                            print(constanst.step);
-
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -649,7 +583,6 @@ class _SalePostState extends State<SalePost> {
                           } else if (constanst.isprofile) {
                             showInformationDialog(context);
                           } else if (constanst.iscategory) {
-                            //Fluttertoast.showToast(msg: 'i m category');
                             categoryDialog(context);
                           } else if (constanst.isgrade) {
                             categoryDialog(context);
@@ -658,10 +591,19 @@ class _SalePostState extends State<SalePost> {
                           } else if (constanst.step != 11) {
                             addPostDialog(context);
                           }
-                          /* else {
-                   showInformationDialog(context);
-                 }*/
-                        } else {
+                        }
+                        else if (constanst.isprofile) {
+                          print("APP OPEN 2nd = ${constanst.appopencount}");
+                          print("APP OPEN 2nd = ${constanst.appopencount1}");
+                          showInformationDialog(context);
+                        }else if(constanst.appopencount == constanst.appopencount1){
+                          print("APP OPEN 3rd= ${constanst.appopencount}");
+                          print("APP OPEN 3rd= ${constanst.appopencount1}");
+                          categoryDialog(context);
+                        }
+                        else {
+                          print("APP OPEN 4th= ${constanst.appopencount}");
+                          print("APP OPEN 4th= ${constanst.appopencount1}");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -669,37 +611,6 @@ class _SalePostState extends State<SalePost> {
                                     prod_id: result.productId.toString(),
                                     post_type: result.postType.toString()),
                               ));
-                          /*if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        } else if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile && constanst.step == 11) {
-                          print(constanst.step);
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    Buyer_sell_detail(
-                                        prod_id: result.productId.toString(),
-                                        post_type: result.postType.toString()),
-                              ));
-                          */ /*   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) =>
-                             demo()));*/ /*
-                        }*/
                         }
                       }),
                       child: Card(
@@ -728,26 +639,15 @@ class _SalePostState extends State<SalePost> {
                                   width: 170,
                                 ),
                               ),
-                              /* child:Image(
-                                errorBuilder: (context, object, trace) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color.fromARGB(
-                                          255, 223, 220, 220),
-                                    ),
-                                  );
-                                },
-                                image: NetworkImage(result.mainproductImage.toString()),fit: BoxFit.cover,width: 170,height: 150,
-                            ),*/
+
                             ),
                             Positioned(
                               bottom: 10,
                               left: 10,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
@@ -933,7 +833,6 @@ class _SalePostState extends State<SalePost> {
                           } else if (constanst.isprofile) {
                             showInformationDialog(context);
                           } else if (constanst.iscategory) {
-                            //Fluttertoast.showToast(msg: 'i m category');
                             categoryDialog(context);
                           } else if (constanst.isgrade) {
                             categoryDialog(context);
@@ -949,7 +848,6 @@ class _SalePostState extends State<SalePost> {
                           if (constanst.isprofile) {
                             showInformationDialog(context);
                           } else if (constanst.iscategory) {
-                            //Fluttertoast.showToast(msg: 'i m category');
                             categoryDialog(context);
                           } else if (constanst.isgrade) {
                             categoryDialog(context);
@@ -1180,7 +1078,6 @@ class _SalePostState extends State<SalePost> {
       }
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
 
       setState(() {});
     }*/
@@ -1241,6 +1138,7 @@ class _SalePostState extends State<SalePost> {
       setState(() {});
     } else {
       Fluttertoast.showToast(msg: res['message']);
+
     }
     return jsonarray;
     setState(() {});

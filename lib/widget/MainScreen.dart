@@ -1,13 +1,13 @@
+// ignore_for_file: use_build_context_synchronously, must_be_immutable
+
 import 'dart:io';
 import 'package:Plastic4trade/screen/BussinessProfile.dart';
-import 'package:Plastic4trade/screen/Bussinessinfo.dart';
 import 'package:Plastic4trade/screen/other_user_profile.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:Plastic4trade/model/GetNotificationcount.dart';
 import 'package:Plastic4trade/screen/More.dart';
@@ -15,8 +15,6 @@ import 'package:Plastic4trade/screen/News.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_interface.dart';
 import '../api/firebase_api.dart';
-import '../main.dart';
-import '../model/GetNotification.dart';
 import '../screen/Blog.dart';
 import '../screen/BuyerPost.dart';
 import '../screen/Buyer_sell_detail.dart';
@@ -24,7 +22,6 @@ import '../screen/Exhibition.dart';
 import '../screen/Follower_Following.dart';
 import '../screen/HomePage.dart';
 import '../screen/Liveprice.dart';
-import '../screen/LoginScreen.dart';
 import '../screen/SalePost.dart';
 import '../screen/Tutorial_Videos.dart';
 import '../screen/Videos.dart';
@@ -43,12 +40,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  //int selectedIndex = 0;
   String title = 'Home';
   bool load = false;
   DateTime? currentBackPressTime;
   String notificationMessge = 'Notification Waiting ';
-  List<Widget> pagelist = <Widget>[
+  List<Widget> pagelist = const  <Widget>[
     HomePage(),
     SalePost(),
     BuyerPost(),
@@ -68,47 +64,11 @@ class _MainScreenState extends State<MainScreen> {
     return init(context);
   }
 
-  /* Future<void> init_noti(BuildContext context) async {
-    await FirebaseApi().initNOtification(context);
-
-    const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('mipmap/ic_launcher');
-
-    const IOSInitializationSettings initializationSettingsios =
-    IOSInitializationSettings(
-      defaultPresentBadge: true,
-      defaultPresentAlert: true,
-      defaultPresentSound: true,
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-    final InitializationSettings initializationSettings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsios);
-
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-      onSelectNotification: (String? payload) async {
-        if (payload != null) {
-
-          Fluttertoast.showToast(msg: 'rfsrsfrfr');
-          print('jfjjfrfjfjkfg');
-          print(payload);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Bussinessinfo()));
-        }
-      },
-    );
-    await FirebaseApi().initLocalNotification(context);
-
-    // APIs.getSelfInfo();
-  }*/
   Widget init(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 218, 218, 218),
+      backgroundColor: const Color.fromARGB(255, 218, 218, 218),
       appBar: CustomeApp(title),
-      body: /*load==true?*/ pagelist[widget.select_idx],
-      /*:const Center(child: CircularProgressIndicator(color: Color.fromARGB(255, 0, 91, 148),)),*/
+      body: pagelist[widget.select_idx],
       bottomNavigationBar: BottomMenu(
         selectedIndex: widget.select_idx,
         onClicked: onClicked,
@@ -121,23 +81,15 @@ class _MainScreenState extends State<MainScreen> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
-      //isprofile=true;
+
     } else {
       get_notification();
-      print("Debug::::::1");
-      print("select_idx::::${widget.select_idx}");
-      var result = await FirebaseApi.setupInteractedMessage();
 
-      print("result:::${result}");
-      /*  Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginScreen(),
-          ));*/
+      var result = await FirebaseApi.setupInteractedMessage();
 
       constanst.isFromNotification = true;
       if(constanst.notificationtype=="profile like"){
-        print("jsdsd");
+
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -192,19 +144,19 @@ class _MainScreenState extends State<MainScreen> {
 
 
       }else if(constanst.notificationtype=="unfollowuser") {
-        print("hfuihdgiufhrghdriugiorh");
+
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
                     follower()));
       } else if(constanst.notificationtype=="followuser") {
-        print("hfuihdgiufhrghdriugiorh");
+
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    follower()));
+                    const follower()));
       }else if(constanst.notificationtype=="profile_review") {
         Navigator.push(
             context,
@@ -216,7 +168,7 @@ class _MainScreenState extends State<MainScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    LivepriceScreen()));
+                    const LivepriceScreen()));
       }else if(constanst.notificationtype=="quick_news_notification") {
         Navigator.push(
             context,
@@ -234,13 +186,13 @@ class _MainScreenState extends State<MainScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    Blog()));
+                    const Blog()));
       }else if(constanst.notificationtype=="video") {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    Videos()));
+                    const Videos()));
       }else if(constanst.notificationtype=="banner") {
         Navigator.push(
             context,
@@ -252,13 +204,13 @@ class _MainScreenState extends State<MainScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    Tutorial_Videos()));
+                    const Tutorial_Videos()));
       }else if(constanst.notificationtype=="exhibition") {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    Exhibition()));
+                    const Exhibition()));
       }else if(constanst.notificationtype=="quicknews") {
         Navigator.push(
             context,
@@ -266,20 +218,8 @@ class _MainScreenState extends State<MainScreen> {
                 builder: (context) =>
                     MainScreen(3)));
       }
-      print("MORE_NOTIFICATION_VALUE:::${constanst.isFromNotification}");
-
-      // final BottomNavigationBar navigationBar =
-      //     bottomNavKey.currentWidget as BottomNavigationBar;
-      // navigationBar.onTap!(4);
-      // Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => MainScreen(3),
-      //     ));
 
 
-
-      // get_data();
     }
   }
 
@@ -315,82 +255,19 @@ class _MainScreenState extends State<MainScreen> {
     return Future.value(true);
   }
 
-/*  Future<bool> _onbackpress(BuildContext context) async {
-    bool exitapp = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              title: const Text('Exit App'),
-              content: const Text('Are you want exit App ?'),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      exit(0);
-                    },
-                    child: const Text('Yes')),
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: const Text('No')),
-              ]);
-        });
-    return exitapp ?? false;
-  }*/
   Future<void> get_notification() async {
     GetNotificationcount getsimmilar = GetNotificationcount();
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await count_notify(_pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
-    // constanst.image_url=_pref.getString('userImage').toString();
-    // print('fdffrgr ${constanst.image_url}');
+
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       getsimmilar = GetNotificationcount.fromJson(res);
 
       constanst.notification_count = res['NotificationCount'];
       setState(() {});
-      //load=true;
-
-      //
-      /*for (var data in jsonarray) {
-
-          getnotifi.Result record = getnotifi.Result(
-              notificationId: data['notificationId'],
-              blogId: data['blog_id'],
-              newsId:data['news_id'] ,
-              type: data['type'],
-              advertiseId: data['advertise_id'],
-              buypostId: data['buypost_id'],
-              description: data['description'],
-              followId: data['follow_id'],
-              fromUserId: data['from_user_id'],
-              heading: data['heading'],
-              isFollow: data['is_follow'],
-              livepriceId: data['liveprice_id'],
-              notificationType: data['notification_type'],
-              otherImage: data['other_image'],
-              postImage: data['post_image'],
-              profilepic: data['profilepic'],
-              salepostId: data['salepost_id'],
-              time:data['time'],
-              name: data['name'],
-              isRead: data['is_read']
-
-
-
-
-
-
-          );
-
-          getnotifydata.add(record);
-          //loadmore = true;
-        }
-        isload=true;
-        print(getnotifydata);*/
       if (mounted) {
         setState(() {});
       }
@@ -398,6 +275,6 @@ class _MainScreenState extends State<MainScreen> {
       Fluttertoast.showToast(msg: res['message']);
     }
     return jsonarray;
-    setState(() {});
+
   }
 }

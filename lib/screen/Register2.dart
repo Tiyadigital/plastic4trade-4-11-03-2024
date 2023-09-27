@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+
+import 'dart:developer';
+
 import 'package:Plastic4trade/widget/MainScreen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:country_calling_code_picker/functions.dart';
@@ -203,7 +207,7 @@ class _Register2State extends State<Register2> {
                                 ),
                                 imageprofile(context),
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(
+                                  padding: const EdgeInsets.fromLTRB(
                                       25.0, 25.0, 25.0, 3.0),
                                   child: TextFormField(
                                     controller: _bussname,
@@ -290,15 +294,17 @@ class _Register2State extends State<Register2> {
                                     },
                                   ),
                                 ),
+
+
                                 Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                       controller: _userbussnature,
                                       keyboardType: TextInputType.text,
                                       readOnly: true,
                                       textInputAction: TextInputAction.next,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
@@ -308,7 +314,7 @@ class _Register2State extends State<Register2> {
                                         hintText: "Nature Of Business *",
                                         suffixIcon:
                                             Icon(Icons.arrow_drop_down_sharp),
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
@@ -330,7 +336,7 @@ class _Register2State extends State<Register2> {
                                                 width: 1, color: _color2),
                                             borderRadius:
                                                 BorderRadius.circular(10.0)),
-                                        //errorText: _validusernm ? 'Name is not empty' : null),
+
                                       ),
                                       onTap: () async {
                                         setState(() {});
@@ -344,20 +350,10 @@ class _Register2State extends State<Register2> {
                                               msg:
                                                   'Internet Connection not available');
                                         } else {
+
                                           ViewItem1(context);
                                         }
                                       },
-                                      /* validator: (value) {
-                                    if (value!.isEmpty) {
-                                      //return 'Enter a Bussiness Type!';
-                                      _color2 = Colors.red;
-                                    } else {
-                                      // setState(() {
-                                      _color2 = Colors.green.shade600;
-                                      // });
-                                    }
-                                    return null;
-                                  },*/
                                       onChanged: (value) {
                                         if (value.isEmpty) {
                                           Fluttertoast.showToast(timeInSecForIosWeb: 2,
@@ -390,28 +386,29 @@ class _Register2State extends State<Register2> {
 
                                 Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _loc,
                                     readOnly: true,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
                                             'assets\fonst\Metropolis-Black.otf'),
                                     onTap: () async {
-                                      var place = await PlacesAutocomplete.show(
-                                          context: context,
-                                          apiKey: googleApikey,
-                                          mode: Mode.overlay,
-                                          types: ['(cities)'],
-                                          strictbounds: false,
-                                          // components: [Component(Component.country, 'np')],
-                                          //google_map_webservice package
-                                          onError: (err) {
-                                            print('error ${err.errorMessage}');
-                                          });
+                                      var place =
+                                      await PlacesAutocomplete.show(
+                                        context: context,
+                                        apiKey: googleApikey,
+                                        mode: Mode.overlay,
+                                        types: ['geocode', 'establishment'],
+                                        strictbounds: false,
+                                        onError: (err) {
+                                          print(err);
+                                        },
+                                      );
+
 
                                       if (place != null) {
                                         setState(() {
@@ -429,8 +426,8 @@ class _Register2State extends State<Register2> {
                                               : country = '';
                                           city = list[0];
                                           print(list);
-                                          print(state);
                                           print(city);
+                                          print(state);
                                           print(country);
                                           _loc.text = location;
                                           _color5 = Colors.green.shade600;
@@ -441,7 +438,7 @@ class _Register2State extends State<Register2> {
                                         //form google_maps_webservice package
                                         final plist = GoogleMapsPlaces(
                                           apiKey: googleApikey,
-                                          apiHeaders: await GoogleApiHeaders()
+                                          apiHeaders: await const GoogleApiHeaders()
                                               .getHeaders(),
                                           //from google_api_headers package
                                         );
@@ -463,7 +460,7 @@ class _Register2State extends State<Register2> {
                                     },
                                     decoration: InputDecoration(
                                       hintText: "Location/ Address / City *",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
@@ -517,108 +514,9 @@ class _Register2State extends State<Register2> {
                                     },
                                   ),
                                 ),
-                                /*Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
-                              child: TextFormField(
-                                readOnly: true,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                controller: _userbussnature,
-                                keyboardType: TextInputType.name,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-                                textCapitalization:
-                                    TextCapitalization.sentences,
-                                textInputAction: TextInputAction.done,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                    RegExp(r"[a-zA-Z]+|\s"),
-                                  ),
-                                ],
-                                onTap: () {
-                                  //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
-                                  */ /*InkWell(
-                                      onTap: () {*/ /*
-                                  //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'hello');
-                                  ViewItem(context);
-                                  //},
-                                  //);
-                                },
-                                decoration: InputDecoration(
-                                  // labelText: 'Your Name*',
-                                  // labelStyle: TextStyle(color: Colors.red),
-                                  suffixIcon: Icon(Icons.arrow_drop_down_sharp),
-                                  hintText: 'Nature Of Business *',
 
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(color: Colors.black45),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color8),
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color8),
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color8),
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  // errorBorder: OutlineInputBorder(
-                                  //   borderSide:
-                                  //       BorderSide(width: 1, color: Colors.red),
-                                  // ),
-                                  // focusedErrorBorder: OutlineInputBorder(
-                                  //   borderSide: BorderSide(
-                                  //       width: 1, color: Colors.green.shade600),
-                                  //     borderRadius:
-                                  //     BorderRadius.circular(10.0)
-                                  // ),
-                                ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    _color8 = Colors.red;
-                                    //return 'Enter a Nature Of Business!';
-                                  } else {
-                                    // setState(() {
-                                    _color4 = Colors.green.shade600;
-                                    // });
-                                  }
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  if (value.isEmpty) {
-                                    Fluttertoast.showToast(timeInSecForIosWeb: 2,
-                                        msg: 'Please Enter Nature Of Business');
-                                    setState(() {
-                                      _color8 = Colors.red;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      _color8 = Colors.green.shade600;
-                                    });
-                                  }
-                                },
-                                onFieldSubmitted: (value) {
-                                  if (value.isEmpty) {
-                                    Fluttertoast.showToast(timeInSecForIosWeb: 2,
-                                        msg: 'Please Nature Of Business');
-                                    setState(() {
-                                      _color8 = Colors.red;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      _color8 = Colors.green.shade600;
-                                    });
-                                  }
-                                },
-                              ),
-                            ),*/
+
+
                                 Padding(
                                   padding:
                                       EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
@@ -709,18 +607,18 @@ class _Register2State extends State<Register2> {
                                                     .width /
                                                 1.59,
                                             margin:
-                                                EdgeInsets.only(bottom: 0.0),
+                                                const EdgeInsets.only(bottom: 0.0),
                                             child: TextFormField(
                                               // controller: _usernm,
                                               controller: _bussmbl,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
                                                       'assets\fonst\Metropolis-Black.otf'),
                                               inputFormatters: [
-                                                LengthLimitingTextInputFormatter(13),
+                                                LengthLimitingTextInputFormatter(11),
                                               ],
                                               keyboardType: TextInputType.phone,
                                               autovalidateMode: AutovalidateMode
@@ -733,7 +631,7 @@ class _Register2State extends State<Register2> {
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 hintText: "Bussiness Moblie",
-                                                hintStyle: TextStyle(
+                                                hintStyle: const TextStyle(
                                                         fontSize: 15.0,
                                                         fontWeight:
                                                             FontWeight.w400,
@@ -768,23 +666,11 @@ class _Register2State extends State<Register2> {
                                                                 .circular(
                                                                     10.0)),
                                               ),
-                                              /* validator: (value) {
-                                        if (value!.isEmpty) {
-                                          _color8 = Colors.red;
-                                          //return 'Enter a Bussiness Mobile Number!';
-                                        } else {
-                                          // setState(() {
-                                          _color8 = Colors.green.shade600;
-                                          //});
-                                        }
-
-                                        return null;
-                                      },*/
 
                                               onFieldSubmitted: (value) {
                                                 var numValue = value.length;
-                                                if (numValue >= 7 &&
-                                                    numValue < 13) {
+                                                if (numValue >= 6 &&
+                                                    numValue < 12) {
                                                   _color8 =
                                                       Colors.green.shade600;
                                                 } else {
@@ -817,13 +703,13 @@ class _Register2State extends State<Register2> {
 
                                 Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _bussemail,
                                     keyboardType: TextInputType.emailAddress,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
@@ -834,7 +720,7 @@ class _Register2State extends State<Register2> {
                                       // labelText: 'Your email *',
                                       // labelStyle: TextStyle(color: Colors.red),
                                       hintText: "Bussiness Email",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
@@ -857,20 +743,6 @@ class _Register2State extends State<Register2> {
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
                                     ),
-                                    /* validator: (value) {
-                                  // if (!EmailValidator.validate(value!)) {
-                                  //   return 'Please enter a valid email';
-                                  // }
-                                  if (value!.isEmpty) {
-                                    // return 'Enter a Email!';
-                                    _color4 = Colors.red;
-                                  } else {
-                                    // setState(() {
-                                    //_color3 = Colors.green.shade600;
-                                    //});
-                                  }
-                                  return null;
-                                },*/
                                     onChanged: (value) {
                                       if (value.isEmpty) {
                                         /* Fluttertoast.showToast(
@@ -1217,6 +1089,7 @@ class _Register2State extends State<Register2> {
                                         /*Fluttertoast.showToast(
                                             msg: "Data Proccess");*/
                                         vaild_data();
+                                        print("SENDED DATA === ${constanst.Bussiness_nature}");
                                         // }
                                       }
                                       // });
@@ -1324,34 +1197,10 @@ class _Register2State extends State<Register2> {
 
     Navigator.of(context).pop();
 
-   /* setState(() async {
 
-
-      // print('image path : ');
-      // print(_imagefiles!.path);
-    });*/
   }
 
-  /* Future _getImage(int type) async {
-    var image = await ImagePicker.platform.pickImage(
-        source: type == 1 ? ImageSource.camera : ImageSource.gallery,
-        imageQuality: 50);
 
-    print('value');
-    print(image!.path);
-    if (image.path != null) {
-      setState(() {
-        _imagefiles = File(io.File);
-        print('123');
-        print(_imagefiles);
-      });
-    }
-    _imagefiles = await _cropImage(imagefile: imageFile!);
-    //testCompressFile(imageFile!);
-
-
-
-  }*/
   Future<io.File?> _cropImage({required io.File imagefile}) async {
     if (_imagefiles != null) {
       final croppedFile = await ImageCropper().cropImage(
@@ -1696,26 +1545,10 @@ class _Register2State extends State<Register2> {
                 ModalRoute.withName('/'));
           }
         });
-        /*if(_gstno.text.isNotEmpty){
-          if(_isValid){
-            Fluttertoast.showToast(msg: 'Enter Valid Email Address');
-          }
-        }*/
-      }
-      //ViewItem(context);
-      //_registerApi();
-    } /*else {
-      add_bussinessProfile();
-      */ /*if(_gstno.text.isNotEmpty){
-          if(_isValid){
-            Fluttertoast.showToast(msg: 'Enter Valid Email Address');
-          }
-        }*/ /*
-    }*/
-    /*if(file!=null && _bussname.text.isNotEmpty && constanst.Bussiness_nature.isNotEmpty && _loc.text.isNotEmpty){
-      add_bussinessProfile();
 
-    }*/
+      }
+
+    }
   }
 
   Future<bool> add_bussinessProfile() async {
@@ -1744,66 +1577,13 @@ class _Register2State extends State<Register2> {
         file,
         _gstno.text,
         state);
-    /* 'userId':userId,'userToken':userToken,'business_name':business_name,'business_type':business_type,'location':location,'longitude':longitude,'longitude':latitude,'other_mobile1':other_mobile1,'country':country,
-    'countryCode':countryCode,
-    'business_phone':business_phone,'business_type':business_type,'city':city,'email':email,'website':website,'about_business':about_business,
-    'profilePicture':file,'gst_tax_vat':gst_tax_vat,'state':state*/
-    //constanst.isprofile=true;
-    constanst.appopencount1 = 6;
-    print('after register');
-    print(res);
+
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       constanst.isprofile = false;
       _pref.setString('userImage', res['profile_image']).toString();
       constanst.image_url = _pref.getString('userImage').toString();
       _isloading1 = true;
-      print('consta_image ${constanst.image_url} ');
-
-      /*   if(constanst.redirectpage=="sale_buy"){
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)),
-            ModalRoute.withName('/'));
-       // Navigator.push(context, MaterialPageRoute(builder: (context) => ));
-        */ /*Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)));*/ /*
-      }else if(constanst.redirectpage=="add_post"){
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AddPost()));
-      }else if(constanst.redirectpage=="chat"){
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Chat()));
-      }else if(constanst.redirectpage=="live_price"){
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LivepriceScreen()));
-      }else if(constanst.redirectpage=="Manage_Sell_Posts"){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => managesellpost(Title: 'Manage Sell Posts'),
-            ));
-      }else if(constanst.redirectpage=="Manage_Buy_Posts"){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => managebuypost(Title: 'Manage Buy Posts'),
-            ));
-      }else if(constanst.redirectpage=="update_category"){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UpdateCategoryScreen(),
-            ));
-      }else if(constanst.redirectpage=="edit_profile"){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Bussinessinfo(),
-            ));
-      }*/
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
       _isloading1 = true;
       Fluttertoast.showToast(msg: res['message']);
@@ -1843,31 +1623,6 @@ class _Register2State extends State<Register2> {
     );
   }
 
-  /*Future _getImage(int type) async {
-
-    var image = await ImagePicker.pickImage(
-        source: type == 1 ? ImageSource.camera : ImageSource.gallery,
-        imageQuality: 50
-    );
-
-    File croppedFile = await ImageCropper.cropImage(
-      sourcePath: image?.path,
-      ratioX: 1.0,
-      ratioY: 1.0,
-      maxWidth: 600,
-      maxHeight: 600,
-    );
-
-    var compressedFile = await FlutterImageCompress.compressAndGetFile(
-      croppedFile.path,
-      croppedFile.path,
-      quality: 50,
-    );
-
-    setState(() {
-      imageFile = compressedFile;
-    });
-  }*/
   void _onLoading() {
     dialogContext = context;
 
@@ -1888,13 +1643,13 @@ class _Register2State extends State<Register2> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
@@ -1905,12 +1660,6 @@ class _Register2State extends State<Register2> {
             ));
       },
     );
-
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 }
 
@@ -1922,7 +1671,6 @@ class type extends StatefulWidget {
 }
 
 class _typeState extends State<type> {
-  String? assignedName;
   bool gender = false;
 
   @override
@@ -1939,14 +1687,14 @@ class _typeState extends State<type> {
 
     return Column(
       children: [
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Image.asset(
           'assets/hori_line.png',
           width: 150,
           height: 5,
         ),
-        SizedBox(height: 5),
-        Center(
+        const SizedBox(height: 5),
+        const Center(
           child: Text('Select Nature Of Business',
               style: TextStyle(
                   fontSize: 17.0,
@@ -1954,13 +1702,13 @@ class _typeState extends State<type> {
                   color: Colors.black,
                   fontFamily: 'assets\fonst\Metropolis-Black.otf')),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         //-------CircularCheckBox()
         Expanded(
           child: ListView.builder(
               shrinkWrap: true,
               itemCount: constanst.btype_data.length,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 bt.Result record = constanst.btype_data[index];
                 return GestureDetector(
@@ -2002,7 +1750,7 @@ class _typeState extends State<type> {
                   },
                   child: ListTile(
                       title: Text(record.businessType.toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
@@ -2010,7 +1758,7 @@ class _typeState extends State<type> {
                       leading: IconButton(
                           icon: constanst.itemsCheck[index] ==
                                   Icons.circle_outlined
-                              ? Icon(Icons.circle_outlined,
+                              ? const Icon(Icons.circle_outlined,
                                   color: Colors.black45)
                               : Icon(Icons.check_circle,
                                   color: Colors.green.shade600),
@@ -2053,7 +1801,10 @@ class _typeState extends State<type> {
                                     .join(",");
                               }
                             });
-                          })),
+                          }
+
+
+                          )),
                 );
               }),
         ),
@@ -2061,25 +1812,22 @@ class _typeState extends State<type> {
         Container(
           width: MediaQuery.of(context).size.width * 1.2,
           height: 60,
-          margin: EdgeInsets.all(20.0),
+          margin: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
               border: Border.all(width: 1),
               borderRadius: BorderRadius.circular(50.0),
-              color: Color.fromARGB(255, 0, 91, 148)),
+              color: const Color.fromARGB(255, 0, 91, 148)),
           child: TextButton(
             onPressed: () {
               if (gender) {
                 Navigator.pop(context);
                 setState(() {});
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CategoryScreen()));*/
+              log("SELECTED NATURE === ${constanst.lstBussiness_nature}");
               } else {
                 Fluttertoast.showToast(msg: 'Select Minimum 1 Category ');
               }
             },
-            child: Text('Update',
+            child: const Text('Update',
                 style: TextStyle(
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+
 import 'dart:async';
 import 'dart:developer';
 import 'package:android_id/android_id.dart';
@@ -304,8 +306,8 @@ class _RegisterState extends State<Register> {
                           AbsorbPointer(
                               absorbing: verify_phone == 1 ? true : false,
                               child: Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(25.0, 5.0, 5.0, 5.0),
+                                margin: const EdgeInsets.fromLTRB(
+                                    25.0, 5.0, 5.0, 5.0),
                                 child: Row(
                                   children: [
                                     GestureDetector(
@@ -463,20 +465,28 @@ class _RegisterState extends State<Register> {
                               ? Column(
                                   children: [
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.9,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
                                       height: 60,
                                       margin: const EdgeInsets.only(top: 15),
                                       child: _isResendButtonEnabled &&
                                               _countdown != 0
                                           ? Container(
-                                              width: MediaQuery.of(context).size.width * 0.9,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
                                               height: 60,
                                               decoration: BoxDecoration(
                                                   border: Border.all(width: 1),
                                                   borderRadius:
-                                                      BorderRadius.circular(50.0),
-                                                  color: const Color.fromARGB(255, 0, 91, 148).withOpacity(0.8)),
-                                              margin: const EdgeInsets.only(top: 5.0),
+                                                      BorderRadius.circular(
+                                                          50.0),
+                                                  color: const Color.fromARGB(
+                                                          255, 0, 91, 148)
+                                                      .withOpacity(0.8)),
+                                              margin: const EdgeInsets.only(
+                                                  top: 5.0),
                                               // Set the height of the container
                                               alignment: Alignment.center,
                                               child: Text(
@@ -490,7 +500,7 @@ class _RegisterState extends State<Register> {
                                                     fontWeight: FontWeight.w800,
                                                     fontSize: 17),
                                               ))
-                                          : Container (
+                                          : Container(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
@@ -580,8 +590,7 @@ class _RegisterState extends State<Register> {
                                                               'Please Enter Your Correct Number');
                                                       setState(() {});
                                                     }
-                                                  }
-                                                  else if (_usernm
+                                                  } else if (_usernm
                                                           .text.isNotEmpty &&
                                                       _usermbl
                                                           .text.isNotEmpty) {
@@ -633,7 +642,7 @@ class _RegisterState extends State<Register> {
                                       child: TextFormField(
                                         controller: _mbloto,
                                         autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                            AutovalidateMode.onUserInteraction,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: [
                                           FilteringTextInputFormatter
@@ -646,7 +655,7 @@ class _RegisterState extends State<Register> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                                'assets\fonst\Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your Password',
@@ -658,26 +667,25 @@ class _RegisterState extends State<Register> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets\fonst\Metropolis-Black.otf'),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                              BorderRadius.circular(15.0)),
+                                                  BorderRadius.circular(15.0)),
                                           border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                              BorderRadius.circular(15.0)),
+                                                  BorderRadius.circular(15.0)),
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color6),
                                               borderRadius:
-                                              BorderRadius.circular(15.0)),
+                                                  BorderRadius.circular(15.0)),
                                           //errorText: _validusernm ? 'Name is not empty' : null),
                                         ),
-
                                         onChanged: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
@@ -741,7 +749,8 @@ class _RegisterState extends State<Register> {
                                               //setState(() {
                                               _color6 = Colors.red;
                                               // });
-                                            } else if (_mbloto.text.isNotEmpty &&
+                                            } else if (_mbloto
+                                                    .text.isNotEmpty &&
                                                 _usermbl.text.isNotEmpty) {
                                               _isloading = false;
                                               _onLoading();
@@ -881,8 +890,7 @@ class _RegisterState extends State<Register> {
                                                               'Please Enter Your Correct Number');
                                                       setState(() {});
                                                     }
-                                                  }
-                                                  else if (_usernm
+                                                  } else if (_usernm
                                                           .text.isNotEmpty &&
                                                       _usermbl
                                                           .text.isNotEmpty) {
@@ -1204,12 +1212,12 @@ class _RegisterState extends State<Register> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             50.0),
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        91,
-                                                                        148)),
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    91,
+                                                                    148)),
                                                             child: TextButton(
                                                               onPressed:
                                                                   () async {
@@ -1273,7 +1281,7 @@ class _RegisterState extends State<Register> {
                                                               child: Text(
                                                                   'Resend OTP',
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     fontSize:
                                                                         15.0,
                                                                     color: Colors
@@ -1288,12 +1296,9 @@ class _RegisterState extends State<Register> {
                                                             ),
                                                           ),
                                                     Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              10.0,
-                                                              15.0,
-                                                              10.0,
-                                                              5.0),
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(10.0,
+                                                          15.0, 10.0, 5.0),
                                                       child: TextFormField(
                                                         controller: _emailotp,
                                                         autovalidateMode:
@@ -1422,14 +1427,12 @@ class _RegisterState extends State<Register> {
                                                                   .width *
                                                               0.9,
                                                       height: 60,
-                                                      margin: const EdgeInsets.only(
-                                                          top: 10),
-                                                      padding:
-                                                          const EdgeInsets.fromLTRB(
-                                                              35.0,
-                                                              5.0,
-                                                              35.0,
-                                                              5.0),
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              top: 10),
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          35.0, 5.0, 35.0, 5.0),
                                                       decoration: BoxDecoration(
                                                           border: Border.all(
                                                               width: 1),
@@ -1455,14 +1458,13 @@ class _RegisterState extends State<Register> {
                                                                     'Net Connection not available');
                                                           } else {
                                                             //this.getData();
-                                                            if(_emailotp.text
-                                                                .isEmpty){
+                                                            if (_emailotp
+                                                                .text.isEmpty) {
                                                               Fluttertoast
                                                                   .showToast(
                                                                       msg:
                                                                           "Please Enter OTP");
                                                             }
-
 
                                                             if (_formKey
                                                                 .currentState!
@@ -1507,7 +1509,8 @@ class _RegisterState extends State<Register> {
                                                                     _isloading =
                                                                         false;
                                                                   } else {
-                                                                    _isloading = false;
+                                                                    _isloading =
+                                                                        false;
                                                                   }
                                                                 });
                                                                 ;
@@ -1897,7 +1900,7 @@ class _RegisterState extends State<Register> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
-                child: Text('Log in',
+                child: const Text('Log in',
                     style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
@@ -1937,7 +1940,6 @@ class _RegisterState extends State<Register> {
           _usercpass.text.isNotEmpty &&
           _isValid &&
           check_value) {
-        print('swerr ${_isValid}');
         _isloading = false;
         _onLoading();
 
@@ -1961,7 +1963,6 @@ class _RegisterState extends State<Register> {
         _usercpass.text.isNotEmpty &&
         _isValid &&
         check_value) {
-      print('swerr ${_isValid}');
       _isloading = false;
       _onLoading();
 
@@ -1975,11 +1976,7 @@ class _RegisterState extends State<Register> {
           _isloading = false;
         }
       });
-
-      //_registerApi();
-    } else {
-      print('rgfdgtfth');
-    }
+    } else {}
   }
 
   Future<bool?> setRegisterUserPhoneno() async {
@@ -1988,7 +1985,12 @@ class _RegisterState extends State<Register> {
     print(_usermbl.text.toString());
 
     var res = await registerUserPhoneno(
-        _usermbl.text, country_code.toString(), _usernm.text.toString(), '3');
+      _usermbl.text,
+      country_code.toString(),
+      _usernm.text.toString(),
+      device_name,
+      '3',
+    );
     String? msg = res['message'];
 
     if (res['status'] == 1) {
@@ -2041,7 +2043,6 @@ class _RegisterState extends State<Register> {
 
     if (res['status'] == 1) {
       register = GetRegsterEmailOTP.fromJson(res);
-      print(res);
 
       email_otp = 1;
       _isloading = true;
@@ -2060,6 +2061,7 @@ class _RegisterState extends State<Register> {
       _startTimer();
       setState(() {});
     }
+    return _isloading;
     return _isloading;
   }
 
@@ -2173,7 +2175,6 @@ class _RegisterState extends State<Register> {
     String email,
     String step,
   ) async {
-
     log("VERIFY EMAIL OTP PRESSED..!");
     common_par common = common_par();
 
@@ -2183,7 +2184,8 @@ class _RegisterState extends State<Register> {
 
     if (res['status'] == 1) {
       common = common_par.fromJson(res);
-      Fluttertoast.showToast(msg: res['message']);
+      // Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(msg: "Your Email is Verified");
       verify_email = 1;
       _isloading = true;
       email_otp = 1;
@@ -2232,38 +2234,19 @@ class _RegisterState extends State<Register> {
       constanst.api_token = register.result!.userToken.toString();
       constanst.userid = register.result!.userid.toString();
       constanst.step = register.result!.stepCounter!;
-      //constanst.image_url= register.result!.userImage.toString();
-      init(context);
 
       if (Platform.isAndroid) {
-        // Android-specific code
-        //print('device id $deviceId');
-        //if(constanst.fcm_token!=null || constanst.fcm_token.isEmpty) {
         const androidId = AndroidId();
         constanst.android_device_id = (await androidId.getId())!;
 
         print('android device');
         print(constanst.android_device_id);
         add_android_device();
-
-        // }
       } else if (Platform.isIOS) {
-        //  if (constanst.APNSToken != null || constanst.fcm_token.isEmpty) {
-        print('ios device');
         final iosinfo = await deviceInfo.iosInfo;
         constanst.devicename = iosinfo.name!;
         constanst.ios_device_id = iosinfo.identifierForVendor!;
-        print('ios device_id ${constanst.ios_device_id}');
-        add_ios_device();
-
-        //  }
       }
-      /* Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-          ModalRoute.withName('/'));*/
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ));*/
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
@@ -2275,7 +2258,6 @@ class _RegisterState extends State<Register> {
 
     /*_onLoading();*/
     var res = await androidDevice_Register(_usermbl.text.toString());
-    print('Inside Api ');
     if (res['status'] == 1) {
       constanst.usernm = _usernm.text.toString();
       login = Login.fromJson(res);
@@ -2286,19 +2268,15 @@ class _RegisterState extends State<Register> {
       _pref.setString('phone', register.result!.phoneno.toString());
       _pref.setString('api_token', register.result!.userToken.toString());
       _pref.setString('step', register.result!.stepCounter.toString());
-      //_pref.setString('userImage', register.result!.userImage.toString());
+
       _pref.setBool('islogin', true);
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
           ModalRoute.withName('/'));
-
-      //Fluttertoast.showToast(msg: res['message']);
     } else {
       _isloading = true;
-      //  Fluttertoast.showToast(msg: res['message']);
     }
     return _isloading;
   }
@@ -2306,7 +2284,6 @@ class _RegisterState extends State<Register> {
   Future<bool> add_ios_device() async {
     Login login = Login();
 
-    /*_onLoading();*/
     var res = await iosDevice_Register();
 
     if (res['status'] == 1) {

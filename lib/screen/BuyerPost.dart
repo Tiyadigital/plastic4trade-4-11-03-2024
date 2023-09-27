@@ -309,38 +309,27 @@ class _BuyerPostState extends State<BuyerPost> {
         height: 70,
         width: 70,
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/floating_back.png")),
+            image: const DecorationImage(image: AssetImage("assets/floating_back.png")),
             borderRadius: BorderRadius.circular(30)
         ),
         child: IconButton(
           onPressed: () {
             constanst.redirectpage = "add_post";
-            /* constanst.productId=result.productId.toString();
-                constanst.post_type=result.postType.toString();*/
-            //constanst.redirectpage="sale_buy";
-            print(constanst.appopencount);
-            print(constanst.appopencount1);
-            print(constanst.isprofile);
-            print(constanst.iscategory);
             if (constanst.appopencount == constanst.appopencount1) {
-              print(constanst.step);
               if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
                   !constanst.isprofile &&
                   constanst.step == 11) {
-                print(constanst.step);
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddPost(),
+                      builder: (context) => const AddPost(),
                     ));
               } else if (constanst.isprofile) {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
@@ -351,70 +340,41 @@ class _BuyerPostState extends State<BuyerPost> {
               } else if (constanst.step != 11) {
                 addPostDialog(context);
               }
-              /* else {
-                   showInformationDialog(context);
-                 }*/
             } else {
               if (constanst.isprofile) {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                //categoryDialog(context);
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));*/
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));*/
                 categoryDialog(context);
-                //categoryDialog(context);
               } else if (constanst.istype) {
                 constanst.redirectpage = "add_grade";
-                //categoryDialog(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Grade(),
+                      builder: (context) => const Grade(),
                     ));
               } else if (constanst.step != 11) {
-                // addPostDialog(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddPost(),
-                    ));
+                addPostDialog(context);
               } else if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
                   !constanst.isprofile &&
                   constanst.step == 11) {
-                print(constanst.step);
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddPost(),
+                      builder: (context) => const AddPost(),
                     ));
               }
             }
           },
-          icon: Icon(Icons.add,color: Colors.white,size: 40),
+          icon: const Icon(Icons.add,color: Colors.white,size: 40),
         ) ,
-        //
+
       ),
-      // company_datavigationBar: BottomMenu(
-      //   selectedIndex: selectedIndex,
-      //   onClicked: onClicked,
-      // ),
-      // ),
 
     ));
   }
@@ -592,33 +552,26 @@ class _BuyerPostState extends State<BuyerPost> {
                       constanst.productId=result.productId.toString();
                       constanst.post_type=result.postType.toString();
                       constanst.redirectpage="sale_buy";
-                      print(constanst.appopencount);
-                      print(constanst.appopencount1);
 
-                      print(constanst.isprofile);
-                      print(constanst.iscategory);
-                      print(constanst.istype);
-                      print(constanst.isgrade);
-                      if(constanst.appopencount==constanst.appopencount1) {
-                        print(constanst.step);
+
+                      if (constanst.appopencount == constanst.appopencount1) {
+                        print("APP OPEN 1st = ${constanst.appopencount}");
+                        print("APP OPEN 1st = ${constanst.appopencount1}");
                         if (!constanst.isgrade &&
                             !constanst.istype &&
                             !constanst.iscategory &&
-                            !constanst.isprofile && constanst.step == 11) {
-                          print(constanst.step);
-
+                            !constanst.isprofile &&
+                            constanst.step == 11) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    Buyer_sell_detail(
-                                        prod_id: result.productId.toString(),
-                                        post_type: result.postType.toString()),
+                                builder: (context) => Buyer_sell_detail(
+                                    prod_id: result.productId.toString(),
+                                    post_type: result.postType.toString()),
                               ));
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
                         } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -627,50 +580,71 @@ class _BuyerPostState extends State<BuyerPost> {
                         } else if (constanst.step != 11) {
                           addPostDialog(context);
                         }
-                        /* else {
-                   showInformationDialog(context);
-                 }*/
-                      }else{
+                      }
+                      else if (constanst.isprofile) {
+                        print("APP OPEN 2nd = ${constanst.appopencount}");
+                        print("APP OPEN 2nd = ${constanst.appopencount1}");
+                        showInformationDialog(context);
+                      }else if(constanst.appopencount == constanst.appopencount1){
+                        print("APP OPEN 3rd= ${constanst.appopencount}");
+                        print("APP OPEN 3rd= ${constanst.appopencount1}");
+                        categoryDialog(context);
+                      }
+                      else {
+                        print("APP OPEN 4th= ${constanst.appopencount}");
+                        print("APP OPEN 4th= ${constanst.appopencount1}");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  Buyer_sell_detail(
-                                      prod_id: result.productId.toString(),
-                                      post_type: result.postType.toString()),
+                              builder: (context) => Buyer_sell_detail(
+                                  prod_id: result.productId.toString(),
+                                  post_type: result.postType.toString()),
                             ));
-                     /*   if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        } else if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile && constanst.step == 11) {
-                          print(constanst.step);
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    Buyer_sell_detail(
-                                        prod_id: result.productId.toString(),
-                                        post_type: result.postType.toString()),
-                              ));
-                          *//*   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) =>
-                             demo()));*//*
-                        }*/
                       }
+
+
+                 //      if(constanst.appopencount==constanst.appopencount1) {
+                 //        print(constanst.step);
+                 //        if (!constanst.isgrade &&
+                 //            !constanst.istype &&
+                 //            !constanst.iscategory &&
+                 //            !constanst.isprofile && constanst.step == 11) {
+                 //          print(constanst.step);
+                 //
+                 //          Navigator.push(
+                 //              context,
+                 //              MaterialPageRoute(
+                 //                builder: (context) =>
+                 //                    Buyer_sell_detail(
+                 //                        prod_id: result.productId.toString(),
+                 //                        post_type: result.postType.toString()),
+                 //              ));
+                 //        } else if (constanst.isprofile) {
+                 //          showInformationDialog(context);
+                 //        } else if (constanst.iscategory) {
+                 //          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
+                 //          categoryDialog(context);
+                 //        } else if (constanst.isgrade) {
+                 //          categoryDialog(context);
+                 //        } else if (constanst.istype) {
+                 //          categoryDialog(context);
+                 //        } else if (constanst.step != 11) {
+                 //          addPostDialog(context);
+                 //        }
+                 //        /* else {
+                 //   showInformationDialog(context);
+                 // }*/
+                 //      }else{
+                 //        Navigator.push(
+                 //            context,
+                 //            MaterialPageRoute(
+                 //              builder: (context) =>
+                 //                  Buyer_sell_detail(
+                 //                      prod_id: result.productId.toString(),
+                 //                      post_type: result.postType.toString()),
+                 //            ));
+                 //
+                 //      }
                     }),
                     child: Card(
                       elevation: 2,

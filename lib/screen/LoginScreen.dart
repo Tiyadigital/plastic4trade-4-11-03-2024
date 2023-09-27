@@ -604,13 +604,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                         value: null,
                         strokeWidth: 2.0,
                         color: Color.fromARGB(255, 0, 91, 148),
                       )
                           : Platform.isIOS
-                          ? CupertinoActivityIndicator(
+                          ? const CupertinoActivityIndicator(
                         color: Color.fromARGB(255, 0, 91, 148),
                         radius: 20,
                         animating: true,

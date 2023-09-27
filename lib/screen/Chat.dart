@@ -12,8 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:Plastic4trade/utill/constant.dart';
-import 'package:Plastic4trade/widget/shared_value_helper.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,10 +90,7 @@ class _ChatState extends State<Chat> {
 
       print('ABC123 $documentSnapshot');
       if (documentSnapshot.exists) {
-        //Fluttertoast.showToast(msg: documentSnapshot.metadata.toString());
-        // Document exists, perform the update
-        //Fluttertoast.showToast(msg: constanst.count.toString());
-       // constanst.count="0";
+
          print(docRef.path);
          docRef.update({count:"0"});
          print('Success ${docRef.update({count:"0"})}');
@@ -110,16 +105,6 @@ class _ChatState extends State<Chat> {
       Fluttertoast.showToast(msg: 'Update failed: $error');
     }
   }
-
-      // Use set with merge:true to update or create the document
-     /* await docRef.set({count:0}, SetOptions(merge: true));
-
-      Fluttertoast.showToast(msg: 'Success');
-    } catch (e) {
-      Fluttertoast.showToast(msg: 'Failed: $e');
-      Fluttertoast.showToast(msg: 'Error updating count: $e');
-    }
-  }*/
 
 
   Future<List<String>> fetchUserData(List<String> userIds) async {

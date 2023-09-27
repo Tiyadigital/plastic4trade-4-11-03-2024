@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:country_calling_code_picker/picker.dart';
 import 'package:country_calling_code_picker/country.dart';
@@ -23,6 +25,8 @@ import '../model/common.dart';
 import '../widget/MainScreen.dart';
 import 'dart:io' show Platform;
 
+import 'Bussinessinfo.dart';
+
 class EditBussinessProfile extends StatefulWidget {
   const EditBussinessProfile({Key? key}) : super(key: key);
 
@@ -42,17 +46,17 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   String state = '', city = '', country = '';
   CameraPosition? cameraPosition;
   int? buss_id;
-  LatLng startLocation = LatLng(0, 0);
-  bool _isloading=false;
+  LatLng startLocation = const LatLng(0, 0);
+  final bool _isloading = false;
   String location = "Search Location";
-  TextEditingController _usernm = TextEditingController();
-  TextEditingController _userbussnm = TextEditingController();
-  TextEditingController _userbussnature = TextEditingController();
-  TextEditingController _userloc = TextEditingController();
-  TextEditingController _bussmbl = TextEditingController();
-  TextEditingController _bussemail = TextEditingController();
-  TextEditingController _bussweb = TextEditingController();
-  TextEditingController _bussabout = TextEditingController();
+  final TextEditingController _usernm = TextEditingController();
+  final TextEditingController _userbussnm = TextEditingController();
+  final TextEditingController _userbussnature = TextEditingController();
+  final TextEditingController _userloc = TextEditingController();
+  final TextEditingController _bussmbl = TextEditingController();
+  final TextEditingController _bussemail = TextEditingController();
+  final TextEditingController _bussweb = TextEditingController();
+  final TextEditingController _bussabout = TextEditingController();
 
   Color _color1 = Colors.black45;
   Color _color2 = Colors.black45;
@@ -66,13 +70,15 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   List<String> select_cate = [];
   String? bus_type;
   String defaultCountryCode = 'IN';
+
   //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry;
   BuildContext? dialogContext;
   bool _isloading1 = false;
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   io.File? file;
+
   //enum FavoriteMethod { flutter, kotlin, swift, reactNative }
 
   @override
@@ -80,7 +86,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
     // TODO: implement initState
     super.initState();
     initCountry();
-    checknetowork();
+    checkNetwork();
   }
 
   void initCountry() async {
@@ -91,7 +97,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   }
 
   void get_data() async {
-    GetBussinessTypeController bt = await GetBussinessTypeController();
+    GetBussinessTypeController bt = GetBussinessTypeController();
     constanst.bt_data = bt.getBussiness_Type();
 
     constanst.bt_data!.then((value) {
@@ -103,7 +109,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
     });
 
     // setState(() {});
-    print(constanst.btype_data);
+    print("BUSINESS DATA === ${constanst.btype_data}");
   }
 
   @override
@@ -120,6 +126,19 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   @override
   Widget build(BuildContext context) {
     return initwidget();
+  }
+
+  void _onPressedShowBottomSheet() async {
+    final country = await showCountryPickerSheet(
+      context,
+      cornerRadius: BorderSide.strokeAlignInside,
+    );
+    if (country != null) {
+      setState(() {
+        _selectedCountry = country;
+        country_code = country.callingCode.toString();
+      });
+    }
   }
 
   Widget initwidget() {
@@ -144,7 +163,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -171,14 +190,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 18.0, 25.0, 10.0),
                                       child: TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         controller: _usernm,
                                         keyboardType: TextInputType.name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -199,7 +218,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           filled: true,
                                           fillColor: Colors.white,
                                           hintText: 'User Name *',
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
@@ -222,31 +241,12 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   width: 1, color: _color1),
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
-                                          // errorBorder: OutlineInputBorder(
-                                          //   borderSide:
-                                          //       BorderSide(width: 1, color: Colors.red),
-                                          // ),
-                                          // focusedErrorBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //       width: 1, color: Colors.green.shade600),
-                                          //     borderRadius:
-                                          //     BorderRadius.circular(10.0)
-                                          // ),
                                         ),
-                                       /* validator: (value) {
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Enter Your Name!');
-                                          } else {
-                                            // setState(() {
-                                            _color1 = Colors.green.shade600;
-                                            // });
-                                          }
-                                          return null;
-                                        },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter Your Name');
                                             setState(() {
@@ -260,7 +260,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter Your Name');
                                             setState(() {
@@ -275,14 +277,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 0.0, 25.0, 10.0),
                                       child: TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         controller: _userbussnm,
                                         keyboardType: TextInputType.name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -303,7 +305,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           filled: true,
                                           fillColor: Colors.white,
                                           hintText: 'Business Name*',
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
@@ -351,7 +353,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Enter Your Business Name');
@@ -366,7 +370,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter Your Name');
                                             setState(() {
@@ -380,8 +386,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                       ),
                                     ),
+
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 0.0, 25.0, 10.0),
                                       child: TextFormField(
                                         readOnly: true,
@@ -389,7 +396,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             AutovalidateMode.onUserInteraction,
                                         controller: _userbussnature,
                                         keyboardType: TextInputType.name,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -404,10 +411,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           ),
                                         ],
                                         onTap: () async {
-                                          //Fluttertoast.showToast(msg: 'hello');
-                                          /*InkWell(
-                                      onTap: () {*/
-                                          //Fluttertoast.showToast(msg: 'hello');
                                           setState(() {});
                                           final connectivityResult =
                                               await Connectivity()
@@ -421,23 +424,18 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           } else {
                                             ViewItem(context);
                                           }
-                                          //},
-                                          //);
                                         },
                                         decoration: InputDecoration(
-                                          // labelText: 'Your Name*',
-                                          // labelStyle: TextStyle(color: Colors.red),
                                           filled: true,
                                           fillColor: Colors.white,
                                           hintText: 'Nature Of Business *',
-
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
                                                       'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
+                                              .copyWith(color: Colors.black45),
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color4),
@@ -453,32 +451,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   width: 1, color: _color4),
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
-                                          // errorBorder: OutlineInputBorder(
-                                          //   borderSide:
-                                          //       BorderSide(width: 1, color: Colors.red),
-                                          // ),
-                                          // focusedErrorBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //       width: 1, color: Colors.green.shade600),
-                                          //     borderRadius:
-                                          //     BorderRadius.circular(10.0)
+
                                           // ),
                                         ),
-                                       /* validator: (value) {
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Nature Of Business');
-                                          } else {
-                                            // setState(() {
-                                            _color4 = Colors.green.shade600;
-                                            // });
-                                          }
-                                          return null;
-                                        },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Enter Nature Of Business');
@@ -493,7 +473,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Nature Of Business');
@@ -509,19 +491,20 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 0.0, 25.0, 5.0),
                                       child: TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         controller: _userloc,
                                         keyboardType: TextInputType.name,
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                        style: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets\fonst\Metropolis-Black.otf',
+                                        ),
                                         textCapitalization:
                                             TextCapitalization.sentences,
                                         textInputAction: TextInputAction.next,
@@ -529,63 +512,42 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           FilteringTextInputFormatter.allow(
                                             RegExp(r"[a-zA-Z]+|\s"),
                                           ),
-                                          //LengthLimitingTextInputFormatter(30)
                                         ],
                                         decoration: InputDecoration(
-                                          // labelText: 'Your Name*',
-                                          // labelStyle: TextStyle(color: Colors.red),
                                           filled: true,
                                           fillColor: Colors.white,
                                           hintText: 'Location/ Address/ City*',
-                                          hintStyle: TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
-
+                                          hintStyle: const TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets\fonst\Metropolis-Black.otf',
+                                          ).copyWith(color: Colors.black45),
                                           enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color5),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color5),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
                                           border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color5),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color5),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
                                           focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color5),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          // errorBorder: OutlineInputBorder(
-                                          //   borderSide:
-                                          //       BorderSide(width: 1, color: Colors.red),
-                                          // ),
-                                          // focusedErrorBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //       width: 1, color: Colors.green.shade600),
-                                          //     borderRadius:
-                                          //     BorderRadius.circular(10.0)
-                                          // ),
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color5),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
                                         ),
-                                     /*   validator: (value) {
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Your Location');
-                                          } else {
-                                            // setState(() {
-                                            _color5 = Colors.green.shade600;
-                                            // });
-                                          }
-                                          return null;
-                                        },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Enter Your Location');
@@ -599,51 +561,33 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           }
                                         },
                                         onTap: () async {
-                                          var place = await PlacesAutocomplete.show(
-                                              context: context,
-                                              apiKey: googleApikey,
-                                              mode: Mode.overlay,
-                                              types: ['(cities)'],
-                                              strictbounds: false,
-                                              // components: [Component(Component.country, 'np')],
-                                              //google_map_webservice package
-                                              onError: (err) {
-                                                print(err);
-                                              });
+                                          var place =
+                                              await PlacesAutocomplete.show(
+                                            context: context,
+                                            apiKey: googleApikey,
+                                            mode: Mode.overlay,
+                                            types: ['establishment', 'geocode'],
+                                            // types: ['geocode'],
+                                            strictbounds: false,
+                                            onError: (err) {
+                                              print(err);
+                                            },
+                                          );
 
                                           if (place != null) {
                                             setState(() {
                                               location =
                                                   place.description.toString();
-
-                                              List<String> list = place
-                                                  .description
-                                                  .toString()
-                                                  .split(",");
-                                              list.length > 2
-                                                  ? state = list[1].toString()
-                                                  : state = '';
-                                              list.length >= 3
-                                                  ? country = list[2].toString()
-                                                  : country = '';
-                                              city = list[0];
-                                              print(list);
-                                              print(state);
-                                              print(city);
-                                              print(country);
                                               _userloc.text = location;
                                               _color5 = Colors.green.shade600;
-                                              // print(location);
                                               setState(() {});
                                             });
 
-                                            //form google_maps_webservice package
                                             final plist = GoogleMapsPlaces(
                                               apiKey: googleApikey,
                                               apiHeaders:
                                                   await GoogleApiHeaders()
                                                       .getHeaders(),
-                                              //from google_api_headers package
                                             );
                                             String placeid =
                                                 place.placeId ?? "0";
@@ -653,18 +597,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             final geometry =
                                                 detail.result.geometry!;
                                             lat = geometry.location.lat;
-
                                             log = geometry.location.lng;
-                                            print(log);
-                                            var newlatlang = LatLng(lat, log);
-
-                                            //move map camera to selected place with animation
-                                            //mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
                                           }
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Enter Your Location');
@@ -691,7 +631,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                 borderRadius:
                                                     BorderRadius.circular(10.0),
                                                 color: Colors.white),
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 28.0, 5.0, 5.0, 10.0),
                                             child: Row(
                                               mainAxisAlignment:
@@ -700,8 +640,9 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               children: [
                                                 Container(
                                                     height: 57,
-                                                    padding: EdgeInsets.only(
-                                                        left: 2),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 2),
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
                                                           width: 1,
@@ -712,10 +653,12 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                               10.0),
                                                     ),
                                                     child: GestureDetector(
-                                                      onTap: () {},
+                                                      onTap: () {
+                                                        _onPressedShowBottomSheet();
+                                                      },
                                                       child: Row(
                                                         children: [
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             width: 5,
                                                           ),
                                                           Image.asset(
@@ -724,20 +667,23 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                                 countryCodePackageName,
                                                             width: 30,
                                                           ),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             height: 16,
                                                           ),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             width: 2,
                                                           ),
                                                           Text(
-                                                            '${country1.callingCode}',
+                                                            country1
+                                                                .callingCode,
                                                             textAlign: TextAlign
                                                                 .center,
-                                                            style: TextStyle(
-                                                                fontSize: 15),
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        15),
                                                           ),
-                                                          SizedBox(
+                                                          const SizedBox(
                                                             width: 10,
                                                           ),
                                                         ],
@@ -753,7 +699,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         Expanded(
                                           flex: 2,
                                           child: Container(
-                                            margin: EdgeInsets.only(
+                                            margin: const EdgeInsets.only(
                                                 left: 0.0,
                                                 right: 25,
                                                 bottom: 5.0),
@@ -767,7 +713,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontFamily:
                                                       'assets\fonst\Metropolis-Black.otf'),
                                               inputFormatters: [
-                                                LengthLimitingTextInputFormatter(13),
+                                                LengthLimitingTextInputFormatter(
+                                                    11),
                                               ],
 
                                               keyboardType: TextInputType.phone,
@@ -816,7 +763,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                                 .circular(
                                                                     10.0)),
                                               ),
-                                           /*   validator: (value) {
+                                              /*   validator: (value) {
                                                 if (value!.isEmpty) {
                                                   Fluttertoast.showToast(
                                                       msg:
@@ -833,12 +780,16 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               onFieldSubmitted: (value) {
                                                 var numValue = value.length;
                                                 if (numValue >= 6 &&
-                                                    numValue < 13) {
+                                                    numValue < 12) {
                                                   _color6 =
                                                       Colors.green.shade600;
                                                 } else {
                                                   _color6 = Colors.red;
-                                                  WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                                  WidgetsBinding
+                                                      .instance
+                                                      ?.focusManager
+                                                      .primaryFocus
+                                                      ?.unfocus();
                                                   Fluttertoast.showToast(
                                                       msg:
                                                           'Please Enter Correct Number');
@@ -846,7 +797,11 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               },
                                               onChanged: (value) {
                                                 if (value.isEmpty) {
-                                                  WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                                  WidgetsBinding
+                                                      .instance
+                                                      ?.focusManager
+                                                      .primaryFocus
+                                                      ?.unfocus();
                                                   Fluttertoast.showToast(
                                                       msg:
                                                           'Please Add Correct Mobile Numbe');
@@ -910,7 +865,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
                                         ),
-                                      /*  validator: (value) {
+                                        /*  validator: (value) {
                                           // if (!EmailValidator.validate(value!)) {
                                           //   return 'Please enter a valid email';
                                           // }
@@ -927,13 +882,17 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         onFieldSubmitted: (value) {
                                           if (!EmailValidator.validate(value)) {
                                             _color7 = Colors.red;
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please enter a valid email');
                                             setState(() {});
                                           } else if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Your Email');
                                             setState(() {
@@ -948,14 +907,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 5.0, 25.0, 5.0),
                                       child: TextFormField(
                                         controller: _bussweb,
                                         keyboardType: TextInputType.text,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -968,7 +927,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           filled: true,
                                           fillColor: Colors.white,
                                           hintText: "Website",
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
@@ -992,29 +951,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
                                         ),
-                                      /*  validator: (value) {
-                                          // if (!EmailValidator.validate(value!)) {
-                                          //   return 'Please enter a valid email';
-                                          // }
-
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Your Website');
-                                          } else {
-                                            // setState(() {
-                                            //_color3 = Colors.green.shade600;
-                                            //});
-                                          }
-                                          return null;
-                                        },*/
                                         onFieldSubmitted: (value) {
-                                          String msg = hasValidUrl(value);
-                                          if (msg != '') {
-                                            setState(() {
-                                              _color8 = Colors.red;
-                                              Fluttertoast.showToast(msg: msg);
-                                            });
-                                          } else {
+                                          if (value != '') {
                                             setState(() {
                                               _color8 = Colors.green.shade600;
                                             });
@@ -1023,14 +961,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 5.0, 25.0, 10.0),
                                       child: TextFormField(
                                         controller: _bussabout,
                                         keyboardType: TextInputType.multiline,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(
+                                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        maxLength: 2000,
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -1042,13 +980,13 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             hintText: "About Bussiness",
                                             filled: true,
                                             fillColor: Colors.white,
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                                     fontSize: 15.0,
                                                     fontWeight: FontWeight.w400,
                                                     color: Colors.black,
                                                     fontFamily:
                                                         'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(
+                                                .copyWith(
                                                     color: Colors.black45),
                                             enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -1068,24 +1006,11 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
 
                                             //errorText: _validusernm ? 'Name is not empty' : null),
                                             ),
-                                     /*   validator: (value) {
-                                          // if (!EmailValidator.validate(value!)) {
-                                          //   return 'Please enter a valid email';
-                                          // }
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Your About Bussiness');
-                                          } else {
-                                            // setState(() {
-                                            //_color3 = Colors.green.shade600;
-                                            //});
-                                          }
-                                          return null;
-                                        },*/
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                            WidgetsBinding.instance
+                                                ?.focusManager.primaryFocus
+                                                ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Your About Bussiness');
@@ -1113,11 +1038,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               Color.fromARGB(255, 0, 91, 148)),
                                       child: TextButton(
                                         onPressed: () {
-                                        /*  if (_formKey.currentState!
-                                              .validate()) {*/
-                                            /* Fluttertoast.showToast(msg: "Data Proccess");*/
-                                            vaild_data();
-                                          //}
+                                          vaild_data();
+
                                           setState(() {});
                                         },
                                         child: Text('Update',
@@ -1152,18 +1074,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                         )
                       : Container()),
     );
-  }
-
-  String hasValidUrl(String value) {
-    String pattern =
-        r'(http|https)://[\w-]+(\.[\w-]+)+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
-    RegExp regExp = new RegExp(pattern);
-    if (value.length == 0) {
-      return 'Please enter url';
-    } else if (!regExp.hasMatch(value)) {
-      return 'Please enter valid url';
-    }
-    return '';
   }
 
   vaild_data() {
@@ -1216,7 +1126,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       if (_bussmbl.text.isNotEmpty) {
         var numValue = _bussmbl.text.length;
 
-        if (numValue >= 6 && numValue < 11) {
+        if (numValue >= 6 && numValue < 12) {
           _color2 = Colors.green.shade600;
           setState(() {});
           if (_bussemail.text.isNotEmpty) {
@@ -1230,26 +1140,27 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
               _color7 = Colors.green.shade600;
               setState(() {});
 
-                _onLoading();
-                updateUserBusiness_Profile().then((value) {
-                  Navigator.of(dialogContext!).pop();
-                  if (value) {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => MainScreen(0)),
-                        ModalRoute.withName('/'));
-                  } else {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => MainScreen(0)),
-                        ModalRoute.withName('/'));
-                  }
-                });
-
+              _onLoading();
+              updateUserBusiness_Profile().then((value) {
+                Navigator.of(dialogContext!).pop();
+                if (value) {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const Bussinessinfo()),
+                      ModalRoute.withName('/'));
+                } else {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const Bussinessinfo()),
+                      ModalRoute.withName('/'));
+                }
+              });
             }
-          } else{
+          } else {
             _onLoading();
             updateUserBusiness_Profile().then((value) {
               Navigator.of(dialogContext!).pop();
@@ -1257,13 +1168,15 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => MainScreen(0)),
+                        builder: (BuildContext context) =>
+                            const Bussinessinfo()),
                     ModalRoute.withName('/'));
               } else {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => MainScreen(0)),
+                        builder: (BuildContext context) =>
+                            const Bussinessinfo()),
                     ModalRoute.withName('/'));
               }
             });
@@ -1274,8 +1187,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
           WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
           Fluttertoast.showToast(msg: 'Please Enter Correct Number');
         }
-      }
-      else if (_bussemail.text.isNotEmpty) {
+      } else if (_bussemail.text.isNotEmpty) {
         if (!_isValid) {
           WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
           Fluttertoast.showToast(msg: 'Enter Valid Email Address');
@@ -1292,19 +1204,18 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => MainScreen(0)),
+                      builder: (BuildContext context) => const Bussinessinfo()),
                   ModalRoute.withName('/'));
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => MainScreen(0)),
+                      builder: (BuildContext context) => const Bussinessinfo()),
                   ModalRoute.withName('/'));
             }
           });
         }
-      }
-      else{
+      } else {
         _onLoading();
         updateUserBusiness_Profile().then((value) {
           Navigator.of(dialogContext!).pop();
@@ -1312,48 +1223,18 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => MainScreen(0)),
+                    builder: (BuildContext context) => const Bussinessinfo()),
                 ModalRoute.withName('/'));
           } else {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => MainScreen(0)),
+                    builder: (BuildContext context) => const Bussinessinfo()),
                 ModalRoute.withName('/'));
           }
         });
       }
-
     }
-
-/*    if (_userbussnm.text.isNotEmpty &&
-        _usernm.text.isNotEmpty &&
-        _bussmbl.text.isNotEmpty &&
-        _bussemail.text.isNotEmpty &&
-        _userloc.text.isNotEmpty &&
-        _userbussnature.text.isNotEmpty &&
-        _bussweb.text.isNotEmpty &&
-        _bussabout.text.isNotEmpty) {
-      _onLoading();
-      updateUserBusiness_Profile().then((value) {
-        Navigator.of(dialogContext!).pop();
-        if (value) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => MainScreen(0)),
-              ModalRoute.withName('/'));
-        } else {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => MainScreen(0)),
-              ModalRoute.withName('/'));
-        }
-      });
-
-      //_registerApi();
-    }*/
   }
 
   void _onLoading() {
@@ -1376,29 +1257,23 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
+                          ? const CircularProgressIndicator(
+                              value: null,
+                              strokeWidth: 2.0,
+                              color: Color.fromARGB(255, 0, 91, 148),
+                            )
                           : Platform.isIOS
-                          ? CupertinoActivityIndicator(
-                        color: Color.fromARGB(255, 0, 91, 148),
-                        radius: 20,
-                        animating: true,
-                      )
-                          : Container()),
+                              ? const CupertinoActivityIndicator(
+                                  color: Color.fromARGB(255, 0, 91, 148),
+                                  radius: 20,
+                                  animating: true,
+                                )
+                              : Container()),
                 ),
               ),
             ));
       },
     );
-
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 
   getProfiless() async {
@@ -1412,7 +1287,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       _pref.getString('api_token').toString(),
     );
 
-    print(res);
+    // print("GET PROFILE RESPONSE  === $res");
+
     if (res['status'] == 1) {
       _usernm.text = res['user']['username'];
       _userbussnm.text = res['profile']['business_name'];
@@ -1436,23 +1312,16 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       constanst.selectbusstype_id =
           constanst.select_Bussiness_nature.split(',');
 
-      print(_usernm.text.toString());
-
       String myString = res['profile']['business_type'];
-
-      /*  List<String> stringList = myString.split(",");
-      print(stringList);
-      for(int i=0;i<stringList.length;i++){
-        findcartItem(stringList[i].toString());
-      }*/
       isprofile = true;
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
       WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
-      // Fluttertoast.showToast(msg: res['message']);
     }
+
+    print('GET BUSINESS ID = ${constanst.selectbusstype_id}');
+    print('GET BUSINESS NAME = ${constanst.select_Bussiness_nature}');
+    print('GET BUSINESS NAME = ${constanst.lstBussiness_nature}');
 
     setState(() {});
   }
@@ -1484,45 +1353,20 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
         state,
         _usernm.text.toString());
 
-    print(res);
     if (res['status'] == 1) {
       WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));
-      _isloading1=true;
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const Bussinessinfo()));
+      _isloading1 = true;
     } else {
       WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
-      _isloading1=true;
+      _isloading1 = true;
     }
     return _isloading;
   }
 
-  /*Widget _buildDropdownItem(Country country) => Container(
-        width: MediaQuery.of(context).size.width / 3.5,
-        height: 120,
-        child: Row(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 10.0),
-              child: CountryPickerUtils.getDefaultFlagImage(country),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5.0),
-              child: Text(
-                "+${country.phoneCode}",
-                style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-              ),
-            ),
-          ],
-        ),
-      );*/
   ViewItem(BuildContext context) {
     return showModalBottomSheet(
         context: context,
@@ -1541,7 +1385,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return YourWidget();
+                  return const YourWidget();
                 },
               );
             })).then(
@@ -1555,7 +1399,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
     );
   }
 
-  Future<void> checknetowork() async {
+  Future<void> checkNetwork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
@@ -1576,11 +1420,11 @@ class YourWidget extends StatefulWidget {
 }
 
 class _YourWidgetState extends State<YourWidget> {
-  String? assignedName;
   bool gender = false;
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
   }
 
@@ -1593,14 +1437,14 @@ class _YourWidgetState extends State<YourWidget> {
 
     return Column(
       children: [
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Image.asset(
           'assets/hori_line.png',
           width: 150,
           height: 5,
         ),
-        SizedBox(height: 5),
-        Center(
+        const SizedBox(height: 5),
+        const Center(
           child: Text('Select Nature Of Business',
               style: TextStyle(
                   fontSize: 17.0,
@@ -1608,138 +1452,120 @@ class _YourWidgetState extends State<YourWidget> {
                   color: Colors.black,
                   fontFamily: 'assets\fonst\Metropolis-Black.otf')),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         //-------CircularCheckBox()
         Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: constanst.btype_data.length,
-              physics: AlwaysScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                bt.Result record = constanst.btype_data[index];
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      gender = true;
-                      /*if (constanst.itemsCheck[index] ==
-                                Icons.circle_outlined) {*/
-                      if (!constanst.selectbusstype_id
-                          .contains(record.businessTypeId.toString())) {
-                        // print('1236 ${constanst.selectbusstype_id}');
-                        if (constanst.selectbusstype_id.length <= 2) {
-                          constanst.itemsCheck[index] =
-                              Icons.check_circle_outline;
-                          //constanst.select_Bussiness_nature
-                          constanst.lstBussiness_nature
-                              .add(record.businessType.toString());
-                          constanst.selectbusstype_id
-                              .add(record.businessTypeId.toString());
-                          constanst.Bussiness_nature =
-                              constanst.lstBussiness_nature.join(",");
-                          constanst.select_Bussiness_nature =
-                              constanst.lstBussiness_nature.join(",");
-                        } else {
-                          WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                          Fluttertoast.showToast(
-                              msg:
-                              'You Can Select Maximum 3 Nature of Bussiness');
-                        }
-                      } else {
-                        // print('1236 ${constanst.selectbusstype_id}');
-                        print(record.businessType.toString());
-                        constanst.itemsCheck[index] =
-                            Icons.circle_outlined;
-                        constanst.selectbusstype_id
-                            .remove(record.businessTypeId.toString());
-                        constanst.lstBussiness_nature
-                            .remove(record.businessType.toString());
-                        constanst.select_Bussiness_nature =
-                            constanst.selectbusstype_id.join(",");
-                      }
-                    });
-                  },
-                  child: ListTile(
-                      title: Text(record.businessType.toString(),
-                          style: TextStyle(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-                      leading: IconButton(
-                          icon: constanst.selectbusstype_id
-                                  .contains(record.businessTypeId.toString())
-                              ? Icon(Icons.check_circle,
-                                  color: Colors.green.shade600)
-                              : Icon(Icons.circle_outlined,
-                                  color: Colors.black45),
-                          onPressed: () {
+            child:
+
+
+          ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: constanst.btype_data.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        bt.Result record = constanst.btype_data[index];
+                        return GestureDetector(
+                          onTap: () {
                             setState(() {
+                              print('GET BUSINESS ID = ${constanst.selectbusstype_id}');
+                              print('GET BUSINESS NAME = ${constanst.select_Bussiness_nature}');
+                              print('GET BUSINESS NAME = ${constanst.lstBussiness_nature}');
+
+
+
                               gender = true;
-                              /*if (constanst.itemsCheck[index] ==
-                                  Icons.circle_outlined) {*/
-                              if (!constanst.selectbusstype_id
-                                  .contains(record.businessTypeId.toString())) {
-                                // print('1236 ${constanst.selectbusstype_id}');
+                              if (!constanst.selectbusstype_id.contains(record.businessTypeId.toString())) {
                                 if (constanst.selectbusstype_id.length <= 2) {
-                                  constanst.itemsCheck[index] =
-                                      Icons.check_circle_outline;
-                                  //constanst.select_Bussiness_nature
-                                  constanst.lstBussiness_nature
-                                      .add(record.businessType.toString());
-                                  constanst.selectbusstype_id
-                                      .add(record.businessTypeId.toString());
-                                  constanst.Bussiness_nature =
-                                      constanst.lstBussiness_nature.join(",");
-                                  constanst.select_Bussiness_nature =
-                                      constanst.lstBussiness_nature.join(",");
+                                  constanst.itemsCheck[index] = Icons.check_circle_outline;
+                                  constanst.lstBussiness_nature_name.add(record.businessType.toString());
+                                  constanst.selectbusstype_id.add(record.businessTypeId.toString());
+                                  constanst.Bussiness_nature = constanst.lstBussiness_nature_name.join(",");
+                                  constanst.select_Bussiness_nature = constanst.lstBussiness_nature_name.join(",");
                                 } else {
-                                  WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                                  WidgetsBinding.instance.focusManager.primaryFocus
+                                      ?.unfocus();
                                   Fluttertoast.showToast(
                                       msg:
                                           'You Can Select Maximum 3 Nature of Bussiness');
                                 }
                               } else {
-                                // print('1236 ${constanst.selectbusstype_id}');
-                                print(record.businessType.toString());
-                                constanst.itemsCheck[index] =
-                                    Icons.circle_outlined;
-                                constanst.selectbusstype_id
-                                    .remove(record.businessTypeId.toString());
-                                constanst.lstBussiness_nature
-                                    .remove(record.businessType.toString());
-                                constanst.select_Bussiness_nature =
-                                    constanst.selectbusstype_id.join(",");
+                                constanst.itemsCheck[index] = Icons.circle_outlined;
+                                constanst.selectbusstype_id.remove(record.businessTypeId.toString());
+                                constanst.lstBussiness_nature.remove(record.businessType.toString());
+                                constanst.select_Bussiness_nature = constanst.selectbusstype_id.join(",");
                               }
                             });
-                          })),
-                );
-              }),
-        ),
+                          },
+                          child: ListTile(
+                              title: Text(record.businessType.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 17.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                              leading: IconButton(
+                                  icon: constanst.select_Bussiness_nature
+                                          .contains(record.businessTypeId.toString())
+                                      ? Icon(Icons.check_circle,
+                                          color: Colors.green.shade600)
+                                      : const Icon(Icons.circle_outlined,
+                                          color: Colors.black45),
+                                  onPressed: () {
+                                    setState(() {
+                                      print('Selected IDs: ${constanst.selectbusstype_id}');
+
+                                      gender = true;
+
+                                      if (!constanst.selectbusstype_id.contains(record.businessTypeId.toString())) {
+
+                                        if (constanst.selectbusstype_id.length <= 2) {constanst.itemsCheck[index] = Icons.check_circle_outline;
+
+                                          constanst.lstBussiness_nature.add(record.businessType.toString());
+                                          constanst.selectbusstype_id.add(record.businessTypeId.toString());
+                                          constanst.Bussiness_nature = constanst.lstBussiness_nature.join(",");
+                                          constanst.select_Bussiness_nature = constanst.lstBussiness_nature.join(",");
+                                        } else {
+                                          WidgetsBinding
+                                              .instance.focusManager.primaryFocus
+                                              ?.unfocus();
+                                          Fluttertoast.showToast(
+                                              msg: 'You Can Select Maximum 3 Nature of Bussiness');
+                                        }
+                                      } else {
+                                        constanst.itemsCheck[index] = Icons.circle_outlined;
+                                        constanst.selectbusstype_id.remove(record.businessTypeId.toString());
+                                        constanst.lstBussiness_nature.remove(record.businessType.toString());
+                                        constanst.select_Bussiness_nature = constanst.selectbusstype_id.join(",");
+                                      }
+                                    });
+                                  })
+
+
+                          ),
+                        );
+                      }),
+            ),
 
         Container(
           width: MediaQuery.of(context).size.width * 1.2,
           height: 60,
-          margin: EdgeInsets.all(20.0),
+          margin: const EdgeInsets.all(20.0),
           decoration: BoxDecoration(
               border: Border.all(width: 1),
               borderRadius: BorderRadius.circular(50.0),
-              color: Color.fromARGB(255, 0, 91, 148)),
+              color: const Color.fromARGB(255, 0, 91, 148)),
           child: TextButton(
             onPressed: () {
               if (constanst.selectbusstype_id.isNotEmpty) {
                 Navigator.pop(context);
                 setState(() {});
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CategoryScreen()));*/
               } else {
-                WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                 Fluttertoast.showToast(
                     msg: 'Select Minimum 1 Nature of Bussiness ');
               }
             },
-            child: Text('Update',
+            child: const Text('Update',
                 style: TextStyle(
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,

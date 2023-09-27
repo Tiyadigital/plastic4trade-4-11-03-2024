@@ -144,18 +144,6 @@ class _otpState extends State<otp> {
                                 const SizedBox(
                                   height: 30,
                                 )
-                                //alignment: Alignment.center,
-
-                                /*  SizedBox(
-                              height: 30.0,
-                              width: MediaQuery.of(context).size.width / 1.95,
-                              child: Text('and jack@gmail.com',
-                                  //maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall
-                                      ?.copyWith(fontWeight: FontWeight.w400,fontSize: 17)),
-                            ),*/
                               ]),
                               OtpTextField(
 
@@ -173,12 +161,13 @@ class _otpState extends State<otp> {
                                     otpError = false; // Reset the error when the OTP field changes
                                   });
                                 },
+
                                 numberOfFields: 4,
                                 fieldWidth: 50,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 12),
                                 cursorColor: Colors.black26,
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(7),
                                 borderColor:
                                     otpError ? Colors.red : Colors.black26,
                                 focusedBorderColor: Colors.blue,

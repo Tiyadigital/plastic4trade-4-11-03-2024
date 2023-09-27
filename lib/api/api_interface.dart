@@ -1,4 +1,6 @@
 
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
@@ -99,7 +101,7 @@ Future android_logout(deviceid) async {
 }
 
 // Register with phone no
-Future registerUserPhoneno(String phoneno, String countryCode, String userName,
+Future registerUserPhoneno(String phoneno, String countryCode, String userName,String device,
     String stepCounter) async {
   String registeruserphonenoUrl = 'registerUserPhoneno_v2';
   var res;
@@ -111,6 +113,7 @@ Future registerUserPhoneno(String phoneno, String countryCode, String userName,
     'phoneno': phoneno,
     'countryCode': countryCode,
     'userName': userName,
+        'device' : device,
     'step_counter': stepCounter
   });
 
@@ -628,8 +631,6 @@ Future getbussinessprofile(String userId, String userToken) async {
   final response = await http.post(Uri.parse(baseurl + getmybusinessprofileUrl),
       headers: {"Accept": "application/json"},
       body: {'userId': userId, 'userToken': userToken});
-
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
     //Map<String, dynamic> responseJson = json.decode(response.body);
@@ -2138,9 +2139,9 @@ Future getlive_price(
   return res;
 }
 
-Future get_coderecord(String code_id, String offset) async {
+Future get_coderecord(String codeId, String offset) async {
   String getsalepostUrl =
-      'getcoderecord?code_id=$code_id&offset=$offset&limit=20';
+      'getcoderecord?code_id=$codeId&offset=$offset&limit=20';
   // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
@@ -2780,8 +2781,8 @@ Future get_productname() async {
   return res;
 }
 
-Future get_deletedocument(String docu_id) async {
-  String gethomepostUrl = 'deletedocument?document_id=$docu_id';
+Future get_deletedocument(String docuId) async {
+  String gethomepostUrl = 'deletedocument?document_id=$docuId';
 
   var res;
 
@@ -2797,8 +2798,8 @@ Future get_deletedocument(String docu_id) async {
   return res;
 }
 
-Future remove_docu(String docu_id) async {
-  String getsalepostUrl = 'deletedocument?document_id=$docu_id';
+Future remove_docu(String docuId) async {
+  String getsalepostUrl = 'deletedocument?document_id=$docuId';
   // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
@@ -2818,8 +2819,8 @@ Future remove_docu(String docu_id) async {
   return res;
 }
 
-Future get_profileliked_user(String profile_id) async {
-  String gethomepostUrl = 'getprofileliked_user?profile_id=$profile_id';
+Future get_profileliked_user(String profileId) async {
+  String gethomepostUrl = 'getprofileliked_user?profile_id=$profileId';
 
   var res;
 
@@ -2835,8 +2836,8 @@ Future get_profileliked_user(String profile_id) async {
   return res;
 }
 
-Future get_profileviewd_user(String profile_id) async {
-  String gethomepostUrl = 'getprofileviewed_user?profile_id=$profile_id';
+Future get_profileviewd_user(String profileId) async {
+  String gethomepostUrl = 'getprofileviewed_user?profile_id=$profileId';
 
   var res;
 
@@ -2852,9 +2853,9 @@ Future get_profileviewd_user(String profile_id) async {
   return res;
 }
 
-Future share_count(String profile_id, user_id) async {
+Future share_count(String profileId, userId) async {
   String gethomepostUrl =
-      'countprofileshare?profile_id=$profile_id&user_id=$user_id';
+      'countprofileshare?profile_id=$profileId&user_id=$userId';
 
   var res;
 
@@ -2870,8 +2871,8 @@ Future share_count(String profile_id, user_id) async {
   return res;
 }
 
-Future get_profiles_share(String profile_id) async {
-  String gethomepostUrl = 'getprofileshare?profile_id=$profile_id';
+Future get_profiles_share(String profileId) async {
+  String gethomepostUrl = 'getprofileshare?profile_id=$profileId';
 
   var res;
 
@@ -2888,7 +2889,7 @@ Future get_profiles_share(String profile_id) async {
 }
 
 Future getbusinessprofileDetail(
-    String userId, String apiToken, String profile_id) async {
+    String userId, String apiToken, String profileId) async {
   String getpostdatailUrl = 'getbusinessprofileDetail';
   var res;
 
@@ -2896,7 +2897,7 @@ Future getbusinessprofileDetail(
       body: {
         'userId': userId,
         'userToken': apiToken,
-        'profile_id': profile_id
+        'profile_id': profileId
       });
 
   print(response.request);
@@ -2908,7 +2909,7 @@ Future getbusinessprofileDetail(
   return res;
 }
 
-Future addReview(String userId, String userToken, String profile_id,
+Future addReview(String userId, String userToken, String profileId,
     String rating, String comment, File? file) async {
   String addbussinessprofileUrl = 'addProfileComment_with_rating';
   var res;
@@ -2934,7 +2935,7 @@ Future addReview(String userId, String userToken, String profile_id,
   request.fields.addAll({
     'user_id': userId,
     'userToken': userToken,
-    'profile_id': profile_id,
+    'profile_id': profileId,
     'rating': rating,
     'comment': comment
   });
@@ -2968,8 +2969,8 @@ Future Getcomment(String profileid, String offset, String limit) async {
   return res;
 }
 
-Future addReply(String userId, String userToken, String comment_id,
-    String profile_id, String comment) async {
+Future addReply(String userId, String userToken, String commentId,
+    String profileId, String comment) async {
   String gethomepostUrl = 'addprofilesubcomment';
   var res;
 
@@ -2979,8 +2980,8 @@ Future addReply(String userId, String userToken, String comment_id,
   }, body: {
     'user_id': userId,
     'userToken': userToken,
-    'comment_id': comment_id,
-    'profile_id': profile_id,
+    'comment_id': commentId,
+    'profile_id': profileId,
     'comment': comment
   });
 
@@ -2994,7 +2995,7 @@ Future addReply(String userId, String userToken, String comment_id,
   return res;
 }
 
-Future editReview(String userId, String userToken, String comment_id,
+Future editReview(String userId, String userToken, String commentId,
     String rating, String comment, File? file) async {
   String addbussinessprofileUrl = 'editprofilereviewwithrating';
   var res;
@@ -3020,7 +3021,7 @@ Future editReview(String userId, String userToken, String comment_id,
   request.fields.addAll({
     'user_id': userId,
     'userToken': userToken,
-    'comment_id': comment_id,
+    'comment_id': commentId,
     'rating': rating,
     'comment': comment
   });
@@ -3038,13 +3039,13 @@ Future editReview(String userId, String userToken, String comment_id,
   return res;
 }
 
-Future deletemyreview(String comment_id) async {
+Future deletemyreview(String commentId) async {
   String gethomepostUrl = 'deletemyreview';
   var res;
 
   final response = await http.post(Uri.parse(baseurl + gethomepostUrl),
       headers: {"Accept": "application/json"},
-      body: {'comment_id': comment_id});
+      body: {'comment_id': commentId});
 
   print(response.request);
   print(response.body);
@@ -3056,8 +3057,8 @@ Future deletemyreview(String comment_id) async {
   return res;
 }
 
-Future get_databytimeduration(String code_id) async {
-  String gethomepostUrl = 'getdatabytimeduration?code_id=$code_id';
+Future get_databytimeduration(String codeId) async {
+  String gethomepostUrl = 'getdatabytimeduration?code_id=$codeId';
   var res;
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl),

@@ -37,6 +37,7 @@ class constanst {
   static String select_cat_name = "";
   static int? select_cat_idx;
   static int? select_product_cap_idx;
+  static int? select_prodcap_idx;
   static int? select_document_type_idx;
   static String select_type_id = "";
   static int? select_type_idx;
@@ -46,7 +47,7 @@ class constanst {
   static int? select_grade_idx;
   static String Product_color = "";
   static int? select_prodcolor_idx;
-  static int? select_prodcap_idx;
+
   static String select = "";
   static String api_token = "";
   static String fcm_token = "";

@@ -58,28 +58,28 @@ class Choice {
   final String id;
 }
 
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Business & Profile ', icon: 'assets/shop.png', id: '1'),
-  const Choice(
+const List<Choice> choices = <Choice>[
+  Choice(title: 'Business & Profile ', icon: 'assets/shop.png', id: '1'),
+   Choice(
       title: 'Manage Sell Posts', icon: 'assets/shopping-cart.png', id: '2'),
-  const Choice(title: 'Interests', icon: 'assets/bag-tick.png', id: '3'),
-  const Choice(title: 'Manage Buy Posts', icon: 'assets/bag-2.png', id: '4'),
-  const Choice(title: 'Favourites', icon: 'assets/heart-circle.png', id: '5'),
-  const Choice(
+  Choice(title: 'Interests', icon: 'assets/bag-tick.png', id: '3'),
+   Choice(title: 'Manage Buy Posts', icon: 'assets/bag-2.png', id: '4'),
+   Choice(title: 'Favourites', icon: 'assets/heart-circle.png', id: '5'),
+   Choice(
       title: 'Followers/Followings', icon: 'assets/profile-2user.png', id: '6'),
-  const Choice(title: 'Blog', icon: 'assets/document-text.png', id: '7'),
-  const Choice(title: 'News', icon: 'assets/clipboard-text.png', id: '8'),
-  const Choice(title: 'Videos', icon: 'assets/video.png', id: '9'),
-  const Choice(title: 'Exhibition', icon: 'assets/box.png', id: '10'),
-  const Choice(
+   Choice(title: 'Blog', icon: 'assets/document-text.png', id: '7'),
+   Choice(title: 'News', icon: 'assets/clipboard-text.png', id: '8'),
+   Choice(title: 'Videos', icon: 'assets/video.png', id: '9'),
+   Choice(title: 'Exhibition', icon: 'assets/box.png', id: '10'),
+   Choice(
       title: 'Directory', icon: 'assets/directbox-default.png', id: '11'),
-  const Choice(
+   Choice(
       title: 'Tutorial Video', icon: 'assets/play-circle.png', id: '12'),
-  const Choice(title: 'Exhibitor', icon: 'assets/star.png', id: '13'),
-  const Choice(
+   Choice(title: 'Exhibitor', icon: 'assets/star.png', id: '13'),
+   Choice(
       title: 'Premium Member', icon: 'assets/premium_mem.png', id: '14'),
-  const Choice(title: 'App Share', icon: 'assets/send-2.png', id: '15'),
-  const Choice(title: 'Premium Plan', icon: 'assets/award.png', id: '16'),
+   Choice(title: 'App Share', icon: 'assets/send-2.png', id: '15'),
+   Choice(title: 'Premium Plan', icon: 'assets/award.png', id: '16'),
 ];
 
 class _moreState extends State<more> {
@@ -1087,31 +1087,16 @@ class _moreState extends State<more> {
                 return GestureDetector(
                   onTap: (() {
                     if (record.id == '1') {
-                      print(constanst.isgrade);
-                      print(constanst.istype);
-                      print(constanst.iscategory);
-                      print(constanst.isgrade);
-                      constanst.redirectpage = "edit_profile";
-                      //constanst.productId=result.productId.toString();
-                      //constanst.post_type=result.postType.toString();
-                      //constanst.redirectpage = "sale_buy";
-                      print(constanst.appopencount);
-                      print(constanst.appopencount1);
-                      print(constanst.isprofile);
-                      print(constanst.iscategory);
                       if (constanst.appopencount == constanst.appopencount1) {
-                        print(constanst.step);
                         if (!constanst.isgrade &&
                             !constanst.istype &&
                             !constanst.iscategory &&
                             !constanst.isprofile &&
                             constanst.step == 11) {
-                          print(constanst.step);
-
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Bussinessinfo(),
+                                builder: (context) => const Bussinessinfo(),
                               ));
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
@@ -1119,22 +1104,9 @@ class _moreState extends State<more> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Bussinessinfo(),
+                                builder: (context) => const Bussinessinfo(),
                               ));
-                        } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        }*/
-
-                        /* else {
-                   showInformationDialog(context);
-                 }*/
+                        }
                       } else {
                         if (constanst.isprofile) {
                           showInformationDialog(context);
@@ -1142,45 +1114,14 @@ class _moreState extends State<more> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Bussinessinfo(),
+                                builder: (context) => const Bussinessinfo(),
                               ));
-                        } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        } else if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile &&
-                            constanst.step == 11) {
-                          print(constanst.step);
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Bussinessinfo(),
-                              ));
-                        }*/
+                        }
                       }
                     }
                     else if (record.id == '2') {
-                    /*  Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                managesellpost(Title: "Manage_Sell_Posts"),
-                          ));*/
-                      print(constanst.isgrade);
-                      print(constanst.istype);
-                      print(constanst.iscategory);
-                      print(constanst.isgrade);
-
                       constanst.redirectpage = "Manage_Sell_Posts";
+
                       if (constanst.appopencount == constanst.appopencount1) {
                         print(constanst.step);
                         if (!constanst.isgrade &&
@@ -1194,19 +1135,11 @@ class _moreState extends State<more> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    managesellpost(Title: "Manage_Sell_Posts"),
+                                const managesellpost(Title: "Manage_Sell_Posts"),
                               ));
                         } else if (constanst.isprofile) {
                           showInformationDialog(context);
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    managesellpost(Title: "Manage_Sell_Posts"),
-                              ));
-                        } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
+                        } else if (constanst.iscategory) {
                           categoryDialog(context);
                         } else if (constanst.isgrade) {
                           categoryDialog(context);
@@ -1214,52 +1147,19 @@ class _moreState extends State<more> {
                           categoryDialog(context);
                         } else if (constanst.step != 11) {
                           addPostDialog(context);
-                          }*/
-
-                        /*else {
-                   showInformationDialog(context);
-                 }*/
+                        }
                       } else {
-
-                        if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    managesellpost(Title: "Manage_Sell_Posts"),
-                              ));
-                        } /*else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        } else if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile &&
-                            constanst.step == 11) {
-                          print(constanst.step);
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    managesellpost(Title: "Manage_Sell_Posts"),
-                              ));
-                        }*/
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                              const managesellpost(Title: "Manage_Sell_Posts"),
+                            ));
                       }
                     }
+
                     else if (record.id == '3') {
-                      print(constanst.isgrade);
-                      print(constanst.istype);
-                      print(constanst.iscategory);
-                      print(constanst.isgrade);
+
 
                       constanst.redirectpage = "update_category";
                       if (constanst.appopencount == constanst.appopencount1) {
@@ -1335,11 +1235,8 @@ class _moreState extends State<more> {
                               ));
                         }*/
                       }
-                    } else if (record.id == '4') {
-                      print(constanst.isgrade);
-                      print(constanst.istype);
-                      print(constanst.iscategory);
-                      print(constanst.isgrade);
+                    }
+                    else if (record.id == '4') {
 
                       constanst.redirectpage = "Manage_Buy_Posts";
                       if (constanst.appopencount == constanst.appopencount1) {
@@ -1379,31 +1276,7 @@ class _moreState extends State<more> {
                               builder: (context) =>
                                   managebuypost(Title: "Manage_Buy_Posts"),
                             ));
-                    /*    if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else if (constanst.iscategory) {
-                          //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m category');
-                          categoryDialog(context);
-                        } else if (constanst.isgrade) {
-                          categoryDialog(context);
-                        } else if (constanst.istype) {
-                          categoryDialog(context);
-                        } else if (constanst.step != 11) {
-                          addPostDialog(context);
-                        } else if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile &&
-                            constanst.step == 11) {
-                          print(constanst.step);
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    managebuypost(Title: "Manage_Buy_Posts"),
-                              ));
-                        }*/
                       }
                     } else if (record.id == '5') {
                       Navigator.push(context,
@@ -1455,13 +1328,13 @@ class _moreState extends State<more> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     child: Column(children: [
-                      Container(
+                      SizedBox(
                           height: 50,
                           child: Align(
                               alignment: Alignment.topLeft,
                               child: Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(20.0, 15.0, 0.0, 0.0),
+                                      const EdgeInsets.fromLTRB(20.0, 15.0, 0.0, 0.0),
                                   child: Image(
                                     image: AssetImage(record.icon ?? ''
                                         //data[index]['member_image'] ?? '',
@@ -1470,7 +1343,7 @@ class _moreState extends State<more> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
+                            padding: const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
                             child: Text(record.title,
                                 style: const TextStyle(
                                     fontSize: 14.0,

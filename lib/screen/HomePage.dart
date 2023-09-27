@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -41,7 +43,6 @@ import 'package:Plastic4trade/model/getHomePost.dart' as homepost;
 import 'package:Plastic4trade/model/getHomePostSearch.dart' as homesearch;
 import 'package:Plastic4trade/model/GetCategory.dart' as cat;
 
-import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 import '../widget/HomeAppbar.dart';
 import '../widget/MainScreen.dart';
 import 'Blog.dart';
@@ -87,13 +88,13 @@ class _HomePageState extends State<HomePage> {
       type_id = '',
       bussinesstype = '',
       post_type = '';
-  TextEditingController _loc = TextEditingController();
-  TextEditingController _search = TextEditingController();
+  final TextEditingController _loc = TextEditingController();
+  final TextEditingController _search = TextEditingController();
   Timer? _timer;
   Dio dio = Dio();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final _androidchannel = AndroidNotificationChannel(
+  final _androidchannel = const AndroidNotificationChannel(
       'high_impotance_channel', 'High Importance Notification',
       description: 'This channel is used for importance notification',
       importance: Importance.max);
@@ -169,30 +170,14 @@ class _HomePageState extends State<HomePage> {
                                         constanst.location =
                                             place.description.toString();
                                         _loc.text = location!;
-
-                                        /*
-
-                                  List<String> list = place.description.toString().split(",");
-                                  list.length>2?state =list[1].toString():state ='';
-                                  list.length>=3?country =list[2].toString():country ='';
-                                  city=list[0];
-                                  print(list);
-                                  print(state);
-                                  print(city);
-                                  print(country);
-
-                                  _color5=Colors.green.shade600;
-                                  // print(location);
-                                  setState(() {
-
-                                  });*/
                                       });
 
                                       //form google_maps_webservice package
                                       final plist = GoogleMapsPlaces(
                                         apiKey: googleApikey,
-                                        apiHeaders: await GoogleApiHeaders()
-                                            .getHeaders(),
+                                        apiHeaders:
+                                            await const GoogleApiHeaders()
+                                                .getHeaders(),
                                         //from google_api_headers package
                                       );
                                       String placeid = place.placeId ?? "0";
@@ -216,18 +201,14 @@ class _HomePageState extends State<HomePage> {
                                       _onLoading();
                                       get_HomePost();
                                       setState(() {});
-                                      // var newlatlang = LatLng(lat, log);
-
-                                      //move map camera to selected place with animation
-                                      //mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
                                     }
                                   },
                                   textAlign: TextAlign.start,
                                   textInputAction: TextInputAction.search,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(vertical: 1.0),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 1.0),
                                     prefixIconConstraints:
                                         BoxConstraints(minWidth: 24),
                                     suffixIconConstraints:
@@ -343,42 +324,42 @@ class _HomePageState extends State<HomePage> {
                                   },
                                 ))),
                         GestureDetector(
-                            onTap: () {
-                              ViewItem(context);
-                            },
-                            child: Container(
-                                height: 70,
-                                margin: EdgeInsets.only(
-                                    bottom: 4.0, left: 1.2, top: 2.0),
-                                padding: EdgeInsets.all(3.0),
-                                width: MediaQuery.of(context).size.width / 11,
-                                // padding: EdgeInsets.only(right: 5),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white),
-                                child: Icon(
-                                  Icons.filter_alt,
-                                  color: Colors.black,
-                                )))
+                          onTap: () {
+                            ViewItem(context);
+                          },
+                          child: Container(
+                            height: 70,
+                            margin: const EdgeInsets.only(
+                                bottom: 4.0, left: 1.2, top: 2.0),
+                            padding: EdgeInsets.all(3.0),
+                            width: MediaQuery.of(context).size.width / 11,
+                            // padding: EdgeInsets.only(right: 5),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.white),
+                            child: const Icon(
+                              Icons.filter_alt,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-
                   Expanded(
                     child: SingleChildScrollView(
                         controller: scrollercontroller,
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Column(
                           children: [
                             slider_home(),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Container(
+                            SizedBox(
                               height: 20,
                               child: Marquee(
                                 text: quicknews.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 13.0,
                                     color: Colors.black),
@@ -386,48 +367,33 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 blankSpace: 20.0,
                                 velocity: 100.0,
-                                pauseAfterRound: Duration(seconds: 1),
+                                pauseAfterRound: const Duration(seconds: 1),
                                 startPadding: 10.0,
-                                accelerationDuration: Duration(seconds: 1),
+                                accelerationDuration:
+                                    const Duration(seconds: 1),
                                 accelerationCurve: Curves.linear,
                                 decelerationDuration:
-                                    Duration(milliseconds: 500),
+                                    const Duration(milliseconds: 500),
                                 decelerationCurve: Curves.easeOut,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             category()
                           ],
                         )),
                   ),
-                  // Flexible(
-                  //     child: Marquee(
-                  //       text: 'The quick brown fox jumps over the lazy dog',
-                  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize:20),
-                  //       scrollAxis: Axis.horizontal, //scroll direction
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       blankSpace: 20.0,
-                  //       velocity: 50.0, //speed
-                  //       pauseAfterRound: Duration(seconds: 1),
-                  //       startPadding: 10.0,
-                  //       accelerationDuration: Duration(seconds: 1),
-                  //       accelerationCurve: Curves.linear,
-                  //       decelerationDuration: Duration(milliseconds: 500),
-                  //       decelerationCurve: Curves.easeOut,
-                  //     )
-                  // ),
                 ])
               : Center(
                   child: Platform.isAndroid
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           value: null,
                           strokeWidth: 2.0,
                           color: Color.fromARGB(255, 0, 91, 148),
                         )
                       : Platform.isIOS
-                          ? CupertinoActivityIndicator(
+                          ? const CupertinoActivityIndicator(
                               color: Color.fromARGB(255, 0, 91, 148),
                               radius: 20,
                               animating: true,
@@ -437,38 +403,27 @@ class _HomePageState extends State<HomePage> {
             height: 70,
             width: 70,
             decoration: BoxDecoration(
-                image: DecorationImage(
+                image: const DecorationImage(
                     image: AssetImage("assets/floating_back.png")),
                 borderRadius: BorderRadius.circular(30)),
             child: IconButton(
               onPressed: () {
                 constanst.redirectpage = "add_post";
-                /* constanst.productId=result.productId.toString();
-                constanst.post_type=result.postType.toString();*/
-                //constanst.redirectpage="sale_buy";
-                print(constanst.appopencount);
-                print(constanst.appopencount1);
-                print(constanst.isprofile);
-                print(constanst.iscategory);
                 if (constanst.appopencount == constanst.appopencount1) {
-                  print(constanst.step);
                   if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
                       !constanst.isprofile &&
                       constanst.step == 11) {
-                    print(constanst.step);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddPost(),
+                          builder: (context) => const AddPost(),
                         ));
                   } else if (constanst.isprofile) {
                     showInformationDialog(context);
                   } else if (constanst.iscategory) {
                     constanst.redirectpage = "add_cat";
-                    //Fluttertoast.showToast(msg: 'i m category');
                     categoryDialog(context);
                   } else if (constanst.isgrade) {
                     constanst.redirectpage = "add_type";
@@ -479,62 +434,38 @@ class _HomePageState extends State<HomePage> {
                   } else if (constanst.step != 11) {
                     addPostDialog(context);
                   }
-                  /* else {
-                   showInformationDialog(context);
-                 }*/
                 } else {
                   if (constanst.isprofile) {
                     showInformationDialog(context);
                   } else if (constanst.iscategory) {
                     constanst.redirectpage = "add_cat";
-                    //Fluttertoast.showToast(msg: 'i m category');
-                    //categoryDialog(context);
-                   /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));*/
                     categoryDialog(context);
                   } else if (constanst.isgrade) {
                     constanst.redirectpage = "add_type";
-                   /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));*/
                     categoryDialog(context);
-                    //categoryDialog(context);
                   } else if (constanst.istype) {
                     constanst.redirectpage = "add_grade";
-                    //categoryDialog(context);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Grade(),
+                          builder: (context) => const Grade(),
                         ));
                   } else if (constanst.step != 11) {
-                    // addPostDialog(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddPost(),
-                        ));
+                    addPostDialog(context);
                   } else if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
                       !constanst.isprofile &&
                       constanst.step == 11) {
-                    print(constanst.step);
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddPost(),
+                          builder: (context) => const AddPost(),
                         ));
                   }
                 }
               },
-              icon: Icon(Icons.add, color: Colors.white, size: 40),
+              icon: const Icon(Icons.add, color: Colors.white, size: 40),
             ),
             //
           ),
@@ -550,12 +481,8 @@ class _HomePageState extends State<HomePage> {
   Future<bool> _onbackpress(BuildContext context) async {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
-      // Show a toast or snackbar message to inform the user to tap again to exit
-      /* ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tap again to exit')),
-      );*/
       showCustomToast(context);
       return Future.value(false);
     }
@@ -584,29 +511,21 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
+              SizedBox(
                 height: 70,
                 width: 50,
-                // margin: EdgeInsets.all(5.0),
-                /* decoration: BoxDecoration(
-                                          //color: Colors.black26,
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(30.0))),*/
                 child: Image.asset(
                   "assets/plastic4trade logo final 1 (2).png",
-
-                  //fit: BoxFit.fitHeight,
-                  // height: 100,
                   width: 70,
                 ),
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Flexible(
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.transparent),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Please tap again to exit',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
@@ -705,37 +624,6 @@ class _HomePageState extends State<HomePage> {
         }));
   }
 
-  /*Widget slider() {
-    return GFCarousel(
-      autoPlay: true,
-      pagerSize: 2.0,
-      viewportFraction: 1.0,
-      aspectRatio: 2,
-      // hasPagination: true,
-      //
-      // activeIndicator: Colors.lightBlue,
-
-      items: imageList.map(
-        (url) {
-          return Container(
-            //margin: EdgeInsets.fromLTRB(5, 0, 5,0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              child: Image.asset(url, fit: BoxFit.cover, width: 2500.0),
-            ),
-          );
-        },
-      ).toList(),
-      onPageChanged: (index) {
-        setState(() {
-          index;
-          //cat_data.clear();
-        });
-      },
-    );
-
-  }*/
-
   Widget slider_home() {
     return SizedBox(
         height: 200.0,
@@ -754,10 +642,6 @@ class _HomePageState extends State<HomePage> {
                           fit: BoxFit.fill, width: 2500.0),
                     ))
                   : web_view(record.bannerImage.toString());
-
-              new Center(
-                child: new Text(record.bannerImage.toString()),
-              );
             },
           ),
         ));
@@ -784,17 +668,7 @@ class _HomePageState extends State<HomePage> {
         ),
       )
       ..loadRequest(Uri.parse(imageurl));
-    return Container(
-      /*child: WebView(
-          zoomEnabled: true ,
-          initialUrl: imageurl,
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController){
-            web_controller = webViewController;
-          },
-        )*/
-      child: WebViewWidget(controller: web_controller as WebViewController),
-    );
+    return WebViewWidget(controller: web_controller as WebViewController);
   }
 
   void _onLoading() {
@@ -817,87 +691,29 @@ class _HomePageState extends State<HomePage> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
                                 )
                               : Container()),
                 ),
-              ), /*Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 300.0,
-                  height: 150.0,
-                  alignment: AlignmentDirectional.center,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    width: 300.0,
-                    height: 150.0,
-                    alignment: AlignmentDirectional.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const
-                      */ /*  Container(
-                          margin: const EdgeInsets.only(top: 25.0),
-                          child: Center(
-                            child: Text(
-                              "loading.. wait...",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),*/ /*
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )*/
+              ),
             ));
       },
     );
 
     Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
     });
   }
-
-  /* double calculateAspectRatio(BuildContext context) {
-    // Define your desired aspect ratio
-    double desiredAspectRatio = 0.5;
-
-    // Calculate available width
-    double screenWidth = MediaQuery.of(context).size.width;
-    double crossAxisSpacing = 15; // Adjust this based on your actual spacing
-    int crossAxisCount = 2; // Adjust this based on your actual cross axis count
-    double availableWidth = screenWidth - ((crossAxisCount - 1) * crossAxisSpacing);
-
-    // Calculate width per child based on the available width and desired aspect ratio
-    double childWidth = availableWidth / crossAxisCount;
-    double childHeight = childWidth / desiredAspectRatio;
-
-    // Return the calculated aspect ratio
-    return childWidth / childHeight;
-  }*/
 
   Widget category() {
     return FutureBuilder(
@@ -908,44 +724,38 @@ class _HomePageState extends State<HomePage> {
       }
       if (snapshot.connectionState == ConnectionState.none &&
           snapshot.hasData == null) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else {
         //List<dynamic> users = snapshot.data as List<dynamic>;
         return LayoutBuilder(builder: (context, constraints) {
           return GridView.builder(
-            padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               // childAspectRatio:MediaQuery.of(context).size.height < 750 ? .50: MediaQuery.of(context).size.height < 825 ? .65 :MediaQuery.of(context).size.height < 850 ? .62 : MediaQuery.of(context).size.height < 800 ? .73: .619,
               childAspectRatio: MediaQuery.of(context).size.width / 620,
             ),
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: homepost_data.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               homepost.Result result = homepost_data[index];
+
               return GestureDetector(
                 onTap: (() {
                   constanst.productId = result.productId.toString();
                   constanst.post_type = result.postType.toString();
                   constanst.redirectpage = "sale_buy";
-                  print(constanst.appopencount);
-                  print(constanst.appopencount1);
 
-                  print(constanst.isprofile);
-                  print(constanst.iscategory);
-                  print(constanst.istype);
-                  print(constanst.isgrade);
                   if (constanst.appopencount == constanst.appopencount1) {
-                    Fluttertoast.showToast(msg: "123");
-                    print(constanst.step);
+                    print("APP OPEN 1st = ${constanst.appopencount}");
+                    print("APP OPEN 1st = ${constanst.appopencount1}");
+
                     if (!constanst.isgrade &&
                         !constanst.istype &&
                         !constanst.iscategory &&
                         !constanst.isprofile &&
                         constanst.step == 11) {
-                      print(constanst.step);
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -956,7 +766,6 @@ class _HomePageState extends State<HomePage> {
                     } else if (constanst.isprofile) {
                       showInformationDialog(context);
                     } else if (constanst.iscategory) {
-                      //Fluttertoast.showToast(msg: 'i m category');
                       categoryDialog(context);
                     } else if (constanst.isgrade) {
                       categoryDialog(context);
@@ -965,67 +774,25 @@ class _HomePageState extends State<HomePage> {
                     } else if (constanst.step != 11) {
                       addPostDialog(context);
                     }
-                    /* else {
-                   showInformationDialog(context);
-                 }*/
+                  } else if (constanst.isprofile) {
+                    print("APP OPEN 2nd = ${constanst.appopencount}");
+                    print("APP OPEN 2nd = ${constanst.appopencount1}");
+                    showInformationDialog(context);
+                  } else if (constanst.appopencount ==
+                      constanst.appopencount1) {
+                    print("APP OPEN 3rd= ${constanst.appopencount}");
+                    print("APP OPEN 3rd= ${constanst.appopencount1}");
+                    categoryDialog(context);
                   } else {
-                    if (!constanst.isgrade &&
-                        !constanst.istype &&
-                        !constanst.iscategory &&
-                        !constanst.isprofile &&
-                        constanst.step == 11) {
-                      print(constanst.step);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Buyer_sell_detail(
-                                prod_id: result.productId.toString(),
-                                post_type: result.postType.toString()),
-                          ));
-                    } else if (constanst.isprofile) {
-                      showInformationDialog(context);
-                    } else if (constanst.iscategory) {
-                      //Fluttertoast.showToast(msg: 'i m category');
-                      categoryDialog(context);
-                    } else if (constanst.isgrade) {
-                      categoryDialog(context);
-                    } else if (constanst.istype) {
-                      categoryDialog(context);
-                    } else if (constanst.step != 11) {
-                      addPostDialog(context);
-                    }
-                    /* if (constanst.isprofile) {
-                   showInformationDialog(context);
-                 } else if (constanst.iscategory) {
-                   //Fluttertoast.showToast(msg: 'i m category');
-                   categoryDialog(context);
-                 } else if (constanst.isgrade) {
-                   categoryDialog(context);
-                 } else if (constanst.istype) {
-                   categoryDialog(context);
-                 } else if (constanst.step != 11) {
-                   addPostDialog(context);
-                 } else if (!constanst.isgrade &&
-                     !constanst.istype &&
-                     !constanst.iscategory &&
-                     !constanst.isprofile && constanst.step == 11) {
-                   print(constanst.step);
-
-                   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) =>
-                             Buyer_sell_detail(
-                                 prod_id: result.productId.toString(),
-                                 post_type: result.postType.toString()),
-                       ));
-                */ /*   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                         builder: (context) =>
-                             demo()));*/ /*
-                 }*/
+                    print("APP OPEN 4th= ${constanst.appopencount}");
+                    print("APP OPEN 4th= ${constanst.appopencount1}");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Buyer_sell_detail(
+                              prod_id: result.productId.toString(),
+                              post_type: result.postType.toString()),
+                        ));
                   }
                 }),
                 child: Card(
@@ -1033,28 +800,31 @@ class _HomePageState extends State<HomePage> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   child: Column(children: [
-                    Stack(fit: StackFit.passthrough, children: <Widget>[
-                      Container(
-                        height: MediaQuery.of(context).size.height / 4.8,
-                        width: 175,
-                        margin: EdgeInsets.all(5.0),
-                        decoration: BoxDecoration(
-                            //color: Colors.black26,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0))),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          /*shape: RoundedRectangleBorder(
+                    Stack(
+                      fit: StackFit.passthrough,
+                      children: <Widget>[
+                        Container(
+                          height: MediaQuery.of(context).size.height / 4.8,
+                          width: 175,
+                          margin: const EdgeInsets.all(5.0),
+                          decoration: const BoxDecoration(
+                              //color: Colors.black26,
+
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0))),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            /*shape: RoundedRectangleBorder(
                            borderRadius: BorderRadius.circular(10.0)),*/
-                          child: Image(
-                            image: NetworkImage(
-                                result.mainproductImage.toString()),
-                            fit: BoxFit.cover,
-                            height: 150,
-                            width: 170,
+                            child: Image(
+                              image: NetworkImage(
+                                  result.mainproductImage.toString()),
+                              fit: BoxFit.cover,
+                              height: 150,
+                              width: 170,
+                            ),
                           ),
-                        ),
-                        /* child:Image(
+                          /* child:Image(
                         errorBuilder: (context, object, trace) {
                           return Container(
                             decoration: BoxDecoration(
@@ -1066,48 +836,49 @@ class _HomePageState extends State<HomePage> {
                         },
                         image: NetworkImage(result.mainproductImage.toString()),fit: BoxFit.cover,width: 170,height: 150,
                     ),*/
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        left: 10,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 5.0),
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 0, 148, 95),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0))),
-                          // color: Color.fromARGB(0,255, 255, 255),
-                          child: Text('₹' + result.productPrice.toString(),
-                              style: TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily:
-                                      'assets\fonst\Metropolis-Black.otf',
-                                  color: Colors.white)),
                         ),
-                      ),
-                      result.isPaidPost == 'Paid'
-                          ? Positioned(
-                              top: -10,
-                              left: -30,
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                /*decoration: BoxDecoration(
+                        Positioned(
+                          bottom: 10,
+                          left: 10,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 5.0),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 0, 148, 95),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            // color: Color.fromARGB(0,255, 255, 255),
+                            child: Text('₹' + result.productPrice.toString(),
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily:
+                                        'assets\fonst\Metropolis-Black.otf',
+                                    color: Colors.white)),
+                          ),
+                        ),
+                        result.isPaidPost == 'Paid'
+                            ? Positioned(
+                                top: -10,
+                                left: -30,
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  /*decoration: BoxDecoration(
                                     color: Colors.red,
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(15.0))),*/
-                                // color: Color.fromARGB(0,255, 255, 255),
-                                //child: Text('Paid', style: TextStyle(color: Colors.white)),
-                                child: Image.asset(
-                                  'assets/PaidPost.png',
-                                  height: 50,
-                                  width: 100,
+                                  // color: Color.fromARGB(0,255, 255, 255),
+                                  //child: Text('Paid', style: TextStyle(color: Colors.white)),
+                                  child: Image.asset(
+                                    'assets/PaidPost.png',
+                                    height: 50,
+                                    width: 100,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : Container()
-                    ]),
+                              )
+                            : Container()
+                      ],
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1193,205 +964,8 @@ class _HomePageState extends State<HomePage> {
             },
           );
         });
-
-        return CircularProgressIndicator();
       }
     });
-    /*: Expanded(
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-                    childAspectRatio: MediaQuery.of(context).size.height /
-                        1250, //MediaQuery.of(context).size.aspectRatio * 1.3,
-                    mainAxisSpacing: 3.0,
-                    crossAxisCount: 2,
-                  ),
-                  physics: AlwaysScrollableScrollPhysics(),
-                  controller: scrollercontroller,
-                  itemCount: homepostsearch_data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    homesearch.Result result = homepostsearch_data[index];
-                    return GestureDetector(
-                      onTap: (() {
-                        if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile) {
-                          print(constanst.step);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Buyer_sell_detail(
-                                  prod_id: result.productId.toString(),
-                                  post_type: result.postType.toString(),
-                                ),
-                              ));
-                        } else {
-                          showInformationDialog(context);
-                        }
-                      }),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(children: [
-                          Stack(fit: StackFit.passthrough, children: <Widget>[
-                            Container(
-                              height: 165,
-                              width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                */ /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/ /*
-                                child: Image(
-                                  image: NetworkImage(
-                                      result.mainproductImage.toString()),
-                                  fit: BoxFit.cover,
-                                  height: 150,
-                                  width: 170,
-                                ),
-                              ),
-
-                            ),
-                            Positioned(
-                              bottom: 10,
-                              left: 10,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                // color: Color.fromARGB(0,255, 255, 255),
-                                child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf',
-                                        color: Colors.white)),
-                              ),
-                            ),
-                            result.isPaidPost == 'Paid'
-                                ? Positioned(
-                                    top: -10,
-                                    left: -30,
-                                    child: Container(
-                                      padding: EdgeInsets.all(5),
-                                      */ /*decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),*/ /*
-                                      // color: Color.fromARGB(0,255, 255, 255),
-                                      //child: Text('Paid', style: TextStyle(color: Colors.white)),
-                                      child: Image.asset(
-                                        'assets/PaidPost.png',
-                                        height: 50,
-                                        width: 100,
-                                      ),
-                                    ),
-                                  )
-                                : Container()
-                          ]),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)),
-                              ),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        result.productType.toString() +
-                                            ' | ' +
-                                            result.productGrade.toString(),
-                                        style: TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        result.state.toString() +
-                                            ',' +
-                                            result.country.toString(),
-                                        style: TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                      result.postType.toString(),
-                                      style: TextStyle(
-                                          fontSize: 13.0,
-                                          fontFamily: 'Metropolis',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1)),
-                                    ),
-                                  )),
-                            ],
-                          )
-                        ]),
-                      ),
-                    );
-                  },
-                );
-              }
-
-              return CircularProgressIndicator();
-            }),
-          );*/
   }
 
   void _scrollercontroller() {
@@ -1471,38 +1045,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   getBussinessProfile() async {
-    /* Getmybusinessprofile register = Getmybusinessprofile();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-
-
-    var res = await getbussinessprofile(_pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),);
-
-    if (res['status'] == 1) {
-      register = Getmybusinessprofile.fromJson(res);
-      if(register.profile==null){
-        constanst.isprofile=true;
-      }else if(register.user!.categoryId.isEmpty){
-        constanst.iscategory=true;
-      }else if(register.user!.typeId.isEmpty){
-        constanst.istype=true;
-      }else if(register.user!.gradeId.isEmpty){
-        constanst.isgrade=true;
-      }
-      setState(() {});
-    } else {
-      Fluttertoast.showToast(msg: res['message']);
-
-      setState(() {});
-    }*/
     GetmybusinessprofileController bt = await GetmybusinessprofileController();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     constanst.getmyprofile = bt.Getmybusiness_profile(
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
-
-    // setState(() {});
-    // print(constanst.btype_data);
   }
 
   getBussinessProfile1() async {
@@ -1539,10 +1086,8 @@ class _HomePageState extends State<HomePage> {
     constanst.cat_data = bt.setlogin();
 
     constanst.cat_data!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.catdata.add(item);
-        }
+      for (var item in value) {
+        constanst.catdata.add(item);
       }
 
       setState(() {});
@@ -1791,10 +1336,7 @@ class _HomePageState extends State<HomePage> {
       print('Title : ${notification.title}');
       print('Body : ${notification.body}');
     }
-    if (message.data != null) {
-      print('PayLoad: ${message.data}');
-      // You can perform further processing with the data here
-    }
+    print('PayLoad: ${message.data}');
 
     //notification_redirect(message.data, context); // Are you sure 'context' is properly initialized here?
   }
@@ -1880,7 +1422,7 @@ class _HomePageState extends State<HomePage> {
             try {
               await Navigator.push(
                   context,
-                  new MaterialPageRoute(
+                  MaterialPageRoute(
                       builder: (context) =>
                           other_user_profile(int.parse(user_id.toString()))));
             } catch (e, stackTrace) {
@@ -1913,8 +1455,7 @@ class _HomePageState extends State<HomePage> {
           } else {
             print('11111111');
           }
-        }
-       else if (message.data['type'] == 'profile_review') {
+        } else if (message.data['type'] == 'profile_review') {
           print("kjdis");
           try {
             Navigator.push(context,

@@ -25,15 +25,6 @@ class GetmybusinessprofileController {
     print(res);
     if (res['status'] == 1) {
       buss = Getmybusinessprofile.fromJson(res);
-
-      print('----------------');
-      print('${buss.profile}');
-      print('${buss.user!.categoryId}');
-      print('${buss.user!.typeId}');
-      print('${buss.user!.gradeId}');
-
-      print('=========');
-
       if(buss.user?.imageUrl!=null){
         _pref.setString('userImage',buss.user!.imageUrl.toString()).toString();
         constanst.image_url=_pref.getString('userImage').toString();
@@ -66,22 +57,9 @@ class GetmybusinessprofileController {
           !constanst.iscategory &&
           !constanst.isprofile &&
           constanst.step == 11) {
-        constanst.appopencount1 = 6;
+        // constanst.appopencount1 = 6;
       }
-      /* if (!constanst.isprofile) {
-         constanst.appopencount1 = 6;
-       }*/
-     /* else {
-        if (constanst.isprofile) {
-          constanst.appopencount1 = 1;
-        }else if(constanst.iscategory){
-          constanst.appopencount1 = 1;
-        }else if(constanst.istype){
-          constanst.appopencount1 = 1;
-        }else if(constanst.isgrade){
-          constanst.appopencount1 = 1;
-        }
-      }*/
+
     }
     return buss;
   }

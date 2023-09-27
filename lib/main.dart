@@ -2,38 +2,26 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
+import 'dart:io' show Platform;
 import 'dart:math';
-import 'package:Plastic4trade/utill/AppLifecycleObserver.dart';
+import 'dart:developer';
+
+import 'package:Plastic4trade/api/firebase_api.dart';
+import 'package:Plastic4trade/widget/MainScreen.dart';
 import 'package:android_id/android_id.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/api/firebase_api.dart';
-import 'package:Plastic4trade/screen/Blog.dart';
-import 'package:Plastic4trade/screen/BussinessProfile.dart';
-import 'package:Plastic4trade/screen/Buyer_sell_detail.dart';
-import 'package:Plastic4trade/screen/Follower_Following.dart';
-import 'package:Plastic4trade/screen/HomePage.dart';
-import 'package:Plastic4trade/screen/Liveprice.dart';
-import 'package:Plastic4trade/screen/Videos.dart';
-import 'package:Plastic4trade/screen/other_user_profile.dart';
-import 'package:Plastic4trade/widget/MainScreen.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui';
+
 import 'api/api_interface.dart';
 import 'model/Login.dart';
-import 'utill/constant.dart';
-import 'dart:io' show Platform;
-
 import 'screen/LoginScreen.dart';
+import 'utill/constant.dart';
 final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -198,19 +186,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  //WidgetsBinding.instance.addObserver(AppLifecycleObserver());
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //
   WidgetsBinding.instance!.addPostFrameCallback((_) async {
     int appOpenCount =  getAppOpenCount() as int ;
-    // appOpenCount++;
+
     saveAppOpenCount(appOpenCount);
-    /*  Fluttertoast.showToast(timeInSecForIosWeb: 2,
-      msg: 'Welcome to the app!',
-      gravity: ToastGravity.CENTER,
-    );*/
+
   });
-  //await Firebase.initializeApp();
-  //runApp(const MyApp());
+
   runApp(MyApp()
   );
 }
@@ -219,13 +202,14 @@ Future<int>  getAppOpenCount() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   constanst.appopencount=prefs.getInt('appOpenCount') ?? 1;
-  // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'rtt ${constanst.appopencount}');
+
   return prefs.getInt('appOpenCount') ?? 0;
 }
 Future<void> saveAppOpenCount(int count) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setInt('appOpenCount', count);
 }
+
 Future<void> init(BuildContext context) async {
   await FirebaseApi().initNOtification(context);
 
@@ -280,9 +264,6 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         // useMaterial3: true,
         fontFamily: 'Metropolis',
-
-
-
         textTheme: const TextTheme(
             titleLarge: TextStyle(
                 fontSize: 26.0,

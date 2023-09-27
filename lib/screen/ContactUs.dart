@@ -480,7 +480,7 @@ class _ContactUsState extends State<ContactUs> {
                                       controller: _usermbl,
                                       style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color:  Color.fromARGB(255, 0, 91, 148),fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                       inputFormatters: [
-                                        LengthLimitingTextInputFormatter(13),
+                                        LengthLimitingTextInputFormatter(11),
                                       ],
                                       keyboardType: TextInputType.phone,
                                       autovalidateMode:
@@ -524,7 +524,7 @@ class _ContactUsState extends State<ContactUs> {
                                       },
                                       onFieldSubmitted: (value) {
                                         var numValue = value.length;
-                                        if (numValue >= 6 && numValue < 13) {
+                                        if (numValue >= 6 && numValue < 11) {
                                           _color6 = Colors.green.shade600;
                                         } else {
                                           _color6 = Colors.red;

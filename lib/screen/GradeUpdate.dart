@@ -23,8 +23,9 @@ class _Grade_updateState extends State<Grade_update> {
   bool category3 = false;
   bool? _isloading;
   String grade_id = '';
-  bool _isloading1= false;
+  bool _isloading1 = false;
   BuildContext? dialogContext;
+
   @override
   void initState() {
     super.initState();
@@ -57,46 +58,49 @@ class _Grade_updateState extends State<Grade_update> {
                   right: true,
                   maintainBottomViewPadding: true,
                   child: _isloading == true
-                      ?  Align(
+                      ? Align(
                           alignment: Alignment.center,
                           child: Center(
                               child: Platform.isAndroid
                                   ? CircularProgressIndicator(
-                                value: null,
-                                strokeWidth: 2.0,
-                                color: Color.fromARGB(255, 0, 91, 148),
-                              )
+                                      value: null,
+                                      strokeWidth: 2.0,
+                                      color: Color.fromARGB(255, 0, 91, 148),
+                                    )
                                   : Platform.isIOS
-                                  ? CupertinoActivityIndicator(
-                                color: Color.fromARGB(255, 0, 91, 148),
-                                radius: 20,
-                                animating: true,
-                              )
-                                  : Container()
-                          ),
-                  )
+                                      ? CupertinoActivityIndicator(
+                                          color:
+                                              Color.fromARGB(255, 0, 91, 148),
+                                          radius: 20,
+                                          animating: true,
+                                        )
+                                      : Container()),
+                        )
                       : Column(children: [
                           Row(
-
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                            GestureDetector(
-                              child: Image.asset('assets/back.png',
-                                  height: 50, width: 60),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-
-                            Center(
-                                child: Text(
-                              'Grade',
-                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                  ?.copyWith(fontSize: 20.0),
-                            )),
-
+                                GestureDetector(
+                                  child: Image.asset('assets/back.png',
+                                      height: 50, width: 60),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Center(
+                                    child: Text(
+                                  'Update Grade',
+                                  style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets\fonst\Metropolis-Black.otf')
+                                      ?.copyWith(fontSize: 20.0),
+                                )),
                                 Container(
-                                  width: MediaQuery.of(context).size.width /4.6,
+                                  width:
+                                      MediaQuery.of(context).size.width / 4.6,
                                   height: 37,
                                   margin: EdgeInsets.only(right: 10.0),
                                   decoration: BoxDecoration(
@@ -105,43 +109,77 @@ class _Grade_updateState extends State<Grade_update> {
                                       color: Color.fromARGB(255, 0, 91, 148)),
                                   child: TextButton(
                                     onPressed: () {
-                                      constanst.select_grade_id =
+                                      var stringGrade =
                                           constanst.select_gradeId.join(",");
                                       setState(() {
-
-                                        /*Navigator.push(
+                                        if (constanst.select_gradeId.isEmpty) {
+                                          Fluttertoast.showToast(
+                                              msg: 'Please Select Grade');
+                                        } else {
+                                          /*Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Type()));*/
-                                        _onLoading();
-                                        setGrade().then((value) {
-                                          print('12346 $value');
-                                          Navigator.of(dialogContext!).pop();
-                                          if(value){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
-                                          }else{
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
-                                          }
-
-                                        });
-
+                                          _onLoading();
+                                          setGrade().then((value) {
+                                            print('12346 $value');
+                                            Navigator.of(dialogContext!).pop();
+                                            if (value) {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MainScreen(4)));
+                                            } else {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MainScreen(4)));
+                                            }
+                                          });
+                                        }
                                       });
                                     },
+                                    // onPressed: () {
+                                    //   constanst.select_grade_id =
+                                    //       constanst.select_gradeId.join(",");
+                                    //   setState(() {
+                                    //
+                                    //     _onLoading();
+                                    //     setGrade().then((value) {
+                                    //       print('12346 $value');
+                                    //       Navigator.of(dialogContext!).pop();
+                                    //       if(value){
+                                    //         Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+                                    //       }else{
+                                    //         Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+                                    //       }
+                                    //
+                                    //     });
+                                    //
+                                    //   });
+                                    // },
                                     child: Text('Continue',
                                         style: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w800,
                                             color: Colors.white,
                                             fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
+                                                'assets\fonst\Metropolis-Black.otf')),
                                   ),
                                 ),
-                          ]),
+                              ]),
                           Padding(
                             padding: EdgeInsets.fromLTRB(27.0, 5.0, 5.0, 5.0),
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
                                 'Select Your Grade',
-                                style:  TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                                style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets\fonst\Metropolis-Black.otf')
                                     ?.copyWith(fontWeight: FontWeight.w400),
                               ),
                             ),
@@ -180,17 +218,18 @@ class _Grade_updateState extends State<Grade_update> {
 
                                             constanst.select_grade_idx = index;
                                             if (!constanst.select_gradeId
-                                                .contains(record.productgradeId.toString())) {
+                                                .contains(record.productgradeId
+                                                    .toString())) {
                                               constanst.itemsCheck[index] =
                                                   Icons.check_circle_outline;
 
-
-                                              constanst.select_gradeId
-                                                  .add(record.productgradeId.toString());
-
+                                              constanst.select_gradeId.add(
+                                                  record.productgradeId
+                                                      .toString());
 
                                               constanst.select_grade_id =
-                                                  constanst.select_gradeId.join(",");
+                                                  constanst.select_gradeId
+                                                      .join(",");
 
                                               print(constanst.select_type_id);
 
@@ -200,13 +239,13 @@ class _Grade_updateState extends State<Grade_update> {
                                               constanst.itemsCheck[index] =
                                                   Icons.check_circle_outline;
 
-
-                                              constanst.select_gradeId
-                                                  .remove(record.productgradeId.toString());
-
+                                              constanst.select_gradeId.remove(
+                                                  record.productgradeId
+                                                      .toString());
 
                                               constanst.select_grade_id =
-                                                  constanst.select_gradeId.join(",");
+                                                  constanst.select_gradeId
+                                                      .join(",");
 
                                               print(constanst.select_type_id);
 
@@ -234,63 +273,99 @@ class _Grade_updateState extends State<Grade_update> {
                                                         child: Row(children: [
                                                           GestureDetector(
                                                               child: IconButton(
-                                                                icon: constanst.select_gradeId.contains(record.productgradeId.toString())
-                                                                    ? Icon(
+                                                            icon: constanst
+                                                                    .select_gradeId
+                                                                    .contains(record
+                                                                        .productgradeId
+                                                                        .toString())
+                                                                ? Icon(
                                                                     Icons
                                                                         .check_circle,
                                                                     color: Colors
                                                                         .green
-                                                                        .shade600):Icon(
+                                                                        .shade600)
+                                                                : Icon(
                                                                     Icons
                                                                         .circle_outlined,
                                                                     color: Colors
                                                                         .black45),
+                                                            onPressed: () {
+                                                              setState(() {
+                                                                constanst
+                                                                        .select_grade_idx =
+                                                                    index;
 
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    constanst.select_grade_idx = index;
+                                                                constanst
+                                                                        .select_grade_idx =
+                                                                    index;
+                                                                if (!constanst
+                                                                    .select_gradeId
+                                                                    .contains(record
+                                                                        .productgradeId
+                                                                        .toString())) {
+                                                                  constanst.itemsCheck[
+                                                                          index] =
+                                                                      Icons
+                                                                          .check_circle_outline;
 
-                                                                    constanst.select_grade_idx = index;
-                                                                    if (!constanst.select_gradeId
-                                                                        .contains(record.productgradeId.toString())) {
-                                                                      constanst.itemsCheck[index] =
-                                                                          Icons.check_circle_outline;
+                                                                  constanst
+                                                                      .select_gradeId
+                                                                      .add(record
+                                                                          .productgradeId
+                                                                          .toString());
 
+                                                                  constanst
+                                                                          .select_grade_id =
+                                                                      constanst
+                                                                          .select_gradeId
+                                                                          .join(
+                                                                              ",");
 
-                                                                      constanst.select_gradeId
-                                                                          .add(record.productgradeId.toString());
+                                                                  print(constanst
+                                                                      .select_type_id);
 
+                                                                  setState(
+                                                                      () {});
+                                                                  // print(constanst.colorsitemsCheck[index]==Icons.check_circle);
+                                                                } else {
+                                                                  constanst.itemsCheck[
+                                                                          index] =
+                                                                      Icons
+                                                                          .check_circle_outline;
 
-                                                                      constanst.select_grade_id =
-                                                                          constanst.select_gradeId.join(",");
+                                                                  constanst
+                                                                      .select_gradeId
+                                                                      .remove(record
+                                                                          .productgradeId
+                                                                          .toString());
 
-                                                                      print(constanst.select_type_id);
+                                                                  constanst
+                                                                          .select_grade_id =
+                                                                      constanst
+                                                                          .select_gradeId
+                                                                          .join(
+                                                                              ",");
 
-                                                                      setState(() {});
-                                                                      // print(constanst.colorsitemsCheck[index]==Icons.check_circle);
-                                                                    } else {
-                                                                      constanst.itemsCheck[index] =
-                                                                          Icons.check_circle_outline;
+                                                                  print(constanst
+                                                                      .select_type_id);
 
-
-                                                                      constanst.select_gradeId
-                                                                          .remove(record.productgradeId.toString());
-
-
-                                                                      constanst.select_grade_id =
-                                                                          constanst.select_gradeId.join(",");
-
-                                                                      print(constanst.select_type_id);
-
-                                                                      setState(() {});
-                                                                    }
-                                                                  });
-                                                                },
-                                                              )),
-                                                          Text(
-                                                              record.productGrade
-                                                                  .toString(),
-                                                              style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf',color: Colors.black)
+                                                                  setState(
+                                                                      () {});
+                                                                }
+                                                              });
+                                                            },
+                                                          )),
+                                                          Text(record.productGrade.toString(),
+                                                              style: TextStyle(
+                                                                      fontSize:
+                                                                          13.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontFamily:
+                                                                          'assets\fonst\Metropolis-Black.otf',
+                                                                      color: Colors
+                                                                          .black)
                                                                   ?.copyWith(
                                                                       fontSize:
                                                                           17))
@@ -312,24 +387,34 @@ class _Grade_updateState extends State<Grade_update> {
                                 color: Color.fromARGB(255, 0, 91, 148)),
                             child: TextButton(
                               onPressed: () {
-                                constanst.select_grade_id =
+                                var stringGrade =
                                     constanst.select_gradeId.join(",");
                                 setState(() {
-
+                                  if (constanst.select_gradeId.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: 'Please Select Grade');
+                                  } else {
                                     /*Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Type()));*/
                                     _onLoading();
                                     setGrade().then((value) {
                                       print('12346 $value');
                                       Navigator.of(dialogContext!).pop();
-                                      if(value){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
-                                      }else{
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+                                      if (value) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MainScreen(4)));
+                                      } else {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MainScreen(4)));
                                       }
-
                                     });
-
+                                  }
                                 });
                               },
                               child: Text('Continue',
@@ -363,8 +448,9 @@ class _Grade_updateState extends State<Grade_update> {
     });
     //
   }
+
   void _onLoading() {
-    dialogContext=context;
+    dialogContext = context;
 
     showDialog(
       context: context,
@@ -374,7 +460,7 @@ class _Grade_updateState extends State<Grade_update> {
         return Dialog(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            child:  SizedBox(
+            child: SizedBox(
               width: 300.0,
               height: 150.0,
               child: Center(
@@ -384,21 +470,19 @@ class _Grade_updateState extends State<Grade_update> {
                   child: Center(
                       child: Platform.isAndroid
                           ? CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
+                              value: null,
+                              strokeWidth: 2.0,
+                              color: Color.fromARGB(255, 0, 91, 148),
+                            )
                           : Platform.isIOS
-                          ? CupertinoActivityIndicator(
-                        color: Color.fromARGB(255, 0, 91, 148),
-                        radius: 20,
-                        animating: true,
-                      )
-                          : Container()
-                  ),
+                              ? CupertinoActivityIndicator(
+                                  color: Color.fromARGB(255, 0, 91, 148),
+                                  radius: 20,
+                                  animating: true,
+                                )
+                              : Container()),
                 ),
               ),
-
             ));
       },
     );
@@ -409,6 +493,7 @@ class _Grade_updateState extends State<Grade_update> {
       print('exit1'); // Dialog closed
     });*/
   }
+
   checknetwork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
 
@@ -422,23 +507,21 @@ class _Grade_updateState extends State<Grade_update> {
       get_data();
     }
   }
-  getProfiless() async{
+
+  getProfiless() async {
     common_par common = common_par();
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
     print(_pref.getString('user_id').toString());
 
-    var res = await getbussinessprofile(_pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),);
-
+    var res = await getbussinessprofile(
+      _pref.getString('user_id').toString(),
+      _pref.getString('api_token').toString(),
+    );
 
     print(res);
     if (res['status'] == 1) {
-
-      grade_id=res['user']['grade_id'];
-
-
-
+      grade_id = res['user']['grade_id'];
 
       print('mytype');
       constanst.select_gradeId = grade_id.split(",");
@@ -458,43 +541,46 @@ class _Grade_updateState extends State<Grade_update> {
       // Fluttertoast.showToast(msg: res['message']);
     }
 
-    setState(() {
-
-    });
+    setState(() {});
   }
-  clean_data(){
+
+  clean_data() {
     constanst.select_gradeId.clear();
     constanst.itemsCheck.clear();
     constanst.Type_itemsCheck.clear();
     constanst.Grade_itemsCheck.clear();
     constanst.select_grade_name.clear();
-    constanst.select_grade_id="";
-    constanst.select_grade_idx=0;
+    constanst.select_grade_id = "";
+    constanst.select_grade_idx = 0;
   }
+
   Future<bool> setGrade() async {
     common_par common = common_par();
-   // var stringgrade = constanst.select_gradeId.join(",");
+    var stringgrade = constanst.select_gradeId.join(",");
 
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
-    var res = await addProductgrade(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(), constanst.select_grade_id, '9');
+    var res = await addProductgrade(
+      _pref.getString('user_id').toString(),
+      _pref.getString('api_token').toString(),
+      // constanst.select_grade_id,
+      stringgrade,
+      '9',
+    );
 
     print(_pref.getString('user_id').toString());
     print(_pref.getString('api_token').toString());
 
-
-
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       clean_data();
-      _isloading1=true;
-   /*   Navigator.push(
+      _isloading1 = true;
+      /*   Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
       clean_data();
       Fluttertoast.showToast(msg: res['message']);
-      _isloading1=true;
+      _isloading1 = true;
     }
     setState(() {});
     return _isloading1;

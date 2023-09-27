@@ -443,6 +443,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                               )
                                                             ],
                                                           )),
+
+
                                                       Container(
                                                         //padding: EdgeInsets.only(bottom: 3.0),
                                                         height: 57,
@@ -856,30 +858,40 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 onPressed: () {
                                                                   setState(
                                                                       () async {
-                                                                    edit_mbl = false;
+
                                                                     WidgetsBinding
                                                                         .instance
                                                                         ?.focusManager
                                                                         .primaryFocus
                                                                         ?.unfocus();
-                                                                    _onLoading();
-                                                                    await register_mo_verifyotp(
-                                                                            _mblotp.text
-                                                                                .toString(),
-                                                                            _bussmbl.text
-                                                                                .toString(),
-                                                                            "3")
-                                                                        .then(
-                                                                            (value) {
-                                                                      print(
-                                                                          'dsefef $value');
-                                                                      Navigator.of(
-                                                                              dialogContext!)
-                                                                          .pop();
-                                                                      if (value) {}
-                                                                    });
-                                                                    isloading1 =
-                                                                        false;
+                                                                   if(_mblotp.text.isEmpty){
+                                                                     Fluttertoast.showToast(msg: "Please Enter OTP");
+                                                                     _color1 = Colors.red;
+
+                                                                   }else{
+
+
+
+                                                                     // _onLoading();
+                                                                     await register_mo_verifyotp(
+                                                                         _mblotp.text
+                                                                             .toString(),
+                                                                         _bussmbl.text
+                                                                             .toString(),
+                                                                         "3")
+                                                                         .then(
+                                                                             (value) {
+                                                                           print(
+                                                                               'dsefef $value');
+                                                                           Navigator.of(
+                                                                               dialogContext!)
+                                                                               .pop();
+                                                                           if (value) {}
+                                                                         });
+
+                                                                     isloading1 = false;
+                                                                   }
+
                                                                   });
                                                                 },
                                                                 child: const Text(
@@ -899,14 +911,10 @@ class _LoginDetailState extends State<LoginDetail> {
                                                           ],
                                                         )
                                                       : Container(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              1.2,
+                                                          width: MediaQuery.of(context).size.width * 1.2,
                                                           height: 60,
                                                           margin:
-                                                              EdgeInsets.all(
+                                                              const EdgeInsets.all(
                                                                   20.0),
                                                           decoration: BoxDecoration(
                                                               border:
@@ -1118,14 +1126,14 @@ class _LoginDetailState extends State<LoginDetail> {
                                       Visibility(
                                           visible: edit_email,
                                           child: Container(
-                                            margin: EdgeInsets.fromLTRB(
+                                            margin: const EdgeInsets.fromLTRB(
                                                 20, 20, 20, 20),
                                             child: Column(
                                               children: [
                                                 TextFormField(
                                                   // controller: _usernm,
                                                   controller: _bussemail,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 15.0,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -1147,7 +1155,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                     fillColor: Colors.white,
                                                     hintText:
                                                         "New Email Address",
-                                                    hintStyle: TextStyle(
+                                                    hintStyle: const TextStyle(
                                                             fontSize: 15.0,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -1235,7 +1243,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 1.2,
                                                             height: 60,
                                                             margin:
-                                                                EdgeInsets.all(
+                                                                const EdgeInsets.all(
                                                                     20.0),
                                                             decoration: BoxDecoration(
                                                                 border:
@@ -1477,7 +1485,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 1.2,
                                                             height: 60,
                                                             margin:
-                                                                EdgeInsets.all(
+                                                                const EdgeInsets.all(
                                                                     20.0),
                                                             decoration: BoxDecoration(
                                                                 border:
@@ -1488,7 +1496,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             50.0),
-                                                                color: Color
+                                                                color: const Color
                                                                     .fromARGB(
                                                                         255,
                                                                         0,
@@ -1496,44 +1504,35 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         148)),
                                                             child: TextButton(
                                                               onPressed: () {
-                                                                /*Navigator.push(
-                                                              context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
-                                                                setState(() {
-                                                                  edit_email =
-                                                                      false;
-                                                                });
+
                                                                 WidgetsBinding
                                                                     .instance
                                                                     ?.focusManager
                                                                     .primaryFocus
                                                                     ?.unfocus();
-                                                                _onLoading();
-
-                                                                update_email_verifyotp(
-                                                                        _emailotp
-                                                                            .text
-                                                                            .toString(),
-                                                                        _bussemail
-                                                                            .text
-                                                                            .toString(),
-                                                                        "2")
-                                                                    .then(
-                                                                        (value) {
-                                                                  Navigator.of(
-                                                                          dialogContext!)
-                                                                      .pop();
-                                                                  if (value) {
-                                                                    /*Navigator.push(
-                                                      context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                                  } else {
-                                                                    /*Navigator.push(
-                                                      context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                                  }
-                                                                });
+                                                                if(_emailotp.text.isEmpty){
+                                                                  _color1 = Colors.red;
+                                                                  Fluttertoast.showToast(msg: "Please Enter OTP");
+                                                                }else{
+                                                                  update_email_verifyotp(
+                                                                      _emailotp
+                                                                          .text
+                                                                          .toString(),
+                                                                      _bussemail
+                                                                          .text
+                                                                          .toString(),
+                                                                      "2")
+                                                                      .then(
+                                                                          (value) {
+                                                                        Navigator.of(
+                                                                            dialogContext!)
+                                                                            .pop();
+                                                                      });
+                                                                }
                                                                 isloading1 =
                                                                     false;
                                                               },
-                                                              child: Text(
+                                                              child: const Text(
                                                                   'Verify',
                                                                   style: TextStyle(
                                                                       fontSize:
@@ -1648,7 +1647,7 @@ class _LoginDetailState extends State<LoginDetail> {
 
 
                                   Container(
-                                      margin: EdgeInsets.fromLTRB(
+                                      margin: const EdgeInsets.fromLTRB(
                                           20.0, 0.0, 20.0, 20.0),
                                       padding: EdgeInsets.fromLTRB(
                                           5.0, 5.0, 5.0, 5.0),
@@ -1656,7 +1655,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                         color: Colors.white,
                                         border:
                                             Border.all(color: Colors.black26),
-                                        borderRadius: BorderRadius.all(
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(15)),
                                       ),
                                       child: Column(
@@ -1715,94 +1714,17 @@ class _LoginDetailState extends State<LoginDetail> {
                                                         ),
                                                       )
                                               ]),
+
+
                                           Visibility(
                                               visible: edit_pass,
                                               child: Column(
                                                 children: [
-                                                  /*Padding(
-                                            padding:
-                                            EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
-                                            child: TextFormField(
-                                              controller: _currentpass,
-                                              obscureText: !_passwordVisible,
-                                              autovalidateMode:
-                                              AutovalidateMode.onUserInteraction,
-                                              keyboardType: TextInputType.text,
-                                              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-                                              textInputAction: TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                // labelText: 'Your Password',
-                                                // labelStyle: TextStyle(color: Colors.red),
 
-                                                hintText: "Enter Your Current Password ",
-                                                hintStyle:
-                                                TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-                                                suffixIcon: IconButton(
-                                                  icon:
-                                                  // Based on passwordVisible state choose the icon
-                                                  _passwordVisible
-                                                      ?  Image.asset(
-                                                      'assets/hidepassword.png')
-                                                      :Image.asset('assets/Vector.png'),
-                                                  color: Colors.white,
-                                                  onPressed: () {
-                                                    // Update the state i.e. toogle the state of passwordVisible variable
-                                                    setState(() {
-                                                      _passwordVisible = !_passwordVisible;
-                                                    });
-                                                  },
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                    borderSide:
-                                                    BorderSide(width: 1, color: _color4),
-                                                    borderRadius:
-                                                    BorderRadius.circular(10.0)),
-                                                border: OutlineInputBorder(
-                                                    borderSide:
-                                                    BorderSide(width: 1, color: _color4),
-                                                    borderRadius:
-                                                    BorderRadius.circular(10.0)),
-                                                focusedBorder: OutlineInputBorder(
-                                                    borderSide:
-                                                    BorderSide(width: 1, color: _color4),
-                                                    borderRadius:
-                                                    BorderRadius.circular(10.0)),
-                                                //errorText: _validusernm ? 'Name is not empty' : null),
-                                              ),
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Enter a Password!';
-                                                }
-                                              },
-                                              onChanged: (value) {
 
-                                              },
-                                              onFieldSubmitted: (value) {
-                                                if (value.isEmpty) {
-                                                  Fluttertoast.showToast(
-                                                      msg: 'Please Enter Your Password');
-                                                  setState(() {
-                                                    _color4 = Colors.red;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    _color4 = Colors.green.shade600;
-                                                  });
-                                                }
-                                                var numValue = value.length;
-                                                if (numValue < 6) {
-                                                  Fluttertoast.showToast(
-                                                      msg: 'Password must be 6 charecter');
-                                                  _color4 = Colors.red;
-                                                } else {
-                                                  _color4 = Colors.green.shade600;
-                                                }
-                                              },
-                                            ),
-                                          ),*/
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.fromLTRB(
+                                                        const EdgeInsets.fromLTRB(
                                                             25.0,
                                                             5.0,
                                                             25.0,
@@ -1814,7 +1736,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       autovalidateMode:
                                                           AutovalidateMode
                                                               .onUserInteraction,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 15.0,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -1831,7 +1753,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                         // labelStyle: TextStyle(color: Colors.red),
                                                         hintText:
                                                             "New Password",
-                                                        hintStyle: TextStyle(
+                                                        hintStyle: const TextStyle(
                                                             fontSize: 15.0,
                                                             fontWeight:
                                                                 FontWeight.w400,
@@ -1927,9 +1849,11 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       },
                                                     ),
                                                   ),
+
+
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.fromLTRB(
+                                                        const EdgeInsets.fromLTRB(
                                                             25.0,
                                                             5.0,
                                                             25.0,
@@ -1941,7 +1865,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       autovalidateMode:
                                                           AutovalidateMode
                                                               .onUserInteraction,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 15.0,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -2051,6 +1975,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       },
                                                     ),
                                                   ),
+
                                                   Container(
                                                     width:
                                                         MediaQuery.of(context)
@@ -2059,53 +1984,60 @@ class _LoginDetailState extends State<LoginDetail> {
                                                             1.2,
                                                     height: 60,
                                                     margin:
-                                                        EdgeInsets.all(20.0),
+                                                        const EdgeInsets.all(20.0),
                                                     decoration: BoxDecoration(
                                                         border: Border.all(
                                                             width: 1),
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(50.0),
-                                                        color: Color.fromARGB(
+                                                        color: const Color.fromARGB(
                                                             255, 0, 91, 148)),
                                                     child: TextButton(
                                                       onPressed: () {
-                                                        /*Navigator.push(
-                                                              context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
-                                                        WidgetsBinding
+                                                         WidgetsBinding
                                                             .instance
                                                             ?.focusManager
                                                             .primaryFocus
                                                             ?.unfocus();
 
                                                         setState(() {
-                                                          if (_confirpass
+
+                                                          if(_newpass.text.isEmpty){
+                                                            _color3 = Colors.red;
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                "Please Enter Password...");
+                                                          }else if(_newpass.text.length < 6){
+                                                            _color3 = Colors.red;
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                "Password must have 6 digit...");
+                                                          }else if(_confirpass.text.isEmpty){
+                                                            _color5 = Colors.red;
+                                                            Fluttertoast.showToast(
+                                                                msg:
+                                                                "Please Enter Confirm Password");
+                                                          }else if (_confirpass
                                                                   .text !=
                                                               _newpass.text) {
+                                                            _color3 = Colors.red;
+                                                            _color5 = Colors.red;
                                                             Fluttertoast.showToast(
                                                                 msg:
                                                                     "Password Doesn't Match");
                                                           } else {
-                                                            edit_pass = false;
                                                             isloading1 = true;
                                                             WidgetsBinding
                                                                 .instance
                                                                 ?.focusManager
                                                                 .primaryFocus
                                                                 ?.unfocus();
-                                                            _onLoading();
                                                             change_password()
                                                                 .then((value) {
                                                               Navigator.of(
                                                                       dialogContext!)
                                                                   .pop();
-                                                              if (value) {
-                                                                /*Navigator.push(
-                                                            context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                              } else {
-                                                                /*  Navigator.push(
-                                                            context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                              }
                                                             });
                                                             isloading1 = false;
                                                           }
@@ -2128,6 +2060,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                               ))
                                         ],
                                       )),
+                                  
+
                                 ],
                               )
                             : Center(
@@ -2229,6 +2163,9 @@ class _LoginDetailState extends State<LoginDetail> {
   }
 
   Future<bool> update_phone() async {
+
+    log("Button Pressed");
+
     common_par common = common_par();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     // _isResendButtonEnabled = ;
@@ -2324,6 +2261,9 @@ class _LoginDetailState extends State<LoginDetail> {
     String phoneno,
     String step,
   ) async {
+
+    log("VERIFY Button Pressed");
+
     common_par common = common_par();
     _onLoading();
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -2335,21 +2275,18 @@ class _LoginDetailState extends State<LoginDetail> {
         step);
 
     String? msg = res['message'];
-    Fluttertoast.showToast(msg: "$msg");
+
     if (res['status'] == 1) {
       common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
-
       _bussmbl.clear();
       _mblotp.clear();
-
-
-
+      edit_mbl = false;
+      mbl_otp = 0;
       isloading1 = true;
     } else {
       Fluttertoast.showToast(msg: res['message']);
       log("VALIDATION FAILED");
-      _mblotp.clear();
       isloading1 = true;
 
     }
@@ -2363,6 +2300,9 @@ class _LoginDetailState extends State<LoginDetail> {
     String email,
     String step,
   ) async {
+
+    _onLoading();
+
     common_par common = common_par();
     SharedPreferences _pref = await SharedPreferences.getInstance();
     var res = await reg_email_verifyotp(
@@ -2380,7 +2320,8 @@ class _LoginDetailState extends State<LoginDetail> {
       Fluttertoast.showToast(msg: res['message']);
       _bussemail.clear();
       _emailotp.clear();
-
+      edit_email = false;
+      email_otp = 0;
       isloading1 = true;
     } else {
       Fluttertoast.showToast(msg: res['message']);
@@ -2403,6 +2344,9 @@ class _LoginDetailState extends State<LoginDetail> {
     if (res['status'] == 1) {
       common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
+      _newpass.clear();
+      _confirpass.clear();
+      edit_pass = false;
       isloading1 = true;
     } else {
       Fluttertoast.showToast(msg: res['message']);
