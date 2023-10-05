@@ -88,7 +88,7 @@ class _AddPostState extends State<AddPost> {
   bool category1 = false;
   String type_post = "";
 
-  String? _selectitem4 = null, _selectitem5 = null, _selectitem6 = null;
+  String? _selectitem4, _selectitem5, _selectitem6;
   String googleApikey = "AIzaSyCyqsD3OPUWGJ5AWbN3iKbUzQGs3Q-ZlPE";
 
   CameraPosition? cameraPosition;
@@ -1020,7 +1020,7 @@ class _AddPostState extends State<AddPost> {
                               Container(
                                   width: MediaQuery.of(context).size.width,
                                   margin:
-                                      EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -1073,16 +1073,44 @@ class _AddPostState extends State<AddPost> {
                                           )
                                         ],
                                       ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                       Stack(
                                         children: [
                                           GestureDetector(
                                             child: _imagefiles1 != null
                                                 ? Image.file(file1!,
-                                                    height: 100, width: 100)
+                                                height: 100, width: 100)
                                                 : Image.asset(
-                                                    'assets/addphoto1.png',
-                                                    height: 100,
-                                                    width: 100),
+                                                'assets/addphoto1.png',
+                                                height: 100,
+                                                width: 100),
                                             onTap: () {
                                               //takephoto1(ImageSource.gallery);
                                               showModalBottomSheet(
@@ -1103,7 +1131,7 @@ class _AddPostState extends State<AddPost> {
                                                   height: 40,
                                                   margin: EdgeInsets.all(2.0),
                                                   child: Card(
-                                                      //margin: EdgeInsets.all(5),
+                                                    //margin: EdgeInsets.all(5),
                                                       shape: CircleBorder(),
                                                       child: GestureDetector(
                                                         child: Icon(
@@ -1114,7 +1142,7 @@ class _AddPostState extends State<AddPost> {
                                                             _imagefiles1 = null;
                                                             constanst.imagesList
                                                                 .remove(
-                                                                    _imagefiles1);
+                                                                _imagefiles1);
                                                           });
                                                         },
                                                       )),
@@ -1127,12 +1155,12 @@ class _AddPostState extends State<AddPost> {
                                           GestureDetector(
                                             child: _imagefiles2 != null
                                                 ? Image.file(file2!,
-                                                    height: 100, width: 100)
+                                                height: 100, width: 100)
                                                 : Image.asset(
-                                                    'assets/addphoto1.png',
-                                                    height: 100,
-                                                    width: 100,
-                                                  ),
+                                              'assets/addphoto1.png',
+                                              height: 100,
+                                              width: 100,
+                                            ),
                                             onTap: () {
                                               // takephoto2(ImageSource.gallery);
                                               // print('heeeeeee');
@@ -1154,9 +1182,9 @@ class _AddPostState extends State<AddPost> {
                                                   height: 40,
                                                   //margin: EdgeInsets.all(2.0),
                                                   child: Card(
-                                                      //margin: EdgeInsets.all(5),
+                                                    //margin: EdgeInsets.all(5),
                                                       shape:
-                                                          const CircleBorder(),
+                                                      const CircleBorder(),
                                                       child: GestureDetector(
                                                         child: const Icon(
                                                             Icons.delete,
@@ -1166,7 +1194,7 @@ class _AddPostState extends State<AddPost> {
                                                             _imagefiles2 = null;
                                                             constanst.imagesList
                                                                 .remove(
-                                                                    _imagefiles2);
+                                                                _imagefiles2);
                                                           });
                                                         },
                                                       )),
@@ -1325,11 +1353,6 @@ class _AddPostState extends State<AddPost> {
       },
     );
 
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 
   Future<bool> add_BuyPost() async {
@@ -1516,6 +1539,7 @@ class _AddPostState extends State<AddPost> {
                 toolbarTitle: 'Cropper',
                 toolbarColor: const Color.fromARGB(255, 0, 91, 148),
                 toolbarWidgetColor: Colors.white,
+
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
             IOSUiSettings(

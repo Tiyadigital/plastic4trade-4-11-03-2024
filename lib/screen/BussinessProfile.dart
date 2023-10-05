@@ -118,13 +118,10 @@ class _bussinessprofileState extends State<bussinessprofile>
 
       // get_data();
     }
-    print(
-        "sddkbfbfahfhgdahfdnfdhfjahfa asbfafhajsgfhgfjakfjakhfbhjafhajkbfaufhn $image_url");
   }
 
   @override
   Widget build(BuildContext context) {
-    print("MORE_PROFILE_::${constanst.isFromNotification}");
     return init(context);
   }
 
@@ -152,7 +149,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Bussinessinfo()));
+                              builder: (context) => const Bussinessinfo()));
                     },
                     icon: Image.asset(
                       'assets/edit.png',
@@ -1050,60 +1047,6 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                   ...buildWidgets(abot_buss!),
                                                 ],
                                             )
-
-
-
-                                            // Align(
-                                            //     alignment: Alignment.topLeft,
-                                            //     child: GestureDetector(
-                                            //       onTap: () async {
-                                            //
-                                            //         List<String> lines = abot_buss!.split('\n');
-                                            //         for (String line in lines) {
-                                            //           // Check for links
-                                            //           if (Uri.tryParse(line)?.hasScheme ?? false) {
-                                            //             if (await canLaunch(line)) {
-                                            //               await launch(line);
-                                            //               return;
-                                            //             }
-                                            //           }
-                                            //
-                                            //           // Check for phone numbers
-                                            //           if (RegExp(r'\b\d{10}\b').hasMatch(line)) {
-                                            //             final number = RegExp(r'\b\d{10}\b').stringMatch(line)!;
-                                            //             final url = 'tel:$number';
-                                            //             if (await canLaunch(url)) {
-                                            //               await launch(url);
-                                            //               return;
-                                            //             }
-                                            //           }
-                                            //
-                                            //           // Check for emails
-                                            //           if (RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b').hasMatch(line)) {
-                                            //             final email = RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b').stringMatch(line)!;
-                                            //             final url = 'mailto:$email';
-                                            //             if (await canLaunch(url)) {
-                                            //               await launch(url);
-                                            //               return;
-                                            //             }
-                                            //           }
-                                            //         }
-                                            //       },
-                                            //       child: Text(
-                                            //         abot_buss.toString(),
-                                            //         style: const TextStyle(
-                                            //           fontWeight: FontWeight.w500,
-                                            //           fontFamily: 'Metropolis-Black', // Adjust the font family accordingly
-                                            //           fontSize: 13,
-                                            //           color: Colors.black,
-                                            //         ),
-                                            //       ),
-                                            //     )
-                                            //
-                                            //
-                                            //
-                                            //
-                                            // ),
                                           ],
                                         ),
                                       )),
@@ -1424,7 +1367,8 @@ class _bussinessprofileState extends State<bussinessprofile>
                               radius: 20,
                               animating: true,
                             )
-                          : Container())),
+                          : Container()),
+      ),
     );
   }
 
@@ -1531,7 +1475,6 @@ class _bussinessprofileState extends State<bussinessprofile>
     var res = await share_count(_pref.getString('user_id').toString(),
         _pref.getString('user_id').toString());
 
-    print(res);
 
     if (res['status'] == 1) {
 
@@ -1845,7 +1788,6 @@ class _bussinessprofileState extends State<bussinessprofile>
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print('MORE_DISPOSE_SCREEN');
   }
 
   void _launchSocialMediaAppIfInstalled() {
@@ -1892,15 +1834,13 @@ class _bussinessprofileState extends State<bussinessprofile>
     );
 
     Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
+      // Dialog closed
     });
   }
 
   Future<bool> _onbackpress(BuildContext context) async {
-    print('MORE_BACKCLICK');
 
     if (constanst.isFromNotification) {
       constanst.isFromNotification = false;
@@ -2234,13 +2174,11 @@ class _bussinessprofileState extends State<bussinessprofile>
         offset.toString(),
         _pref.getString('user_id').toString());
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       buyPostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
         jsonarray = res['result'];
-        print(jsonarray);
 
         var color_array;
         for (var data in jsonarray) {
@@ -2265,10 +2203,8 @@ class _bussinessprofileState extends State<bussinessprofile>
           buypostlist_data.add(record);
         }
 
-        print(color_array);
 
         isload = true;
-        print(buypostlist_data);
         if (mounted) {
           setState(() {});
         }
@@ -2291,7 +2227,6 @@ class _bussinessprofileState extends State<bussinessprofile>
         _pref.getString('api_token').toString());
 
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       getsimmilar = common_par.fromJson(res);
       // Fluttertoast.showToast(msg: res['message']);
@@ -2344,13 +2279,11 @@ class _bussinessprofileState extends State<bussinessprofile>
         offset.toString(),
         _pref.getString('user_id').toString());
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       salePostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
         jsonarray = res['result'];
-        print(jsonarray);
 
         var color_array;
         for (var data in jsonarray) {
@@ -2375,10 +2308,8 @@ class _bussinessprofileState extends State<bussinessprofile>
           salepostlist_data.add(record);
         }
 
-        print(color_array);
 
         isload = true;
-        print(salepostlist_data);
         if (mounted) {
           setState(() {});
         }
@@ -2397,8 +2328,6 @@ class _bussinessprofileState extends State<bussinessprofile>
     packageName = packageInfo!.packageName;
     String version = packageInfo!.version;
     String buildNumber = packageInfo!.buildNumber;
-    print(
-        "App Name : ${appName}, App Package Name: ${packageName},App Version: ${version}, App build Number: ${buildNumber}");
   }
 
   void shareImage({required String url, required String title}) async {
@@ -2453,11 +2382,9 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     var res =
         await get_profileliked_user(_pref.getString('user_id').toString());
 
-    print(res);
     if (res['status'] == 1) {
       common = Get_likeUser.fromJson(res);
       dataList = common.data ?? [];
-      print(dataList);
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
@@ -2468,13 +2395,13 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
   get_view() async {
     Get_viewUser common = Get_viewUser();
     SharedPreferences _pref = await SharedPreferences.getInstance();
+
+
     var res =
         await get_profileviewd_user(_pref.getString('user_id').toString());
-    print(res);
     if (res['status'] == 1) {
       common = Get_viewUser.fromJson(res);
       dataList1 = common.data ?? [];
-      print(dataList1);
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
@@ -2484,15 +2411,13 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_share() async {
     Get_shareUser common = Get_shareUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await get_profiles_share(_pref.getString('user_id').toString());
+    var res = await get_profiles_share(pref.getString('user_id').toString());
 
-    print(res);
     if (res['status'] == 1) {
       common = Get_shareUser.fromJson(res);
       dataList2 = common.data ?? [];
-      print(dataList2);
       isload = true;
     } else {
       Fluttertoast.showToast(msg: res['message']);
@@ -2523,7 +2448,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     return isload == true
         ? Column(
             children: [
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Image.asset(
                 'assets/hori_line.png',
                 width: 150,
@@ -2531,7 +2456,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
               ),
               TabBar(
                 controller: _tabController,
-                tabs: [
+                tabs: const [
                   Tab(text: 'Like'),
                   Tab(text: 'View'),
                   Tab(text: 'Share'),
@@ -2557,7 +2482,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                               radius: 16.0,
                               backgroundImage: NetworkImage(
                                   dataList[index].imageUrl.toString()),
-                              //File imageFile = File(pickedFile.path);
 
                               backgroundColor:
                                   const Color.fromARGB(255, 240, 238, 238),
@@ -2589,10 +2513,10 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                               backgroundImage: dataList1[index].imageUrl != null
                                   ? NetworkImage(
                                       dataList1[index].imageUrl.toString())
-                                  : AssetImage('assets/more.png')
+                                  : const AssetImage('assets/more.png')
                                       as ImageProvider,
                               backgroundColor:
-                                  Color.fromARGB(255, 240, 238, 238),
+                                  const Color.fromARGB(255, 240, 238, 238),
                             ),
                           );
                         }),
@@ -2602,7 +2526,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: Text(dataList2[index].username.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
@@ -2616,7 +2540,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                               //File imageFile = File(pickedFile.path);
 
                               backgroundColor:
-                                  Color.fromARGB(255, 240, 238, 238),
+                                  const Color.fromARGB(255, 240, 238, 238),
                             ),
                           );
                         }),
@@ -2625,7 +2549,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
               ),
             ],
           )
-        : Center(
+        : const Center(
             child: CircularProgressIndicator(),
           );
   }

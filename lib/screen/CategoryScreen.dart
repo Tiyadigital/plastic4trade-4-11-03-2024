@@ -183,8 +183,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     child: TextButton(
                                       onPressed: () async {
                                         final connectivityResult =
-                                            await Connectivity()
-                                                .checkConnectivity();
+                                        await Connectivity()
+                                            .checkConnectivity();
 
                                         if (connectivityResult ==
                                             ConnectivityResult.none) {
@@ -195,7 +195,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           Fluttertoast.showToast(
                                               msg:
                                               'Select Atleast 1 Domestic / International or Select Both ');
-                                        } else if (constanst.select_inserestlocation.isEmpty) {
+                                        } else if (constanst.select_categotyType.isEmpty) {
                                           Fluttertoast.showToast(
                                               msg:
                                               'Select Atleast 1 Buy Post / Sell Post or Select Both');

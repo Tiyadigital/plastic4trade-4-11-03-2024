@@ -1,39 +1,17 @@
 name: Plastic4trade
 description: A new Flutter project.
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
 
   flutter:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   retrofit: any
   dio: any
@@ -42,57 +20,39 @@ dependencies:
   fluttertoast: any
   shared_preferences: any
   flutter_otp_text_field: ^1.1.1
- # file_picker: ^4.0.0
   file_picker: ^5.2.7
   url_launcher: ^6.0.10
-  #country_code_picker: any
-  #country_code_picker : any
-  #country_code_picker_x: ^2.0.5
-  #country_phone_code_picker: ^0.0.43
 
   intl: any
   flutter_slidable: any
   pointer_interceptor: any
-  #visibility_detector: any
   youtube_player_flutter: any
-  image_picker: ^0.8.9 #^0.8.9
+  image_picker: ^0.8.9
   flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
   google_api_headers: ^1.1.1
   google_maps_webservice: ^0.0.20-nullsafety.5
   google_maps_flutter: ^2.1.1
   connectivity_plus: any
-  #flutter_progress_hud: any
   flutter_image_compress: any
-  webview_flutter: any
+#  webview_flutter: any
   share: any
   path_provider: ^2.0.15
   package_info_plus: any
   flutter_html: any
   flutter_typeahead: any
   google_maps_flutter_ios: ^2.2.3
-  #url_launcher_ios: any
-  #firebase_messaging: any
-  #firebase_core: ^1.20.0
-  #flutter_local_notifications: any
-  #firebase_core_platform_interface: 4.5.1
-  #firebase_auth: any
   firebase_messaging: any
   firebase_core: any
   flutter_local_notifications: ^9.3.2
   firebase_core_platform_interface: any
   firebase_auth: any
   flutter_firebase_chat_core: any
-  #firebase_messaging: any
-  #firebase_core: ^1.20.0
-  #flutter_local_notifications: any
-  #firebase_core_platform_interface: 4.5.1
 
 
   cloud_firestore: any
   device_info_plus: any
   country_calling_code_picker: ^2.0.1
   android_id : any
- # overlay_support: ^1.0.0
   syncfusion_flutter_charts: any
   firebase_storage: any
   cached_network_image: ^3.2.3
@@ -100,60 +60,31 @@ dependencies:
   firebase_database: any
   photo_view : any
   responsive_grid_list: ^1.3.2
-  #country_list_pick: ^1.0.1+6
   flutter_localizations:
     sdk: flutter
-
-
-
-  #image_picker: any
- # image_cropper: ^1.0.2
-#  flutter_image_compress: any
-
-  #intl_phone_number_input: any
-
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
-      #remoce
-  #intl_phone_field: ^3.1.0
   getwidget: any
   marquee: ^2.2.3
-  fluttertoast: any
   email_validator: any
   flutter_rating_bar: any
   youtube_player_iframe: ^4.0.4
-  #fl_chart: ^0.10.1
   badges: ^3.0.2
   http: any
-  flutter_image_compress: ^2.0.4
-  #country_phone_code_picker: any
-  shared_preferences: any
   slide_switcher: ^1.1.2
   image_cropper: ^4.0.0
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 
-
-
-  #modal_bottom_sheet: any
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
@@ -272,31 +203,9 @@ flutter:
       - assets/round.png
       - assets/account.png
 
-  #   - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   fonts:
         - family: Metropolis
           fonts:
             - asset: assets\fonst\Metropolis-Regular.otf
             - asset: assets\fonst\Metropolis-Black.otf
             - asset: assets\fonst\Metropolis-SemiBold.otf
-          # style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

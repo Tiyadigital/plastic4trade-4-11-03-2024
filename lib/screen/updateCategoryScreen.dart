@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:Plastic4trade/constroller/GetCategoryController.dart';
@@ -38,8 +39,9 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
   String? post_type;
   String category_id = '';
   bool? _isloading;
-  bool _isloading1= false;
+  bool _isloading1 = false;
   BuildContext? dialogContext;
+
   void get_data() async {
     GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
@@ -84,12 +86,9 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
   }
 
   Widget initwidget(BuildContext context) {
-
     setState(() {
-
       if (constanst.catdata.isEmpty) {
         _isloading = true;
-
       }
       for (int i = 0; i < constanst.catdata.length; i++) {
         constanst.itemsCheck.add(Icons.circle_outlined);
@@ -111,78 +110,88 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                   maintainBottomViewPadding: true,
                   child: _isloading == true
                       ? Center(
-                      child: Platform.isAndroid
-                          ? const CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
-                          : Platform.isIOS
-                          ? const CupertinoActivityIndicator(
-                        color: Color.fromARGB(255, 0, 91, 148),
-                        radius: 20,
-                        animating: true,
-                      )
-                          : Container())
+                          child: Platform.isAndroid
+                              ? const CircularProgressIndicator(
+                                  value: null,
+                                  strokeWidth: 2.0,
+                                  color: Color.fromARGB(255, 0, 91, 148),
+                                )
+                              : Platform.isIOS
+                                  ? const CupertinoActivityIndicator(
+                                      color: Color.fromARGB(255, 0, 91, 148),
+                                      radius: 20,
+                                      animating: true,
+                                    )
+                                  : Container())
                       : Column(children: [
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                            GestureDetector(
-                              child: Image.asset('assets/back.png',
-                                  height: 50, width: 60),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-
-                            Center(
-                                child: Text(
-                              'Update Category',
-                              style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf')
-                                  .copyWith(fontSize: 20.0),
-                            )),
+                                GestureDetector(
+                                  child: Image.asset('assets/back.png',
+                                      height: 50, width: 60),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Center(
+                                    child: Text(
+                                  'Update Category',
+                                  style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets\fonst\Metropolis-Black.otf')
+                                      .copyWith(fontSize: 20.0),
+                                )),
                                 Container(
-                                  width: MediaQuery.of(context).size.width /4.6,
+                                  width:
+                                      MediaQuery.of(context).size.width / 4.6,
                                   height: 37,
                                   margin: const EdgeInsets.only(right: 10.0),
                                   decoration: BoxDecoration(
                                       border: Border.all(width: 1),
                                       borderRadius: BorderRadius.circular(10.0),
-                                      color: const Color.fromARGB(255, 0, 91, 148)),
+                                      color: const Color.fromARGB(
+                                          255, 0, 91, 148)),
                                   child: TextButton(
                                     onPressed: () async {
-                                      // if (_formKey.currentState!.validate()) {
-                                      //   Fluttertoast.showToast(
-                                      //       msg: "Data Proccess");
-                                      //   vaild_data();
-                                      // }
-                                      // setState(() {});
-
+                                      log("LENGTH === ${constanst.select_inserestlocation.length}");
                                       final connectivityResult =
-                                      await Connectivity().checkConnectivity();
+                                      await Connectivity()
+                                          .checkConnectivity();
 
                                       if (connectivityResult ==
                                           ConnectivityResult.none) {
                                         Fluttertoast.showToast(
-                                            msg: 'Net Connection not available');
+                                            msg:
+                                            'Net Connection not available');
+                                      } else if (constanst.select_inserestlocation.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                            'Select Atleast 1 Domestic / International or Select Both ');
+                                      } else if (constanst.select_categotyType.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                            'Select Atleast 1 Buy Post / Sell Post or Select Both');
+                                      } else if (constanst.select_categotyId.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                            'Select Minimum 1 Category');
                                       } else {
                                         setState(() {});
                                         _onLoading();
                                         setcategory().then((value) {
-
-                                          Navigator.of(dialogContext!).pop();
-                                          if(value){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Type_update()));
-                                          }else{
-                                            /*  Navigator.push(context, MaterialPageRoute(builder: (context) => Type_update()));*/
+                                          Navigator.of(dialogContext!)
+                                              .pop();
+                                          if (value) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Type_update()));
                                           }
-
                                         });
                                       }
                                     },
@@ -192,10 +201,10 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                             fontWeight: FontWeight.w800,
                                             color: Colors.white,
                                             fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
+                                                'assets\fonst\Metropolis-Black.otf')),
                                   ),
                                 ),
-                          ]),
+                              ]),
                           SizedBox(
                             height: 80,
                             child: Card(
@@ -204,8 +213,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0))),
-                              margin:
-                                  const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                              margin: const EdgeInsets.fromLTRB(
+                                  25.0, 5.0, 25.0, 10.0),
 
                               //padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                               /* decoration: BoxDecoration(
@@ -286,7 +295,6 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                           .select_inserestlocation
                                                           .add(location_interest
                                                               .toString());
-
                                                     } else {
                                                       sampleData.first
                                                           .isSelected = false;
@@ -307,7 +315,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                   ? Icon(Icons.check_circle,
                                                       color:
                                                           Colors.green.shade600)
-                                                  : const Icon(Icons.circle_outlined,
+                                                  : const Icon(
+                                                      Icons.circle_outlined,
                                                       color: Colors.black38),
                                               Text(sampleData.last.buttonText,
                                                   style: const TextStyle(
@@ -324,7 +333,6 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                 if (sampleData
                                                         .last.isSelected ==
                                                     false) {
-
                                                   sampleData.last.isSelected =
                                                       true;
                                                   /* sampleData1.last.isSelected =
@@ -336,14 +344,12 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                       .select_inserestlocation
                                                       .add(location_interest
                                                           .toString());
-
                                                 } else {
                                                   sampleData.last.isSelected =
                                                       false;
                                                   constanst
                                                       .select_inserestlocation
                                                       .remove('International');
-
                                                 }
                                                 //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
                                               });
@@ -363,8 +369,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.0))),
-                              margin:
-                                  const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                              margin: const EdgeInsets.fromLTRB(
+                                  25.0, 5.0, 25.0, 10.0),
 
                               //padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                               /* decoration: BoxDecoration(
@@ -375,8 +381,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                               ),*/
                               child: Column(children: [
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 8.0, 0.0, 0.0),
                                   child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
@@ -444,14 +450,12 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                           .select_categotyType
                                                           .add(post_type
                                                               .toString());
-
                                                     } else {
                                                       sampleData1.first
                                                           .isSelected = false;
                                                       constanst
                                                           .select_categotyType
                                                           .remove('BuyPost');
-
                                                     }
                                                   });
                                                 },
@@ -484,12 +488,10 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                                 FontWeight.w500,
                                                             fontFamily:
                                                                 'assets\fonst\Metropolis-Black.otf')
-                                                        .copyWith(
-                                                            fontSize: 17))
+                                                        .copyWith(fontSize: 17))
                                               ]),
                                               onTap: () {
                                                 setState(() {
-
                                                   if (sampleData1
                                                           .last.isSelected ==
                                                       false) {
@@ -504,14 +506,12 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                         .select_categotyType
                                                         .add(post_type
                                                             .toString());
-
                                                   } else {
                                                     sampleData1.last
                                                         .isSelected = false;
                                                     constanst
                                                         .select_categotyType
                                                         .remove('SellPost');
-
                                                   }
                                                 });
                                               },
@@ -524,7 +524,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(27.0, 5.0, 5.0, 5.0),
+                            padding:
+                                const EdgeInsets.fromLTRB(27.0, 5.0, 5.0, 5.0),
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
@@ -546,7 +547,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                             if (snapshot.connectionState ==
                                     ConnectionState.waiting &&
                                 snapshot.hasData == null) {
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else {
@@ -569,53 +571,33 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                       return GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            if (!constanst
-                                                .select_categotyId
-                                                .contains(record
-                                                .categoryId
-                                                .toString())) {
-                                              constanst.itemsCheck[
-                                              index] =
-                                                  Icons
-                                                      .check_circle_outline;
+                                            if (!constanst.select_categotyId
+                                                .contains(record.categoryId
+                                                    .toString())) {
+                                              constanst.itemsCheck[index] =
+                                                  Icons.check_circle_outline;
 
-                                              constanst
-                                                  .select_categotyId
-                                                  .add(record
-                                                  .categoryId
-                                                  .toString());
+                                              constanst.select_categotyId.add(
+                                                  record.categoryId.toString());
 
-                                              constanst.select_cat_id = constanst
-                                                  .select_categotyId
-                                                  .join(
-                                                  ",");
+                                              constanst.select_cat_id =
+                                                  constanst.select_categotyId
+                                                      .join(",");
 
-
-
-                                              setState(
-                                                      () {});
-
+                                              setState(() {});
                                             } else {
-                                              constanst.itemsCheck[
-                                              index] =
-                                                  Icons
-                                                      .check_circle_outline;
+                                              constanst.itemsCheck[index] =
+                                                  Icons.check_circle_outline;
 
-                                              constanst
-                                                  .select_categotyId
-                                                  .remove(record
-                                                  .categoryId
-                                                  .toString());
+                                              constanst.select_categotyId
+                                                  .remove(record.categoryId
+                                                      .toString());
 
-                                              constanst.select_cat_id = constanst
-                                                  .select_categotyId
-                                                  .join(
-                                                  ",");
+                                              constanst.select_cat_id =
+                                                  constanst.select_categotyId
+                                                      .join(",");
 
-
-
-                                              setState(
-                                                      () {});
+                                              setState(() {});
                                             }
                                           });
                                         },
@@ -632,7 +614,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                             BorderRadius.all(
                                                                 Radius.circular(
                                                                     10.0))),
-                                                    margin: const EdgeInsets.fromLTRB(
+                                                    margin: const EdgeInsets
+                                                            .fromLTRB(
                                                         25.0, 5.0, 25.0, 5.0),
                                                     child: Column(
                                                         mainAxisAlignment:
@@ -640,157 +623,122 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                                                 .center,
                                                         children: [
                                                           Align(
-                                                            alignment:
-                                                                Alignment.topLeft,
-                                                            child: GestureDetector(
+                                                            alignment: Alignment
+                                                                .topLeft,
+                                                            child:
+                                                                GestureDetector(
                                                               onTap: () {
                                                                 setState(() {
                                                                   constanst
-                                                                      .select_cat_idx =
+                                                                          .select_cat_idx =
                                                                       index;
 
                                                                   constanst
-                                                                      .select_cat_idx =
+                                                                          .select_cat_idx =
                                                                       index;
                                                                   if (!constanst
                                                                       .select_cat_id
                                                                       .contains(record
-                                                                      .categoryId
-                                                                      .toString())) {
+                                                                          .categoryId
+                                                                          .toString())) {
                                                                     constanst.itemsCheck[
-                                                                    index] =
+                                                                            index] =
                                                                         Icons
                                                                             .check_circle_outline;
 
                                                                     constanst
                                                                         .select_categotyId
                                                                         .add(record
-                                                                        .categoryId
-                                                                        .toString());
+                                                                            .categoryId
+                                                                            .toString());
 
                                                                     constanst.select_cat_id = constanst
                                                                         .select_categotyId
                                                                         .join(
-                                                                        ",");
-
-
+                                                                            ",");
 
                                                                     setState(
-                                                                            () {});
+                                                                        () {});
                                                                   } else {
                                                                     constanst.itemsCheck[
-                                                                    index] =
+                                                                            index] =
                                                                         Icons
                                                                             .check_circle_outline;
 
                                                                     constanst
                                                                         .select_categotyId
                                                                         .remove(record
-                                                                        .categoryId
-                                                                        .toString());
+                                                                            .categoryId
+                                                                            .toString());
 
                                                                     constanst.select_cat_id = constanst
                                                                         .select_categotyId
                                                                         .join(
-                                                                        ",");
-
+                                                                            ",");
 
                                                                     setState(
-                                                                            () {});
+                                                                        () {});
                                                                   }
                                                                 });
                                                               },
-                                                              child: Row(children: [
-                                                                GestureDetector(
-                                                                    child:
-                                                                        IconButton(
-                                                                  icon: constanst
-                                                                          .select_categotyId
-                                                                          .contains(record
+                                                              child: Row(
+                                                                  children: [
+                                                                    GestureDetector(
+                                                                        child:
+                                                                            IconButton(
+                                                                      icon: constanst.select_categotyId.contains(record
                                                                               .categoryId
                                                                               .toString())
-                                                                      ? Icon(
-                                                                          Icons
-                                                                              .check_circle,
-                                                                          color: Colors
-                                                                              .green
-                                                                              .shade600)
-                                                                      : const Icon(
-                                                                          Icons
-                                                                              .circle_outlined,
-                                                                          color: Colors
-                                                                              .black45),
-                                                                  onPressed: () {
-                                                                    setState(() {
-                                                                      constanst
-                                                                              .select_cat_idx =
-                                                                          index;
-
-                                                                      constanst
-                                                                              .select_cat_idx =
-                                                                          index;
-                                                                      if (!constanst
-                                                                          .select_cat_id
-                                                                          .contains(record
-                                                                              .categoryId
-                                                                              .toString())) {
-                                                                        constanst.itemsCheck[
-                                                                                index] =
-                                                                            Icons
-                                                                                .check_circle_outline;
-
-                                                                        constanst
-                                                                            .select_categotyId
-                                                                            .add(record
-                                                                                .categoryId
-                                                                                .toString());
-
-                                                                        constanst.select_cat_id = constanst
-                                                                            .select_categotyId
-                                                                            .join(
-                                                                                ",");
+                                                                          ? Icon(Icons.check_circle,
+                                                                              color: Colors
+                                                                                  .green.shade600)
+                                                                          : const Icon(
+                                                                              Icons.circle_outlined,
+                                                                              color: Colors.black45),
+                                                                      onPressed:
+                                                                          () {
                                                                         setState(
-                                                                            () {});
+                                                                            () {
+                                                                          constanst.select_cat_idx =
+                                                                              index;
 
-                                                                      } else {
-                                                                        constanst.itemsCheck[
-                                                                                index] =
-                                                                            Icons
-                                                                                .check_circle_outline;
+                                                                          constanst.select_cat_idx =
+                                                                              index;
+                                                                          if (!constanst
+                                                                              .select_cat_id
+                                                                              .contains(record.categoryId.toString())) {
+                                                                            constanst.itemsCheck[index] =
+                                                                                Icons.check_circle_outline;
 
-                                                                        constanst
-                                                                            .select_categotyId
-                                                                            .remove(record
-                                                                                .categoryId
-                                                                                .toString());
+                                                                            constanst.select_categotyId.add(record.categoryId.toString());
 
-                                                                        constanst.select_cat_id = constanst
-                                                                            .select_categotyId
-                                                                            .join(
-                                                                                ",");
-                                                                        setState(
-                                                                            () {});
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                )),
-                                                                Text(
-                                                                    record
-                                                                        .categoryName
-                                                                        .toString(),
-                                                                    style: const TextStyle(
-                                                                            fontSize:
-                                                                                13.0,
-                                                                            fontWeight:
-                                                                                FontWeight
-                                                                                    .w500,
-                                                                            fontFamily:
-                                                                                'assets\fonst\Metropolis-Black.otf',
-                                                                            color: Colors.black)
-                                                                        .copyWith(
-                                                                            fontSize:
-                                                                                17))
-                                                              ]),
+                                                                            constanst.select_cat_id =
+                                                                                constanst.select_categotyId.join(",");
+                                                                            setState(() {});
+                                                                          } else {
+                                                                            constanst.itemsCheck[index] =
+                                                                                Icons.check_circle_outline;
+
+                                                                            constanst.select_categotyId.remove(record.categoryId.toString());
+
+                                                                            constanst.select_cat_id =
+                                                                                constanst.select_categotyId.join(",");
+                                                                            setState(() {});
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                    )),
+                                                                    Text(
+                                                                        record
+                                                                            .categoryName
+                                                                            .toString(),
+                                                                        style: const TextStyle(
+                                                                                fontSize: 13.0,
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontFamily: 'assets\fonst\Metropolis-Black.otf',
+                                                                                color: Colors.black)
+                                                                            .copyWith(fontSize: 17))
+                                                                  ]),
                                                             ),
                                                           ),
                                                         ])))),
@@ -809,32 +757,40 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                 color: const Color.fromARGB(255, 0, 91, 148)),
                             child: TextButton(
                               onPressed: () async {
-                                // if (_formKey.currentState!.validate()) {
-                                //   Fluttertoast.showToast(
-                                //       msg: "Data Proccess");
-                                //   vaild_data();
-                                // }
-                                // setState(() {});
-
                                 final connectivityResult =
-                                    await Connectivity().checkConnectivity();
+                                await Connectivity()
+                                    .checkConnectivity();
 
                                 if (connectivityResult ==
                                     ConnectivityResult.none) {
                                   Fluttertoast.showToast(
-                                      msg: 'Net Connection not available');
+                                      msg:
+                                      'Net Connection not available');
+                                } else if (constanst.select_inserestlocation.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                      'Select Atleast 1 Domestic / International or Select Both ');
+                                } else if (constanst.select_categotyType.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                      'Select Atleast 1 Buy Post / Sell Post or Select Both');
+                                } else if (constanst.select_categotyId.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                      'Select Minimum 1 Category');
                                 } else {
                                   setState(() {});
                                   _onLoading();
                                   setcategory().then((value) {
-
-                                    Navigator.of(dialogContext!).pop();
-                                    if(value){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Type_update()));
-                                    }else{
-                                    /*  Navigator.push(context, MaterialPageRoute(builder: (context) => Type_update()));*/
+                                    Navigator.of(dialogContext!)
+                                        .pop();
+                                    if (value) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Type_update()));
                                     }
-
                                   });
                                 }
                               },
@@ -864,22 +820,18 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.itemsCheck.clear();
 
-
     var res = await getbussinessprofile(
       pref.getString('user_id').toString(),
       pref.getString('api_token').toString(),
     );
-
 
     if (res['status'] == 1) {
       category_id = res['user']['category_id'];
       location_interest = res['user']['location_interest'];
       post_type = res['user']['posttype'];
 
-
       if (post_type == "Both") {
-        sampleData1.first.isSelected = true;
-        sampleData1.last.isSelected = true;
+
         constanst.select_categotyType.add('BuyPost');
         constanst.select_categotyType.add('SellPost');
       } else if (post_type.toString() == "BuyPost") {
@@ -895,7 +847,6 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
         sampleData.last.isSelected = true;
         constanst.select_inserestlocation.add("Domestic");
         constanst.select_inserestlocation.add("International");
-
       } else if (location_interest.toString() == "Domestic") {
         sampleData.first.isSelected = true;
         constanst.select_inserestlocation.add(location_interest.toString());
@@ -905,11 +856,8 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
       }
 
       constanst.select_categotyId = category_id.split(",");
-
-
     } else {
       Fluttertoast.showToast(msg: res['message']);
-      // Fluttertoast.showToast(msg: res['message']);
     }
 
     setState(() {});
@@ -920,31 +868,16 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
 
     var stringCategory = constanst.select_categotyId.join(",");
 
-    if (constanst.select_inserestlocation.isNotEmpty) {
-      if (constanst.select_inserestlocation.length == 2) {
-        location_interest = 'Both';
-      } else {
-        location_interest = constanst.select_inserestlocation.join(",");
-      }
-      if (constanst.select_categotyType.isNotEmpty) {
-        if (constanst.select_categotyType.length == 2) {
-          post_type = 'Both';
-        } else {
-          post_type = constanst.select_categotyType.join(",");
-        }
-        if (constanst.select_categotyId.isEmpty) {
-          Fluttertoast.showToast(msg: 'Select Minimum 1 Category');
-        }
-      } else {
-        Fluttertoast.showToast(
-            msg: 'Select Atleast 1 Buy Post / Sell Post or Select Both');
-      }
+    if (constanst.select_inserestlocation.length == 2) {
+      location_interest = 'Both';
     } else {
-      Fluttertoast.showToast(
-          msg: 'Select Atleast 1 Domestic / International or Select Both ');
+      location_interest = constanst.select_inserestlocation.join(",");
     }
-
-
+    if (constanst.select_categotyType.length == 2) {
+      post_type = 'Both';
+    } else {
+      post_type = constanst.select_categotyType.join(",");
+    }
 
     if (constanst.select_inserestlocation.isNotEmpty &&
         constanst.select_categotyType.isNotEmpty &&
@@ -957,13 +890,11 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
           stringCategory,
           '7');
 
-
       if (res['status'] == 1) {
         Fluttertoast.showToast(msg: res['message']);
-        _isloading1=true;
-
+        _isloading1 = true;
       } else {
-        _isloading1=true;
+        _isloading1 = true;
         Fluttertoast.showToast(msg: res['message']);
       }
       setState(() {});
@@ -984,8 +915,9 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
       getProfiless();
     }
   }
+
   void _onLoading() {
-    dialogContext=context;
+    dialogContext = context;
 
     showDialog(
       context: context,
@@ -995,7 +927,7 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
         return Dialog(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            child:  SizedBox(
+            child: SizedBox(
               width: 300.0,
               height: 150.0,
               child: Center(
@@ -1005,21 +937,19 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                   child: Center(
                       child: Platform.isAndroid
                           ? const CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
+                              value: null,
+                              strokeWidth: 2.0,
+                              color: Color.fromARGB(255, 0, 91, 148),
+                            )
                           : Platform.isIOS
-                          ? const CupertinoActivityIndicator(
-                        color: Color.fromARGB(255, 0, 91, 148),
-                        radius: 20,
-                        animating: true,
-                      )
-                          : Container()
-                  ),
+                              ? const CupertinoActivityIndicator(
+                                  color: Color.fromARGB(255, 0, 91, 148),
+                                  radius: 20,
+                                  animating: true,
+                                )
+                              : Container()),
                 ),
               ),
-
             ));
       },
     );

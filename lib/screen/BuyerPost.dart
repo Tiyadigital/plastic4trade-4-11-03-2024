@@ -319,8 +319,7 @@ class _BuyerPostState extends State<BuyerPost> {
               if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
-                  !constanst.isprofile &&
-                  constanst.step == 11) {
+                  !constanst.isprofile) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -337,8 +336,6 @@ class _BuyerPostState extends State<BuyerPost> {
               } else if (constanst.istype) {
                 constanst.redirectpage = "add_grade";
                 categoryDialog(context);
-              } else if (constanst.step != 11) {
-                addPostDialog(context);
               }
             } else {
               if (constanst.isprofile) {
@@ -356,13 +353,10 @@ class _BuyerPostState extends State<BuyerPost> {
                     MaterialPageRoute(
                       builder: (context) => const Grade(),
                     ));
-              } else if (constanst.step != 11) {
-                addPostDialog(context);
               } else if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
-                  !constanst.isprofile &&
-                  constanst.step == 11) {
+                  !constanst.isprofile) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(

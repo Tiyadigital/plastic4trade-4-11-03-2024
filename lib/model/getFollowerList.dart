@@ -57,13 +57,13 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['image'] = this.image;
-    data['name'] = this.name;
-    data['businessType'] = this.businessType;
-    data['Status'] = this.status;
-    data['is_following'] = this.isFollowing;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['image'] = image;
+    data['name'] = name;
+    data['businessType'] = businessType;
+    data['Status'] = status;
+    data['is_following'] = isFollowing;
     return data;
   }
 }

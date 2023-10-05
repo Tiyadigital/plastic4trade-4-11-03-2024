@@ -2020,6 +2020,8 @@ class _BussinessverificationState extends State<Bussinessverification> {
     }
   }
 
+  // 193.22.558-4A1ASD7A-50000-3CP.218990
+
   Future<XFile?> compressFile(File file) async {
     final filePath = file.absolute.path;
     final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
@@ -2047,14 +2049,14 @@ class _BussinessverificationState extends State<Bussinessverification> {
           child: DropdownButton(
             value: _select_premises,
             hint: Text(hint,
-                style: TextStyle(
+                style: const TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
                         color: Colors.black,
                         fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                    ?.copyWith(color: Colors.black45)),
+                    .copyWith(color: Colors.black45)),
             dropdownColor: Colors.white,
-            icon: Icon(Icons.arrow_drop_down),
+            icon: const Icon(Icons.arrow_drop_down),
             iconSize: 30,
             isExpanded: true,
             underline: SizedBox(),

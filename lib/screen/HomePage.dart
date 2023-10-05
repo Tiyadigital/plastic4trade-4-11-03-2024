@@ -1,12 +1,17 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, empty_catches, non_constant_identifier_names
 
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:Plastic4trade/screen/CategoryScreen.dart';
+
+import 'package:Plastic4trade/model/GetCategory.dart' as cat;
+import 'package:Plastic4trade/model/getBannerImage.dart' as img;
+import 'package:Plastic4trade/model/getHomePost.dart' as homepost;
+import 'package:Plastic4trade/model/getHomePostSearch.dart' as homesearch;
+import 'package:Plastic4trade/screen/AddPost.dart';
+import 'package:Plastic4trade/screen/Buyer_sell_detail.dart';
 import 'package:Plastic4trade/screen/GradeScreen.dart';
-import 'package:Plastic4trade/screen/Type.dart';
-import 'package:Plastic4trade/widget/AddPost_dialog.dart';
+import 'package:Plastic4trade/widget/FilterScreen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,33 +21,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:google_api_headers/google_api_headers.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:Plastic4trade/screen/AddPost.dart';
-import 'package:Plastic4trade/screen/Buyer_sell_detail.dart';
-import 'package:marquee/marquee.dart';
-import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_api_headers/google_api_headers.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:marquee/marquee.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 import '../api/api_interface.dart';
 import '../constroller/GetCategoryController.dart';
 import '../constroller/Getmybusinessprofile.dart';
-import '../main.dart';
-import '../model/GetNotification.dart';
-import '../model/Getmybusinessprofile.dart';
-import '../model/common.dart';
 import '../model/getBannerImage.dart';
 import '../model/getHomePost.dart';
-import '../model/getHomePostSearch.dart';
+import '../model/gethome_quicknews.dart';
 import '../utill/constant.dart';
-import 'package:Plastic4trade/widget/FilterScreen.dart';
-import 'package:Plastic4trade/model/getBannerImage.dart' as img;
-import 'package:Plastic4trade/model/getHomePost.dart' as homepost;
-import 'package:Plastic4trade/model/getHomePostSearch.dart' as homesearch;
-import 'package:Plastic4trade/model/GetCategory.dart' as cat;
-
 import '../widget/HomeAppbar.dart';
 import '../widget/MainScreen.dart';
 import 'Blog.dart';
@@ -50,11 +42,8 @@ import 'BussinessProfile.dart';
 import 'Exhibition.dart';
 import 'Follower_Following.dart';
 import 'Liveprice.dart';
-import 'Register2.dart';
-import '../model/gethome_quicknews.dart';
 import 'Tutorial_Videos.dart';
 import 'Videos.dart';
-import 'demo.dart';
 import 'other_user_profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -121,11 +110,11 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
         onWillPop: () => _onbackpress(context),
         child: Scaffold(
-          backgroundColor: Color(0xFFDADADA),
+          backgroundColor: const Color(0xFFDADADA),
           body: isload == true
               ? Column(mainAxisSize: MainAxisSize.min, children: [
                   horiztallist(),
-                  SizedBox(
+                  const SizedBox(
                     height: 3,
                   ),
                   Container(
@@ -134,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(40.0),
                                     bottomRight: Radius.circular(40.0),
@@ -142,13 +131,13 @@ class _HomePageState extends State<HomePage> {
                                     bottomLeft: Radius.circular(40.0)),
                                 color: Colors.white),
                             height: 40,
-                            margin: EdgeInsets.only(left: 8.0),
+                            margin: const EdgeInsets.only(left: 8.0),
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                                 child: TextField(
                                   controller: _loc,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.black, fontSize: 14),
                                   readOnly: true,
                                   onTap: () async {
@@ -158,10 +147,7 @@ class _HomePageState extends State<HomePage> {
                                         mode: Mode.overlay,
                                         types: ['(cities)'],
                                         strictbounds: false,
-                                        // components: [Component(Component.country, 'np')],
-                                        //google_map_webservice package
                                         onError: (err) {
-                                          print(err);
                                         });
 
                                     if (place != null) {
@@ -190,13 +176,12 @@ class _HomePageState extends State<HomePage> {
 
                                       constanst.log =
                                           geometry.location.lng.toString();
-                                      print(constanst.log);
                                       homepost_data.clear();
                                       count = 0;
                                       offset = 0;
                                       //get_HomePostSearch();
                                       WidgetsBinding
-                                          .instance?.focusManager.primaryFocus
+                                          .instance.focusManager.primaryFocus
                                           ?.unfocus();
                                       _onLoading();
                                       get_HomePost();
@@ -210,10 +195,10 @@ class _HomePageState extends State<HomePage> {
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 1.0),
                                     prefixIconConstraints:
-                                        BoxConstraints(minWidth: 24),
+                                        const BoxConstraints(minWidth: 24),
                                     suffixIconConstraints:
-                                        BoxConstraints(minWidth: 24),
-                                    prefixIcon: Padding(
+                                        const BoxConstraints(minWidth: 24),
+                                    prefixIcon: const Padding(
                                       padding:
                                           EdgeInsets.only(right: 2, left: 2),
                                       child: Icon(
@@ -234,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                                         get_HomePost();
                                         setState(() {});
                                       },
-                                      child: Padding(
+                                      child: const Padding(
                                         padding:
                                             EdgeInsets.only(right: 2, left: 2),
                                         child: Icon(
@@ -245,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     hintText: 'Location',
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black,
@@ -265,10 +250,10 @@ class _HomePageState extends State<HomePage> {
                                     bottomLeft: Radius.circular(40.0)),
                                 color: Colors.white),
                             height: 40,
-                            margin: EdgeInsets.only(left: 6.0),
+                            margin: const EdgeInsets.only(left: 6.0),
                             width: MediaQuery.of(context).size.width / 2.2,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                                 child: TextField(
                                   style: const TextStyle(
                                       color: Colors.black, fontSize: 14),
@@ -299,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                                               'assets\fonst\Metropolis-Black.otf')),
                                   onSubmitted: (value) {
                                     WidgetsBinding
-                                        .instance?.focusManager.primaryFocus
+                                        .instance.focusManager.primaryFocus
                                         ?.unfocus();
                                     homepost_data.clear();
                                     count = 0;
@@ -311,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                                   onChanged: (value) {
                                     if (value.isEmpty) {
                                       WidgetsBinding
-                                          .instance?.focusManager.primaryFocus
+                                          .instance.focusManager.primaryFocus
                                           ?.unfocus();
                                       _search.clear();
                                       count = 0;
@@ -413,8 +398,7 @@ class _HomePageState extends State<HomePage> {
                   if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
+                      !constanst.isprofile) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -431,8 +415,6 @@ class _HomePageState extends State<HomePage> {
                   } else if (constanst.istype) {
                     constanst.redirectpage = "add_grade";
                     categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
                   }
                 } else {
                   if (constanst.isprofile) {
@@ -450,13 +432,10 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                           builder: (context) => const Grade(),
                         ));
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  } else if (!constanst.isgrade &&
+                  }  else if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
+                      !constanst.isprofile) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -502,8 +481,8 @@ class _HomePageState extends State<HomePage> {
         height: 45,
         child: Container(
           alignment: Alignment.topLeft,
-          margin: EdgeInsets.symmetric(horizontal: 32.0),
-          padding: EdgeInsets.fromLTRB(3.0, 8.0, 3.0, 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 32.0),
+          padding: const EdgeInsets.fromLTRB(3.0, 8.0, 3.0, 8.0),
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.7),
             borderRadius: BorderRadius.circular(32.0),
@@ -545,7 +524,7 @@ class _HomePageState extends State<HomePage> {
     overlay.insert(overlayEntry);
 
     // Wait for the toast duration and remove the overlay entry
-    Future.delayed(Duration(seconds: 2)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       overlayEntry.remove();
     });
   }
@@ -562,7 +541,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               snapshot.hasData == null) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -570,20 +549,20 @@ class _HomePageState extends State<HomePage> {
             //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
                 shrinkWrap: false,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: constanst.catdata.length,
                 itemBuilder: (context, index) {
                   cat.Result result = constanst.catdata[index];
                   return Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Wrap(spacing: 6.0, runSpacing: 6.0, children: <
                           Widget>[
                         ChoiceChip(
                           label: Text(
                               constanst.catdata[index].categoryName.toString()),
                           selected: _defaultChoiceIndex == index,
-                          selectedColor: Color.fromARGB(255, 0, 91, 148),
+                          selectedColor: const Color.fromARGB(255, 0, 91, 148),
                           onSelected: (bool selected) {
                             setState(() {
                               _defaultChoiceIndex = selected ? index : -1;
@@ -601,19 +580,18 @@ class _HomePageState extends State<HomePage> {
                               }
                             });
                           },
-                          // padding: EdgeInsets.all(5),
-                          backgroundColor: Color.fromARGB(255, 236, 232, 232),
-                          labelStyle: TextStyle(
+                          backgroundColor: const Color.fromARGB(255, 236, 232, 232),
+                          labelStyle: const TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                   fontFamily:
                                       'assets\fonst\Metropolis-Black.otf')
-                              ?.copyWith(
+                              .copyWith(
                                   color: _defaultChoiceIndex == index
                                       ? Colors.white
                                       : Colors.black),
-                          labelPadding: EdgeInsets.symmetric(horizontal: 14.0),
+                          labelPadding: const EdgeInsets.symmetric(horizontal: 14.0),
                           /*shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(10.0))
                               ),*/
@@ -635,12 +613,11 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               img.Result record = banner_img[index];
               return record.bannertype == 'image'
-                  ? Container(
-                      child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      child: Image.network(record.bannerImage.toString(),
-                          fit: BoxFit.fill, width: 2500.0),
-                    ))
+                  ? ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                  child: Image.network(record.bannerImage.toString(),
+                      fit: BoxFit.fill, width: 2500.0),
+                    )
                   : web_view(record.bannerImage.toString());
             },
           ),
@@ -659,12 +636,6 @@ class _HomePageState extends State<HomePage> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
-          /* onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },*/
         ),
       )
       ..loadRequest(Uri.parse(imageurl));
@@ -748,8 +719,6 @@ class _HomePageState extends State<HomePage> {
                   constanst.redirectpage = "sale_buy";
 
                   if (constanst.appopencount == constanst.appopencount1) {
-                    print("APP OPEN 1st = ${constanst.appopencount}");
-                    print("APP OPEN 1st = ${constanst.appopencount1}");
 
                     if (!constanst.isgrade &&
                         !constanst.istype &&
@@ -775,17 +744,11 @@ class _HomePageState extends State<HomePage> {
                       addPostDialog(context);
                     }
                   } else if (constanst.isprofile) {
-                    print("APP OPEN 2nd = ${constanst.appopencount}");
-                    print("APP OPEN 2nd = ${constanst.appopencount1}");
                     showInformationDialog(context);
                   } else if (constanst.appopencount ==
                       constanst.appopencount1) {
-                    print("APP OPEN 3rd= ${constanst.appopencount}");
-                    print("APP OPEN 3rd= ${constanst.appopencount1}");
                     categoryDialog(context);
                   } else {
-                    print("APP OPEN 4th= ${constanst.appopencount}");
-                    print("APP OPEN 4th= ${constanst.appopencount1}");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -824,32 +787,20 @@ class _HomePageState extends State<HomePage> {
                               width: 170,
                             ),
                           ),
-                          /* child:Image(
-                        errorBuilder: (context, object, trace) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color.fromARGB(
-                                  255, 223, 220, 220),
-                            ),
-                          );
-                        },
-                        image: NetworkImage(result.mainproductImage.toString()),fit: BoxFit.cover,width: 170,height: 150,
-                    ),*/
                         ),
                         Positioned(
                           bottom: 10,
                           left: 10,
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 5.0),
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromARGB(255, 0, 148, 95),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0))),
                             // color: Color.fromARGB(0,255, 255, 255),
-                            child: Text('₹' + result.productPrice.toString(),
-                                style: TextStyle(
+                            child: Text('₹${result.productPrice}',
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w800,
                                     fontFamily:
@@ -885,9 +836,9 @@ class _HomePageState extends State<HomePage> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
-                              padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                              padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                               child: Text(result.postName.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
@@ -900,12 +851,10 @@ class _HomePageState extends State<HomePage> {
                         Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                              padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                              padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                               child: Text(
-                                  result.categoryName.toString() +
-                                      ' | ' +
-                                      result.productGrade.toString(),
-                                  style: TextStyle(
+                                  '${result.categoryName} | ${result.productGrade}',
+                                  style: const TextStyle(
                                     fontSize: 13.0,
                                     color: Colors.grey,
                                     fontFamily: 'Metropolis',
@@ -917,12 +866,10 @@ class _HomePageState extends State<HomePage> {
                         Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                              padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                              padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                               child: Text(
-                                  result.state.toString() +
-                                      ', ' +
-                                      result.country.toString(),
-                                  style: TextStyle(
+                                  '${result.state}, ${result.country}',
+                                  style: const TextStyle(
                                     fontSize: 13.0,
                                     color: Colors.grey,
                                     fontFamily: 'Metropolis',
@@ -934,9 +881,9 @@ class _HomePageState extends State<HomePage> {
                         Align(
                             alignment: Alignment.topLeft,
                             child: Padding(
-                                padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                                padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                                 child: result.postType.toString() == "BuyPost"
-                                    ? Text(
+                                    ? const Text(
                                         'Buy Post',
                                         style: TextStyle(
                                             fontSize: 13.0,
@@ -946,7 +893,7 @@ class _HomePageState extends State<HomePage> {
                                                 Color.fromRGBO(0, 148, 95, 1)),
                                       )
                                     : result.postType.toString() == "SalePost"
-                                        ? Text(
+                                        ? const Text(
                                             "Sale Post",
                                             style: TextStyle(
                                                 fontSize: 13.0,
@@ -974,7 +921,6 @@ class _HomePageState extends State<HomePage> {
       loadmore = false;
 
       if (homepost_data.isNotEmpty) {
-        print('hello');
         count++;
         if (count == 1) {
           offset = offset + 21;
@@ -993,9 +939,7 @@ class _HomePageState extends State<HomePage> {
         _onLoading();
         get_HomePostSearch();
       }
-    } /*else{
-      print('hello');
-    }*/
+    }
   }
 
   ViewItem(BuildContext context) {
@@ -1020,7 +964,6 @@ class _HomePageState extends State<HomePage> {
               );
             })).then(
       (value) {
-        print(constanst.location);
         _loc.text = constanst.location.toString();
         category_filter_id = constanst.select_categotyId.join(",");
         type_id = constanst.select_typeId.join(",");
@@ -1070,29 +1013,24 @@ class _HomePageState extends State<HomePage> {
           // Process the response data
         } else {
           // Handle other status codes
-          print('Request failed with status code: ${response.statusCode}');
         }
       } else {
         // Dio request error
-        print('Dio request error');
       }
     } catch (e) {
-      print('Error: $e');
     }
   }
 
   void get_categorylist() async {
-    GetCategoryController bt = await GetCategoryController();
+    GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
 
     constanst.cat_data!.then((value) {
       for (var item in value) {
         constanst.catdata.add(item);
       }
-
       setState(() {});
     });
-    //
   }
 
   void get_categorylist1() async {
@@ -1108,11 +1046,9 @@ class _HomePageState extends State<HomePage> {
         // Process the data
       } else {
         // API call failed
-        print('Error: ${response.statusCode}');
       }
     } catch (e) {
       // Handle any errors that occurred during the API call
-      print('Error: $e');
     }
   }
 
@@ -1123,18 +1059,15 @@ class _HomePageState extends State<HomePage> {
     var res = await getSlider(_pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       getcoloregory = getBannerImage.fromJson(res);
       jsonarray = res['result'];
-      print(jsonarray);
 
       for (var data in jsonarray) {
         img.Result record = img.Result(
             bannertype: data['bannertype'], bannerImage: data['BannerImage']);
         banner_img.add(record);
       }
-      print(banner_img);
       setState(() {});
     } else {
       Fluttertoast.showToast(msg: res['message']);
@@ -1149,19 +1082,10 @@ class _HomePageState extends State<HomePage> {
 
     var res = await gethomequicknew();
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       quicknes = gethome_quicknews.fromJson(res);
       quicknews = res['result'];
-      print(jsonarray);
 
-/*
-      for (var data in jsonarray) {
-        img.Result record = img.Result(
-            bannertype: data['bannertype'], bannerImage: data['BannerImage']);
-        banner_img.add(record);
-      }
-      print(banner_img);*/
       isload = true;
       setState(() {});
     } else {
@@ -1180,10 +1104,8 @@ class _HomePageState extends State<HomePage> {
       // API call successful
       var data = response.data;
       // Process the data as needed
-      print(data);
     } else {
       // API call failed
-      print('API call failed with status code ${response.statusCode}');
     }
   }
 
@@ -1206,12 +1128,10 @@ class _HomePageState extends State<HomePage> {
       _search.text.toString(),
     );
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       gethomepost = getHomePost.fromJson(res);
       if (res['result'] != null) {
         jsonarray = res['result'];
-        print(jsonarray);
 
         for (var data in jsonarray) {
           homepost.Result record = homepost.Result(
@@ -1231,7 +1151,6 @@ class _HomePageState extends State<HomePage> {
           homepost_data.add(record);
           loadmore = true;
         }
-        print(homepost_data);
         if (mounted) {
           setState(() {});
         }
@@ -1259,18 +1178,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   get_HomePostSearch() async {
-    getHomePostSearch gethomepostsearch = getHomePostSearch();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await getHomeSearch_Post(lat.toString(), log.toString(),
         _search.text.toString(), '20', offset.toString());
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
-      gethomepostsearch = getHomePostSearch.fromJson(res);
       if (res['result'] != null) {
         jsonarray = res['result'];
-        print(jsonarray);
 
         for (var data in jsonarray) {
           homesearch.Result record = homesearch.Result(
@@ -1289,7 +1203,6 @@ class _HomePageState extends State<HomePage> {
           homepostsearch_data.add(record);
           loadmore = true;
         }
-        print(homepostsearch_data);
         setState(() {});
       }
     } else {
@@ -1315,35 +1228,20 @@ class _HomePageState extends State<HomePage> {
       get_Slider();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      //getSlider1();
       get_HomePost();
       getquicknews();
       Firebase_init();
-      //DateTime endTime = DateTime.now();
-      // Duration duration = endTime.difference(startTime);
-
-      // Print the duration in milliseconds
-      //print('using http API call took ${duration.inMilliseconds} inMilliseconds');
-
-      // get_data();
     }
   }
 
   Future<void> handleBackgroundMessage(RemoteMessage message) async {
-    print(message.notification);
     final notification = message.notification;
     if (notification != null) {
-      print('Title : ${notification.title}');
-      print('Body : ${notification.body}');
     }
-    print('PayLoad: ${message.data}');
-
-    //notification_redirect(message.data, context); // Are you sure 'context' is properly initialized here?
   }
 
   Firebase_init() async {
     if (Platform.isAndroid) {
-      print('Android ');
       await Firebase.initializeApp();
 
       final _firebaseMessaging = FirebaseMessaging.instance;
@@ -1354,7 +1252,6 @@ class _HomePageState extends State<HomePage> {
                   "BC4eLOdjJWopUE-NEu_WCFLlByPe5-K5_AljnUINqx4QL7RmA3W5lC-__7WDfEWPJF0nVk05xpD3d4JjdrGnfVA")
           .then((value) => value);
       constanst.fcm_token = FCMToken.toString();
-      print('Token $FCMToken');
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
         alert: true,
@@ -1363,8 +1260,8 @@ class _HomePageState extends State<HomePage> {
       );
     } else if (Platform.isIOS) {
       await Firebase.initializeApp();
-      final _firebaseMessaging = FirebaseMessaging.instance;
-      await _firebaseMessaging.requestPermission();
+      final firebaseMessaging = FirebaseMessaging.instance;
+      await firebaseMessaging.requestPermission();
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
         alert: true,
@@ -1372,15 +1269,12 @@ class _HomePageState extends State<HomePage> {
         sound: true,
       );
       final APNSToken =
-          await _firebaseMessaging.getToken().then((value) => value);
+          await firebaseMessaging.getToken().then((value) => value);
       constanst.APNSToken = APNSToken.toString();
-      print('APNSToken $APNSToken');
       /* */ //);
     }
     if (FirebaseMessaging.instance.isAutoInitEnabled) {
-      print('User granted permission');
     } else {
-      print('User declined permission or has not yet responded');
     }
     FirebaseMessaging.instance
         .requestPermission(alert: true, badge: true, sound: true);
@@ -1396,7 +1290,7 @@ class _HomePageState extends State<HomePage> {
       requestBadgePermission: true,
       requestSoundPermission: true,
     );
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
             iOS: initializationSettingsios);
@@ -1404,69 +1298,42 @@ class _HomePageState extends State<HomePage> {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
       if (payload != null) {
-        print(payload);
         final message = RemoteMessage.fromMap(jsonDecode(payload!));
-        String notification_type = message.data['type'];
-        String post_type = message.data['post_type'];
-        String user_id = message.data['user_id'];
-        String post_id = message.data['postId'];
+        String notificationType = message.data['type'];
+        String postType = message.data['post_type'];
+        String userId = message.data['user_id'];
+        String postId = message.data['postId'];
 
-        print('post type');
-        print(notification_type);
-        print(user_id);
-        print(post_id);
-        if (notification_type.toString() == "profile like") {
-          if (user_id.toString().isNotEmpty) {
-            print('=============');
+        if (notificationType.toString() == "profile like") {
+          if (userId.toString().isNotEmpty) {
             // Navigator.of(_context).push(MaterialPageRoute(builder: (context) => other_user_profile(int.parse(user_id.toString()))));
             try {
               await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          other_user_profile(int.parse(user_id.toString()))));
+                          other_user_profile(int.parse(userId.toString()))));
             } catch (e, stackTrace) {
-              // Handle the exception or error
-              // Fluttertoast.showToast(msg:'Exception: $e');
-              // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
-              print('Exception: $e');
-              print('Stack trace: $stackTrace');
             }
           } else {
-            print('11111111');
           }
-        } else if (notification_type.toString() == "Business profile dislike") {
-          if (user_id.toString().isNotEmpty) {
-            print('=============');
+        } else if (notificationType.toString() == "Business profile dislike") {
+          if (userId.toString().isNotEmpty) {
             // Navigator.of(_context).push(MaterialPageRoute(builder: (context) => other_user_profile(int.parse(user_id.toString()))));
             try {
               await Navigator.push(
                   context,
-                  new MaterialPageRoute(
+                  MaterialPageRoute(
                       builder: (context) =>
-                          other_user_profile(int.parse(user_id.toString()))));
-            } catch (e, stackTrace) {
-              // Handle the exception or error
-              // Fluttertoast.showToast(msg:'Exception: $e');
-              // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
-              print('Exception: $e');
-              print('Stack trace: $stackTrace');
-            }
+                          other_user_profile(int.parse(userId.toString()))));
+            } catch (e, stackTrace) {}
           } else {
-            print('11111111');
           }
         } else if (message.data['type'] == 'profile_review') {
-          print("kjdis");
           try {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => bussinessprofile()));
-          } catch (e, stackTrace) {
-            // Handle the exception or error
-            // Fluttertoast.showToast(msg:'Exception: $e');
-            // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
-            print('Exception: $e');
-            print('Stack trace: $stackTrace');
-          }
+          } catch (e, stackTrace) {}
         } else if (message.data['type'] == 'follower_profile_like') {
           Navigator.push(
               context,
@@ -1480,9 +1347,7 @@ class _HomePageState extends State<HomePage> {
                   builder: (context) => other_user_profile(
                       int.parse(constanst.notiuser.toString()))));
         } else if (message.data['type'] == "post like") {
-          print("gfdghf");
           if (constanst.notypost_type.toString() == "SalePost") {
-            print("gfdghf1233");
             if (constanst.notipostid.toString().isNotEmpty) {
               Navigator.push(
                   context,
@@ -1493,7 +1358,6 @@ class _HomePageState extends State<HomePage> {
             }
           } else {
             if (constanst.notypost_type.toString() == "BuyPost") {
-              print("gfdghf");
               if (constanst.notipostid.toString().isNotEmpty) {
                 Navigator.push(
                     context,
@@ -1505,11 +1369,9 @@ class _HomePageState extends State<HomePage> {
             }
           }
         } else if (message.data['type'] == "unfollowuser") {
-          print("hfuihdgiufhrghdriugiorh");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => follower()));
         } else if (message.data['type'] == "followuser") {
-          print("hfuihdgiufhrghdriugiorh");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => follower()));
         } else if (message.data['type'] == "profile_review") {
@@ -1538,10 +1400,10 @@ class _HomePageState extends State<HomePage> {
               context, MaterialPageRoute(builder: (context) => MainScreen(0)));
         } else if (message.data['type'] == "tutorial_video") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Tutorial_Videos()));
+              MaterialPageRoute(builder: (context) => const Tutorial_Videos()));
         } else if (message.data['type'] == "exhibition") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Exhibition()));
+              context, MaterialPageRoute(builder: (context) => const Exhibition()));
         } else if (message.data['type'] == "quicknews") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
@@ -1550,48 +1412,30 @@ class _HomePageState extends State<HomePage> {
     });
 
     FirebaseMessaging.instance.getInitialMessage().then((value) {
-      if (value != null) {
-        print('inside open');
-        //Fluttertoast.showToast(msg: 'APP Terminate ');
-        //_context = context;
-        //notification_redirect(value!.data, _context);
-      }
+      if (value != null) {}
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) {
-        print('inside open');
-        // _context=context;
-        // notification_redirect(message.data,_context);
-        String notification_type = message.data['type'];
-        String user_id = message.data['user_id'];
-        print('saqwagrgr ${message.data}');
+
+        String notificationType = message.data['type'];
+        String userId = message.data['user_id'];
         if (message.data['type'] == 'profile like') {
           try {
-            print('i m try');
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        other_user_profile(int.parse(user_id.toString()))));
+                        other_user_profile(int.parse(userId.toString()))));
           } catch (e, stackTrace) {
-            // Handle the exception or error
-            // Fluttertoast.showToast(msg:'Exception: $e');
-            // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
-            print('Exception: $e');
-            print('Stack trace: $stackTrace');
+
           }
         } else if (message.data['type'] == 'profile_review') {
-          print("kjdis");
           try {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => bussinessprofile()));
           } catch (e, stackTrace) {
-            // Handle the exception or error
-            // Fluttertoast.showToast(msg:'Exception: $e');
-            // Fluttertoast.showToast(msg:'Stack trace: $stackTrace');
-            print('Exception: $e');
-            print('Stack trace: $stackTrace');
+
           }
         } else if (message.data['type'] == 'follower_profile_like') {
           Navigator.push(
@@ -1606,9 +1450,7 @@ class _HomePageState extends State<HomePage> {
                   builder: (context) => other_user_profile(
                       int.parse(constanst.notiuser.toString()))));
         } else if (message.data['type'] == "post like") {
-          print("gfdghf");
           if (message.data['post_type'] == "SalePost") {
-            print("gfdghf1233");
             if (message.data['postId'].toString().isNotEmpty) {
               Navigator.push(
                   context,
@@ -1619,7 +1461,6 @@ class _HomePageState extends State<HomePage> {
             }
           } else {
             if (message.data['post_type'] == "BuyPost") {
-              print("gfdghf");
               if (message.data['postId'].toString().isNotEmpty) {
                 Navigator.push(
                     context,
@@ -1631,11 +1472,9 @@ class _HomePageState extends State<HomePage> {
             }
           }
         } else if (message.data['type'] == "unfollowuser") {
-          print("hfuihdgiufhrghdriugiorh");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => follower()));
         } else if (message.data['type'] == "followuser") {
-          print("hfuihdgiufhrghdriugiorh");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => follower()));
         } else if (message.data['type'] == "profile_review") {
@@ -1678,8 +1517,6 @@ class _HomePageState extends State<HomePage> {
       //_context=context;
       final notification = message.notification;
       if (notification == null) return;
-      print('notification.title');
-      print(message);
       final localNotificationImplementation =
           _localNotification.resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
@@ -1687,10 +1524,6 @@ class _HomePageState extends State<HomePage> {
         localNotificationImplementation
             .createNotificationChannel(_androidchannel);
       }
-      print('Android channel');
-      print(_androidchannel.id);
-      print(_androidchannel.name);
-      print(_androidchannel.description);
       _localNotification.show(
         notification.hashCode,
         notification.title ?? '',
@@ -1716,21 +1549,10 @@ class _HomePageState extends State<HomePage> {
       RemoteNotification? remoteNotification = message.notification;
       AndroidNotification? notification1 = message.notification?.android;
       if (notification1 != null) {
-        /* show_notification(notification.title,
-            notification.body,
-            message.data);*/
       }
-      print('esgrgghhghhjhjhj ${message}');
 
-      /*show_notification(notification.title,
-        notification.body,
-       message.data);*/
     });
 
-    // initPushNotification(context);
-    //initLocalNotification(context);
-
-    //FirebaseMessaging.instance.getInitialMessage().then((handleBackgroundMessage);
   }
 
   Clear_date() {

@@ -61,19 +61,15 @@ class _Register2State extends State<Register2> {
   CroppedFile? _croppedFile;
   final ImagePicker _picker = ImagePicker();
   String googleApikey = "AIzaSyCyqsD3OPUWGJ5AWbN3iKbUzQGs3Q-ZlPE";
-  //String googleApikey = "AIzaSyBAhhavIsSMVdaBF2WkJvwJdF8EPuJeGcg";
   late double lat = 0.0;
   late double log = 0.0;
   String state = '', country_code = '+91', city = '', country = '';
   CameraPosition? cameraPosition;
   LatLng startLocation = LatLng(0, 0);
   String location = "Search Location";
-  //final ImagePicker _picker = ImagePicker();
   bool _isValid = false;
-  // CountryController countryController = getCountryController();
   String defaultCountryCode = 'IN';
   String buss_type = "";
-  //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry;
   BuildContext? dialogContext;
   bool _isloading1 = false;
@@ -105,15 +101,6 @@ class _Register2State extends State<Register2> {
         country_code = country.callingCode.toString();
       });
     }
-    /*  final country =
-    await Navigator.push(context, new MaterialPageRoute(builder: (context) {
-      return PickerPage();
-    }));
-    if (country != null) {
-      setState(() {
-        _selectedCountry = country;
-      });
-    }*/
   }
 
   @override
@@ -211,7 +198,7 @@ class _Register2State extends State<Register2> {
                                       25.0, 25.0, 25.0, 3.0),
                                   child: TextFormField(
                                     controller: _bussname,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
@@ -231,7 +218,7 @@ class _Register2State extends State<Register2> {
                                     ],
                                     decoration: InputDecoration(
                                       hintText: "Bussiness Name *",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
@@ -409,11 +396,9 @@ class _Register2State extends State<Register2> {
                                         },
                                       );
 
-
                                       if (place != null) {
                                         setState(() {
-                                          location =
-                                              place.description.toString();
+                                          location = place.description.toString();
 
                                           List<String> list = place.description
                                               .toString()
@@ -425,19 +410,15 @@ class _Register2State extends State<Register2> {
                                               ? country = list[2].toString()
                                               : country = '';
                                           city = list[0];
-                                          print(list);
-                                          print(city);
-                                          print(state);
-                                          print(country);
                                           _loc.text = location;
                                           _color5 = Colors.green.shade600;
-                                          // print(location);
                                           setState(() {});
                                         });
 
                                         //form google_maps_webservice package
                                         final plist = GoogleMapsPlaces(
                                           apiKey: googleApikey,
+
                                           apiHeaders: await const GoogleApiHeaders()
                                               .getHeaders(),
                                           //from google_api_headers package
@@ -842,24 +823,10 @@ class _Register2State extends State<Register2> {
                                               BorderRadius.circular(10.0)),
                                       //errorText: _validusernm ? 'Name is not empty' : null),
                                     ),
-                                    /* validator: (value) {
-                                  // if (!EmailValidator.validate(value!)) {
-                                  //   return 'Please enter a valid email';
-                                  // }
-                                  if (value!.isEmpty) {
-                                    //return 'Enter a GST Number!';
-                                    _color3 = Colors.red;
-                                  } else {
-                                    // setState(() {
-                                    //_color3 = Colors.green.shade600;
-                                    //});
-                                  }
-                                  return null;
-                                },*/
+
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        /*Fluttertoast.showToast(
-                                        msg: 'Please Enter Valid GST/ VAT/Tax Number');*/
+
                                         setState(() {
                                           _color3 = Colors.black26;
                                         });
@@ -891,11 +858,11 @@ class _Register2State extends State<Register2> {
                                 ),
                                 Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _website,
                                     keyboardType: TextInputType.text,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
@@ -906,13 +873,13 @@ class _Register2State extends State<Register2> {
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
                                       hintText: "Website",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
                                                   'assets\fonst\Metropolis-Black.otf')
-                                          ?.copyWith(color: Colors.black45),
+                                          .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color6),
@@ -928,33 +895,10 @@ class _Register2State extends State<Register2> {
                                               width: 1, color: _color6),
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
-                                      //errorText: _validusernm ? 'Name is not empty' : null),
                                     ),
-                                    /* validator: (value) {
-                                  // if (!EmailValidator.validate(value!)) {
-                                  //   return 'Please enter a valid email';
-                                  // }
-                                  if (value!.isEmpty) {
-                                    // return 'Enter a Website Number!';
-
-
-                                    Fluttertoast.showToast(
-                                        msg: 'Please Your Website ');
-                                    setState(() {
-                                      _color6 = Colors.red;
-                                    });
-                                  } else {
-                                    // setState(() {
-                                    //_color3 = Colors.green.shade600;
-                                    //});
-                                  }
-                                  return null;
-                                },*/
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        /* Fluttertoast.showToast(
-                                              msg:
-                                                  'Please Your Bussiness Mobile Number');*/
+
                                         setState(() {
                                           _color6 = Colors.black26;
                                         });
@@ -1089,7 +1033,6 @@ class _Register2State extends State<Register2> {
                                         /*Fluttertoast.showToast(
                                             msg: "Data Proccess");*/
                                         vaild_data();
-                                        print("SENDED DATA === ${constanst.Bussiness_nature}");
                                         // }
                                       }
                                       // });
@@ -1234,32 +1177,44 @@ class _Register2State extends State<Register2> {
   }
 
   vaild_data() {
+
+    print("VALID DATA");
+
     _isValid = EmailValidator.validate(_bussemail.text);
 
     if (_bussname.text.isEmpty) {
+
       _color1 = Colors.red;
       setState(() {});
     }
     if (_userbussnature.text.isEmpty) {
+
       _color2 = Colors.red;
       setState(() {});
     }
     if (_loc.text.isEmpty) {
+
       _color5 = Colors.red;
       setState(() {});
     }
     if (file == null) {
+
       Fluttertoast.showToast(msg: 'Please Add and Save Your Image');
-    } else if (_bussname.text.isEmpty) {
+    }
+    else if (_bussname.text.isEmpty) {
+
       _color1 = Colors.red;
       setState(() {});
       Fluttertoast.showToast(msg: 'Please Add Your Business Name');
-    } else if (_userbussnature.text.isEmpty) {
+    }
+    else if (_userbussnature.text.isEmpty) {
+
       _color2 = Colors.red;
       setState(() {});
       Fluttertoast.showToast(
           msg: 'Please Select at least 1 Nature of Business');
-    } else if (_loc.text.isEmpty) {
+    }
+    else if (_loc.text.isEmpty) {
       if (constanst.Bussiness_nature.isNotEmpty) {
         _color2 = Colors.green.shade600;
         setState(() {});
@@ -1268,34 +1223,29 @@ class _Register2State extends State<Register2> {
       setState(() {});
       Fluttertoast.showToast(
           msg: 'Please Search and Save your Business Location');
-    } /*else if (_bussmbl.text.isEmpty) {
-      _color3 = Colors.red;
-      setState(() {
-
-      });
-      Fluttertoast.showToast(
-          msg: 'Please Add Your Business Mobile ');
-    } */
+    }
     else if (_bussname.text.isNotEmpty &&
         _loc.text.isNotEmpty &&
         constanst.Bussiness_nature.isNotEmpty) {
+
       if (_bussmbl.text.isNotEmpty) {
         var numValue = _bussmbl.text.length;
         if (numValue >= 6 && numValue < 11) {
           _color8 = Colors.green.shade600;
           setState(() {});
           if (_bussemail.text.isNotEmpty) {
+
             if (!_isValid) {
               Fluttertoast.showToast(msg: 'Enter Valid Email Address');
               _color4 = Colors.red;
               setState(() {});
             } else if (_isValid) {
-              //  Fluttertoast.showToast(msg: 'Enter Valid Email Address');
+
               _color4 = Colors.green.shade600;
               setState(() {});
               if (_gstno.text.isNotEmpty) {
+                print("Phase 6");
                 var numValue = _gstno.text.length;
-
                 if (numValue < 15) {
                   Fluttertoast.showToast(
                       msg: 'Enter Valid GST/ VAT/Tax Number');
@@ -1306,7 +1256,23 @@ class _Register2State extends State<Register2> {
                   setState(() {
                     _color3 = Colors.green.shade600;
                   });
-
+                  _onLoading();
+                  add_bussinessProfile().then((value) {
+                    Navigator.of(dialogContext!).pop();
+                    if (value) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => MainScreen(0)),
+                          ModalRoute.withName('/'));
+                    } else {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => MainScreen(0)),
+                          ModalRoute.withName('/'));
+                    }
+                  });
                   /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
                 }
               } else {
@@ -1361,7 +1327,6 @@ class _Register2State extends State<Register2> {
                       ModalRoute.withName('/'));
                 }
               });
-              ;
             }
           } else if (_gstno.text.isNotEmpty) {
             var numValue = _gstno.text.length;
@@ -1419,13 +1384,13 @@ class _Register2State extends State<Register2> {
           setState(() {});
           Fluttertoast.showToast(msg: 'Please Enter Correct Number');
         }
-      } else if (_bussemail.text.isNotEmpty) {
+      }
+      else if (_bussemail.text.isNotEmpty) {
         if (!_isValid) {
           Fluttertoast.showToast(msg: 'Enter Valid Email Address');
           _color4 = Colors.red;
           setState(() {});
         } else if (_isValid) {
-          //  Fluttertoast.showToast(msg: 'Enter Valid Email Address');
           _color4 = Colors.green.shade600;
           setState(() {});
           if (_gstno.text.isNotEmpty) {
@@ -1465,7 +1430,7 @@ class _Register2State extends State<Register2> {
         } else if (_gstno.text.isNotEmpty) {
           var numValue = _gstno.text.length;
 
-          if (numValue < 15) {
+          if (numValue < 15)  {
             Fluttertoast.showToast(msg: 'Enter Valid GST/ VAT/Tax Number');
             setState(() {
               _color3 = Colors.red;
@@ -1494,9 +1459,9 @@ class _Register2State extends State<Register2> {
             }
           });
         }
-      } else if (_gstno.text.isNotEmpty) {
+      }
+      else if (_gstno.text.isNotEmpty) {
         var numValue = _gstno.text.length;
-
         if (numValue < 15) {
           Fluttertoast.showToast(msg: 'Enter Valid GST/ VAT/Tax Number');
           setState(() {
@@ -1527,7 +1492,8 @@ class _Register2State extends State<Register2> {
 
           /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
         }
-      } else {
+      }
+      else {
         _onLoading();
         add_bussinessProfile().then((value) {
           Navigator.of(dialogContext!).pop();
@@ -1547,7 +1513,6 @@ class _Register2State extends State<Register2> {
         });
 
       }
-
     }
   }
 

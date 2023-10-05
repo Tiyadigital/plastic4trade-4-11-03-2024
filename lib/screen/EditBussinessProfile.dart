@@ -181,7 +181,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                         child: Container(
                             // height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
-                            child: Column(children: [
+                            child: Column(
+                                children: [
                               SafeArea(
                                 top: true,
                                 left: true,
@@ -386,7 +387,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                       ),
                                     ),
-
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
                                           25.0, 0.0, 25.0, 10.0),

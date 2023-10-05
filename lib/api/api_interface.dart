@@ -1,5 +1,5 @@
 
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, prefer_typing_uninitialized_variables
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,7 +8,7 @@ import 'package:Plastic4trade/utill/constant.dart';
 
 String baseurl = 'https://www.plastic4trade.com/api/';
 
-// Login
+
 Future login_user(String devicenm, String mbl, String password) async {
   String loginUrl = 'login';
   var res;
@@ -17,13 +17,8 @@ Future login_user(String devicenm, String mbl, String password) async {
       headers: {"Accept": "application/json"},
       body: {'device': devicenm, 'email': mbl, 'password': password});
 
-  print(response.statusCode);
-  print(mbl);
-  print(password);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -32,7 +27,6 @@ Future androidDevice_Register(String mbl) async {
   String loginUrl = 'androidDeviceRegister';
   var res;
 
-  print('fcm ${constanst.fcm_token}');
   final response = await http.post(Uri.parse(baseurl + loginUrl), headers: {
     "Accept": "application/json"
   }, body: {
@@ -42,14 +36,9 @@ Future androidDevice_Register(String mbl) async {
     'email': mbl
   });
 
-  print(response.statusCode);
-  print(response.body);
-  print(mbl);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -58,7 +47,6 @@ Future iosDevice_Register() async {
   String loginUrl = 'iosDeviceRegister';
   var res;
 
-  print('fcm ${constanst.APNSToken}');
   final response = await http.post(Uri.parse(baseurl + loginUrl), headers: {
     "Accept": "application/json"
   }, body: {
@@ -69,13 +57,9 @@ Future iosDevice_Register() async {
     'push_notification_status': '1'
   });
 
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -84,18 +68,12 @@ Future android_logout(deviceid) async {
   String loginUrl = 'logout';
   var res;
 
-  print(constanst.fcm_token);
   final response = await http.post(Uri.parse(baseurl + loginUrl),
       headers: {"Accept": "application/json"}, body: {'deviceId': deviceid});
 
-  print(constanst.android_device_id);
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -117,12 +95,9 @@ Future registerUserPhoneno(String phoneno, String countryCode, String userName,S
     'step_counter': stepCounter
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -143,12 +118,9 @@ Future reg_mo_verifyotp(String otp, String userId, String phone,
     'step_counter': step
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -168,12 +140,9 @@ Future reg_mo_updateverifyotp(String otp, String userId, String phone,
     'step_counter': step
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -193,12 +162,8 @@ Future reg_mo_resendotp(
     'countryCode': countryCode
   });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -221,12 +186,9 @@ Future registerUserEmail(String userName, String email, String stepCounter,
     'device': device
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -240,12 +202,9 @@ Future reg_email_resendotp(String userId, String apiToken, String email) async {
       headers: {"Accept": "application/json"},
       body: {'userId': userId, 'userToken': apiToken, 'email': email});
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -256,7 +215,7 @@ Future reg_email_verifyotp(String otp, String userId, String apiToken,
   String verifyotp = 'verifyemailotp';
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + verifyotp), //2
+  final response = await http.post(Uri.parse(baseurl + verifyotp),
       headers: {
         "Accept": "application/json"
       },
@@ -268,12 +227,8 @@ Future reg_email_verifyotp(String otp, String userId, String apiToken,
         'step_counter': step
       });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -292,7 +247,7 @@ Future final_register(
   String verifyotp = 'register_v2';
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + verifyotp), //2
+  final response = await http.post(Uri.parse(baseurl + verifyotp),
       headers: {
         "Accept": "application/json"
       },
@@ -308,12 +263,9 @@ Future final_register(
         'userToken': userToken
       });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   } else {}
   return res;
 }
@@ -328,17 +280,11 @@ Future forgotpassword_ME(
       headers: {"Accept": "application/json"},
       body: {'phoneno': phoneno, 'countryCode': countryCode, 'email': email});
 
-  print(phoneno);
-  print(countryCode);
-  print(email);
 
-  print(response.request);
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -360,12 +306,10 @@ Future verifyforgototp(
         'email': email
       });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -386,12 +330,10 @@ Future resetPassword(
     'email': email
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -404,12 +346,10 @@ Future getCategoryList() async {
 
   final response = await http.get(Uri.parse(baseurl + getcategorylistUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -421,12 +361,10 @@ Future getBussinessType() async {
 
   final response = await http.get(Uri.parse(baseurl + getbussinesstypeUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -459,7 +397,6 @@ Future addbussiness(
     'POST',
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
-  var convertdatajson;
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
   request.files.add(
     http.MultipartFile(
@@ -493,12 +430,9 @@ Future addbussiness(
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -511,12 +445,10 @@ Future getCateType() async {
 
   final response = await http.get(Uri.parse(baseurl + getcatetypeUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -529,12 +461,10 @@ Future getCateGrade() async {
 
   final response = await http.get(Uri.parse(baseurl + getcategradeUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -557,13 +487,10 @@ Future addcategory(String userId, String userToken, String locationInterest,
     'step_counter': stepCounter
   });
 
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -584,13 +511,10 @@ Future addtype(
     'step_counter': stepCounter
   });
 
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -611,13 +535,10 @@ Future addgrade(
     'step_counter': stepCounter
   });
 
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -633,7 +554,7 @@ Future getbussinessprofile(String userId, String userToken) async {
       body: {'userId': userId, 'userToken': userToken});
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -647,12 +568,10 @@ Future getColors() async {
 
   final response = await http.get(Uri.parse(baseurl + getcolorlistUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -665,12 +584,10 @@ Future getUnit() async {
 
   final response = await http.get(Uri.parse(baseurl + getunitUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -704,7 +621,6 @@ Future addBuyPost(
     'POST',
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
-  var convertdatajson;
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
   int j = 0;
   for (int i = 0; i < constanst.imagesList.length; i++) {
@@ -712,45 +628,12 @@ Future addBuyPost(
     request.files.add(
       http.MultipartFile(
         'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
+        constanst.imagesList[i].readAsBytes().asStream(),
+        constanst.imagesList[i].lengthSync(),
+        filename: constanst.imagesList[i].path,
       ),
     );
   }
-  /* var request =
-  http.MultipartRequest('POST', Uri.parse(url + _scanQrCode));
-  print(Uri.parse(url + _scanQrCode));
-  request.files.add(http.MultipartFile.fromBytes(
-      'picture',
-      File(_image[i].path).readAsBytesSync(),
-      filename: _image[i].path.split("/").last
-  ));
-  var res = await request.send();
-  var responseData = await res.stream.toBytes();
-  var result = String.fromCharCodes(responseData);
-  print(_image[i].path);*/
-  /*List<http.MultipartFile> newList = new List<http.MultipartFile>();
-
-  for (int i = 0; i < imagesList.length; i++) {
-    var path = await FlutterAbsolutePath.getAbsolutePath(imagesList[i].identifier);
-    File imageFile =  File(path);
-
-    var stream = new http.ByteStream(imageFile.openRead());
-    var length = await imageFile.length();
-
-    var multipartFile = new http.MultipartFile("pictures", stream, length,
-        filename: basename(imageFile.path));
-    newList.add(multipartFile);
-  }*/
-  /*request.files.add(
-    http.MultipartFile(
-      'mainproductImage',
-      file!.readAsBytes().asStream(),
-      file.lengthSync(),
-      filename: file.path,
-    ),
-  )*/
   request.headers.addAll(headers);
   request.fields.addAll({
     'user_id': userId,
@@ -779,12 +662,9 @@ Future addBuyPost(
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -818,7 +698,6 @@ Future addSalePost(
     'POST',
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
-  var convertdatajson;
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
   int j = 0;
   for (int i = 0; i < constanst.imagesList.length; i++) {
@@ -826,20 +705,13 @@ Future addSalePost(
     request.files.add(
       http.MultipartFile(
         'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
+        constanst.imagesList[i].readAsBytes().asStream(),
+        constanst.imagesList[i].lengthSync(),
+        filename: constanst.imagesList[i].path,
       ),
     );
   }
-/*  request.files.add(
-    http.MultipartFile(
-      'mainproductImage',
-      file!.readAsBytes().asStream(),
-      file.lengthSync(),
-      filename: file.path,
-    ),
-  );*/
+
   request.headers.addAll(headers);
   request.fields.addAll({
     'user_id': userId,
@@ -868,12 +740,9 @@ Future addSalePost(
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -888,15 +757,10 @@ Future getuser_Profile(String userId, String userToken) async {
       headers: {"Accept": "application/json"},
       body: {'userId': userId, 'userToken': userToken});
 
-  print(userId);
-  print(userToken);
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -925,12 +789,9 @@ Future saveProfile(String userId, String userToken, File? file) async {
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -951,12 +812,10 @@ Future updateUserPhoneno(
     'phoneno': phoneno
   });
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -969,12 +828,9 @@ Future updateUseremail(String email, String userId, String userToken) async {
       headers: {"Accept": "application/json"},
       body: {'user_id': userId, 'userToken': userToken, 'email': email});
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -994,12 +850,9 @@ Future changePassword(
         'new_password': newPassword
       });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1030,12 +883,9 @@ Future updatesocialmedia(
     'telegram_link': telegramLink,
   });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1088,12 +938,9 @@ Future updateUserBusinessProfile(
     'username': username
   });
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1104,12 +951,10 @@ Future getannual_capacity() async {
 
   final response = await http.get(Uri.parse(baseurl + getannualcapacityUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1120,12 +965,10 @@ Future getannual_turnover() async {
 
   final response = await http.get(Uri.parse(baseurl + getannualcapacityUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1136,12 +979,10 @@ Future getbusiness_document_types() async {
 
   final response = await http.get(Uri.parse(baseurl + getannualcapacityUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -1153,10 +994,9 @@ Future getSlider(String userId, String apiToken) async {
 
   final response = await http.get(Uri.parse(baseurl + getsliderlistUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1168,10 +1008,9 @@ Future getfilterdata() async {
 
   final response = await http.get(Uri.parse(baseurl + getsliderlistUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1183,10 +1022,9 @@ Future getfilterdata_liveprice() async {
 
   final response = await http.get(Uri.parse(baseurl + getsliderlistUrl));
 
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1212,10 +1050,8 @@ Future getHome_Post(
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1240,10 +1076,9 @@ Future getSale_Post(
   var res;
 
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
-  print(response.request);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1269,14 +1104,10 @@ Future getBuyer_Post(
 
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.request);
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1290,12 +1121,9 @@ Future getHomeSearch_Post(String latitude, String longitude,
 
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1309,10 +1137,9 @@ Future getPost_datail(
 
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
 
-  print(response.request);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1326,10 +1153,9 @@ Future getPost_datail1(
 
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
 
-  print(response.request);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1343,11 +1169,9 @@ Future similar_product_buyer(
 
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
 
-  print(response.request);
 
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1361,11 +1185,9 @@ Future similar_product_saler(
 
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
 
-  print(response.request);
 
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1374,10 +1196,10 @@ Future similar_product_saler(
 Future getsaleSearch_Post(String latitude, String longitude,
     String searchKeyword, String limit, String offset) async {
   String getsalepostUrl = 'searchSalepost';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response =
       await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
@@ -1389,12 +1211,9 @@ Future getsaleSearch_Post(String latitude, String longitude,
     'offset': offset
   });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1403,10 +1222,10 @@ Future getsaleSearch_Post(String latitude, String longitude,
 Future getbuysearch_Post(String latitude, String longitude,
     String searchKeyword, String limit, String offset) async {
   String getsalepostUrl = 'searchBuypost';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response =
       await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
@@ -1418,12 +1237,9 @@ Future getbuysearch_Post(String latitude, String longitude,
     'offset': offset
   });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1434,11 +1250,9 @@ Future gethomequicknew() async {
   var res;
   final response = await http.get(Uri.parse(baseurl + gethomequicknewUrl));
 
-  print(response.request);
 
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1446,18 +1260,15 @@ Future gethomequicknew() async {
 
 Future getnewss(String userId, String userToken) async {
   String getsalepostUrl = 'getNews?userId=$userId&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1466,18 +1277,15 @@ Future getnewss(String userId, String userToken) async {
 Future getQuicknews(String userId, String userToken, String offset) async {
   String getsalepostUrl =
       'newnews?userId=$userId&userToken=$userToken&offset=$offset&limit=20';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1485,20 +1293,17 @@ Future getQuicknews(String userId, String userToken, String offset) async {
 
 Future news_like(String newsId, String userId, String userToken) async {
   String getsalepostUrl = 'addNewsLike';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {"Accept": "application/json"},
       body: {'news_id': newsId, 'user_id': userId, 'userToken': userToken});
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1506,20 +1311,17 @@ Future news_like(String newsId, String userId, String userToken) async {
 
 Future product_like(String newsId, String userId, String userToken) async {
   String getsalepostUrl = 'addProductLike';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {"Accept": "application/json"},
       body: {'product_id': newsId, 'user_id': userId, 'userToken': userToken});
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1527,10 +1329,10 @@ Future product_like(String newsId, String userId, String userToken) async {
 
 Future profile_like(String profileId, String userId, String userToken) async {
   String getsalepostUrl = 'addProfileLike';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {
         "Accept": "application/json"
@@ -1541,12 +1343,9 @@ Future profile_like(String profileId, String userId, String userToken) async {
         'userToken': userToken
       });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1555,18 +1354,15 @@ Future profile_like(String profileId, String userId, String userToken) async {
 Future getnewssdetail(String userId, String userToken, String blogid) async {
   String getsalepostUrl =
       'getNewsDetails?userId=$userId&userToken=$userToken&newsId=$blogid';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1574,18 +1370,15 @@ Future getnewssdetail(String userId, String userToken, String blogid) async {
 
 Future getblogs(String userId, String userToken) async {
   String getsalepostUrl = 'getBlog?userId=$userId&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1594,18 +1387,15 @@ Future getblogs(String userId, String userToken) async {
 Future getblogsdetail(String userId, String userToken, String blogid) async {
   String getsalepostUrl =
       'getBlogDetails?userId=$userId&userToken=$userToken&blogId=$blogid';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1613,20 +1403,17 @@ Future getblogsdetail(String userId, String userToken, String blogid) async {
 
 Future blog_like(String blogId, String userId, String userToken) async {
   String getsalepostUrl = 'addBlogLike';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {"Accept": "application/json"},
       body: {'blog_id': blogId, 'user_id': userId, 'userToken': userToken});
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1636,14 +1423,12 @@ Future getFollowerLists(
     String userId, String userToken, String profileId, String search) async {
   String getfollowerlistUrl =
       'getFollowerList?userId=$userId&userToken=$userToken&profileId=$profileId&search=$search';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
   final response = await http.get(Uri.parse(baseurl + getfollowerlistUrl));
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1653,18 +1438,12 @@ Future getfollwingList(
     String userId, String userToken, String profileId, String search) async {
   String getsalepostUrl =
       'getFollowingList?userId=$userId&userToken=$userToken&profileId=$profileId&search=$search';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
   }
   return res;
@@ -1673,10 +1452,8 @@ Future getfollwingList(
 Future followUnfollow(String isFollow, String otherUserId, String userid,
     String userToken) async {
   String getsalepostUrl = 'followUnfollow';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
   final response =
       await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
@@ -1687,12 +1464,8 @@ Future followUnfollow(String isFollow, String otherUserId, String userid,
     'userToken': userToken
   });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
   }
   return res;
@@ -1700,20 +1473,14 @@ Future followUnfollow(String isFollow, String otherUserId, String userid,
 
 Future addfav(String userid, String userToken, String productid) async {
   String getsalepostUrl = 'addFavoriteproduct';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {"Accept": "application/json"},
       body: {'userid': userid, 'userToken': userToken, 'productid': productid});
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
     res = jsonDecode(response.body);
   }
   return res;
@@ -1721,20 +1488,17 @@ Future addfav(String userid, String userToken, String productid) async {
 
 Future removefav(String userid, String userToken, String productid) async {
   String getsalepostUrl = 'removeFavoriteproduct';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
       headers: {"Accept": "application/json"},
       body: {'userid': userid, 'userToken': userToken, 'removeid': productid});
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1743,18 +1507,15 @@ Future removefav(String userid, String userToken, String productid) async {
 Future favList(String userid, String userToken) async {
   String getsalepostUrl =
       'getFavoriteproduct?user_id=$userid&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1762,18 +1523,15 @@ Future favList(String userid, String userToken) async {
 
 Future getvideolist(String userId, String userToken) async {
   String getsalepostUrl = 'getvideolist?userId=$userId&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1781,18 +1539,15 @@ Future getvideolist(String userId, String userToken) async {
 
 Future gettutorialvideo_screen(String screenId) async {
   String getsalepostUrl = 'tutorialvideo_screen?screen_id=$screenId';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1802,18 +1557,15 @@ Future gettutorialvideolist(
     String userId, String userToken, String offset) async {
   String getsalepostUrl =
       'gettutorialvideolist?user_id=$userId&userToken=$userToken&offset=$offset&limit=20';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1823,18 +1575,15 @@ Future getnotification(String userId, String userToken, String readStatus,
     String offset, String limit) async {
   String getsalepostUrl =
       'getNotificationlist?userId=$userId&userToken=$userToken&user_type=$readStatus&offset=$offset&limit=$limit';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1844,18 +1593,15 @@ Future getadminnotification(String userId, String userToken, String readStatus,
     String offset, String limit) async {
   String getsalepostUrl =
       'getadminNotificationlist?userId=$userId&userToken=$userToken&user_type=$readStatus&offset=$offset&limit=$limit';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1864,18 +1610,15 @@ Future getadminnotification(String userId, String userToken, String readStatus,
 Future getContactDetails(String userId, String userToken) async {
   String getsalepostUrl =
       'getContactDetails?userId=$userId&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1893,10 +1636,10 @@ Future add_contact(
     String businessName,
     String contactBy) async {
   String getsalepostUrl = 'addContactUs';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response =
       await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
@@ -1913,12 +1656,9 @@ Future add_contact(
     'contact_by': contactBy
   });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1926,10 +1666,10 @@ Future add_contact(
 
 Future remove_noty(String userid, String userToken, String notifId) async {
   String getsalepostUrl = 'deleteNotification';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response =
       await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
@@ -1939,12 +1679,9 @@ Future remove_noty(String userid, String userToken, String notifId) async {
     'userToken': userToken,
   });
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1953,18 +1690,15 @@ Future remove_noty(String userid, String userToken, String notifId) async {
 Future adminremove_noty(String userid, String userToken, String notifId) async {
   String getsalepostUrl =
       'deleteadminnotification?notification_id=$notifId&user_id=$userid&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1973,18 +1707,15 @@ Future adminremove_noty(String userid, String userToken, String notifId) async {
 Future count_notify(String userid, String userToken) async {
   String getsalepostUrl =
       'getNotificationCount?userId=$userid&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -1992,18 +1723,15 @@ Future count_notify(String userid, String userToken) async {
 
 Future getStaticPage() async {
   String getsalepostUrl = 'getStaticPage?staticId=6';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2012,18 +1740,15 @@ Future getStaticPage() async {
 Future getread_all(String userid, String userToken) async {
   String getsalepostUrl =
       'readallnotification?userId=$userid&userToken=$userToken';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2033,18 +1758,15 @@ Future getupcoming_exbition(String userId, String userToken, String offset,
     String limit, String categoryFilterId) async {
   String getsalepostUrl =
       'getupcommingexhibition?userId=$userId&userToken=$userToken&offset=$offset&limit=$limit&category_filter_id=$categoryFilterId';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2054,38 +1776,31 @@ Future getpast_exbition(String userId, String userToken, String offset,
     String limit, String categoryFilterId) async {
   String getsalepostUrl =
       'getpastexhibition?userId=$userId&userToken=$userToken&offset=$offset&limit=$limit&category_filter_id=$categoryFilterId';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
 }
 
 Future exbitionlike_like(String exId, String userId, String userToken) async {
-  //String getSalePost_url = 'addNewsLike';
   String getsalepostUrl =
       'addexhibitionlike?user_id=$userId&userToken=$userToken&ex_id=$exId';
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2094,18 +1809,15 @@ Future exbitionlike_like(String exId, String userId, String userToken) async {
 Future getexbitiondetail(String userId, String userToken, String exId) async {
   String getsalepostUrl =
       'exhibitiondetail?userId=$userId&userToken=$userToken&ex_id=$exId';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2122,18 +1834,15 @@ Future getlive_price(
     String date) async {
   String getsalepostUrl =
       'getPriceList?offset=$offset&limit=$limit&search=$search&category=$category&company=$company&country=$country&state=$state&date=$date';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2142,18 +1851,15 @@ Future getlive_price(
 Future get_coderecord(String codeId, String offset) async {
   String getsalepostUrl =
       'getcoderecord?code_id=$codeId&offset=$offset&limit=20';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2168,11 +1874,9 @@ Future getsale_PostList(String userId, String apiToken, String limit,
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2185,11 +1889,9 @@ Future save_prostatus(String productId, String productStatus) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2206,11 +1908,9 @@ Future push_notification(String productId) async {
     'product_id': productId,
   });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2230,11 +1930,9 @@ Future deletesalepost(String productId, String userId, String userToken) async {
         'userToken': userToken
       });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2254,11 +1952,9 @@ Future deletebuypost(String productId, String userId, String userToken) async {
         'userToken': userToken
       });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2272,11 +1968,9 @@ Future getbuy_PostList(String userId, String apiToken, String limit,
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2297,11 +1991,9 @@ Future deletePostSubImage(
         'userToken': userToken
       });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2325,9 +2017,9 @@ Future addPostSubImage(String userId, String userToken, String productId,
     request.files.add(
       http.MultipartFile(
         'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
+        constanst.imagesList[i].readAsBytes().asStream(),
+        constanst.imagesList[i].lengthSync(),
+        filename: constanst.imagesList[i].path,
       ),
     );
   }
@@ -2341,11 +2033,9 @@ Future addPostSubImage(String userId, String userToken, String productId,
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2369,9 +2059,9 @@ Future addBuyeSubImage(String userId, String userToken, String productId,
     request.files.add(
       http.MultipartFile(
         'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
+        constanst.imagesList[i].readAsBytes().asStream(),
+        constanst.imagesList[i].lengthSync(),
+        filename: constanst.imagesList[i].path,
       ),
     );
   }
@@ -2385,11 +2075,9 @@ Future addBuyeSubImage(String userId, String userToken, String productId,
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2427,26 +2115,13 @@ Future updateSalePost(
     'POST',
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
-  var convertdatajson;
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
-  int j = 0;
 
-/*  for(int i=0;i<constanst.imagesList.length;i++){
-    j=j+1;
-    request.files.add(
-      http.MultipartFile(
-        'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
-      ),
-    );
-  }*/
   if (file != null) {
     request.files.add(
       http.MultipartFile(
         'mainproductImage',
-        file!.readAsBytes().asStream(),
+        file.readAsBytes().asStream(),
         file.lengthSync(),
         filename: file.path,
       ),
@@ -2481,12 +2156,9 @@ Future updateSalePost(
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -2522,9 +2194,7 @@ Future updateBuyerPost(
     'POST',
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
-  var convertdatajson;
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
-  int j = 0;
 
 /*  for(int i=0;i<constanst.imagesList.length;i++){
     j=j+1;
@@ -2541,7 +2211,7 @@ Future updateBuyerPost(
     request.files.add(
       http.MultipartFile(
         'mainproductImage',
-        file!.readAsBytes().asStream(),
+        file.readAsBytes().asStream(),
         file.lengthSync(),
         filename: file.path,
       ),
@@ -2576,12 +2246,9 @@ Future updateBuyerPost(
 
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -2601,11 +2268,9 @@ Future addProducttype(
     'step_counter': stepCounter
   });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2626,11 +2291,9 @@ Future addProductgrade(
     'step_counter': stepCounter
   });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2655,11 +2318,9 @@ Future get_directory(
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2681,11 +2342,9 @@ Future get_exhibitor(
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2716,13 +2375,12 @@ Future updateBusinessVerification(
       'POST',
       Uri.parse(baseurl + addbussinessprofileUrl),
     );
-    var convertdatajson;
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
     if (file != null) {
       request.files.add(
         http.MultipartFile(
           'document',
-          file!.readAsBytes().asStream(),
+          file.readAsBytes().asStream(),
           file.lengthSync(),
           filename: file.path,
         ),
@@ -2749,16 +2407,13 @@ Future updateBusinessVerification(
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
-      //Map<String, dynamic> responseJson = json.decode(response.body);
+
       res = jsonDecode(response.body);
-      print("res $res");
     }
   } catch (e) {
-    print('Error: $e');
-    throw e;
+    rethrow;
   }
 
   return res;
@@ -2771,11 +2426,9 @@ Future get_productname() async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2788,11 +2441,9 @@ Future get_deletedocument(String docuId) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2800,21 +2451,17 @@ Future get_deletedocument(String docuId) async {
 
 Future remove_docu(String docuId) async {
   String getsalepostUrl = 'deletedocument?document_id=$docuId';
-  // String getSalePost_url = 'searchSalepost?latitude=$latitude&longitude=$longitude&searchKeyword=$searchKeyword&limit=$limit&offset=$offset';
+
   var res;
 
-  // final response = await http.get(Uri.parse(baseurl + getSalePost_url));
+
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
-  print(response.statusCode);
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
 
-    print(res['data']);
   }
   return res;
 }
@@ -2826,11 +2473,9 @@ Future get_profileliked_user(String profileId) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2843,11 +2488,9 @@ Future get_profileviewd_user(String profileId) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2861,11 +2504,9 @@ Future share_count(String profileId, userId) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2878,11 +2519,9 @@ Future get_profiles_share(String profileId) async {
 
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2900,10 +2539,9 @@ Future getbusinessprofileDetail(
         'profile_id': profileId
       });
 
-  print(response.request);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2925,7 +2563,7 @@ Future addReview(String userId, String userToken, String profileId,
     request.files.add(
       http.MultipartFile(
         'com_image',
-        file!.readAsBytes().asStream(),
+        file.readAsBytes().asStream(),
         file.lengthSync(),
         filename: file.path,
       ),
@@ -2943,12 +2581,9 @@ Future addReview(String userId, String userToken, String profileId,
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -2960,10 +2595,9 @@ Future Getcomment(String profileid, String offset, String limit) async {
   final response = await http.post(Uri.parse(baseurl + getpostdatailUrl),
       body: {'profile_id': profileid, 'offset': offset, 'limit': limit});
 
-  print(response.request);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -2985,11 +2619,9 @@ Future addReply(String userId, String userToken, String commentId,
     'comment': comment
   });
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -3011,7 +2643,7 @@ Future editReview(String userId, String userToken, String commentId,
     request.files.add(
       http.MultipartFile(
         'com_image',
-        file!.readAsBytes().asStream(),
+        file.readAsBytes().asStream(),
         file.lengthSync(),
         filename: file.path,
       ),
@@ -3029,12 +2661,9 @@ Future editReview(String userId, String userToken, String commentId,
   var streamedResponse = await request.send();
   var response = await http.Response.fromStream(streamedResponse);
 
-  print(response.statusCode);
-  print(response.body);
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
-    print("res $res");
   }
   return res;
 }
@@ -3047,11 +2676,9 @@ Future deletemyreview(String commentId) async {
       headers: {"Accept": "application/json"},
       body: {'comment_id': commentId});
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;
@@ -3064,11 +2691,9 @@ Future get_databytimeduration(String codeId) async {
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl),
       headers: {"Accept": "application/json"});
 
-  print(response.request);
-  print(response.body);
 
   if (response.statusCode == 200) {
-    //Map<String, dynamic> responseJson = json.decode(response.body);
+
     res = jsonDecode(response.body);
   }
   return res;

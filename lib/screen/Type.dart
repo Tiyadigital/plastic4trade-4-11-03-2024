@@ -61,14 +61,6 @@ class _TypeState extends State<Type> {
     return initwidget(context);
   }
 
-  Future<bool> _onbackpress(BuildContext context) async {
-    /* Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-        ModalRoute.withName('/'));*/
-    Navigator.pop(context);
-    return Future.value(true);
-  }
 
   Widget initwidget(BuildContext context) {
     print('bgh$_isloading');
@@ -150,9 +142,7 @@ class _TypeState extends State<Type> {
                                   child: TextButton(
                                     onPressed: () {
                                       setState(() {
-                                        print(constanst.select_typeId);
-                                        if (constanst
-                                            .Type_itemsCheck1.isEmpty) {
+                                        if (constanst.select_typeId.isEmpty) {
                                           Fluttertoast.showToast(
                                               msg: 'Select Minimum 1 Type');
                                         } else {
@@ -365,7 +355,6 @@ class _TypeState extends State<Type> {
                             child: TextButton(
                               onPressed: () {
                                 setState(() {
-                                  print(constanst.select_typeId);
                                   if (constanst.select_typeId.isEmpty) {
                                     Fluttertoast.showToast(
                                         msg: 'Select Minimum 1 Type');

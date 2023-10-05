@@ -936,12 +936,13 @@ class _RegisterState extends State<Register> {
                                   child: Column(
                                     children: [
                                       TextFormField(
+                                        autocorrect: false,
                                         controller: _useremail,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -949,8 +950,7 @@ class _RegisterState extends State<Register> {
                                                 'assets\fonst\Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
-                                          // labelText: 'Your email *',
-                                          // labelStyle: TextStyle(color: Colors.red),
+
                                           enabled:
                                               verify_email == 1 ? false : true,
                                           suffixIcon: verify_email == 1
@@ -1033,16 +1033,7 @@ class _RegisterState extends State<Register> {
                                                     'Please Enter Correct Email');
                                             // setState(() {});
                                           }
-                                          /*else if (value.isEmpty) {
-                                            */ /* Fluttertoast.showToast(
-                                                msg: 'Please Your Email');*/ /*
-                                            WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Enter Your Email');
-                                            // setState(() {
-                                            _color3 = Colors.red;
-                                            // });
-                                          }*/
+
                                           else if (value.isNotEmpty) {
                                             // setState(() {
                                             _color3 = Colors.green.shade600;
@@ -1070,6 +1061,9 @@ class _RegisterState extends State<Register> {
                                                           255, 0, 91, 148)),
                                                   child: TextButton(
                                                     onPressed: () async {
+
+                                                      log("EMAIL OTP BUTTON PRESSED");
+
                                                       final connectivityResult =
                                                           await Connectivity()
                                                               .checkConnectivity();
@@ -1143,7 +1137,7 @@ class _RegisterState extends State<Register> {
                                                           color: Colors.white,
                                                           fontFamily:
                                                               'assets\fonst\Metropolis-Black.otf',
-                                                        )?.copyWith(
+                                                        ).copyWith(
                                                             fontWeight:
                                                                 FontWeight.w800,
                                                             fontSize: 17)),
@@ -1860,10 +1854,7 @@ class _RegisterState extends State<Register> {
                                                     'Net Connection not available');
                                           } else {
                                             if (_formKey.currentState!
-                                                .validate()) {
-                                              /* Fluttertoast.showToast(
-                                                  msg: "Data Proccess");*/
-                                            }
+                                                .validate()) {}
                                             setState(() {
                                               vaild_data();
                                             });
@@ -1953,8 +1944,6 @@ class _RegisterState extends State<Register> {
             _isloading = false;
           }
         });
-
-        //_registerApi();
       }
     } else if (_usernm.text.isNotEmpty &&
         _useremail.text.isNotEmpty &&
@@ -2031,6 +2020,8 @@ class _RegisterState extends State<Register> {
 
   Future<bool> setRegisterUserEmail() async {
     GetRegsterEmailOTP register = GetRegsterEmailOTP();
+
+    log("setRegisterUserEmail Method Called");
 
     var res = await registerUserEmail(
         _usernm.text.toString(),
@@ -2238,14 +2229,13 @@ class _RegisterState extends State<Register> {
       if (Platform.isAndroid) {
         const androidId = AndroidId();
         constanst.android_device_id = (await androidId.getId())!;
-
-        print('android device');
-        print(constanst.android_device_id);
         add_android_device();
       } else if (Platform.isIOS) {
         final iosinfo = await deviceInfo.iosInfo;
-        constanst.devicename = iosinfo.name!;
+
+        constanst.devicename = iosinfo.name;
         constanst.ios_device_id = iosinfo.identifierForVendor!;
+        add_ios_device();
       }
     } else {
       Fluttertoast.showToast(msg: res['message']);

@@ -104,22 +104,12 @@ class _managesellpostState extends State<managesellpost> {
         child: IconButton(
           onPressed: () {
             constanst.redirectpage = "add_post";
-            /* constanst.productId=result.productId.toString();
-                constanst.post_type=result.postType.toString();*/
-            //constanst.redirectpage="sale_buy";
-            print(constanst.appopencount);
-            print(constanst.appopencount1);
-            print(constanst.isprofile);
-            print(constanst.iscategory);
+
             if (constanst.appopencount == constanst.appopencount1) {
-              print(constanst.step);
               if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
-                  !constanst.isprofile &&
-                  constanst.step == 11) {
-                print(constanst.step);
-
+                  !constanst.isprofile) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -129,7 +119,6 @@ class _managesellpostState extends State<managesellpost> {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(msg: 'i m category');
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
@@ -137,44 +126,24 @@ class _managesellpostState extends State<managesellpost> {
               } else if (constanst.istype) {
                 constanst.redirectpage = "add_grade";
                 categoryDialog(context);
-              } else if (constanst.step != 11) {
-                addPostDialog(context);
               }
-              /* else {
-                   showInformationDialog(context);
-                 }*/
             } else {
               if (constanst.isprofile) {
                 showInformationDialog(context);
               } else if (constanst.iscategory) {
                 constanst.redirectpage = "add_cat";
-                //Fluttertoast.showToast(msg: 'i m category');
-                //categoryDialog(context);
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));*/
                 categoryDialog(context);
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
-                /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));*/
                 categoryDialog(context);
-                //categoryDialog(context);
               } else if (constanst.istype) {
                 constanst.redirectpage = "add_grade";
-                //categoryDialog(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Grade(),
+                      builder: (context) => const Grade(),
                     ));
               } else if (constanst.step != 11) {
-                // addPostDialog(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -183,10 +152,7 @@ class _managesellpostState extends State<managesellpost> {
               } else if (!constanst.isgrade &&
                   !constanst.istype &&
                   !constanst.iscategory &&
-                  !constanst.isprofile &&
-                  constanst.step == 11) {
-                print(constanst.step);
-
+                  !constanst.isprofile) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -195,7 +161,7 @@ class _managesellpostState extends State<managesellpost> {
               }
             }
           },
-          icon: Icon(Icons.add, color: Colors.white, size: 40),
+          icon: const Icon(Icons.add, color: Colors.white, size: 40),
         ),
         //
       ),
@@ -441,7 +407,7 @@ class _managesellpostState extends State<managesellpost> {
                                           margin: EdgeInsets.zero,
                                           padding: EdgeInsets.zero,
                                           child: newStr == 'ffffff'
-                                              ? Icon(Icons.circle_outlined,
+                                              ? const Icon(Icons.circle_outlined,
                                                   size: 15)
                                               : Icon(Icons.circle_rounded,
                                                   size: 15, color: colors));
@@ -456,12 +422,12 @@ class _managesellpostState extends State<managesellpost> {
                                       SizedBox(
                                           width: 105,
                                           child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
+                                              padding: const EdgeInsets.fromLTRB(
                                                   0.0, 0.0, 0.0, 0),
                                               child: Container(
                                                   height: 30,
                                                   width: 80,
-                                                  padding: EdgeInsets.only(
+                                                  padding: const EdgeInsets.only(
                                                     left: 5.0,
                                                   ),
                                                   decoration: BoxDecoration(

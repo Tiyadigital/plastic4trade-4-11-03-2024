@@ -15,8 +15,8 @@ class Get_shareUser {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -56,15 +56,15 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['profile_id'] = this.profileId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['username'] = this.username;
-    data['userImage'] = this.userImage;
-    data['image_url'] = this.imageUrl;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['profile_id'] = profileId;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['username'] = username;
+    data['userImage'] = userImage;
+    data['image_url'] = imageUrl;
     return data;
   }
 }

@@ -288,7 +288,7 @@ class _SalePostState extends State<SalePost> {
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.white),
-                                child: Icon(
+                                child: const Icon(
                                   Icons.filter_alt,
                                   color: Colors.black,
                                 )))
@@ -305,7 +305,7 @@ class _SalePostState extends State<SalePost> {
                           color: Color.fromARGB(255, 0, 91, 148),
                         )
                       : Platform.isIOS
-                          ? CupertinoActivityIndicator(
+                          ? const CupertinoActivityIndicator(
                               color: Color.fromARGB(255, 0, 91, 148),
                               radius: 20,
                               animating: true,
@@ -315,7 +315,7 @@ class _SalePostState extends State<SalePost> {
             height: 70,
             width: 70,
             decoration: BoxDecoration(
-                image: DecorationImage(
+                image: const DecorationImage(
                     image: AssetImage("assets/floating_back.png")),
                 borderRadius: BorderRadius.circular(30)),
             child: IconButton(
@@ -325,8 +325,7 @@ class _SalePostState extends State<SalePost> {
                   if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
+                      !constanst.isprofile) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -343,8 +342,6 @@ class _SalePostState extends State<SalePost> {
                   } else if (constanst.istype) {
                     constanst.redirectpage = "add_grade";
                     categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
                   }
                 } else {
                   if (constanst.isprofile) {
@@ -362,13 +359,10 @@ class _SalePostState extends State<SalePost> {
                         MaterialPageRoute(
                           builder: (context) => const Grade(),
                         ));
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  } else if (!constanst.isgrade &&
+                  }else if (!constanst.isgrade &&
                       !constanst.istype &&
                       !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
+                      !constanst.isprofile) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(

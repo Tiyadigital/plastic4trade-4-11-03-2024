@@ -184,14 +184,14 @@ class _TypeState extends State<Grade> {
                                   ConnectionState.waiting &&
                                   snapshot.hasData == null) {
                                 print('hiiii1');
-                                return Center(
+                                return const Center(
                                     child: CircularProgressIndicator());
                               } else if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
                                 if (constanst.cat_grade_data.isEmpty) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 20),
+                                  return const Padding(
+                                    padding: EdgeInsets.only(top: 20),
                                     child: Center(
                                         child: CircularProgressIndicator()),
                                   );
