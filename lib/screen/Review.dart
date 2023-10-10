@@ -1167,8 +1167,6 @@ class _reviewState extends State<review> {
   }
 
   revove_Reply(String comment_id) async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await deletemyreview(
         comment_id

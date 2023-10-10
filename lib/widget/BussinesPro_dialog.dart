@@ -70,7 +70,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                       fontSize: 26.0,
                       fontWeight: FontWeight.w700,
                       color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')
                   .copyWith(fontSize: 23)),
           const SizedBox(
             height: 20,
@@ -82,7 +82,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
               style: const TextStyle(
                       fontSize: 13.0,
                       fontWeight: FontWeight.w500,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf',
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf',
                       color: Color.fromARGB(255, 0, 91, 148))
                   ?.copyWith(fontSize: 14)),
 
@@ -195,7 +195,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                           fontSize: 19.0,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                 ),
               ),
             ],

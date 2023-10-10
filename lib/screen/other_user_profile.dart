@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, camel_case_types, must_be_immutable, unnecessary_null_comparison
+// ignore_for_file: non_constant_identifier_names, camel_case_types, must_be_immutable, unnecessary_null_comparison, depend_on_referenced_packages, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, avoid_print, invalid_return_type_for_catch_error
 
 import 'dart:developer';
 import 'dart:io';
@@ -23,7 +23,6 @@ import '../model/GetSalePostList.dart';
 import '../model/Get_likeUser.dart';
 import '../model/Get_shareUser.dart';
 import '../model/Get_viewUser.dart';
-import '../model/common.dart';
 import 'Buyer_sell_detail.dart';
 import 'Review.dart';
 
@@ -130,7 +129,7 @@ class _bussinessprofileState extends State<other_user_profile>
               color: Colors.black,
               fontWeight: FontWeight.w600,
               fontFamily: 'Metropolis',
-            )),
+            ),),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -173,12 +172,12 @@ class _bussinessprofileState extends State<other_user_profile>
                                               color: const Color(0xff7c94b6),
                                               image: DecorationImage(
                                                 image: NetworkImage(
-                                                    image_url.toString()),
+                                                    image_url.toString(),),
                                                 fit: BoxFit.cover,
                                               ),
                                               borderRadius:
                                                   const BorderRadius.all(
-                                                      Radius.circular(50.0)),
+                                                      Radius.circular(50.0),),
                                               border: Border.all(
                                                 color: const Color(0xffFFC107),
                                                 width: 2.0,
@@ -201,7 +200,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                           ),
                                         ],
                                       ),
-                                      //SizedBox(width: 10), // Add spacing between the two columns
+
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -221,7 +220,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-SemiBold.otf',
+                                                    'assets/fonst/Metropolis-SemiBold.otf',
                                               ),
                                             ),
                                           ),
@@ -240,7 +239,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                 Row(
                                                   children: [
                                                     const ImageIcon(AssetImage(
-                                                        'assets/user.png')),
+                                                        'assets/user.png'),),
                                                     const SizedBox(width: 5),
                                                     SizedBox(
                                                       //width: MediaQuery.of(context).size.width/2.3,
@@ -257,7 +256,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                 FontWeight.w400,
                                                             color: Colors.black,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-SemiBold.otf',
+                                                                'assets/fonst/Metropolis-SemiBold.otf',
                                                           ),
                                                           softWrap: false,
                                                           maxLines: 1,
@@ -270,7 +269,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                 Row(
                                                   children: [
                                                     const ImageIcon(AssetImage(
-                                                        'assets/call.png')),
+                                                        'assets/call.png'),),
                                                     const SizedBox(width: 5),
                                                     SizedBox(
                                                       width:
@@ -301,25 +300,22 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                 FontWeight.w400,
                                                             color: Colors.black,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-SemiBold.otf',
+                                                                'assets/fonst/Metropolis-SemiBold.otf',
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 2),
+                                                const SizedBox(height: 2),
                                                 Row(
                                                   children: [
                                                     const ImageIcon(AssetImage(
-                                                        'assets/location.png')),
-                                                    SizedBox(width: 5),
+                                                        'assets/location.png'),),
+                                                    const SizedBox(width: 5),
                                                     SizedBox(
                                                       width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              2.2,
+                                                          MediaQuery.of(context).size.width / 2.2,
                                                       child: Text(
                                                         address.toString(),
                                                         softWrap: false,
@@ -331,7 +327,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                               FontWeight.w400,
                                                           color: Colors.black,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-SemiBold.otf',
+                                                              'assets/fonst/Metropolis-SemiBold.otf',
                                                         ),
                                                         maxLines: 1,
                                                         overflow:
@@ -358,7 +354,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                 children: const [
                                                                   Image(
                                                                       image: AssetImage(
-                                                                          'assets/verify.png')),
+                                                                          'assets/verify.png'),),
                                                                   Text(
                                                                       'Unverified'),
                                                                 ],
@@ -369,7 +365,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                     children: [
                                                                       const Image(
                                                                           image:
-                                                                              AssetImage('assets/verify.png')),
+                                                                              AssetImage('assets/verify.png'),),
                                                                       const Text(
                                                                           'Unverified'),
                                                                       const SizedBox(
@@ -394,7 +390,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                 : Container()
                                                   ],
                                                 ),
-                                              ])),
+                                              ]),),
                                         ],
                                       ),
                                     ],
@@ -405,13 +401,13 @@ class _bussinessprofileState extends State<other_user_profile>
                               //category(),
 
                               //SizedBox(height: 10,),
-                            ])),
+                            ]),),
                       ]),
 
                       //category(),
 
                       //SizedBox(height: 10,),
-                    ])),
+                    ]),),
                 Container(
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
@@ -461,37 +457,37 @@ class _bussinessprofileState extends State<other_user_profile>
                               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(followers_count.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 17.0,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-SemiBold.otf')),
-                                Text('Followers',
+                                            'assets/fonst/Metropolis-SemiBold.otf'),),
+                                const Text('Followers',
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-SemiBold.otf')),
+                                            'assets/fonst/Metropolis-SemiBold.otf'),),
                               ]),
                           Row(children: [
                             Text(following_count.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 17.0,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-SemiBold.otf')),
-                            Text('Following',
+                                        'assets/fonst/Metropolis-SemiBold.otf'),),
+                            const Text('Following',
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-SemiBold.otf')),
+                                        'assets/fonst/Metropolis-SemiBold.otf'),),
                           ])
-                        ])),
+                        ]),),
                 Container(
                     margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                     height: 60,
@@ -499,12 +495,12 @@ class _bussinessprofileState extends State<other_user_profile>
                         scrollDirection: Axis.horizontal,
                         child: Row(children: [
                           Container(
-                              padding: EdgeInsets.all(5.0),
-                              margin: EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
+                              padding: const EdgeInsets.all(5.0),
+                              margin: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black26),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
+                                    const BorderRadius.all(Radius.circular(18),),
                               ),
                               child: SizedBox(
                                   width:
@@ -516,48 +512,50 @@ class _bussinessprofileState extends State<other_user_profile>
                                       GestureDetector(
                                           onTap: () {},
                                           child: const ImageIcon(
-                                              AssetImage('assets/sms.png'))),
-                                      const Text('Message',
+                                              AssetImage('assets/sms.png'),),),
+                                      const Text(' Chat',
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf',
+                                                  'assets/fonst/Metropolis-Black.otf',
                                               fontSize: 14,
-                                              color: Colors.black)),
+                                              color: Colors.black),),
                                     ],
-                                  ))),
+                                  ),),),
                           Container(
-                              padding: EdgeInsets.all(5.0),
-                              margin: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black26),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
+                            padding: const EdgeInsets.all(5.0),
+                            margin:
+                                const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black26),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(18),),
+                            ),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 3.8,
+                              height: 25,
+                              child: GestureDetector(
+                                onTap: () {
+                                  launchUrl(
+                                    Uri.parse('https://wa.me/$bussmbl'),
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Image.asset(('assets/whatsapp.png'),),
+                                    const Text('WhatsApp',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-Black.otf',
+                                            fontSize: 14,
+                                            color: Colors.black),),
+                                  ],
+                                ),
                               ),
-                              child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 3.8,
-                                  height: 25,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      launchUrl(
-                                        Uri.parse('https://wa.me/$bussmbl'),
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(('assets/whatsapp.png')),
-                                        const Text('WhatsApp',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf',
-                                                fontSize: 14,
-                                                color: Colors.black)),
-                                      ],
-                                    ),
-                                  ))),
+                            ),
+                          ),
                           Row(
                             //mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -570,34 +568,34 @@ class _bussinessprofileState extends State<other_user_profile>
                                     'assets/facebook.png',
                                     width: 30,
                                     height: 30,
-                                  )),
+                                  ),),
                               IconButton(
                                   onPressed: () => launchUrl(
                                         Uri.parse(instagram_url!),
                                         mode: LaunchMode.externalApplication,
                                       ),
-                                  icon: Image.asset('assets/instagram.png')),
+                                  icon: Image.asset('assets/instagram.png'),),
                               IconButton(
                                   onPressed: () => launchUrl(
                                         Uri.parse(linkedin_url!),
                                         mode: LaunchMode.externalApplication,
                                       ),
-                                  icon: Image.asset('assets/linkdin.png')),
+                                  icon: Image.asset('assets/linkdin.png'),),
                               IconButton(
                                   onPressed: () => launchUrl(
                                         Uri.parse(youtube_url!),
                                         mode: LaunchMode.externalApplication,
                                       ),
-                                  icon: Image.asset('assets/youtube.png')),
+                                  icon: Image.asset('assets/youtube.png'),),
                               IconButton(
                                   onPressed: () => launchUrl(
                                         Uri.parse(twitter_url!),
                                         mode: LaunchMode.externalApplication,
                                       ),
-                                  icon: Image.asset('assets/Twitter.png')),
+                                  icon: Image.asset('assets/Twitter.png'),),
                             ],
                           )
-                        ]))),
+                        ]),),),
                 const Divider(
                   color: Colors.black26,
                   height: 2.0,
@@ -607,7 +605,7 @@ class _bussinessprofileState extends State<other_user_profile>
                   child: Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
                         height: 40,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 6.0,
@@ -649,8 +647,8 @@ class _bussinessprofileState extends State<other_user_profile>
 
                                             setState(() {});
                                           },
-                                        )),
-                              SizedBox(
+                                        ),),
+                              const SizedBox(
                                 width: 2,
                               ),
                               GestureDetector(
@@ -658,19 +656,19 @@ class _bussinessprofileState extends State<other_user_profile>
                                   ViewItem(context);
                                 },
                                 child: Text('Like ($like_count)',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 11.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
-                                    )),
+                                    ),),
                               )
                             ],
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
                         height: 40,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 3.8,
@@ -684,12 +682,12 @@ class _bussinessprofileState extends State<other_user_profile>
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                review(profileid.toString())));
+                                                review(profileid.toString(),),),);
                                   },
                                   child: Image.asset(
                                     'assets/star.png',
                                     color: Colors.black,
-                                  )),
+                                  ),),
                               const SizedBox(
                                 width: 2,
                               ),
@@ -699,13 +697,13 @@ class _bussinessprofileState extends State<other_user_profile>
                                     fontFamily: 'Metropolis',
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
-                                  ))
+                                  ),)
                             ],
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                         height: 40,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 4.3,
@@ -717,23 +715,23 @@ class _bussinessprofileState extends State<other_user_profile>
                                   onTap: () {
                                     ViewItem(context);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.remove_red_eye_outlined,
                                     color: Colors.black54,
-                                  )),
+                                  ),),
                               Text('Views ($view_count)',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 11.0,
                                     fontFamily: 'Metropolis',
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
-                                  ))
+                                  ),)
                             ],
                           ),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                         height: 40,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 5.5,
@@ -746,23 +744,23 @@ class _bussinessprofileState extends State<other_user_profile>
                                     sharecount();
                                     shareImage(
                                         url: image_url.toString(),
-                                        title: business_name.toString());
+                                        title: business_name.toString(),);
                                   },
                                   child: Image.asset(
                                     'assets/Send.png',
                                     height: 15,
-                                  )),
-                              SizedBox(
+                                  ),),
+                              const SizedBox(
                                 width: 2,
                               ),
                               GestureDetector(
-                                child: Text('Share',
+                                child: const Text('Share',
                                     style: TextStyle(
                                       fontSize: 11.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
-                                    )),
+                                    ),),
                                 onTap: () {
                                   ViewItem(context);
                                 },
@@ -774,17 +772,16 @@ class _bussinessprofileState extends State<other_user_profile>
                     ],
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.black26,
                   height: 2.0,
                 ),
-                /* _tabSection(context),*/
-                /* LikeWidget1()*/
+
                 TabBar(
                   controller: _parentController,
                   tabs: [
                     Tab(text: 'Product Catalogue ($post_count)'),
-                    Tab(text: 'Business Info'),
+                    const Tab(text: 'Business Info'),
                   ],
                 ),
                 Expanded(
@@ -793,48 +790,48 @@ class _bussinessprofileState extends State<other_user_profile>
                     children: [
                       _subtabSection(context),
                       Container(
-                          margin: EdgeInsets.all(20.0),
+                          margin: const EdgeInsets.all(20.0),
                           width: MediaQuery.of(context).size.width,
                           child: SingleChildScrollView(
                               child: Column(
                             children: [
                               Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10),),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     //height: 300,
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Column(
                                       children: [
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('Nature Of Business',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
                                                 business_type.toString(),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf',
+                                                        'assets/fonst/Metropolis-Black.otf',
                                                     fontSize: 13,
-                                                    color: Colors.black))),
-                                        SizedBox(
+                                                    color: Colors.black),),),
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
                                         Row(
@@ -852,10 +849,10 @@ class _bussinessprofileState extends State<other_user_profile>
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           fontSize: 12,
                                                           color:
-                                                              Colors.black26)),
+                                                              Colors.black26),),
                                                 ),
                                                 Align(
                                                     alignment:
@@ -877,11 +874,11 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                   FontWeight
                                                                       .w500,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf',
+                                                                  'assets/fonst/Metropolis-Black.otf',
                                                               fontSize: 13,
                                                               color: Colors
-                                                                  .black)),
-                                                    ))
+                                                                  .black),),
+                                                    ),)
                                               ],
                                             ),
                                             Column(
@@ -895,10 +892,10 @@ class _bussinessprofileState extends State<other_user_profile>
                                                           fontWeight:
                                                               FontWeight.w400,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           fontSize: 12,
                                                           color:
-                                                              Colors.black26)),
+                                                              Colors.black26),),
                                                 ),
                                                 Align(
                                                     alignment:
@@ -917,23 +914,23 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                   FontWeight
                                                                       .w500,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf',
+                                                                  'assets/fonst/Metropolis-Black.otf',
                                                               fontSize: 13,
                                                               color: Colors
-                                                                  .black)),
-                                                    ))
+                                                                  .black),),
+                                                    ),)
                                               ],
                                             )
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
                                         const Align(
@@ -942,9 +939,9 @@ class _bussinessprofileState extends State<other_user_profile>
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
@@ -965,25 +962,25 @@ class _bussinessprofileState extends State<other_user_profile>
                                                         forceWebView: false,
                                                         enableJavaScript: true)
                                                     .catchError((e) => print(
-                                                        'Error launching URL: $e'));
+                                                        'Error launching URL: $e'),);
                                               },
                                               child: Text(website.toString(),
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       fontFamily:
-                                                          'assets\fonst\Metropolis-Black.otf',
+                                                          'assets/fonst/Metropolis-Black.otf',
                                                       fontSize: 13,
-                                                      color: Colors.black)),
-                                            )),
-                                        SizedBox(
+                                                      color: Colors.black),),
+                                            ),),
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
                                         const Align(
@@ -992,9 +989,9 @@ class _bussinessprofileState extends State<other_user_profile>
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Column(
                                           crossAxisAlignment:
@@ -1005,162 +1002,59 @@ class _bussinessprofileState extends State<other_user_profile>
                                         )
                                       ],
                                     ),
-                                  )),
+                                  ),),
                               Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10),),
                                   child: Expanded(
                                     child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         //height: 60,
-                                        padding: EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Column(children: [
-                                          Align(
+                                          const Align(
                                             alignment: Alignment.topLeft,
                                             child: Text('Our Products',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w400,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf',
+                                                        'assets/fonst/Metropolis-Black.otf',
                                                     fontSize: 12,
-                                                    color: Colors.black26)),
+                                                    color: Colors.black26),),
                                           ),
                                           Align(
                                               alignment: Alignment.topLeft,
                                               child: Text(
                                                   product_name.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       fontFamily:
-                                                          'assets\fonst\Metropolis-Black.otf',
+                                                          'assets/fonst/Metropolis-Black.otf',
                                                       fontSize: 13,
-                                                      color: Colors.black))),
-                                        ])),
-                                  )),
-                              // Card(
-                              //     shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(10)),
-                              //     child: Container(
-                              //         width: MediaQuery.of(context).size.width,
-                              //         height: 60,
-                              //         padding: EdgeInsets.all(10.0),
-                              //         child: Column(children: [
-                              //           Align(
-                              //             alignment: Alignment.topLeft,
-                              //             child: Text('IEC Number: ',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontFamily:
-                              //                     'assets\fonst\Metropolis-Black.otf',
-                              //                     fontSize: 12,
-                              //                     color: Colors.black)),
-                              //           ),
-                              //           Align(
-                              //               alignment: Alignment.topLeft,
-                              //               child: Text('3242432432',
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontFamily:
-                              //                       'assets\fonst\Metropolis-Black.otf',
-                              //                       fontSize: 13,
-                              //                       color: Colors.black))),
-                              //           Align(
-                              //             alignment: Alignment.topLeft,
-                              //             child: Text('Our Products',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontFamily:
-                              //                     'assets\fonst\Metropolis-Black.otf',
-                              //                     fontSize: 12,
-                              //                     color: Colors.black)),
-                              //           ),
-                              //           Align(
-                              //               alignment: Alignment.topLeft,
-                              //               child: Text('IFB Yellow ABS, IFB Red ABS',
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontFamily:
-                              //                       'assets\fonst\Metropolis-Black.otf',
-                              //                       fontSize: 13,
-                              //                       color: Colors.black))),
-                              //           Align(
-                              //             alignment: Alignment.topLeft,
-                              //             child: Text('Our Products',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontFamily:
-                              //                     'assets\fonst\Metropolis-Black.otf',
-                              //                     fontSize: 12,
-                              //                     color: Colors.black)),
-                              //           ),
-                              //           Align(
-                              //               alignment: Alignment.topLeft,
-                              //               child: Text('IFB Yellow ABS, IFB Red ABS',
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontFamily:
-                              //                       'assets\fonst\Metropolis-Black.otf',
-                              //                       fontSize: 13,
-                              //                       color: Colors.black))),
-                              //           Align(
-                              //             alignment: Alignment.topLeft,
-                              //             child: Text('Our Products',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontFamily:
-                              //                     'assets\fonst\Metropolis-Black.otf',
-                              //                     fontSize: 12,
-                              //                     color: Colors.black)),
-                              //           ),
-                              //           Align(
-                              //               alignment: Alignment.topLeft,
-                              //               child: Text('IFB Yellow ABS, IFB Red ABS',
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontFamily:
-                              //                       'assets\fonst\Metropolis-Black.otf',
-                              //                       fontSize: 13,
-                              //                       color: Colors.black))),
-                              //           Align(
-                              //             alignment: Alignment.topLeft,
-                              //             child: Text('Our Products',
-                              //                 style: TextStyle(
-                              //                     fontWeight: FontWeight.w400,
-                              //                     fontFamily:
-                              //                     'assets\fonst\Metropolis-Black.otf',
-                              //                     fontSize: 12,
-                              //                     color: Colors.black)),
-                              //           ),
-                              //           Align(
-                              //               alignment: Alignment.topLeft,
-                              //               child: Text('IFB Yellow ABS, IFB Red ABS',
-                              //                   style: TextStyle(
-                              //                       fontWeight: FontWeight.w500,
-                              //                       fontFamily:
-                              //                       'assets\fonst\Metropolis-Black.otf',
-                              //                       fontSize: 13,
-                              //                       color: Colors.black))),
-                              //         ])))
+                                                      color: Colors.black),),),
+                                        ]),),
+                                  ),),
+
                               Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10),),
                                   child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     //height: 320,
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Column(
                                       children: [
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('GST/VAT/TAX',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
@@ -1175,34 +1069,34 @@ class _bussinessprofileState extends State<other_user_profile>
                                                       )
                                                     : Container(),
                                                 Text(gst_number.toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf',
+                                                            'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 13,
-                                                        color: Colors.black)),
+                                                        color: Colors.black),),
                                               ],
-                                            )),
-                                        SizedBox(
+                                            ),),
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('Pan Number: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Row(
                                           children: [
@@ -1217,257 +1111,257 @@ class _bussinessprofileState extends State<other_user_profile>
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
                                                     pan_number.toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf',
+                                                            'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 13,
-                                                        color: Colors.black))),
+                                                        color: Colors.black),),),
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('IEC Number: ',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
                                               ex_import_number.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 13,
                                                   color: Colors.black),
-                                            )),
-                                        SizedBox(
+                                            ),),
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('Production Capacity',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
                                               production_capacity.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 13,
                                                   color: Colors.black),
-                                            )),
-                                        SizedBox(
+                                            ),),
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('Annual Turnover',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5.0,
                                         ),
                                         Column(
                                           children: [
                                             Row(
                                               children: [
-                                                Text('2020 - 2021 :',
+                                                const Text('2020 - 2021 :',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf',
+                                                            'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 14,
-                                                        color: Colors.black)),
+                                                        color: Colors.black),),
                                                 First_currency.toString()
                                                         .isNotEmpty
                                                     ? Text(
                                                         First_currency
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const  TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container(),
                                                 First_currency_sign.toString()
                                                         .isEmpty
                                                     ? Text(
                                                         First_currency_sign
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container()
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                Text('2021 - 2022 :',
+                                                const Text('2021 - 2022 :',
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf',
+                                                            'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 14,
-                                                        color: Colors.black)),
+                                                        color: Colors.black),),
                                                 First_currency.toString()
                                                         .isNotEmpty
                                                     ? Text(
                                                         First_currency
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container(),
                                                 Second_currency_sign.toString()
                                                         .isEmpty
                                                     ? Text(
                                                         Second_currency_sign
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container()
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                Text('2022 - 2023 :',
-                                                    style: TextStyle(
+                                                const Text('2022 - 2023 :',
+                                                    style:  TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf',
+                                                            'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 14,
-                                                        color: Colors.black)),
+                                                        color: Colors.black),),
                                                 Third_currency.toString()
                                                         .isNotEmpty
                                                     ? Text(
                                                         Third_currency
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container(),
                                                 Third_currency_sign.toString()
                                                         .isEmpty
                                                     ? Text(
                                                         Third_currency_sign
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf',
+                                                                'assets/fonst/Metropolis-Black.otf',
                                                             fontSize: 13,
                                                             color:
-                                                                Colors.black))
+                                                                Colors.black),)
                                                     : Container()
                                               ],
                                             ),
                                           ],
                                         ),
-                                        Divider(
+                                        const Divider(
                                           height: 1.0,
                                           color: Colors.black26,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10.0,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topLeft,
                                           child: Text('Premises Type',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w400,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 12,
-                                                  color: Colors.black26)),
+                                                  color: Colors.black26),),
                                         ),
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
                                               Premises_Type.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
+                                                      'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 13,
                                                   color: Colors.black),
-                                            )),
+                                            ),),
                                       ],
                                     ),
-                                  )),
+                                  ),),
                             ],
-                          )))
+                          ),),)
                     ],
                   ),
                 ),
@@ -1486,20 +1380,17 @@ class _bussinessprofileState extends State<other_user_profile>
                           radius: 20,
                           animating: true,
                         )
-                      : Container()),
+                      : Container(),),
     );
   }
 
   Future<void> sharecount() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await share_count(
-        profileid.toString(), _pref.getString('user_id').toString());
+        profileid.toString(), pref.getString('user_id').toString(),);
 
     if (res['status'] == 1) {
-      //getsimmilar = Get_deteteDocument.fromJson(res);
-      // Fluttertoast.showToast(msg: res['message']);
-      // remove_item(notify_id)
 
       if (mounted) {
         setState(() {});
@@ -1510,79 +1401,77 @@ class _bussinessprofileState extends State<other_user_profile>
   }
 
   Widget _subtabSection(BuildContext context) {
-    return Container(
-      child: Column(children: [
-        Container(
-          margin: EdgeInsets.all(10.0),
-          height: 45,
-          decoration: BoxDecoration(
-            color: Colors.white,
+    return Column(children: [
+      Container(
+        margin: const EdgeInsets.all(10.0),
+        height: 45,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            25.0,
+          ),
+        ),
+        child: TabBar(
+          controller: _childController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          // give the indicator a decoration (color and border radius)
+          indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(
               25.0,
             ),
+            color: const Color.fromARGB(255, 0, 91, 148),
           ),
-          child: TabBar(
-            controller: _childController,
-            physics: AlwaysScrollableScrollPhysics(),
-            // give the indicator a decoration (color and border radius)
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                25.0,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
+          tabs: const [
+            // first tab [you can add an icon using the icon property]
+            Tab(
+              //text: 'Quick News',
+              child: Text(
+                'Buy Posts',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Metropolis',
+                ),
               ),
-              color: Color.fromARGB(255, 0, 91, 148),
             ),
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
-            tabs: [
-              // first tab [you can add an icon using the icon property]
-              Tab(
-                //text: 'Quick News',
-                child: Text(
-                  'Buy Posts',
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Metropolis',
-                  ),
-                ),
-              ),
 
-              // second tab [you can add an icon using the icon property]
-              Tab(
-                child: Text(
-                  'Sell Posts',
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Metropolis',
-                  ),
+            // second tab [you can add an icon using the icon property]
+            Tab(
+              child: Text(
+                'Sell Posts',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Metropolis',
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Expanded(
-            child: TabBarView(
-                // physics: (),
-                physics: AlwaysScrollableScrollPhysics(),
-                controller: _childController,
-                // first tab bar view widget
-                children: [
-              Buyer_post(),
-              Sale_post()
-              /*news()*/
-            ])
+      ),
+      Expanded(
+          child: TabBarView(
+              // physics: (),
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: _childController,
+              // first tab bar view widget
+              children: [
+            Buyer_post(),
+            Sale_post()
+            /*news()*/
+          ])
 
-            // second tab bar view widget
-            ),
-      ]),
-    );
+          // second tab bar view widget
+          ),
+    ]);
   }
 
   Widget Buyer_post() {
     return buypostlist_data.isNotEmpty
         ? Container(
-            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
                 //future: load_category(),
@@ -1592,22 +1481,19 @@ class _bussinessprofileState extends State<other_user_profile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(),);
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
+                  padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
+
                     childAspectRatio: MediaQuery.of(context).size.height /
                         1300, //MediaQuery.of(context).size.aspectRatio * 1.3,
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: buypostlist_data.length,
                   shrinkWrap: true,
@@ -1622,29 +1508,29 @@ class _bussinessprofileState extends State<other_user_profile>
                                 prod_id: result.productId.toString(),
                                 post_type: result.postType.toString(),
                               ),
-                            ));
+                            ),);
                       }),
                       child: Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.circular(20),),
                         child: Column(children: [
                           Stack(fit: StackFit.passthrough, children: <Widget>[
                             Container(
                               height: 165,
                               width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.all(5.0),
+                              decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
+                                      BorderRadius.all(Radius.circular(30.0),),),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
+                                   borderRadius: BorderRadius.circular(10.0),),*/
                                 child: Image(
                                   image: NetworkImage(
-                                      result.mainproductImage.toString()),
+                                      result.mainproductImage.toString(),),
                                   fit: BoxFit.cover,
                                   height: 150,
                                   width: 170,
@@ -1655,21 +1541,21 @@ class _bussinessprofileState extends State<other_user_profile>
                               bottom: 10,
                               left: 10,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
+                                        Radius.circular(10.0),),),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf',
-                                        color: Colors.white)),
+                                            'assets/fonst/Metropolis-Black.otf',
+                                        color: Colors.white),),
                               ),
                             ),
                             result.isPaidPost == 'Paid'
@@ -1677,13 +1563,8 @@ class _bussinessprofileState extends State<other_user_profile>
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
-                                      /*decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),*/
-                                      // color: Color.fromARGB(0,255, 255, 255),
-                                      //child: Text('Paid', style: TextStyle(color: Colors.white)),
+                                      padding: const EdgeInsets.all(5),
+
                                       child: Image.asset(
                                         'assets/PaidPost.png',
                                         height: 50,
@@ -1694,34 +1575,32 @@ class _bussinessprofileState extends State<other_user_profile>
                                 : Container()
                           ]),
                           Column(
-                            //  crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-SemiBold.otf'),
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
                                         softWrap: false,
                                         maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)),
+                                        overflow: TextOverflow.ellipsis),),
                               ),
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.productType.toString() +
-                                            ' | ' +
-                                            result.productGrade.toString(),
-                                        style: TextStyle(
+                                        '${result.productType} | ${result.productGrade}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1729,17 +1608,15 @@ class _bussinessprofileState extends State<other_user_profile>
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis),
-                                  )),
+                                  ),),
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.state.toString() +
-                                            ',' +
-                                            result.country.toString(),
-                                        style: TextStyle(
+                                        '${result.state},${result.country}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1747,21 +1624,21 @@ class _bussinessprofileState extends State<other_user_profile>
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis),
-                                  )),
+                                  ),),
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
                                       result.postType.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 13.0,
                                           fontFamily: 'Metropolis',
                                           fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1)),
+                                          color: Color.fromRGBO(0, 148, 95, 1),),
                                     ),
-                                  )),
+                                  ),),
                             ],
                           )
                         ]),
@@ -1771,18 +1648,17 @@ class _bussinessprofileState extends State<other_user_profile>
                 );
               }
 
-              return CircularProgressIndicator();
-            }))
+            }),)
         : const Center(
             child: Text('Buy Post not Found',
-                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148))),
+                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148),),),
           );
   }
 
   void _scrollercontroller() {
     if (scrollercontroller.position.pixels ==
         scrollercontroller.position.maxScrollExtent) {
-      // loadmore = false;
+
       if (_childController.index == 0) {
         if (salepostlist_data.isNotEmpty) {
           count++;
@@ -1829,59 +1705,21 @@ class _bussinessprofileState extends State<other_user_profile>
                 width: 50.0,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             value: null,
                             strokeWidth: 2.0,
                             color: Color.fromARGB(255, 0, 91, 148),
                           )
                         : Platform.isIOS
-                            ? CupertinoActivityIndicator(
+                            ? const CupertinoActivityIndicator(
                                 color: Color.fromARGB(255, 0, 91, 148),
                                 radius: 20,
                                 animating: true,
                               )
-                            : Container()),
+                            : Container(),),
               ),
             ),
-          ), /*Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 300.0,
-                  height: 150.0,
-                  alignment: AlignmentDirectional.center,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    width: 300.0,
-                    height: 150.0,
-                    alignment: AlignmentDirectional.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const
-                      */ /*  Container(
-                          margin: const EdgeInsets.only(top: 25.0),
-                          child: Center(
-                            child: Text(
-                              "loading.. wait...",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),*/ /*
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )*/
+          ),
         );
       },
     );
@@ -1906,7 +1744,7 @@ class _bussinessprofileState extends State<other_user_profile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(),);
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
@@ -1917,7 +1755,7 @@ class _bussinessprofileState extends State<other_user_profile>
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: salepostlist_data.length,
                   shrinkWrap: true,
@@ -1932,12 +1770,12 @@ class _bussinessprofileState extends State<other_user_profile>
                                 prod_id: result.productId.toString(),
                                 post_type: result.postType.toString(),
                               ),
-                            ));
+                            ),);
                       }),
                       child: Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                            borderRadius: BorderRadius.circular(20),),
                         child: Column(children: [
                           Stack(fit: StackFit.passthrough, children: <Widget>[
                             Container(
@@ -1947,14 +1785,14 @@ class _bussinessprofileState extends State<other_user_profile>
                               decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
+                                      BorderRadius.all(Radius.circular(30.0),),),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
+                                   borderRadius: BorderRadius.circular(10.0),),*/
                                 child: Image(
                                   image: NetworkImage(
-                                      result.mainproductImage.toString()),
+                                      result.mainproductImage.toString(),),
                                   fit: BoxFit.cover,
                                   height: 150,
                                   width: 170,
@@ -1970,15 +1808,15 @@ class _bussinessprofileState extends State<other_user_profile>
                                 decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
+                                        Radius.circular(10.0),),),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text('₹${result.productPrice}',
                                     style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf',
-                                        color: Colors.white)),
+                                            'assets/fonst/Metropolis-Black.otf',
+                                        color: Colors.white),),
                               ),
                             ),
                             result.isPaidPost == 'Paid'
@@ -1986,13 +1824,8 @@ class _bussinessprofileState extends State<other_user_profile>
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
-                                      /*decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),*/
-                                      // color: Color.fromARGB(0,255, 255, 255),
-                                      //child: Text('Paid', style: TextStyle(color: Colors.white)),
+                                      padding: const EdgeInsets.all(5),
+
                                       child: Image.asset(
                                         'assets/PaidPost.png',
                                         height: 50,
@@ -2009,17 +1842,17 @@ class _bussinessprofileState extends State<other_user_profile>
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-SemiBold.otf'),
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
                                         softWrap: false,
                                         maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)),
+                                        overflow: TextOverflow.ellipsis),),
                               ),
                               Align(
                                   alignment: Alignment.topLeft,
@@ -2036,7 +1869,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis),
-                                  )),
+                                  ),),
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
@@ -2052,21 +1885,21 @@ class _bussinessprofileState extends State<other_user_profile>
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis),
-                                  )),
+                                  ),),
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
                                       result.postType.toString(),
                                       style: const TextStyle(
                                           fontSize: 13.0,
                                           fontFamily: 'Metropolis',
                                           fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1)),
+                                          color: Color.fromRGBO(0, 148, 95, 1),),
                                     ),
-                                  )),
+                                  ),),
                             ],
                           )
                         ]),
@@ -2076,22 +1909,20 @@ class _bussinessprofileState extends State<other_user_profile>
                 );
               }
 
-              return CircularProgressIndicator();
-            }))
-        : Center(
+            }),)
+        : const Center(
             child: Text('Sale Post not Found',
-                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148))),
+                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148),),),
           );
   }
 
   getProfiless() async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbusinessprofileDetail(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
-        widget.user_id.toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        widget.user_id.toString(),);
 
     log("RESPONSE === $res");
 
@@ -2168,23 +1999,22 @@ class _bussinessprofileState extends State<other_user_profile>
 
   get_buypostlist() async {
     buyPostList = GetSalePostList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbuy_PostList(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         '20',
         offset.toString(),
-        widget.user_id.toString());
-    var jsonarray;
+        widget.user_id.toString(),);
+    var jsonArray;
     if (res['status'] == 1) {
       buyPostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        var colorArray;
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homepost.Result record = homepost.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -2217,7 +2047,7 @@ class _bussinessprofileState extends State<other_user_profile>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   Future<void> Profilelike() async {
@@ -2226,16 +2056,16 @@ class _bussinessprofileState extends State<other_user_profile>
     var res = await profile_like(
         profileid.toString(),
         pref.getString('user_id').toString(),
-        pref.getString('api_token').toString());
+        pref.getString('api_token').toString(),);
 
-    var jsonarray;
+    var jsonArray;
 
     if (res['status'] == 1) {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   Future<void> followUnfollowUser(isFollow) async {
@@ -2249,7 +2079,7 @@ class _bussinessprofileState extends State<other_user_profile>
     );
     log("FOLLOW RESPONSE == $response");
 
-    var jsonarray;
+    var jsonArray;
 
     if (response['status'] == 1) {
       Fluttertoast.showToast(msg: response['message']);
@@ -2257,7 +2087,7 @@ class _bussinessprofileState extends State<other_user_profile>
       Fluttertoast.showToast(msg: response['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   ViewItem(BuildContext context) {
@@ -2269,7 +2099,7 @@ class _bussinessprofileState extends State<other_user_profile>
           // <-- SEE HERE
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
-        )),
+        ),),
         builder: (context) => DraggableScrollableSheet(
             expand: false,
             initialChildSize:
@@ -2277,34 +2107,33 @@ class _bussinessprofileState extends State<other_user_profile>
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return ViewWidget(profileid.toString());
+                  return ViewWidget(profileid.toString(),);
                 },
               );
-            })).then(
+            }),).then(
       (value) {},
     );
   }
 
   get_salepostlist() async {
     salePostList = GetSalePostList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getsale_PostList(
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
       '20',
       offset.toString(),
       widget.user_id.toString(),
     );
-    var jsonarray;
+    var jsonArray;
     if (res['status'] == 1) {
       salePostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        var colorArray;
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homepost.Result record = homepost.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -2336,15 +2165,12 @@ class _bussinessprofileState extends State<other_user_profile>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
   }
 
   void shareImage({required String url, required String title}) async {
@@ -2369,7 +2195,7 @@ class _bussinessprofileState extends State<other_user_profile>
     final lines = text.split('\n');
 
     for (var line in lines) {
-      widgets.add(buildLineWidget(line));
+      widgets.add(buildLineWidget(line),);
     }
 
     return widgets;
@@ -2398,7 +2224,7 @@ class _bussinessprofileState extends State<other_user_profile>
               decoration: TextDecoration.underline,
             ),
           ),
-        ));
+        ),);
       } else if (RegExp(r'\b\d{10}\b').hasMatch(word)) {
         // Handle phone numbers
         String phoneNumber = RegExp(r'\b\d{10}\b').stringMatch(word)!;
@@ -2419,7 +2245,7 @@ class _bussinessprofileState extends State<other_user_profile>
               decoration: TextDecoration.underline,
             ),
           ),
-        ));
+        ),);
       } else if (word.endsWith('.com') || word.endsWith('.in')) {
         // Handle website URLs with .com or .in extension
         String url = word;
@@ -2442,7 +2268,7 @@ class _bussinessprofileState extends State<other_user_profile>
               decoration: TextDecoration.underline,
             ),
           ),
-        ));
+        ),);
       } else {
         // Handle regular text
         lineWidgets.add(Text(
@@ -2451,10 +2277,10 @@ class _bussinessprofileState extends State<other_user_profile>
             color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
-        ));
+        ),);
       }
       lineWidgets
-          .add(const SizedBox(width: 4)); // Add some spacing between words
+          .add(const SizedBox(width: 4),); // Add some spacing between words
     }
     return Wrap(
       direction: Axis.horizontal,
@@ -2474,8 +2300,6 @@ class ViewWidget extends StatefulWidget {
 }
 
 class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
-  int? _radioValue = 0;
-  int? _managerValue = 0;
   String? assignedName;
   bool? isload;
   late TabController _tabController;
@@ -2486,6 +2310,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
   //List<Data> dataList2=[];
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _tabController = TabController(length: 3, vsync: this);
     get_like();
@@ -2495,7 +2320,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_like() async {
     Get_likeUser common = Get_likeUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await get_profileliked_user(widget.profileid);
 
@@ -2511,7 +2335,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_view() async {
     Get_viewUser common = Get_viewUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
     var res = await get_profileviewd_user(widget.profileid);
     if (res['status'] == 1) {
       common = Get_viewUser.fromJson(res);
@@ -2525,7 +2348,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_share() async {
     Get_shareUser common = Get_shareUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await get_profiles_share(widget.profileid);
 
@@ -2545,7 +2367,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     return isload == true
         ? Column(
             children: [
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Image.asset(
                 'assets/hori_line.png',
                 width: 150,
@@ -2574,11 +2396,11 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-Black.otf')),
+                                        'assets/fonst/Metropolis-Black.otf'),),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: NetworkImage(
-                                  dataList[index].imageUrl.toString()),
+                                  dataList[index].imageUrl.toString(),),
                               //File imageFile = File(pickedFile.path);
 
                               backgroundColor:
@@ -2598,19 +2420,19 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'))
+                                            'assets/fonst/Metropolis-Black.otf'),)
                                 : const Text('unknow',
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
+                                            'assets/fonst/Metropolis-Black.otf'),),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: dataList1[index].imageUrl != null
                                   ? NetworkImage(
-                                      dataList1[index].imageUrl.toString())
+                                      dataList1[index].imageUrl.toString(),)
                                   : const AssetImage('assets/more.png')
                                       as ImageProvider,
                               backgroundColor:
@@ -2629,11 +2451,11 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-Black.otf')),
+                                        'assets/fonst/Metropolis-Black.otf'),),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: NetworkImage(
-                                  dataList2[index].imageUrl.toString()),
+                                  dataList2[index].imageUrl.toString(),),
                               backgroundColor:
                                   const Color.fromARGB(255, 240, 238, 238),
                             ),

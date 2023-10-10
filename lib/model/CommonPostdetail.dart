@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_void_to_null
+
 class CommonPostdetail {
   int? status;
   String? message;
@@ -11,17 +13,17 @@ class CommonPostdetail {
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+        result!.add(Result.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    if (result != null) {
+      data['result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -63,7 +65,7 @@ class Result {
   int? isView;
   List<SimilarProducts>? similarProducts;
   String? isPaidPost;
-  Null? unitOfPrice;
+  Null unitOfPrice;
   String? updatedDate;
   String? createdDate;
 
@@ -128,7 +130,7 @@ class Result {
     if (json['PostHaxCodeColor'] != null) {
       postHaxCodeColor = <PostHaxCodeColor>[];
       json['PostHaxCodeColor'].forEach((v) {
-        postHaxCodeColor!.add(new PostHaxCodeColor.fromJson(v));
+        postHaxCodeColor!.add(PostHaxCodeColor.fromJson(v));
       });
     }
     location = json['Location'];
@@ -142,7 +144,7 @@ class Result {
     if (json['subproductImage'] != null) {
       subproductImage = <SubproductImage>[];
       json['subproductImage'].forEach((v) {
-        subproductImage!.add(new SubproductImage.fromJson(v));
+        subproductImage!.add(SubproductImage.fromJson(v));
       });
     }
     isLike = json['isLike'];
@@ -154,7 +156,7 @@ class Result {
     if (json['SimilarProducts'] != null) {
       similarProducts = <SimilarProducts>[];
       json['SimilarProducts'].forEach((v) {
-        similarProducts!.add(new SimilarProducts.fromJson(v));
+        similarProducts!.add(SimilarProducts.fromJson(v));
       });
     }
     isPaidPost = json['is_paid_post'];
@@ -164,54 +166,54 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productId'] = this.productId;
-    data['UserId'] = this.userId;
-    data['Username'] = this.username;
-    data['BusinessType'] = this.businessType;
-    data['UserImage'] = this.userImage;
-    data['PostType'] = this.postType;
-    data['CategoryId'] = this.categoryId;
-    data['CategoryName'] = this.categoryName;
-    data['PostName'] = this.postName;
-    data['productTypeId'] = this.productTypeId;
-    data['ProductType'] = this.productType;
-    data['ProductGradeId'] = this.productGradeId;
-    data['ProductGrade'] = this.productGrade;
-    data['Currency'] = this.currency;
-    data['ProductPrice'] = this.productPrice;
-    data['Unit'] = this.unit;
-    data['PostQuntity'] = this.postQuntity;
-    if (this.postHaxCodeColor != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['UserId'] = userId;
+    data['Username'] = username;
+    data['BusinessType'] = businessType;
+    data['UserImage'] = userImage;
+    data['PostType'] = postType;
+    data['CategoryId'] = categoryId;
+    data['CategoryName'] = categoryName;
+    data['PostName'] = postName;
+    data['productTypeId'] = productTypeId;
+    data['ProductType'] = productType;
+    data['ProductGradeId'] = productGradeId;
+    data['ProductGrade'] = productGrade;
+    data['Currency'] = currency;
+    data['ProductPrice'] = productPrice;
+    data['Unit'] = unit;
+    data['PostQuntity'] = postQuntity;
+    if (postHaxCodeColor != null) {
       data['PostHaxCodeColor'] =
-          this.postHaxCodeColor!.map((v) => v.toJson()).toList();
+          postHaxCodeColor!.map((v) => v.toJson()).toList();
     }
-    data['Location'] = this.location;
-    data['Latitude'] = this.latitude;
-    data['City'] = this.city;
-    data['State'] = this.state;
-    data['Country'] = this.country;
-    data['Longitude'] = this.longitude;
-    data['Description'] = this.description;
-    data['mainproductImage'] = this.mainproductImage;
-    if (this.subproductImage != null) {
+    data['Location'] = location;
+    data['Latitude'] = latitude;
+    data['City'] = city;
+    data['State'] = state;
+    data['Country'] = country;
+    data['Longitude'] = longitude;
+    data['Description'] = description;
+    data['mainproductImage'] = mainproductImage;
+    if (subproductImage != null) {
       data['subproductImage'] =
-          this.subproductImage!.map((v) => v.toJson()).toList();
+          subproductImage!.map((v) => v.toJson()).toList();
     }
-    data['isLike'] = this.isLike;
-    data['likeCount'] = this.likeCount;
-    data['commentCount'] = this.commentCount;
-    data['isFavorite'] = this.isFavorite;
-    data['isFollow'] = this.isFollow;
-    data['isView'] = this.isView;
-    if (this.similarProducts != null) {
+    data['isLike'] = isLike;
+    data['likeCount'] = likeCount;
+    data['commentCount'] = commentCount;
+    data['isFavorite'] = isFavorite;
+    data['isFollow'] = isFollow;
+    data['isView'] = isView;
+    if (similarProducts != null) {
       data['SimilarProducts'] =
-          this.similarProducts!.map((v) => v.toJson()).toList();
+          similarProducts!.map((v) => v.toJson()).toList();
     }
-    data['is_paid_post'] = this.isPaidPost;
-    data['unit_of_price '] = this.unitOfPrice;
-    data['updated_date'] = this.updatedDate;
-    data['created_date'] = this.createdDate;
+    data['is_paid_post'] = isPaidPost;
+    data['unit_of_price '] = unitOfPrice;
+    data['updated_date'] = updatedDate;
+    data['created_date'] = createdDate;
     return data;
   }
 }
@@ -230,10 +232,10 @@ class PostHaxCodeColor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['colorId'] = this.colorId;
-    data['colorName'] = this.colorName;
-    data['HaxCode'] = this.haxCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['colorId'] = colorId;
+    data['colorName'] = colorName;
+    data['HaxCode'] = haxCode;
     return data;
   }
 }
@@ -250,9 +252,9 @@ class SubproductImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productImageId'] = this.productImageId;
-    data['sub_image_url'] = this.subImageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productImageId'] = productImageId;
+    data['sub_image_url'] = subImageUrl;
     return data;
   }
 }
@@ -329,7 +331,7 @@ class SimilarProducts {
     if (json['PostHaxCodeColor'] != null) {
       postHaxCodeColor = <PostHaxCodeColor>[];
       json['PostHaxCodeColor'].forEach((v) {
-        postHaxCodeColor!.add(new PostHaxCodeColor.fromJson(v));
+        postHaxCodeColor!.add(PostHaxCodeColor.fromJson(v));
       });
     }
     location = json['Location'];
@@ -342,34 +344,34 @@ class SimilarProducts {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productId'] = this.productId;
-    data['UserId'] = this.userId;
-    data['Username'] = this.username;
-    data['Useremail'] = this.useremail;
-    data['PostType'] = this.postType;
-    data['CategoryId'] = this.categoryId;
-    data['CategoryName'] = this.categoryName;
-    data['PostName'] = this.postName;
-    data['productTypeId'] = this.productTypeId;
-    data['ProductType'] = this.productType;
-    data['ProductGradeId'] = this.productGradeId;
-    data['ProductGrade'] = this.productGrade;
-    data['Currency'] = this.currency;
-    data['ProductPrice'] = this.productPrice;
-    data['Unit'] = this.unit;
-    data['PostQuntity'] = this.postQuntity;
-    if (this.postHaxCodeColor != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['UserId'] = userId;
+    data['Username'] = username;
+    data['Useremail'] = useremail;
+    data['PostType'] = postType;
+    data['CategoryId'] = categoryId;
+    data['CategoryName'] = categoryName;
+    data['PostName'] = postName;
+    data['productTypeId'] = productTypeId;
+    data['ProductType'] = productType;
+    data['ProductGradeId'] = productGradeId;
+    data['ProductGrade'] = productGrade;
+    data['Currency'] = currency;
+    data['ProductPrice'] = productPrice;
+    data['Unit'] = unit;
+    data['PostQuntity'] = postQuntity;
+    if (postHaxCodeColor != null) {
       data['PostHaxCodeColor'] =
-          this.postHaxCodeColor!.map((v) => v.toJson()).toList();
+          postHaxCodeColor!.map((v) => v.toJson()).toList();
     }
-    data['Location'] = this.location;
-    data['City'] = this.city;
-    data['State'] = this.state;
-    data['Country'] = this.country;
-    data['Description'] = this.description;
-    data['mainproductImage'] = this.mainproductImage;
-    data['created_date'] = this.createdDate;
+    data['Location'] = location;
+    data['City'] = city;
+    data['State'] = state;
+    data['Country'] = country;
+    data['Description'] = description;
+    data['mainproductImage'] = mainproductImage;
+    data['created_date'] = createdDate;
     return data;
   }
 }

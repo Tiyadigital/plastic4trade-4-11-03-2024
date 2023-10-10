@@ -14,7 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_interface.dart';
 
 class follower extends StatefulWidget {
-  const follower({Key? key}) : super(key: key);
+  final initialIndex;
+  const follower({Key? key, this.initialIndex}) : super(key: key);
 
   @override
   State<follower> createState() => _followerState();
@@ -33,7 +34,7 @@ class _followerState extends State<follower>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, initialIndex: widget.initialIndex, vsync: this);
     checkNetwork();
     super.initState();
   }
@@ -94,8 +95,8 @@ class _followerState extends State<follower>
                       labelColor: Colors.white,
                       unselectedLabelColor: Colors.black,
                       tabs: [
+
                         Tab(
-                          //text: 'Quick News',
                           child: Text(
                             'Followers ($totalfollowers)',
                             style: const TextStyle(

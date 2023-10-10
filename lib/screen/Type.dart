@@ -1,20 +1,18 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:io';
 
+import 'package:Plastic4trade/constroller/GetCategoryTypeController.dart';
+import 'package:Plastic4trade/model/GetCategoryType.dart' as type;
+import 'package:Plastic4trade/screen/GradeScreen.dart';
+import 'package:Plastic4trade/utill/constant.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Plastic4trade/constroller/GetBussinessTypeController.dart';
-import 'package:Plastic4trade/constroller/GetCategoryTypeController.dart';
-import 'package:Plastic4trade/screen/BussinessProfile.dart';
-import 'package:Plastic4trade/screen/GradeScreen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/utill/constant.dart';
-import 'package:Plastic4trade/model/GetCategoryType.dart' as type;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
-import '../model/common.dart';
-import '../widget/MainScreen.dart';
 
 class Type extends StatefulWidget {
   const Type({Key? key}) : super(key: key);
@@ -34,7 +32,6 @@ class _TypeState extends State<Type> {
   void initState() {
     super.initState();
 
-    print('init');
     checknetwork();
   }
 
@@ -42,14 +39,12 @@ class _TypeState extends State<Type> {
     // Clear the existing cat_type_data list
     constanst.cat_type_data.clear();
 
-    GetCategoryTypeController b_type = await GetCategoryTypeController();
-    constanst.cat_typedata = b_type.setType();
+    GetCategoryTypeController bType = GetCategoryTypeController();
+    constanst.cat_typedata = bType.setType();
     _isloading = true;
     constanst.cat_typedata!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.cat_type_data.add(item);
-        }
+      for (var item in value) {
+        constanst.cat_type_data.add(item);
       }
       _isloading = false;
       setState(() {});
@@ -63,12 +58,9 @@ class _TypeState extends State<Type> {
 
 
   Widget initwidget(BuildContext context) {
-    print('bgh$_isloading');
     setState(() {
-      print(constanst.cat_type_data);
       if (constanst.cat_type_data.isEmpty) {
         _isloading = true;
-        print(_isloading);
       }
       for (int i = 0; i < constanst.cat_type_data.length; i++) {
         constanst.Type_itemsCheck1.add(Icons.circle_outlined);
@@ -78,13 +70,13 @@ class _TypeState extends State<Type> {
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: SafeArea(
             top: true,
             left: true,
             right: true,
             maintainBottomViewPadding: true,
-            child: Container(
+            child: SizedBox(
                 // height: MediaQuery.of(context).size.height,
 
                 width: MediaQuery.of(context).size.width,
@@ -92,13 +84,13 @@ class _TypeState extends State<Type> {
                   _isloading == true
                       ? Center(
                           child: Platform.isAndroid
-                              ? CircularProgressIndicator(
+                              ? const CircularProgressIndicator(
                                   value: null,
                                   strokeWidth: 2.0,
                                   color: Color.fromARGB(255, 0, 91, 148),
                                 )
                               : Platform.isIOS
-                                  ? CupertinoActivityIndicator(
+                                  ? const CupertinoActivityIndicator(
                                       color: Color.fromARGB(255, 0, 91, 148),
                                       radius: 20,
                                       animating: true,
@@ -122,23 +114,23 @@ class _TypeState extends State<Type> {
                                 Center(
                                     child: Text(
                                   'Type',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')
-                                      ?.copyWith(fontSize: 20.0),
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(fontSize: 20.0),
                                 )),
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width / 4.6,
                                   height: 37,
-                                  margin: EdgeInsets.only(right: 10.0),
+                                  margin: const EdgeInsets.only(right: 10.0),
                                   decoration: BoxDecoration(
                                       border: Border.all(width: 1),
                                       borderRadius: BorderRadius.circular(10.0),
-                                      color: Color.fromARGB(255, 0, 91, 148)),
+                                      color: const Color.fromARGB(255, 0, 91, 148)),
                                   child: TextButton(
                                     onPressed: () {
                                       setState(() {
@@ -160,7 +152,7 @@ class _TypeState extends State<Type> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Grade()));
+                                                          const Grade()));
                                             }
                                           });
                                         }
@@ -172,30 +164,30 @@ class _TypeState extends State<Type> {
                                             fontWeight: FontWeight.w800,
                                             color: Colors.white,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf')),
+                                                'assets/fonst/Metropolis-Black.otf')),
                                   ),
                                 ),
                               ]),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(27.0, 5.0, 5.0, 5.0),
+                            padding: const EdgeInsets.fromLTRB(27.0, 5.0, 5.0, 5.0),
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Text(
                                 'Select Your Type',
-                                style: TextStyle(
+                                style: const TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')
-                                    ?.copyWith(fontWeight: FontWeight.w400),
+                                            'assets/fonst/Metropolis-Black.otf')
+                                    .copyWith(fontWeight: FontWeight.w400),
                               ),
                             ),
                           ),
                           ListView.builder(
                               shrinkWrap: true,
                               itemCount: constanst.cat_type_data.length,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 type.Result record =
                                     constanst.cat_type_data[index];
@@ -210,7 +202,6 @@ class _TypeState extends State<Type> {
                                         type_id =
                                             record.producttypeId.toString();
                                         constanst.select_typeId.add(type_id);
-                                        print(constanst.select_typeId);
                                         setState(() {});
                                       } else {
                                         constanst.Type_itemsCheck1[index] =
@@ -228,10 +219,10 @@ class _TypeState extends State<Type> {
                                       child: Card(
                                         color: Colors.white,
                                         elevation: 3,
-                                        shape: RoundedRectangleBorder(
+                                        shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0))),
-                                        margin: EdgeInsets.fromLTRB(
+                                        margin: const EdgeInsets.fromLTRB(
                                             25.0, 10.0, 25.0, 5.0),
                                         child: Column(
                                           children: [
@@ -274,7 +265,7 @@ class _TypeState extends State<Type> {
                                                                     index] ==
                                                                 Icons
                                                                     .circle_outlined
-                                                            ? Icon(
+                                                            ? const Icon(
                                                                 Icons
                                                                     .circle_outlined,
                                                                 color: Colors
@@ -330,7 +321,7 @@ class _TypeState extends State<Type> {
                                                                     FontWeight
                                                                         .w500,
                                                                 fontFamily:
-                                                                    'assets\fonst\Metropolis-Black.otf')
+                                                                    'assets/fonst/Metropolis-Black.otf')
                                                             .copyWith(
                                                                 fontSize: 17))
                                                   ],
@@ -347,11 +338,11 @@ class _TypeState extends State<Type> {
                           Container(
                             width: MediaQuery.of(context).size.width * 1.2,
                             height: 60,
-                            margin: EdgeInsets.all(20.0),
+                            margin: const EdgeInsets.all(20.0),
                             decoration: BoxDecoration(
                                 border: Border.all(width: 1),
                                 borderRadius: BorderRadius.circular(50.0),
-                                color: Color.fromARGB(255, 0, 91, 148)),
+                                color: const Color.fromARGB(255, 0, 91, 148)),
                             child: TextButton(
                               onPressed: () {
                                 setState(() {
@@ -361,30 +352,29 @@ class _TypeState extends State<Type> {
                                   } else {
                                     _onLoading();
                                     setType().then((value) {
-                                      print('12346 $value');
                                       Navigator.of(dialogContext!).pop();
                                       if (value) {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => Grade()));
+                                                builder: (context) => const Grade()));
                                       } else {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => Grade()));
+                                                builder: (context) => const Grade()));
                                       }
                                     });
                                   }
                                 });
                               },
-                              child: Text('Continue',
+                              child: const Text('Continue',
                                   style: TextStyle(
                                       fontSize: 19.0,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.white,
                                       fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf')),
+                                          'assets/fonst/Metropolis-Black.otf')),
                             ),
                           ),
                         ]),
@@ -419,13 +409,13 @@ class _TypeState extends State<Type> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
@@ -440,29 +430,19 @@ class _TypeState extends State<Type> {
 
   Future<bool> setType() async {
     var Stringtype = constanst.select_typeId.join(",");
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.step = 8;
     var res = await addtype(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         Stringtype,
         constanst.step.toString());
 
-    print(_pref.getString('user_id').toString());
-    print(_pref.getString('api_token').toString());
 
-    String? msg = res['message'];
-    // Fluttertoast.showToast(msg: "$msg");
     if (res['status'] == 1) {
       _isloading1 = true;
       Fluttertoast.showToast(msg: res['message']);
       constanst.istype = false;
-      /* Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => Grade()),
-          ModalRoute.withName('/'));*/
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => Grade()));
     } else {
       _isloading1 = true;
       Fluttertoast.showToast(msg: res['message']);
@@ -474,7 +454,6 @@ class _TypeState extends State<Type> {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      //constanst.catdata.clear();
       _isloading = false;
       Fluttertoast.showToast(msg: 'Internet Connection not available');
     } else {

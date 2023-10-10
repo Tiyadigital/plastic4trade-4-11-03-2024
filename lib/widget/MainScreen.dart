@@ -1,18 +1,15 @@
-// ignore_for_file: use_build_context_synchronously, must_be_immutable
+// ignore_for_file: use_build_context_synchronously, must_be_immutable, non_constant_identifier_names
 
-import 'dart:io';
 import 'package:Plastic4trade/screen/BussinessProfile.dart';
+import 'package:Plastic4trade/screen/More.dart';
+import 'package:Plastic4trade/screen/News.dart';
 import 'package:Plastic4trade/screen/other_user_profile.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/model/GetNotificationcount.dart';
-import 'package:Plastic4trade/screen/More.dart';
-import 'package:Plastic4trade/screen/News.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../api/api_interface.dart';
 import '../api/firebase_api.dart';
 import '../screen/Blog.dart';
@@ -25,10 +22,9 @@ import '../screen/Liveprice.dart';
 import '../screen/SalePost.dart';
 import '../screen/Tutorial_Videos.dart';
 import '../screen/Videos.dart';
+import '../utill/constant.dart';
 import 'HomeAppbar.dart';
 import 'bottombar.dart';
-import 'dart:ui';
-import '../utill/constant.dart';
 
 class MainScreen extends StatefulWidget {
   int select_idx;
@@ -107,7 +103,7 @@ class _MainScreenState extends State<MainScreen> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-              bussinessprofile()));
+              const bussinessprofile()));
 
       }else if(constanst.notificationtype=="Business profile dislike"){
         Navigator.push(
@@ -243,11 +239,11 @@ class _MainScreenState extends State<MainScreen> {
   Future<bool> _onbackpress(BuildContext context) async {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       // Show a toast or snackbar message to inform the user to tap again to exit
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tap again to exit')),
+        const SnackBar(content: Text('Tap again to exit')),
       );
       return Future.value(false);
     }
@@ -256,15 +252,13 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> get_notification() async {
-    GetNotificationcount getsimmilar = GetNotificationcount();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await count_notify(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+    var res = await count_notify(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
     var jsonarray;
     if (res['status'] == 1) {
-      getsimmilar = GetNotificationcount.fromJson(res);
 
       constanst.notification_count = res['NotificationCount'];
       setState(() {});

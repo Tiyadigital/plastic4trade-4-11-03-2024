@@ -12,6 +12,7 @@ import 'package:Plastic4trade/screen/LoginScreen.dart';
 import 'package:Plastic4trade/screen/ManageBuyPost.dart';
 import 'package:Plastic4trade/screen/Premium.dart';
 import 'package:Plastic4trade/screen/Videos.dart';
+import 'package:Plastic4trade/screen/terms_condtion.dart';
 import 'package:Plastic4trade/screen/updateCategoryScreen.dart';
 import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -399,6 +400,7 @@ class _moreState extends State<more> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const aboutplastic(),
+                                  // builder: (context) => const AppTermsCondition(),
                                 ),
                               );
                             },
@@ -1222,7 +1224,7 @@ class _moreState extends State<more> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const follower(),
+                          builder: (context) => const follower(initialIndex: 1,),
                         ),
                       );
                     } else if (record.id == '7') {

@@ -24,7 +24,7 @@ import '../widget/MainScreen.dart';
 import 'dart:io' show Platform;
 
 class FirebaseApi {
-  final _androidchannel = AndroidNotificationChannel(
+  final _androidchannel = const AndroidNotificationChannel(
       'high_impotance_channel', 'High Importance Notification',
       description: 'This channel is used for importance notification',
       importance: Importance.defaultImportance);
@@ -32,9 +32,6 @@ class FirebaseApi {
   late BuildContext _context;
 
   Future<void> handleBackgroundMessage(RemoteMessage message) async {
-    print('Title : ${message.notification?.title}');
-    print('Body : ${message.notification?.body}');
-    print('PayLoad: ${message.data}');
     // var data = json.decode(message.payload ?? '');
     // notificationPayload.value = message.data;
 
@@ -46,10 +43,6 @@ class FirebaseApi {
   }
 
   void handleMessage(RemoteMessage message, context) {
-    print('Title : ${message.notification?.title}');
-    print('Body : ${message.notification?.body}');
-    print('data $message');
-    print('PayLoad: ${message.data}');
     _context = context;
     notification_redirect(message.data, _context);
   }
@@ -63,14 +56,11 @@ class FirebaseApi {
     );
 
     if (FirebaseMessaging.instance.isAutoInitEnabled) {
-      print('User granted permission');
     } else {
-      print('User declined permission or has not yet responded');
     }
 
     FirebaseMessaging.instance.getInitialMessage().then((value) {
       if (value != null) {
-        print('inside open');
         //Fluttertoast.showToast(msg: 'APP Terminate ');
         _context = context;
         notification_redirect(value!.data, _context);
@@ -98,10 +88,7 @@ class FirebaseApi {
       final notification = message.notification;
       Fluttertoast.showToast(timeInSecForIosWeb: 2,
           msg: 'notification.title${notification!.title.toString()}');
-      print('notification.title${notification!.title.toString()}');
       if (notification == null) return;
-      print('notification.title');
-      print(message.data);
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m notification');
 
       _localNotification.show(
@@ -126,10 +113,6 @@ class FirebaseApi {
             notification.body,
             message.data);*/
       }
-      print('ese ${message.notification!.bodyLocKey.toString()}');
-      print('ese ${message.notification!.title}');
-      print('ese ${message.notification!.body}');
-      print('ese ${message.notification!.android!.clickAction}');
 
       /*show_notification(notification.title,
         notification.body,
@@ -139,7 +122,6 @@ class FirebaseApi {
 
   Future<void> initNOtification(BuildContext context) async {
     if (Platform.isAndroid) {
-      print('Android ');
       await Firebase.initializeApp();
       final _firebaseMessaging = FirebaseMessaging.instance;
       await _firebaseMessaging.requestPermission();
@@ -149,7 +131,6 @@ class FirebaseApi {
                   "BC4eLOdjJWopUE-NEu_WCFLlByPe5-K5_AljnUINqx4QL7RmA3W5lC-__7WDfEWPJF0nVk05xpD3d4JjdrGnfVA")
           .then((value) => value);
       constanst.fcm_token = FCMToken.toString();
-      print('Token $FCMToken');
     } else if (Platform.isIOS) {
       await Firebase.initializeApp();
       final _firebaseMessaging = FirebaseMessaging.instance;
@@ -163,7 +144,6 @@ class FirebaseApi {
       final APNSToken =
           await _firebaseMessaging.getToken().then((value) => value);
       constanst.APNSToken = APNSToken.toString();
-      print('APNSToken $APNSToken');
       /* */ //);
     }
     initPushNotification(context);
@@ -190,9 +170,9 @@ class FirebaseApi {
                   )),
               title: Text('Plastic4trade',style: TextStyle(
                   fontSize: 15.0,
-                  fontFamily: 'assets\fonst\Metropolis-Black.otf',
+                  fontFamily: 'assets/fonst/Metropolis-Black.otf',
                   color: Colors.black)),
-              subtitle: Text(data['title']!,style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400,color:  Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),),
+              subtitle: Text(data['title']!,style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400,color:  Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),),
              */ /* trailing: IconButton(
                   icon: Icon(Icons.close),
                   onPressed: () {
@@ -211,15 +191,8 @@ class FirebaseApi {
     String user_id = data['user_id'];
     String post_id = data['postId'];
 
-    print('post type');
-    print(notification_type);
-    print(user_id);
-    print(post_id);
-    print('fughirudghiuhg:::::::::');
     if (notification_type == "profile like") {
-      print('hello:::::::::');
       if (user_id.toString().isNotEmpty) {
-        print('=============');
         // Navigator.of(_context).push(MaterialPageRoute(builder: (context) => other_user_profile(int.parse(user_id.toString()))));
         try {
           await Navigator.push(
@@ -231,11 +204,8 @@ class FirebaseApi {
           // Handle the exception or error
           // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Exception: $e');
           // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Stack trace: $stackTrace');
-          print('Exception: $e');
-          print('Stack trace: $stackTrace');
         }
       } else {
-        print('11111111');
       }
     } else if (notification_type== "follower_profile_like") {
 
@@ -247,7 +217,6 @@ class FirebaseApi {
                     other_user_profile(int.parse(user_id.toString()))));
       }
     } else if (notification_type == "profile_review") {
-      print("leelkwopr");
       if (user_id.toString().isNotEmpty) {
         await Navigator.push(
             _context,
@@ -263,9 +232,7 @@ class FirebaseApi {
                     other_user_profile(int.parse(user_id.toString()))));
       }
     } else if (notification_type.toString() == "post like") {
-      print("123");
       if (post_type.toString() == "SalePost") {
-        print("12345");
         if (post_id.toString().isNotEmpty) {
           await Navigator.push(
               _context,
@@ -275,9 +242,7 @@ class FirebaseApi {
 
         }
       }else  {
-        print("1234466");
         if (post_type.toString() == "BuyPost") {
-          print("75678");
           if (post_id.toString().isNotEmpty) {
             await Navigator.push(
                 _context,
@@ -296,14 +261,14 @@ class FirebaseApi {
         await Navigator.push(
             _context,
             new MaterialPageRoute(
-                builder: (context) => follower()));
+                builder: (context) => follower(initialIndex: 0,)));
       }
     } else if (notification_type.toString() == "unfollowuser") {
       if (user_id.toString().isNotEmpty) {
         await Navigator.push(
             context,
             new MaterialPageRoute(
-                builder: (context) => follower()));
+                builder: (context) => follower(initialIndex: 0,)));
       }
     } else if (notification_type.toString() == "profile_review") {
       if (user_id.toString().isNotEmpty) {
@@ -380,7 +345,6 @@ class FirebaseApi {
   static Future<String> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
-    print("Debug::::::2");
 
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
@@ -395,16 +359,10 @@ class FirebaseApi {
     constanst.notiuser=initialMessage?.data['user_id'];
     constanst.notipostid=initialMessage?.data['postId'];
     constanst.notypost_type=initialMessage?.data['post_type'];
-    print("object11:::${constanst.notipostid} ");
-    print("object11:::${constanst.notificationtype} ");
-    print("object:::${initialMessage?.data['type']}");
-    print("object:::${initialMessage?.data.toString()}");
     return  initialMessage!.data.toString();
   }
 
   static Future _handleMessage(RemoteMessage? message) async {
-    print('_handleMessage:::::::${message!.data}');
-    print('message.data:::::::${message!.data}');
     //print('message.data:::::::${message.data['menuId'] == '1'}');
     //_handleMessage(message)
     // navigatorKey.currentState?.push(MaterialPageRoute(

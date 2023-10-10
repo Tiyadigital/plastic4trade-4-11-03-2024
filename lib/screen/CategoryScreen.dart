@@ -1,24 +1,19 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'dart:developer';
+import 'dart:io' show Platform;
 
-import 'package:Plastic4trade/screen/Register2.dart';
+import 'package:Plastic4trade/constroller/GetCategoryController.dart';
+import 'package:Plastic4trade/model/GetCategory.dart' as cat;
+import 'package:Plastic4trade/screen/Type.dart';
+import 'package:Plastic4trade/utill/constant.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Plastic4trade/constroller/GetCategoryController.dart';
-import 'package:Plastic4trade/model/common.dart';
-import 'package:Plastic4trade/screen/Type.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/screen/Videos.dart';
-import 'package:Plastic4trade/utill/constant.dart';
-import 'dart:ui';
-import 'package:Plastic4trade/model/GetCategory.dart' as cat;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io' show Platform;
 
 import '../api/api_interface.dart';
-import '../widget/MainScreen.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -51,7 +46,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     // Clear the existing catdata list
     constanst.catdata.clear();
 
-    GetCategoryController bt = await GetCategoryController();
+    GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
     _isloading = true;
     constanst.cat_data!.then((value) {
@@ -62,7 +57,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       setState(() {});
     });
   }
-
 
   checknetwork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -80,15 +74,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
   initState() {
     super.initState();
     sampleData.add(RadioModel(false, 'Domestic'));
-    sampleData.add(RadioModel(
-      false,
-      'International',
-    ));
+    sampleData.add(RadioModel(false, 'International'));
     sampleData1.add(RadioModel(false, 'Buy Post'));
-    sampleData1.add(RadioModel(
-      false,
-      'Sell Post',
-    ));
+    sampleData1.add(RadioModel(false, 'Sell Post'));
 
     checknetwork();
   }
@@ -166,8 +154,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf')
-                                        ?.copyWith(fontSize: 20.0),
+                                                'assets/fonst/Metropolis-Black.otf')
+                                        .copyWith(fontSize: 20.0),
                                   )),
                                   Container(
                                     width:
@@ -183,38 +171,39 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     child: TextButton(
                                       onPressed: () async {
                                         final connectivityResult =
-                                        await Connectivity()
-                                            .checkConnectivity();
+                                            await Connectivity()
+                                                .checkConnectivity();
 
                                         if (connectivityResult ==
                                             ConnectivityResult.none) {
                                           Fluttertoast.showToast(
                                               msg:
-                                              'Net Connection not available');
-                                        } else if (constanst.select_inserestlocation.isEmpty) {
+                                                  'Net Connection not available');
+                                        } else if (constanst
+                                            .select_inserestlocation.isEmpty) {
                                           Fluttertoast.showToast(
                                               msg:
-                                              'Select Atleast 1 Domestic / International or Select Both ');
-                                        } else if (constanst.select_categotyType.isEmpty) {
+                                                  'Select Atleast 1 Domestic / International or Select Both ');
+                                        } else if (constanst
+                                            .select_categotyType.isEmpty) {
                                           Fluttertoast.showToast(
                                               msg:
-                                              'Select Atleast 1 Buy Post / Sell Post or Select Both');
-                                        } else if (constanst.select_categotyId.isEmpty) {
+                                                  'Select Atleast 1 Buy Post / Sell Post or Select Both');
+                                        } else if (constanst
+                                            .select_categotyId.isEmpty) {
                                           Fluttertoast.showToast(
-                                              msg:
-                                              'Select Minimum 1 Category');
+                                              msg: 'Select Minimum 1 Category');
                                         } else {
                                           setState(() {});
                                           _onLoading();
                                           setcategory().then((value) {
-                                            Navigator.of(dialogContext!)
-                                                .pop();
+                                            Navigator.of(dialogContext!).pop();
                                             if (value) {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Type()));
+                                                          const Type()));
                                             }
                                           });
                                         }
@@ -225,7 +214,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               fontWeight: FontWeight.w800,
                                               color: Colors.white,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')),
+                                                  'assets/fonst/Metropolis-Black.otf')),
                                     ),
                                   ),
                                 ]),
@@ -253,7 +242,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')),
+                                                    'assets/fonst/Metropolis-Black.otf')),
                                       ),
                                     ),
                                     Padding(
@@ -268,13 +257,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   GestureDetector(
                                                     child: Row(
                                                       children: [
-                                                        sampleData.first.isSelected == true
+                                                        sampleData.first
+                                                                    .isSelected ==
+                                                                true
                                                             ? Icon(
-                                                                Icons.check_circle,
-                                                                color: Colors.green.shade600)
+                                                                Icons
+                                                                    .check_circle,
+                                                                color: Colors
+                                                                    .green
+                                                                    .shade600)
                                                             : const Icon(
-                                                                Icons.circle_outlined,
-                                                                color: Colors.black38),
+                                                                Icons
+                                                                    .circle_outlined,
+                                                                color: Colors
+                                                                    .black38),
                                                         Text(
                                                             sampleData
                                                                 .first.buttonText,
@@ -285,7 +281,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                         FontWeight
                                                                             .w500,
                                                                     fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf')
+                                                                        'assets/fonst/Metropolis-Black.otf')
                                                                 .copyWith(
                                                                     fontSize:
                                                                         17)),
@@ -293,19 +289,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                     ),
                                                     onTap: () {
                                                       setState(() {
-                                                        if (sampleData.first.isSelected == false) {
-                                                          sampleData.first.isSelected = true;
+                                                        if (sampleData.first
+                                                                .isSelected ==
+                                                            false) {
+                                                          sampleData.first
+                                                                  .isSelected =
+                                                              true;
                                                           category1 = true;
-                                                          location_interest = 'Domestic';
-                                                          constanst.select_inserestlocation.add(location_interest.toString());
+                                                          location_interest =
+                                                              'Domestic';
+                                                          constanst
+                                                              .select_inserestlocation
+                                                              .add(location_interest
+                                                                  .toString());
                                                         } else {
-                                                          sampleData.first.isSelected = false;
-                                                          constanst.select_inserestlocation.remove('Domestic');
+                                                          sampleData.first
+                                                                  .isSelected =
+                                                              false;
+                                                          constanst
+                                                              .select_inserestlocation
+                                                              .remove(
+                                                                  'Domestic');
                                                         }
                                                       });
 
                                                       log("LOCATION LENGTH  == ${constanst.select_inserestlocation.length}");
-
                                                     },
                                                   )
                                                 ])),
@@ -315,17 +323,27 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
-                                                    if (sampleData.last.isSelected == false) {
-                                                      sampleData.last.isSelected = true;
+                                                    if (sampleData
+                                                            .last.isSelected ==
+                                                        false) {
+                                                      sampleData.last
+                                                          .isSelected = true;
                                                       category1 = true;
-                                                      location_interest = 'International';
-                                                      constanst.select_inserestlocation.add(location_interest.toString());
+                                                      location_interest =
+                                                          'International';
+                                                      constanst
+                                                          .select_inserestlocation
+                                                          .add(location_interest
+                                                              .toString());
                                                     } else {
-                                                      sampleData.last.isSelected = false;
-                                                      constanst.select_inserestlocation.remove('International');
+                                                      sampleData.last
+                                                          .isSelected = false;
+                                                      constanst
+                                                          .select_inserestlocation
+                                                          .remove(
+                                                              'International');
                                                     }
                                                   });
-
                                                 },
                                                 child: Row(children: [
                                                   sampleData.last.isSelected ==
@@ -346,11 +364,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                   FontWeight
                                                                       .w500,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
+                                                                  'assets/fonst/Metropolis-Black.otf')
                                                           .copyWith(
                                                               fontSize: 17))
                                                 ]),
-
                                               ),
                                             ),
                                           ],
@@ -382,7 +399,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')
+                                                    'assets/fonst/Metropolis-Black.otf')
                                             .copyWith(
                                                 fontWeight: FontWeight.w400),
                                       ),
@@ -425,7 +442,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                       FontWeight
                                                                           .w500,
                                                                   fontFamily:
-                                                                      'assets\fonst\Metropolis-Black.otf')
+                                                                      'assets/fonst/Metropolis-Black.otf')
                                                               .copyWith(
                                                                   fontSize: 17))
                                                     ]),
@@ -447,15 +464,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   constanst.select_categotyType
                                                       .add(
                                                           post_type.toString());
-                                                  print(constanst
-                                                      .select_categotyType);
                                                 } else {
                                                   sampleData1.first.isSelected =
                                                       false;
                                                   constanst.select_categotyType
                                                       .remove('BuyPost');
-                                                  print(constanst
-                                                      .select_categotyType);
                                                 }
                                               });
                                             },
@@ -474,27 +487,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                       ? Icon(Icons.check_circle,
                                                           color: Colors
                                                               .green.shade600)
-                                                      : Icon(
+                                                      : const Icon(
                                                           Icons.circle_outlined,
                                                           color:
                                                               Colors.black38),
                                                   Text('Sell Post',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                               fontSize: 13.0,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
-                                                          ?.copyWith(
+                                                                  'assets/fonst/Metropolis-Black.otf')
+                                                          .copyWith(
                                                               fontSize: 17))
                                                 ]),
                                               ),
                                             ),
                                             onTap: () {
                                               setState(() {
-                                                print(sampleData1
-                                                    .last.isSelected);
                                                 if (sampleData1
                                                         .last.isSelected ==
                                                     false) {
@@ -508,15 +519,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                   constanst.select_categotyType
                                                       .add(
                                                           post_type.toString());
-                                                  print(constanst
-                                                      .select_categotyType);
                                                 } else {
                                                   sampleData1.last.isSelected =
                                                       false;
                                                   constanst.select_categotyType
                                                       .remove('SellPost');
-                                                  print(constanst
-                                                      .select_categotyType);
                                                 }
                                               });
                                             },
@@ -538,13 +545,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')
-                                      ?.copyWith(fontWeight: FontWeight.w400),
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(fontWeight: FontWeight.w400),
                                 ),
                               ),
                             ),
-                            FutureBuilder(
-                                builder: (context, snapshot) {
+                            FutureBuilder(builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                       ConnectionState.waiting &&
                                   snapshot.hasData == null) {
@@ -711,8 +717,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                                                           FontWeight
                                                                               .w500,
                                                                       fontFamily:
-                                                                          'assets\fonst\Metropolis-Black.otf')
-                                                                  ?.copyWith(
+                                                                          'assets/fonst/Metropolis-Black.otf')
+                                                                  .copyWith(
                                                                       fontSize:
                                                                           17))
                                                         ],
@@ -731,46 +737,45 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Container(
                               width: MediaQuery.of(context).size.width * 1.2,
                               height: 60,
-                              margin: EdgeInsets.all(20.0),
+                              margin: const EdgeInsets.all(20.0),
                               decoration: BoxDecoration(
                                   border: Border.all(width: 1),
                                   borderRadius: BorderRadius.circular(50.0),
-                                  color: Color.fromARGB(255, 0, 91, 148)),
+                                  color: const Color.fromARGB(255, 0, 91, 148)),
                               child: TextButton(
                                 onPressed: () async {
                                   final connectivityResult =
-                                  await Connectivity()
-                                      .checkConnectivity();
+                                      await Connectivity().checkConnectivity();
 
                                   if (connectivityResult ==
                                       ConnectivityResult.none) {
                                     Fluttertoast.showToast(
-                                        msg:
-                                        'Net Connection not available');
-                                  } else if (constanst.select_inserestlocation.isEmpty) {
+                                        msg: 'Net Connection not available');
+                                  } else if (constanst
+                                      .select_inserestlocation.isEmpty) {
                                     Fluttertoast.showToast(
                                         msg:
-                                        'Select Atleast 1 Domestic / International or Select Both ');
-                                  } else if (constanst.select_inserestlocation.isEmpty) {
+                                            'Select Atleast 1 Domestic / International or Select Both ');
+                                  } else if (constanst
+                                      .select_inserestlocation.isEmpty) {
                                     Fluttertoast.showToast(
                                         msg:
-                                        'Select Atleast 1 Buy Post / Sell Post or Select Both');
-                                  } else if (constanst.select_categotyId.isEmpty) {
+                                            'Select Atleast 1 Buy Post / Sell Post or Select Both');
+                                  } else if (constanst
+                                      .select_categotyId.isEmpty) {
                                     Fluttertoast.showToast(
-                                        msg:
-                                        'Select Minimum 1 Category');
+                                        msg: 'Select Minimum 1 Category');
                                   } else {
                                     setState(() {});
                                     _onLoading();
                                     setcategory().then((value) {
-                                      Navigator.of(dialogContext!)
-                                          .pop();
+                                      Navigator.of(dialogContext!).pop();
                                       if (value) {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Type()));
+                                                    const Type()));
                                       }
                                     });
                                   }
@@ -781,7 +786,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         fontWeight: FontWeight.w800,
                                         color: Colors.white,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf')),
+                                            'assets/fonst/Metropolis-Black.otf')),
                               ),
                             ),
                           ],
@@ -803,16 +808,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Future<bool> setcategory() async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.step = 7;
     var stringCategory = constanst.select_categotyId.join(",");
     var stringtype;
     if (constanst.select_categotyType.length == 2) {
       stringtype = 'Both';
-    } else if(constanst.select_categotyType.length == 1){
+    } else if (constanst.select_categotyType.length == 1) {
       stringtype = constanst.select_categotyType.join(",");
-    }else{
+    } else {
       constanst.select_categotyType.length = 0;
       setState(() {});
     }
@@ -820,25 +824,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
     var stringList;
     if (constanst.select_inserestlocation.length == 2) {
       stringList = 'Both';
-    } else if(constanst.select_inserestlocation.length == 1){
+    } else if (constanst.select_inserestlocation.length == 1) {
       stringList = constanst.select_inserestlocation.join(",");
-    }else{
+    } else {
       constanst.select_inserestlocation.length = 0;
       setState(() {});
     }
 
     var res = await addcategory(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         stringList,
         stringtype,
         stringCategory,
         constanst.step.toString());
 
-
     log("API RESPONSE === $res");
 
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
@@ -848,11 +850,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       _isloading1 = true;
       Fluttertoast.showToast(msg: res['message']);
     }
-    //setState(() {});
     return _isloading1;
   }
-
-
 
   void _onLoading() {
     dialogContext = context;
@@ -874,13 +873,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
@@ -891,11 +890,5 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ));
       },
     );
-
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 }

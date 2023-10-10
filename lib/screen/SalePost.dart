@@ -210,7 +210,7 @@ class _SalePostState extends State<SalePost> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')),
+                                              'assets/fonst/Metropolis-Black.otf')),
                                   onChanged: (value) {},
                                 ))),
                         Container(
@@ -248,7 +248,7 @@ class _SalePostState extends State<SalePost> {
                                       ),
                                       hintText: 'Search',
                                       hintStyle:
-                                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                                   onSubmitted: (value) {
                                    // WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
                                     //homepost_data.clear();
@@ -506,7 +506,7 @@ class _SalePostState extends State<SalePost> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                   fontFamily:
-                                      'assets\fonst\Metropolis-Black.otf')
+                                      'assets/fonst/Metropolis-Black.otf')
                               ?.copyWith(
                                   color: _defaultChoiceIndex == index
                                       ? Colors.white
@@ -652,7 +652,7 @@ class _SalePostState extends State<SalePost> {
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf',
+                                            'assets/fonst/Metropolis-Black.otf',
                                         color: Colors.white)),
                               ),
                             ),
@@ -691,7 +691,7 @@ class _SalePostState extends State<SalePost> {
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-SemiBold.otf'),
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis)),
@@ -908,7 +908,7 @@ class _SalePostState extends State<SalePost> {
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf',
+                                            'assets/fonst/Metropolis-Black.otf',
                                         color: Colors.white)),
                               ),
                             ),
@@ -947,7 +947,7 @@ class _SalePostState extends State<SalePost> {
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-SemiBold.otf'),
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
                                         softWrap: false,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis)),

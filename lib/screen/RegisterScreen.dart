@@ -1,33 +1,28 @@
-// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names, prefer_final_fields, depend_on_referenced_packages
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io' show Platform;
+
+import 'package:Plastic4trade/model/FinalRegister.dart';
+import 'package:Plastic4trade/screen/LoginScreen.dart';
+import 'package:Plastic4trade/screen/terms_condtion.dart';
+import 'package:Plastic4trade/widget/MainScreen.dart';
 import 'package:android_id/android_id.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:country_calling_code_picker/picker.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
-import '../api/firebase_api.dart';
-import '../main.dart';
-import '../model/Login.dart';
-import '../utill/constant.dart';
-import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:Plastic4trade/model/FinalRegister.dart';
-import 'package:Plastic4trade/model/common.dart';
-import 'package:Plastic4trade/screen/LoginScreen.dart';
-import 'package:Plastic4trade/widget/MainScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../api/api_interface.dart';
-import '../model/GetRegsterEmailOTP.dart';
-import '../model/RegisterUserPhoneno.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:country_calling_code_picker/picker.dart';
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/country_code_picker.dart';
-import 'package:country_calling_code_picker/functions.dart';
-import 'dart:io' show Platform;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../api/api_interface.dart';
+import '../api/firebase_api.dart';
+import '../model/RegisterUserPhoneno.dart';
+import '../utill/constant.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -39,13 +34,13 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   bool passenable = true;
   var check_value = false;
-  TextEditingController _usernm = TextEditingController();
-  TextEditingController _usermbl = TextEditingController();
-  TextEditingController _useremail = TextEditingController();
-  TextEditingController _userpass = TextEditingController();
-  TextEditingController _mbloto = TextEditingController();
-  TextEditingController _emailotp = TextEditingController();
-  TextEditingController _usercpass = TextEditingController();
+  final TextEditingController _usernm = TextEditingController();
+  final TextEditingController _usermbl = TextEditingController();
+  final TextEditingController _useremail = TextEditingController();
+  final TextEditingController _userpass = TextEditingController();
+  final TextEditingController _mbloto = TextEditingController();
+  final TextEditingController _emailotp = TextEditingController();
+  final TextEditingController _usercpass = TextEditingController();
   Color _color1 = Colors.black26;
   Color _color2 = Colors.black26;
   Color _color3 = Colors.black26;
@@ -59,11 +54,10 @@ class _RegisterState extends State<Register> {
   bool _isloading = false;
   bool isloading = false;
   BuildContext? dialogContext;
-  var _formKey = GlobalKey<FormState>();
-  bool _validusernm = false, _validusembl = false, _validemail = false;
+  final _formKey = GlobalKey<FormState>();
+  bool _validusernm = false, _validemail = false;
   bool _passwordVisible = false;
   bool _cpasswordVisible = false;
-  bool _vailduseremail = false;
   bool _isValid = false;
   String initialCountry = 'IN';
   String country_code = '+91';
@@ -79,7 +73,6 @@ class _RegisterState extends State<Register> {
   int _countdown = 30;
   String defaultCountryCode = 'IN';
 
-  //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry;
 
   @override
@@ -90,7 +83,7 @@ class _RegisterState extends State<Register> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_countdown > 0) {
         setState(() {
           _countdown--;
@@ -99,7 +92,6 @@ class _RegisterState extends State<Register> {
         _timer?.cancel();
         setState(() {
           _isResendButtonEnabled = true;
-          print('grrgt $_countdown');
         });
       }
     });
@@ -128,15 +120,6 @@ class _RegisterState extends State<Register> {
         country_code = country.callingCode.toString();
       });
     }
-    /*  final country =
-    await Navigator.push(context, new MaterialPageRoute(builder: (context) {
-      return PickerPage();
-    }));
-    if (country != null) {
-      setState(() {
-        _selectedCountry = country;
-      });
-    }*/
   }
 
   Widget initwidget() {
@@ -154,7 +137,7 @@ class _RegisterState extends State<Register> {
         body: SingleChildScrollView(
           child: Form(
               key: _formKey,
-              child: Container(
+              child: SizedBox(
                   // height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Column(children: [
@@ -182,7 +165,7 @@ class _RegisterState extends State<Register> {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                   fontFamily:
-                                      'assets\fonst\Metropolis-Black.otf'),
+                                      'assets/fonst/Metropolis-Black.otf'),
                             ),
                           ),
                           const SizedBox(
@@ -194,7 +177,7 @@ class _RegisterState extends State<Register> {
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-Black.otf'),
+                                        'assets/fonst/Metropolis-Black.otf'),
                               )),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(
@@ -209,7 +192,7 @@ class _RegisterState extends State<Register> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                   fontFamily:
-                                      'assets\fonst\Metropolis-Black.otf'),
+                                      'assets/fonst/Metropolis-Black.otf'),
                               textCapitalization: TextCapitalization.words,
                               textInputAction: TextInputAction.next,
                               inputFormatters: [
@@ -232,7 +215,7 @@ class _RegisterState extends State<Register> {
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black45,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-Black.otf'),
+                                        'assets/fonst/Metropolis-Black.otf'),
 
                                 enabledBorder: OutlineInputBorder(
                                     borderSide:
@@ -257,7 +240,7 @@ class _RegisterState extends State<Register> {
                                 } else if (value.length > 30) {
                                   _color1 = Colors.red;
                                   WidgetsBinding
-                                      .instance?.focusManager.primaryFocus
+                                      .instance.focusManager.primaryFocus
                                       ?.unfocus();
                                   Fluttertoast.showToast(
                                       msg: 'Name Should be 30 Character');
@@ -272,7 +255,7 @@ class _RegisterState extends State<Register> {
                               onChanged: (value) {
                                 if (value.isEmpty) {
                                   WidgetsBinding
-                                      .instance?.focusManager.primaryFocus
+                                      .instance.focusManager.primaryFocus
                                       ?.unfocus();
                                   Fluttertoast.showToast(
                                       msg: 'Please Enter Your Name');
@@ -288,7 +271,7 @@ class _RegisterState extends State<Register> {
                               onFieldSubmitted: (value) {
                                 if (value.isEmpty) {
                                   WidgetsBinding
-                                      .instance?.focusManager.primaryFocus
+                                      .instance.focusManager.primaryFocus
                                       ?.unfocus();
                                   Fluttertoast.showToast(
                                       msg: 'Please Enter Your Name');
@@ -313,7 +296,7 @@ class _RegisterState extends State<Register> {
                                     GestureDetector(
                                       child: Container(
                                           height: 57,
-                                          padding: EdgeInsets.only(left: 2),
+                                          padding: const EdgeInsets.only(left: 2),
                                           decoration: BoxDecoration(
                                             border: verify_phone == 1
                                                 ? Border.all(
@@ -327,7 +310,7 @@ class _RegisterState extends State<Register> {
                                           ),
                                           child: Row(
                                             children: [
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 5,
                                               ),
                                               Image.asset(
@@ -335,18 +318,18 @@ class _RegisterState extends State<Register> {
                                                 package: countryCodePackageName,
                                                 width: 30,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 16,
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 2,
                                               ),
                                               Text(
-                                                '${country.callingCode}',
+                                                country.callingCode,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 15),
+                                                style: const TextStyle(fontSize: 15),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
                                             ],
@@ -371,7 +354,7 @@ class _RegisterState extends State<Register> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf'),
                                           keyboardType: TextInputType.phone,
                                           autovalidateMode: AutovalidateMode
                                               .onUserInteraction,
@@ -401,7 +384,7 @@ class _RegisterState extends State<Register> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black45,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf'),
+                                                    'assets/fonst/Metropolis-Black.otf'),
                                             enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     width: 1, color: _color2),
@@ -495,8 +478,8 @@ class _RegisterState extends State<Register> {
                                                   fontSize: 15.0,
                                                   color: Colors.white,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf',
-                                                )?.copyWith(
+                                                      'assets/fonst/Metropolis-Black.otf',
+                                                ).copyWith(
                                                     fontWeight: FontWeight.w800,
                                                     fontSize: 17),
                                               ))
@@ -513,12 +496,11 @@ class _RegisterState extends State<Register> {
                                                           50.0),
                                                   color: const Color.fromARGB(
                                                       255, 0, 91, 148)),
-                                              margin: EdgeInsets.only(top: 5.0),
+                                              margin: const EdgeInsets.only(top: 5.0),
                                               // Set the height of the container
                                               alignment: Alignment.center,
                                               child: TextButton(
                                                 onPressed: () async {
-                                                  //Flutter toast.showToast(msg: 'dsdderfr');
                                                   if (_usernm.text.isEmpty) {
                                                     _color1 = Colors.red;
                                                     setState(() {});
@@ -531,7 +513,7 @@ class _RegisterState extends State<Register> {
                                                     setState(() {});
                                                     WidgetsBinding
                                                         .instance
-                                                        ?.focusManager
+                                                        .focusManager
                                                         .primaryFocus
                                                         ?.unfocus();
                                                     Fluttertoast.showToast(
@@ -570,7 +552,7 @@ class _RegisterState extends State<Register> {
                                                           Navigator.of(
                                                                   dialogContext!)
                                                               .pop();
-                                                          if (value!) {
+                                                          if (value) {
                                                             _isloading = false;
                                                           } else {
                                                             _isloading = false;
@@ -582,7 +564,7 @@ class _RegisterState extends State<Register> {
                                                       _color2 = Colors.red;
                                                       WidgetsBinding
                                                           .instance
-                                                          ?.focusManager
+                                                          .focusManager
                                                           .primaryFocus
                                                           ?.unfocus();
                                                       Fluttertoast.showToast(
@@ -614,7 +596,7 @@ class _RegisterState extends State<Register> {
                                                       Navigator.of(
                                                               dialogContext!)
                                                           .pop();
-                                                      if (value!) {
+                                                      if (value) {
                                                         _isloading = false;
                                                       } else {
                                                         _isloading = false;
@@ -628,8 +610,8 @@ class _RegisterState extends State<Register> {
                                                       fontSize: 15.0,
                                                       color: Colors.white,
                                                       fontFamily:
-                                                          'assets\fonst\Metropolis-Black.otf',
-                                                    )?.copyWith(
+                                                          'assets/fonst/Metropolis-Black.otf',
+                                                    ).copyWith(
                                                         fontWeight:
                                                             FontWeight.w800,
                                                         fontSize: 19)),
@@ -655,7 +637,7 @@ class _RegisterState extends State<Register> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your Password',
@@ -667,7 +649,7 @@ class _RegisterState extends State<Register> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf'),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -689,7 +671,7 @@ class _RegisterState extends State<Register> {
                                         onChanged: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             _color6 = Colors.red;
                                             Fluttertoast.showToast(
@@ -707,7 +689,7 @@ class _RegisterState extends State<Register> {
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter OTP');
@@ -734,7 +716,7 @@ class _RegisterState extends State<Register> {
                                           borderRadius:
                                               BorderRadius.circular(50.0),
                                           color:
-                                              Color.fromARGB(255, 0, 91, 148)),
+                                              const Color.fromARGB(255, 0, 91, 148)),
                                       child: TextButton(
                                         onPressed: () {
                                           if (_formKey.currentState!
@@ -768,7 +750,7 @@ class _RegisterState extends State<Register> {
                                                   .then((value) {
                                                 Navigator.of(dialogContext!)
                                                     .pop();
-                                                if (value!) {
+                                                if (value) {
                                                   _isloading = false;
                                                 } else {
                                                   _isloading = false;
@@ -782,8 +764,8 @@ class _RegisterState extends State<Register> {
                                               fontSize: 15.0,
                                               color: Colors.white,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf',
-                                            )?.copyWith(
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                            ).copyWith(
                                                 fontWeight: FontWeight.w800,
                                                 fontSize: 19)),
                                       ),
@@ -819,7 +801,7 @@ class _RegisterState extends State<Register> {
                                                   //this.getData();
                                                   WidgetsBinding
                                                       .instance
-                                                      ?.focusManager
+                                                      .focusManager
                                                       .primaryFocus
                                                       ?.unfocus();
                                                   Fluttertoast.showToast(
@@ -831,7 +813,7 @@ class _RegisterState extends State<Register> {
                                                     setState(() {});
                                                     WidgetsBinding
                                                         .instance
-                                                        ?.focusManager
+                                                        .focusManager
                                                         .primaryFocus
                                                         ?.unfocus();
                                                     Fluttertoast.showToast(
@@ -843,7 +825,7 @@ class _RegisterState extends State<Register> {
                                                     setState(() {});
                                                     WidgetsBinding
                                                         .instance
-                                                        ?.focusManager
+                                                        .focusManager
                                                         .primaryFocus
                                                         ?.unfocus();
                                                     Fluttertoast.showToast(
@@ -882,7 +864,7 @@ class _RegisterState extends State<Register> {
                                                       _color2 = Colors.red;
                                                       WidgetsBinding
                                                           .instance
-                                                          ?.focusManager
+                                                          .focusManager
                                                           .primaryFocus
                                                           ?.unfocus();
                                                       Fluttertoast.showToast(
@@ -919,8 +901,8 @@ class _RegisterState extends State<Register> {
                                                     fontSize: 15.0,
                                                     color: Colors.white,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf',
-                                                  )?.copyWith(
+                                                        'assets/fonst/Metropolis-Black.otf',
+                                                  ).copyWith(
                                                       fontWeight:
                                                           FontWeight.w800,
                                                       fontSize: 17)),
@@ -932,7 +914,7 @@ class _RegisterState extends State<Register> {
                           verify_phone == 1
                               ? Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                   child: Column(
                                     children: [
                                       TextFormField(
@@ -947,7 +929,7 @@ class _RegisterState extends State<Register> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
 
@@ -960,12 +942,12 @@ class _RegisterState extends State<Register> {
                                                 )
                                               : null,
                                           hintText: "Your Email",
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf'),
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color3),
@@ -1016,7 +998,7 @@ class _RegisterState extends State<Register> {
                                           } else if (value.isEmpty) {
                                             setState(() {
                                               WidgetsBinding.instance
-                                                  ?.focusManager.primaryFocus
+                                                  .focusManager.primaryFocus
                                                   ?.unfocus();
                                               _color3 = Colors.red;
                                             });
@@ -1026,7 +1008,7 @@ class _RegisterState extends State<Register> {
                                           if (!EmailValidator.validate(value)) {
                                             _color3 = Colors.red;
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1050,14 +1032,14 @@ class _RegisterState extends State<Register> {
                                                       0.9,
                                                   height: 60,
                                                   margin:
-                                                      EdgeInsets.only(top: 15),
+                                                      const EdgeInsets.only(top: 15),
                                                   decoration: BoxDecoration(
                                                       border:
                                                           Border.all(width: 1),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               50.0),
-                                                      color: Color.fromARGB(
+                                                      color: const Color.fromARGB(
                                                           255, 0, 91, 148)),
                                                   child: TextButton(
                                                     onPressed: () async {
@@ -1096,7 +1078,7 @@ class _RegisterState extends State<Register> {
                                                               Navigator.of(
                                                                       dialogContext!)
                                                                   .pop();
-                                                              if (value!) {
+                                                              if (value) {
                                                                 _isloading =
                                                                     false;
                                                               } else {
@@ -1109,7 +1091,7 @@ class _RegisterState extends State<Register> {
                                                                 Colors.red;
                                                             WidgetsBinding
                                                                 .instance
-                                                                ?.focusManager
+                                                                .focusManager
                                                                 .primaryFocus
                                                                 ?.unfocus();
                                                             Fluttertoast.showToast(
@@ -1121,7 +1103,7 @@ class _RegisterState extends State<Register> {
                                                           _color3 = Colors.red;
                                                           WidgetsBinding
                                                               .instance
-                                                              ?.focusManager
+                                                              .focusManager
                                                               .primaryFocus
                                                               ?.unfocus();
                                                           Fluttertoast.showToast(
@@ -1136,7 +1118,7 @@ class _RegisterState extends State<Register> {
                                                           fontSize: 15.0,
                                                           color: Colors.white,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                         ).copyWith(
                                                             fontWeight:
                                                                 FontWeight.w800,
@@ -1160,7 +1142,7 @@ class _RegisterState extends State<Register> {
                                                                 borderRadius:
                                                                     BorderRadius.circular(
                                                                         50.0),
-                                                                color: Color.fromARGB(
+                                                                color: const Color.fromARGB(
                                                                         255,
                                                                         0,
                                                                         91,
@@ -1168,20 +1150,20 @@ class _RegisterState extends State<Register> {
                                                                     .withOpacity(
                                                                         0.8)),
                                                             margin:
-                                                                EdgeInsets.only(
+                                                                const EdgeInsets.only(
                                                                     top: 5.0),
                                                             // Set the height of the container
                                                             alignment: Alignment
                                                                 .center,
                                                             child: Text(
                                                               '0:$_countdown',
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                 fontSize: 15.0,
                                                                 color: Colors
                                                                     .white,
                                                                 fontFamily:
-                                                                    'assets\fonst\Metropolis-Black.otf',
-                                                              )?.copyWith(
+                                                                    'assets/fonst/Metropolis-Black.otf',
+                                                              ).copyWith(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w800,
@@ -1195,7 +1177,7 @@ class _RegisterState extends State<Register> {
                                                                 0.9,
                                                             height: 60,
                                                             margin:
-                                                                EdgeInsets.only(
+                                                                const EdgeInsets.only(
                                                                     top: 15),
                                                             decoration: BoxDecoration(
                                                                 border:
@@ -1246,7 +1228,7 @@ class _RegisterState extends State<Register> {
                                                                           .then((value) {
                                                                         Navigator.of(dialogContext!)
                                                                             .pop();
-                                                                        if (value!) {
+                                                                        if (value) {
                                                                           _isloading =
                                                                               false;
                                                                         } else {
@@ -1260,7 +1242,7 @@ class _RegisterState extends State<Register> {
                                                                               .red;
                                                                       WidgetsBinding
                                                                           .instance
-                                                                          ?.focusManager
+                                                                          .focusManager
                                                                           .primaryFocus
                                                                           ?.unfocus();
                                                                       Fluttertoast
@@ -1281,8 +1263,8 @@ class _RegisterState extends State<Register> {
                                                                     color: Colors
                                                                         .white,
                                                                     fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf',
-                                                                  )?.copyWith(
+                                                                        'assets/fonst/Metropolis-Black.otf',
+                                                                  ).copyWith(
                                                                           fontWeight: FontWeight
                                                                               .w800,
                                                                           fontSize:
@@ -1314,7 +1296,7 @@ class _RegisterState extends State<Register> {
                                                                 FontWeight.w400,
                                                             color: Colors.black,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf'),
+                                                                'assets/fonst/Metropolis-Black.otf'),
                                                         textInputAction:
                                                             TextInputAction
                                                                 .next,
@@ -1335,7 +1317,7 @@ class _RegisterState extends State<Register> {
                                                                   color: Colors
                                                                       .black,
                                                                   fontFamily:
-                                                                      'assets\fonst\Metropolis-Black.otf'),
+                                                                      'assets/fonst/Metropolis-Black.otf'),
 
                                                           enabledBorder: OutlineInputBorder(
                                                               borderSide:
@@ -1373,7 +1355,7 @@ class _RegisterState extends State<Register> {
                                                           if (value.isEmpty) {
                                                             WidgetsBinding
                                                                 .instance
-                                                                ?.focusManager
+                                                                .focusManager
                                                                 .primaryFocus
                                                                 ?.unfocus();
                                                             _color7 =
@@ -1393,7 +1375,7 @@ class _RegisterState extends State<Register> {
                                                           if (value.isEmpty) {
                                                             WidgetsBinding
                                                                 .instance
-                                                                ?.focusManager
+                                                                .focusManager
                                                                 .primaryFocus
                                                                 ?.unfocus();
                                                             Fluttertoast.showToast(
@@ -1499,7 +1481,7 @@ class _RegisterState extends State<Register> {
                                                                   Navigator.of(
                                                                           dialogContext!)
                                                                       .pop();
-                                                                  if (value!) {
+                                                                  if (value) {
                                                                     _isloading =
                                                                         false;
                                                                   } else {
@@ -1507,20 +1489,19 @@ class _RegisterState extends State<Register> {
                                                                         false;
                                                                   }
                                                                 });
-                                                                ;
                                                               }
                                                             });
                                                           }
                                                         },
                                                         child: Text(
                                                             'Verify OTP',
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontSize: 15.0,
                                                               color:
                                                                   Colors.white,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf',
-                                                            )?.copyWith(
+                                                                  'assets/fonst/Metropolis-Black.otf',
+                                                            ).copyWith(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w800,
@@ -1537,7 +1518,7 @@ class _RegisterState extends State<Register> {
                               ? Column(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 5.0, 25.0, 5.0),
                                       child: TextFormField(
                                         controller: _userpass,
@@ -1545,24 +1526,24 @@ class _RegisterState extends State<Register> {
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         keyboardType: TextInputType.text,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your Password',
                                           // labelStyle: TextStyle(color: Colors.red),
 
                                           hintText: "Enter Your Password ",
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf'),
                                           suffixIcon: IconButton(
                                             icon:
                                                 // Based on passwordVisible state choose the icon
@@ -1601,25 +1582,7 @@ class _RegisterState extends State<Register> {
                                           //errorText: _validusernm ? 'Name is not empty' : null),
                                         ),
                                         validator: (value) {
-                                          /*  if (value!.isEmpty) {
-                                          //WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                                          Fluttertoast.showToast(
-                                              msg:
-                                              'Please Enter Your Password');
-                                          //setState(() {
-                                          _color4 = Colors.red;
-                                          //  });
-                                        }*/ /* else if(value!.isNotEmpty) {
-                                            if (_userpass.text.length <
-                                                6) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                  'Your Password Require Minimum 6 Character');
-                                              //setState(() {
-                                              _color4 = Colors.red;
-                                              // });
-                                            }
-                                          }*/
+                                          return null;
                                         },
                                         onChanged: (value) {
                                           if (value.isNotEmpty) {
@@ -1637,7 +1600,7 @@ class _RegisterState extends State<Register> {
                                             }
                                           } else if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1675,19 +1638,19 @@ class _RegisterState extends State<Register> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                           25.0, 5.0, 25.0, 5.0),
                                       child: TextFormField(
                                         controller: _usercpass,
                                         keyboardType: TextInputType.text,
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         obscureText: !_cpasswordVisible,
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
@@ -1695,12 +1658,12 @@ class _RegisterState extends State<Register> {
                                           // labelStyle: TextStyle(color: Colors.red),
                                           hintText:
                                               "Please Enter Confirm Password",
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf'),
                                           suffixIcon: IconButton(
                                             icon:
                                                 // Based on passwordVisible state choose the icon
@@ -1762,7 +1725,7 @@ class _RegisterState extends State<Register> {
                                         onChanged: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1788,7 +1751,7 @@ class _RegisterState extends State<Register> {
                                     Row(
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.fromLTRB(
+                                          padding: const EdgeInsets.fromLTRB(
                                               25.0, 0.0, 0, 10.0),
                                           child: Row(
                                             children: [
@@ -1800,23 +1763,24 @@ class _RegisterState extends State<Register> {
                                                   });
                                                 },
                                               ),
-                                              Text('I agree with',
+                                              const Text('I agree with',
                                                   style: TextStyle(
                                                       fontSize: 15.0,
                                                       fontWeight:
                                                           FontWeight.w400,
                                                       color: Colors.black,
                                                       fontFamily:
-                                                          'assets\fonst\Metropolis-Black.otf')),
+                                                          'assets/fonst/Metropolis-Black.otf')),
                                               TextButton(
                                                 onPressed: () {
-                                                  /* Navigator.pushReplacement(
+                                                  Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            Register()));*/
+                                                      builder: (context) => const AppTermsCondition(),
+                                                    ),
+                                                  );
                                                 },
-                                                child: Text('Terms & Condition',
+                                                child: const Text('Terms & Condition',
                                                     style: TextStyle(
                                                         fontSize: 15.0,
                                                         fontWeight:
@@ -1824,7 +1788,7 @@ class _RegisterState extends State<Register> {
                                                         color: Color.fromARGB(
                                                             255, 0, 91, 148),
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf')),
+                                                            'assets/fonst/Metropolis-Black.otf')),
                                               )
                                             ],
                                           ),
@@ -1839,7 +1803,7 @@ class _RegisterState extends State<Register> {
                                           borderRadius:
                                               BorderRadius.circular(50.0),
                                           color:
-                                              Color.fromARGB(255, 0, 91, 148)),
+                                              const Color.fromARGB(255, 0, 91, 148)),
                                       child: TextButton(
                                         onPressed: () async {
                                           final connectivityResult =
@@ -1860,12 +1824,12 @@ class _RegisterState extends State<Register> {
                                             });
                                           }
                                         },
-                                        child: Text('Continue',
+                                        child: const Text('Continue',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                               color: Colors.white,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf',
+                                                  'assets/fonst/Metropolis-Black.otf',
                                             )),
                                       ),
                                     ),
@@ -1880,23 +1844,23 @@ class _RegisterState extends State<Register> {
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Already have Account?',
+            const Text('Already have Account?',
                 style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => const LoginScreen()));
                 },
                 child: const Text('Log in',
                     style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
                         color: Color.fromARGB(255, 0, 91, 148),
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf'))),
+                        fontFamily: 'assets/fonst/Metropolis-Black.otf'))),
           ],
         ),
       ),
@@ -1905,7 +1869,7 @@ class _RegisterState extends State<Register> {
 
   vaild_data() {
     _isValid = EmailValidator.validate(_useremail.text);
-    WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     if (_userpass.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please Enter Your Password');
       setState(() {
@@ -1971,7 +1935,6 @@ class _RegisterState extends State<Register> {
   Future<bool?> setRegisterUserPhoneno() async {
     RegisterUserPhoneno register = RegisterUserPhoneno();
 
-    print(_usermbl.text.toString());
 
     var res = await registerUserPhoneno(
       _usermbl.text,
@@ -1980,7 +1943,6 @@ class _RegisterState extends State<Register> {
       device_name,
       '3',
     );
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
       register = RegisterUserPhoneno.fromJson(res);
@@ -1992,7 +1954,6 @@ class _RegisterState extends State<Register> {
       _pref.setString('api_token', register.result!.userToken.toString());
       _pref.setString('step', register.result!.stepCounter.toString());
       constanst.step = register.result!.stepCounter!;
-      print('api_token ${register.result!.userToken.toString()}');
       /* _pref.setBool('islogin', true);*/
       mbl_otp = 1;
 
@@ -2016,10 +1977,10 @@ class _RegisterState extends State<Register> {
       _startTimer();
       setState(() {});
     }
+    return null;
   }
 
   Future<bool> setRegisterUserEmail() async {
-    GetRegsterEmailOTP register = GetRegsterEmailOTP();
 
     log("setRegisterUserEmail Method Called");
 
@@ -2030,10 +1991,8 @@ class _RegisterState extends State<Register> {
         _pref.getString('api_token').toString(),
         _pref.getString('user_id').toString(),
         device_name);
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
-      register = GetRegsterEmailOTP.fromJson(res);
 
       email_otp = 1;
       _isloading = true;
@@ -2053,7 +2012,6 @@ class _RegisterState extends State<Register> {
       setState(() {});
     }
     return _isloading;
-    return _isloading;
   }
 
   Future<void> init(BuildContext context) async {
@@ -2070,14 +2028,12 @@ class _RegisterState extends State<Register> {
     String step,
   ) async {
     log("VERIFY OTP PRESSED");
-    common_par common = common_par();
 
     var res = await reg_mo_verifyotp(otp, userId, phoneno, apiToken, step);
 
     //String? msg = res['message'];
 
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       verify_phone = 1;
       mbl_otp = 0;
@@ -2099,15 +2055,11 @@ class _RegisterState extends State<Register> {
     String phoneno,
     countryCode,
   ) async {
-    common_par common = common_par();
 
     var res = await reg_mo_resendotp(userId, phoneno, apiToken, countryCode);
 
-    String? msg = res['message'];
 
-    print("country code $countryCode");
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       otp_sent = res['otp_sent'];
       //verify_phone=1;
@@ -2133,14 +2085,11 @@ class _RegisterState extends State<Register> {
 
   Future<bool> register_email_resendotp(
       String userId, String apiToken, String email) async {
-    common_par common = common_par();
 
     var res = await reg_email_resendotp(userId, apiToken, email);
 
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       _isloading = true;
       //verify_phone=1;
@@ -2167,14 +2116,11 @@ class _RegisterState extends State<Register> {
     String step,
   ) async {
     log("VERIFY EMAIL OTP PRESSED..!");
-    common_par common = common_par();
 
     var res = await reg_email_verifyotp(otp, userId, apiToken, email, step);
 
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       // Fluttertoast.showToast(msg: res['message']);
       Fluttertoast.showToast(msg: "Your Email is Verified");
       verify_email = 1;
@@ -2209,7 +2155,6 @@ class _RegisterState extends State<Register> {
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
 
-    String? msg = res['message'];
 
     if (res['status'] == 1) {
       register = FinalRegister.fromJson(res);
@@ -2244,22 +2189,20 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> add_android_device() async {
-    Login login = Login();
 
     /*_onLoading();*/
     var res = await androidDevice_Register(_usermbl.text.toString());
     if (res['status'] == 1) {
       constanst.usernm = _usernm.text.toString();
-      login = Login.fromJson(res);
-      SharedPreferences _pref = await SharedPreferences.getInstance();
-      _pref.setString('user_id', register.result!.userid.toString());
-      _pref.setString('name', register.result!.userName.toString());
-      _pref.setString('email', register.result!.email.toString());
-      _pref.setString('phone', register.result!.phoneno.toString());
-      _pref.setString('api_token', register.result!.userToken.toString());
-      _pref.setString('step', register.result!.stepCounter.toString());
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('user_id', register.result!.userid.toString());
+      pref.setString('name', register.result!.userName.toString());
+      pref.setString('email', register.result!.email.toString());
+      pref.setString('phone', register.result!.phoneno.toString());
+      pref.setString('api_token', register.result!.userToken.toString());
+      pref.setString('step', register.result!.stepCounter.toString());
 
-      _pref.setBool('islogin', true);
+      pref.setBool('islogin', true);
 
       Navigator.pushAndRemoveUntil(
           context,
@@ -2272,24 +2215,22 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> add_ios_device() async {
-    Login login = Login();
 
     var res = await iosDevice_Register();
 
     if (res['status'] == 1) {
-      login = Login.fromJson(res);
       constanst.usernm = _usernm.text.toString();
       //Fluttertoast.showToast(msg: res['message']);
-      SharedPreferences _pref = await SharedPreferences.getInstance();
-      _pref.setString('user_id', register.result!.userid.toString());
-      _pref.setString('name', register.result!.userName.toString());
-      _pref.setString('email', register.result!.email.toString());
-      _pref.setString('phone', register.result!.phoneno.toString());
-      _pref.setString('api_token', register.result!.userToken.toString());
-      _pref.setString('step', register.result!.stepCounter.toString());
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('user_id', register.result!.userid.toString());
+      pref.setString('name', register.result!.userName.toString());
+      pref.setString('email', register.result!.email.toString());
+      pref.setString('phone', register.result!.phoneno.toString());
+      pref.setString('api_token', register.result!.userToken.toString());
+      pref.setString('step', register.result!.stepCounter.toString());
       constanst.step = register.result!.stepCounter!;
       // _pref.setString('userImage', register.result!.userImage.toString());
-      _pref.setBool('islogin', true);
+      pref.setBool('islogin', true);
       _isloading = true;
       Navigator.pushAndRemoveUntil(
           context,
@@ -2339,12 +2280,6 @@ class _RegisterState extends State<Register> {
             ));
       },
     );
-
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 }
 
@@ -2354,7 +2289,7 @@ class _CloseKeyboardFormatter extends TextInputFormatter {
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.length == 4) {
       // Close the keyboard
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     }
     return newValue;
   }
@@ -2372,7 +2307,7 @@ class CapitalizeWordsTextInputFormatter extends TextInputFormatter {
   }
 
   String toTitleCase(String text) {
-    if (text == null || text.isEmpty) {
+    if (text.isEmpty) {
       return '';
     }
     return text.split(' ').map((word) {

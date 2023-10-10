@@ -177,7 +177,7 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                                                                   FontWeight.w500,
                                                               color: Colors.black,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')),
+                                                                  'assets/fonst/Metropolis-Black.otf')),
                                                     ),
                                                   ),
                                                 ]))),

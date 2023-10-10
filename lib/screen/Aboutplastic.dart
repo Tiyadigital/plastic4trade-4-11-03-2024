@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, import_of_legacy_library_into_null_safe, prefer_typing_uninitialized_variables
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +48,12 @@ class _aboutplasticState extends State<aboutplastic> {
 
   Widget init() {
     return Scaffold(
-        backgroundColor: Color(0xFFDADADA),
+        backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
-          title: Text('About Us',
+          title: const Text('About Us',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -70,49 +72,46 @@ class _aboutplasticState extends State<aboutplastic> {
           ),
         ),
         body: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             child: load == true
-                ? Container(
-                    //padding: EdgeInsets.only(bottom: 3.0),
-                    child: Column(children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
-                          height: 150,
-                          child: Image.asset(
-                            'assets/plastic4trade logo final.png',
-                          )),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
-                          padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Align(child: Html(data: link)),
-                              )
-                            ],
-                          )),
-                    ]),
-                  )
+                ? Column(children: [
+                  Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
+                      height: 150,
+                      child: Image.asset(
+                        'assets/plastic4trade logo final.png',
+                      )),
+                  Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
+                      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Align(child: Html(data: link)),
+                          )
+                        ],
+                      )),
+                ])
                 : Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             value: null,
                             strokeWidth: 2.0,
                             color: Color.fromARGB(255, 0, 91, 148),
                           )
                         : Platform.isIOS
-                            ? CupertinoActivityIndicator(
+                            ? const CupertinoActivityIndicator(
                                 color: Color.fromARGB(255, 0, 91, 148),
                                 radius: 20,
                                 animating: true,
@@ -122,26 +121,17 @@ class _aboutplasticState extends State<aboutplastic> {
   }
 
   Future<void> get_aboutus() async {
-    getAbout_us getsimmilar = getAbout_us();
 
     var res = await getStaticPage();
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = getAbout_us.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        //
-        // for (var data in jsonarray) {
 
-        link = jsonarray['staticDescription'];
+        link = jsonArray['staticDescription'];
 
-        /*videolist.add(link);
-          videocontent.add(content);*/
-        //loadmore = true;
-        //}
         load = true;
 
         if (mounted) {
@@ -153,7 +143,6 @@ class _aboutplasticState extends State<aboutplastic> {
     } else {
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 }

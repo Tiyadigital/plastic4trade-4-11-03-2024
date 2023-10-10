@@ -1,30 +1,26 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
+import 'dart:io' as io;
+import 'dart:io' show Platform;
+
+import 'package:Plastic4trade/model/GetBusinessType.dart' as bt;
+import 'package:Plastic4trade/utill/constant.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:country_calling_code_picker/picker.dart';
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/country_code_picker.dart';
-import 'package:country_calling_code_picker/functions.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'dart:io' as io;
-import 'package:Plastic4trade/model/GetBusinessType.dart' as bt;
-import 'package:Plastic4trade/utill/constant.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui';
+
 import '../api/api_interface.dart';
 import '../constroller/GetBussinessTypeController.dart';
 import '../model/common.dart';
-import '../widget/MainScreen.dart';
-import 'dart:io' show Platform;
-
 import 'Bussinessinfo.dart';
 
 class EditBussinessProfile extends StatefulWidget {
@@ -60,7 +56,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
 
   Color _color1 = Colors.black45;
   Color _color2 = Colors.black45;
-  Color _color3 = Colors.black45;
   Color _color4 = Colors.black45;
   Color _color5 = Colors.black45;
   Color _color6 = Colors.black45;
@@ -74,7 +69,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry;
   BuildContext? dialogContext;
-  bool _isloading1 = false;
   final _formKey = GlobalKey<FormState>();
 
   io.File? file;
@@ -109,7 +103,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
     });
 
     // setState(() {});
-    print("BUSINESS DATA === ${constanst.btype_data}");
   }
 
   @override
@@ -181,8 +174,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                         child: Container(
                             // height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
-                            child: Column(
-                                children: [
+                            child: Column(children: [
                               SafeArea(
                                 top: true,
                                 left: true,
@@ -203,7 +195,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textCapitalization:
                                             TextCapitalization.sentences,
                                         textInputAction: TextInputAction.next,
@@ -224,8 +216,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(color: Colors.black45),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -290,7 +282,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textCapitalization:
                                             TextCapitalization.sentences,
                                         textInputAction: TextInputAction.next,
@@ -311,8 +303,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(color: Colors.black45),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -329,33 +321,13 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   width: 1, color: _color2),
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
-                                          // errorBorder: OutlineInputBorder(
-                                          //   borderSide:
-                                          //       BorderSide(width: 1, color: Colors.red),
-                                          // ),
-                                          // focusedErrorBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //       width: 1, color: Colors.green.shade600),
-                                          //     borderRadius:
-                                          //     BorderRadius.circular(10.0)
-                                          // ),
+
                                         ),
-                                        /*validator: (value) {
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Your Business Name');
-                                          } else {
-                                            // setState(() {
-                                            _color2 = Colors.green.shade600;
-                                            // });
-                                          }
-                                          return null;
-                                        },*/
+
                                         onChanged: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -372,7 +344,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter Your Name');
@@ -401,7 +373,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textCapitalization:
                                             TextCapitalization.sentences,
                                         textInputAction: TextInputAction.next,
@@ -434,7 +406,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
+                                                      'assets/fonst/Metropolis-Black.otf')
                                               .copyWith(color: Colors.black45),
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -450,9 +422,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                               borderSide: BorderSide(
                                                   width: 1, color: _color4),
                                               borderRadius:
-                                                  BorderRadius.circular(15.0)),
-
-                                          // ),
+                                                  BorderRadius.circular(15.0),),
                                         ),
                                         onChanged: (value) {
                                           if (value.isEmpty) {
@@ -503,7 +473,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf',
+                                              'assets/fonst/Metropolis-Black.otf',
                                         ),
                                         textCapitalization:
                                             TextCapitalization.sentences,
@@ -522,7 +492,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf',
+                                                'assets/fonst/Metropolis-Black.otf',
                                           ).copyWith(color: Colors.black45),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -567,10 +537,10 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             apiKey: googleApikey,
                                             mode: Mode.overlay,
                                             types: ['establishment', 'geocode'],
-                                            // types: ['geocode'],
+                                            // types: ['geocode', 'ADDRESS'],
+
                                             strictbounds: false,
                                             onError: (err) {
-                                              print(err);
                                             },
                                           );
 
@@ -602,8 +572,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -690,12 +660,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                       ),
                                                     )),
                                               ],
-                                            )
-
-                                            // ],
-                                            // ),
-                                            //),
-                                            ),
+                                            )),
                                         Expanded(
                                           flex: 2,
                                           child: Container(
@@ -706,12 +671,12 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             child: TextFormField(
                                               // controller: _usernm,
                                               controller: _bussmbl,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 15.0,
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf'),
+                                                      'assets/fonst/Metropolis-Black.otf'),
                                               inputFormatters: [
                                                 LengthLimitingTextInputFormatter(
                                                     11),
@@ -728,14 +693,14 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                 filled: true,
                                                 fillColor: Colors.white,
                                                 hintText: "Bussiness Moblie",
-                                                hintStyle: TextStyle(
+                                                hintStyle: const TextStyle(
                                                         fontSize: 15.0,
                                                         fontWeight:
                                                             FontWeight.w400,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf')
-                                                    ?.copyWith(
+                                                            'assets/fonst/Metropolis-Black.otf')
+                                                    .copyWith(
                                                         color: Colors.black45),
                                                 enabledBorder:
                                                     OutlineInputBorder(
@@ -787,7 +752,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   _color6 = Colors.red;
                                                   WidgetsBinding
                                                       .instance
-                                                      ?.focusManager
+                                                      .focusManager
                                                       .primaryFocus
                                                       ?.unfocus();
                                                   Fluttertoast.showToast(
@@ -799,7 +764,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                 if (value.isEmpty) {
                                                   WidgetsBinding
                                                       .instance
-                                                      ?.focusManager
+                                                      .focusManager
                                                       .primaryFocus
                                                       ?.unfocus();
                                                   Fluttertoast.showToast(
@@ -834,7 +799,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your email *',
@@ -847,8 +812,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(color: Colors.black45),
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color7),
@@ -883,7 +848,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                           if (!EmailValidator.validate(value)) {
                                             _color7 = Colors.red;
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -891,7 +856,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             setState(() {});
                                           } else if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Your Email');
@@ -919,7 +884,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
                                           // labelText: 'Your email *',
@@ -932,8 +897,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf')
-                                              ?.copyWith(color: Colors.black45),
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(color: Colors.black45),
 
                                           enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -966,14 +931,15 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                       child: TextFormField(
                                         controller: _bussabout,
                                         keyboardType: TextInputType.multiline,
-                                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
                                         maxLength: 2000,
                                         style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets/fonst/Metropolis-Black.otf'),
                                         maxLines: 4,
                                         textInputAction: TextInputAction.done,
                                         decoration: InputDecoration(
@@ -985,7 +951,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                     fontWeight: FontWeight.w400,
                                                     color: Colors.black,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf')
+                                                        'assets/fonst/Metropolis-Black.otf')
                                                 .copyWith(
                                                     color: Colors.black45),
                                             enabledBorder: OutlineInputBorder(
@@ -1009,7 +975,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
                                             WidgetsBinding.instance
-                                                ?.focusManager.primaryFocus
+                                                .focusManager.primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1048,7 +1014,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
                                                 fontWeight: FontWeight.w800,
                                                 color: Colors.white,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')),
+                                                    'assets/fonst/Metropolis-Black.otf')),
                                       ),
                                     ),
                                   ],
@@ -1096,17 +1062,17 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       setState(() {});
     }
     if (_usernm.text.isEmpty) {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: 'Please Enter Your Name');
     } else if (_userbussnm.text.isEmpty) {
       _color1 = Colors.red;
       setState(() {});
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: 'Please Add Your Business Name');
     } else if (_userbussnature.text.isEmpty) {
       _color4 = Colors.red;
       setState(() {});
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(
           msg: 'Please Select at least 1 Nature of Business');
     } else if (_userloc.text.isEmpty) {
@@ -1116,7 +1082,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       }
       _color5 = Colors.red;
       setState(() {});
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(
           msg: 'Please Search and Save your Business Location');
     } else if (_usernm.text.isNotEmpty &&
@@ -1131,12 +1097,11 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
           setState(() {});
           if (_bussemail.text.isNotEmpty) {
             if (!_isValid) {
-              WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
               Fluttertoast.showToast(msg: 'Enter Valid Email Address');
               _color7 = Colors.red;
               setState(() {});
             } else if (_isValid) {
-              //  Fluttertoast.showToast(msg: 'Enter Valid Email Address');
               _color7 = Colors.green.shade600;
               setState(() {});
 
@@ -1184,12 +1149,12 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
         } else {
           _color6 = Colors.red;
           setState(() {});
-          WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
           Fluttertoast.showToast(msg: 'Please Enter Correct Number');
         }
       } else if (_bussemail.text.isNotEmpty) {
         if (!_isValid) {
-          WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
           Fluttertoast.showToast(msg: 'Enter Valid Email Address');
           _color7 = Colors.red;
           setState(() {});
@@ -1277,10 +1242,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   }
 
   getProfiless() async {
-    common_par common = common_par();
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
-    print(_pref.getString('user_id').toString());
 
     var res = await getbussinessprofile(
       _pref.getString('user_id').toString(),
@@ -1312,26 +1275,19 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
       constanst.selectbusstype_id =
           constanst.select_Bussiness_nature.split(',');
 
-      String myString = res['profile']['business_type'];
       isprofile = true;
     } else {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
     }
 
-    print('GET BUSINESS ID = ${constanst.selectbusstype_id}');
-    print('GET BUSINESS NAME = ${constanst.select_Bussiness_nature}');
-    print('GET BUSINESS NAME = ${constanst.lstBussiness_nature}');
 
     setState(() {});
   }
 
   Future<bool> updateUserBusiness_Profile() async {
-    common_par common = common_par();
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
-    print(_pref.getString('user_id').toString());
-    print(_pref.getString('A').toString());
     var res = await updateUserBusinessProfile(
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString(),
@@ -1354,15 +1310,13 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
         _usernm.text.toString());
 
     if (res['status'] == 1) {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const Bussinessinfo()));
-      _isloading1 = true;
     } else {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
-      _isloading1 = true;
     }
     return _isloading;
   }
@@ -1450,101 +1404,109 @@ class _YourWidgetState extends State<YourWidget> {
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
-                  fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                  fontFamily: 'assets/fonst/Metropolis-Black.otf')),
         ),
         const SizedBox(height: 5),
         //-------CircularCheckBox()
         Expanded(
-            child:
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: constanst.btype_data.length,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                bt.Result record = constanst.btype_data[index];
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
 
-
-          ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: constanst.btype_data.length,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (BuildContext context, int index) {
-                        bt.Result record = constanst.btype_data[index];
-                        return GestureDetector(
-                          onTap: () {
+                      gender = true;
+                      if (!constanst.selectbusstype_id
+                          .contains(record.businessTypeId.toString())) {
+                        if (constanst.selectbusstype_id.length <= 2) {
+                          constanst.itemsCheck[index] =
+                              Icons.check_circle_outline;
+                          constanst.lstBussiness_nature_name
+                              .add(record.businessType.toString());
+                          constanst.selectbusstype_id
+                              .add(record.businessTypeId.toString());
+                          constanst.Bussiness_nature =
+                              constanst.lstBussiness_nature_name.join(",");
+                          constanst.select_Bussiness_nature =
+                              constanst.lstBussiness_nature_name.join(",");
+                        } else {
+                          WidgetsBinding.instance.focusManager.primaryFocus
+                              ?.unfocus();
+                          Fluttertoast.showToast(
+                              msg:
+                                  'You Can Select Maximum 3 Nature of Bussiness');
+                        }
+                      } else {
+                        constanst.itemsCheck[index] = Icons.circle_outlined;
+                        constanst.selectbusstype_id
+                            .remove(record.businessTypeId.toString());
+                        constanst.lstBussiness_nature
+                            .remove(record.businessType.toString());
+                        constanst.select_Bussiness_nature =
+                            constanst.selectbusstype_id.join(",");
+                      }
+                    });
+                  },
+                  child: ListTile(
+                      title: Text(record.businessType.toString(),
+                          style: const TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+                      leading: IconButton(
+                          icon: constanst.select_Bussiness_nature
+                                  .contains(record.businessTypeId.toString())
+                              ? Icon(Icons.check_circle,
+                                  color: Colors.green.shade600)
+                              : const Icon(Icons.circle_outlined,
+                                  color: Colors.black45),
+                          onPressed: () {
                             setState(() {
-                              print('GET BUSINESS ID = ${constanst.selectbusstype_id}');
-                              print('GET BUSINESS NAME = ${constanst.select_Bussiness_nature}');
-                              print('GET BUSINESS NAME = ${constanst.lstBussiness_nature}');
-
-
 
                               gender = true;
-                              if (!constanst.selectbusstype_id.contains(record.businessTypeId.toString())) {
+
+                              if (!constanst.selectbusstype_id
+                                  .contains(record.businessTypeId.toString())) {
                                 if (constanst.selectbusstype_id.length <= 2) {
-                                  constanst.itemsCheck[index] = Icons.check_circle_outline;
-                                  constanst.lstBussiness_nature_name.add(record.businessType.toString());
-                                  constanst.selectbusstype_id.add(record.businessTypeId.toString());
-                                  constanst.Bussiness_nature = constanst.lstBussiness_nature_name.join(",");
-                                  constanst.select_Bussiness_nature = constanst.lstBussiness_nature_name.join(",");
+                                  constanst.itemsCheck[index] =
+                                      Icons.check_circle_outline;
+
+                                  constanst.lstBussiness_nature
+                                      .add(record.businessType.toString());
+                                  constanst.selectbusstype_id
+                                      .add(record.businessTypeId.toString());
+                                  constanst.Bussiness_nature =
+                                      constanst.lstBussiness_nature.join(",");
+                                  constanst.select_Bussiness_nature =
+                                      constanst.lstBussiness_nature.join(",");
                                 } else {
-                                  WidgetsBinding.instance.focusManager.primaryFocus
+                                  WidgetsBinding
+                                      .instance.focusManager.primaryFocus
                                       ?.unfocus();
                                   Fluttertoast.showToast(
                                       msg:
                                           'You Can Select Maximum 3 Nature of Bussiness');
                                 }
                               } else {
-                                constanst.itemsCheck[index] = Icons.circle_outlined;
-                                constanst.selectbusstype_id.remove(record.businessTypeId.toString());
-                                constanst.lstBussiness_nature.remove(record.businessType.toString());
-                                constanst.select_Bussiness_nature = constanst.selectbusstype_id.join(",");
+                                constanst.itemsCheck[index] =
+                                    Icons.circle_outlined;
+                                constanst.selectbusstype_id
+                                    .remove(record.businessTypeId.toString());
+                                constanst.lstBussiness_nature
+                                    .remove(record.businessType.toString());
+                                constanst.select_Bussiness_nature =
+                                    constanst.selectbusstype_id.join(",");
                               }
                             });
-                          },
-                          child: ListTile(
-                              title: Text(record.businessType.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-                              leading: IconButton(
-                                  icon: constanst.select_Bussiness_nature
-                                          .contains(record.businessTypeId.toString())
-                                      ? Icon(Icons.check_circle,
-                                          color: Colors.green.shade600)
-                                      : const Icon(Icons.circle_outlined,
-                                          color: Colors.black45),
-                                  onPressed: () {
-                                    setState(() {
-                                      print('Selected IDs: ${constanst.selectbusstype_id}');
-
-                                      gender = true;
-
-                                      if (!constanst.selectbusstype_id.contains(record.businessTypeId.toString())) {
-
-                                        if (constanst.selectbusstype_id.length <= 2) {constanst.itemsCheck[index] = Icons.check_circle_outline;
-
-                                          constanst.lstBussiness_nature.add(record.businessType.toString());
-                                          constanst.selectbusstype_id.add(record.businessTypeId.toString());
-                                          constanst.Bussiness_nature = constanst.lstBussiness_nature.join(",");
-                                          constanst.select_Bussiness_nature = constanst.lstBussiness_nature.join(",");
-                                        } else {
-                                          WidgetsBinding
-                                              .instance.focusManager.primaryFocus
-                                              ?.unfocus();
-                                          Fluttertoast.showToast(
-                                              msg: 'You Can Select Maximum 3 Nature of Bussiness');
-                                        }
-                                      } else {
-                                        constanst.itemsCheck[index] = Icons.circle_outlined;
-                                        constanst.selectbusstype_id.remove(record.businessTypeId.toString());
-                                        constanst.lstBussiness_nature.remove(record.businessType.toString());
-                                        constanst.select_Bussiness_nature = constanst.selectbusstype_id.join(",");
-                                      }
-                                    });
-                                  })
-
-
-                          ),
-                        );
-                      }),
-            ),
+                          })),
+                );
+              }),
+        ),
 
         Container(
           width: MediaQuery.of(context).size.width * 1.2,
@@ -1570,7 +1532,7 @@ class _YourWidgetState extends State<YourWidget> {
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
         ),
       ],

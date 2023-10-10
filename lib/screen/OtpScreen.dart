@@ -97,7 +97,7 @@ class _otpState extends State<otp> {
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'))),
+                                                'assets/fonst/Metropolis-Black.otf'))),
                                 widget.email.isEmpty
                                     ? Container(
                                         height: 20.0,
@@ -113,7 +113,7 @@ class _otpState extends State<otp> {
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.black,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf')
+                                                        'assets/fonst/Metropolis-Black.otf')
                                                 ?.copyWith(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 17)),
@@ -132,7 +132,7 @@ class _otpState extends State<otp> {
                                                     fontWeight: FontWeight.w600,
                                                     color: Colors.black,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf')
+                                                        'assets/fonst/Metropolis-Black.otf')
                                                 ?.copyWith(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 17,
@@ -184,7 +184,7 @@ class _otpState extends State<otp> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')),
+                                              'assets/fonst/Metropolis-Black.otf')),
                                   TextButton(
                                     child: const Text(
                                       'Resend Otp',
@@ -261,7 +261,7 @@ class _otpState extends State<otp> {
                                           fontWeight: FontWeight.w800,
                                           color: Colors.white,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')),
+                                              'assets/fonst/Metropolis-Black.otf')),
                                 ),
                               ),
                             ],

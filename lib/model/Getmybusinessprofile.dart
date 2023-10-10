@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_void_to_null, unnecessary_question_mark
+
 class Getmybusinessprofile {
   int? status;
   Profile? profile;
@@ -11,33 +13,33 @@ class Getmybusinessprofile {
   Getmybusinessprofile.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     profile =
-    json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+    json['profile'] != null ?    Profile.fromJson(json['profile']) : null;
     annualTurnover = json['annual_turnover'] != null
-        ? new AnnualTurnover.fromJson(json['annual_turnover'])
+        ?    AnnualTurnover.fromJson(json['annual_turnover'])
         : null;
     if (json['doc'] != null) {
       doc = <Doc>[];
       json['doc'].forEach((v) {
-        doc!.add(new Doc.fromJson(v));
+        doc!.add(   Doc.fromJson(v));
       });
     }
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ?    User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.profile != null) {
-      data['profile'] = this.profile!.toJson();
+    final Map<String, dynamic> data =    <String, dynamic>{};
+    data['status'] =  status;
+    if ( profile != null) {
+      data['profile'] =  profile!.toJson();
     }
-    if (this.annualTurnover != null) {
-      data['annual_turnover'] = this.annualTurnover!.toJson();
+    if ( annualTurnover != null) {
+      data['annual_turnover'] =  annualTurnover!.toJson();
     }
-    if (this.doc != null) {
-      data['doc'] = this.doc!.map((v) => v.toJson()).toList();
+    if ( doc != null) {
+      data['doc'] =  doc!.map((v) => v.toJson()).toList();
     }
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    if ( user != null) {
+      data['user'] =  user!.toJson();
     }
     return data;
   }
@@ -201,64 +203,64 @@ class Profile {
     businessTypeName = json['business_type_name'];
     postCount = json['post_count'];
     annualcapacity = json['annualcapacity'] != null
-        ? new Annualcapacity.fromJson(json['annualcapacity'])
+        ? Annualcapacity.fromJson(json['annualcapacity'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['business_name'] = this.businessName;
-    data['slug'] = this.slug;
-    data['business_type'] = this.businessType;
-    data['gst_tax_vat'] = this.gstTaxVat;
-    data['product_name'] = this.productName;
-    data['address'] = this.address;
-    data['address_line1'] = this.addressLine1;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['countryCode'] = this.countryCode;
-    data['business_phone'] = this.businessPhone;
-    data['other_mobile1'] = this.otherMobile1;
-    data['other_mobile_code1'] = this.otherMobileCode1;
-    data['other_mobile2'] = this.otherMobile2;
-    data['other_mobile_code2'] = this.otherMobileCode2;
-    data['other_mobile3'] = this.otherMobile3;
-    data['other_mobile_code3'] = this.otherMobileCode3;
-    data['other_email'] = this.otherEmail;
-    data['website'] = this.website;
-    data['about_business'] = this.aboutBusiness;
-    data['profilePicture'] = this.profilePicture;
-    data['registration_date'] = this.registrationDate;
-    data['pan_number'] = this.panNumber;
-    data['export_import_number'] = this.exportImportNumber;
-    data['production_capacity'] = this.productionCapacity;
-    data['annual_turnover'] = this.annualTurnover;
-    data['premises'] = this.premises;
-    data['document'] = this.document;
-    data['view_count'] = this.viewCount;
-    data['like_counter'] = this.likeCounter;
-    data['instagram_link'] = this.instagramLink;
-    data['youtube_link'] = this.youtubeLink;
-    data['facebook_link'] = this.facebookLink;
-    data['linkedin_link'] = this.linkedinLink;
-    data['twitter_link'] = this.twitterLink;
-    data['telegram_link'] = this.telegramLink;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['like_count'] = this.likeCount;
-    data['reviews_count'] = this.reviewsCount;
-    data['following_count'] = this.followingCount;
-    data['followers_count'] = this.followersCount;
-    data['is_follow'] = this.isFollow;
-    data['business_type_name'] = this.businessTypeName;
-    data['post_count'] = this.postCount;
-    if (this.annualcapacity != null) {
-      data['annualcapacity'] = this.annualcapacity!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] =  id;
+    data['user_id'] =  userId;
+    data['business_name'] =  businessName;
+    data['slug'] =  slug;
+    data['business_type'] =  businessType;
+    data['gst_tax_vat'] =  gstTaxVat;
+    data['product_name'] =  productName;
+    data['address'] =  address;
+    data['address_line1'] =  addressLine1;
+    data['latitude'] =  latitude;
+    data['longitude'] =  longitude;
+    data['city'] =  city;
+    data['state'] =  state;
+    data['country'] =  country;
+    data['countryCode'] =  countryCode;
+    data['business_phone'] =  businessPhone;
+    data['other_mobile1'] =  otherMobile1;
+    data['other_mobile_code1'] =  otherMobileCode1;
+    data['other_mobile2'] =  otherMobile2;
+    data['other_mobile_code2'] =  otherMobileCode2;
+    data['other_mobile3'] =  otherMobile3;
+    data['other_mobile_code3'] =  otherMobileCode3;
+    data['other_email'] =  otherEmail;
+    data['website'] =  website;
+    data['about_business'] =  aboutBusiness;
+    data['profilePicture'] =  profilePicture;
+    data['registration_date'] = registrationDate;
+    data['pan_number'] = panNumber;
+    data['export_import_number'] =  exportImportNumber;
+    data['production_capacity'] =  productionCapacity;
+    data['annual_turnover'] =  annualTurnover;
+    data['premises'] =  premises;
+    data['document'] =  document;
+    data['view_count'] =  viewCount;
+    data['like_counter'] =  likeCounter;
+    data['instagram_link'] =  instagramLink;
+    data['youtube_link'] =  youtubeLink;
+    data['facebook_link'] =  facebookLink;
+    data['linkedin_link'] =  linkedinLink;
+    data['twitter_link'] =  twitterLink;
+    data['telegram_link'] =  telegramLink;
+    data['created_at'] =  createdAt;
+    data['updated_at'] =  updatedAt;
+    data['like_count'] =  likeCount;
+    data['reviews_count'] =  reviewsCount;
+    data['following_count'] =  followingCount;
+    data['followers_count'] =  followersCount;
+    data['is_follow'] =  isFollow;
+    data['business_type_name'] =  businessTypeName;
+    data['post_count'] =  postCount;
+    if ( annualcapacity != null) {
+      data['annualcapacity'] =  annualcapacity!.toJson();
     }
     return data;
   }
@@ -283,12 +285,12 @@ class Annualcapacity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['created_at'] = this.createdAt;
-    data['deleted_at'] = this.deletedAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data =    <String, dynamic>{};
+    data['id'] =  id;
+    data['name'] =  name;
+    data['created_at'] =  createdAt;
+    data['deleted_at'] =  deletedAt;
+    data['updated_at'] =  updatedAt;
     return data;
   }
 }
@@ -341,38 +343,38 @@ class AnnualTurnover {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     amounts2021 = json['amounts2021'] != null
-        ? new Amounts2021.fromJson(json['amounts2021'])
+        ?    Amounts2021.fromJson(json['amounts2021'])
         : null;
     amounts2122 = json['amounts2122'] != null
-        ? new Amounts2021.fromJson(json['amounts2122'])
+        ?    Amounts2021.fromJson(json['amounts2122'])
         : null;
     amounts2223 = json['amounts2223'] != null
-        ? new Amounts2021.fromJson(json['amounts2223'])
+        ?    Amounts2021.fromJson(json['amounts2223'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['business_id'] = this.businessId;
-    data['currency_20_21'] = this.currency2021;
-    data['amount_20_21'] = this.amount2021;
-    data['currency_21_22'] = this.currency2122;
-    data['amount_21_22'] = this.amount2122;
-    data['currency_22_23'] = this.currency2223;
-    data['amount_22_23'] = this.amount2223;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    if (this.amounts2021 != null) {
-      data['amounts2021'] = this.amounts2021!.toJson();
+    final Map<String, dynamic> data =    <String, dynamic>{};
+    data['id'] =  id;
+    data['user_id'] =  userId;
+    data['business_id'] =  businessId;
+    data['currency_20_21'] =  currency2021;
+    data['amount_20_21'] =  amount2021;
+    data['currency_21_22'] =  currency2122;
+    data['amount_21_22'] =  amount2122;
+    data['currency_22_23'] =  currency2223;
+    data['amount_22_23'] =  amount2223;
+    data['created_at'] =  createdAt;
+    data['updated_at'] =  updatedAt;
+    data['deleted_at'] =  deletedAt;
+    if ( amounts2021 != null) {
+      data['amounts2021'] =  amounts2021!.toJson();
     }
-    if (this.amounts2122 != null) {
-      data['amounts2122'] = this.amounts2122!.toJson();
+    if ( amounts2122 != null) {
+      data['amounts2122'] =  amounts2122!.toJson();
     }
-    if (this.amounts2223 != null) {
-      data['amounts2223'] = this.amounts2223!.toJson();
+    if ( amounts2223 != null) {
+      data['amounts2223'] =  amounts2223!.toJson();
     }
     return data;
   }
@@ -397,12 +399,12 @@ class Amounts2021 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
+    final Map<String, dynamic> data =    <String, dynamic>{};
+    data['id'] =  id;
+    data['name'] =  name;
+    data['created_at'] =  createdAt;
+    data['updated_at'] =  updatedAt;
+    data['deleted_at'] =  deletedAt;
     return data;
   }
 }
@@ -442,23 +444,23 @@ class Doc {
     deletedAt = json['deleted_at'];
     documentUrl = json['document_url'];
     doctype = json['doctype'] != null
-        ? new Amounts2021.fromJson(json['doctype'])
+        ?    Amounts2021.fromJson(json['doctype'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['doc_type'] = this.docType;
-    data['document'] = this.document;
-    data['user_id'] = this.userId;
-    data['business_id'] = this.businessId;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['deleted_at'] = this.deletedAt;
-    data['document_url'] = this.documentUrl;
-    if (this.doctype != null) {
-      data['doctype'] = this.doctype!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] =  id;
+    data['doc_type'] =  docType;
+    data['document'] =  document;
+    data['user_id'] =  userId;
+    data['business_id'] =  businessId;
+    data['created_at'] =  createdAt;
+    data['updated_at'] =  updatedAt;
+    data['deleted_at'] =  deletedAt;
+    data['document_url'] =  documentUrl;
+    if ( doctype != null) {
+      data['doctype'] =  doctype!.toJson();
     }
     return data;
   }
@@ -592,47 +594,47 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['countryCode'] = this.countryCode;
-    data['device'] = this.device;
-    data['phoneno'] = this.phoneno;
-    data['userImage'] = this.userImage;
-    data['userToken'] = this.userToken;
-    data['signup_date'] = this.signupDate;
-    data['is_block'] = this.isBlock;
-    data['blockDate'] = this.blockDate;
-    data['register_status'] = this.registerStatus;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['email_code'] = this.emailCode;
-    data['emailCodeDateTime'] = this.emailCodeDateTime;
-    data['sms_code'] = this.smsCode;
-    data['smsCodeDateTime'] = this.smsCodeDateTime;
-    data['forgotpasswordDateTime'] = this.forgotpasswordDateTime;
-    data['verify_email'] = this.verifyEmail;
-    data['verify_sms'] = this.verifySms;
-    data['category_id'] = this.categoryId;
-    data['type_id'] = this.typeId;
-    data['grade_id'] = this.gradeId;
-    data['step_counter'] = this.stepCounter;
-    data['posttype'] = this.posttype;
-    data['location_interest'] = this.locationInterest;
-    data['coverImage'] = this.coverImage;
-    data['is_director'] = this.isDirector;
-    data['director_start_date'] = this.directorStartDate;
-    data['director_end_date'] = this.directorEndDate;
-    data['director_created_date'] = this.directorCreatedDate;
-    data['deleted_at'] = this.deletedAt;
-    data['is_exhibitor'] = this.isExhibitor;
-    data['exhibitor_start_date'] = this.exhibitorStartDate;
-    data['exhibitor_end_date'] = this.exhibitorEndDate;
-    data['exhibitor_created_date'] = this.exhibitorCreatedDate;
-    data['image_url'] = this.imageUrl;
-    data['category_name'] = this.categoryName;
+    final Map<String, dynamic> data =    <String, dynamic>{};
+    data['id'] =  id;
+    data['username'] =  username;
+    data['email'] =  email;
+    data['password'] =  password;
+    data['countryCode'] =  countryCode;
+    data['device'] =  device;
+    data['phoneno'] =  phoneno;
+    data['userImage'] =  userImage;
+    data['userToken'] =  userToken;
+    data['signup_date'] =  signupDate;
+    data['is_block'] =  isBlock;
+    data['blockDate'] =  blockDate;
+    data['register_status'] =  registerStatus;
+    data['created_at'] =  createdAt;
+    data['updated_at'] =  updatedAt;
+    data['email_code'] =  emailCode;
+    data['emailCodeDateTime'] =  emailCodeDateTime;
+    data['sms_code'] =  smsCode;
+    data['smsCodeDateTime'] =  smsCodeDateTime;
+    data['forgotpasswordDateTime'] =  forgotpasswordDateTime;
+    data['verify_email'] =  verifyEmail;
+    data['verify_sms'] =  verifySms;
+    data['category_id'] =  categoryId;
+    data['type_id'] =  typeId;
+    data['grade_id'] =  gradeId;
+    data['step_counter'] =  stepCounter;
+    data['posttype'] =  posttype;
+    data['location_interest'] =  locationInterest;
+    data['coverImage'] =  coverImage;
+    data['is_director'] =  isDirector;
+    data['director_start_date'] =  directorStartDate;
+    data['director_end_date'] =  directorEndDate;
+    data['director_created_date'] =  directorCreatedDate;
+    data['deleted_at'] =  deletedAt;
+    data['is_exhibitor'] =  isExhibitor;
+    data['exhibitor_start_date'] =  exhibitorStartDate;
+    data['exhibitor_end_date'] =  exhibitorEndDate;
+    data['exhibitor_created_date'] =  exhibitorCreatedDate;
+    data['image_url'] =  imageUrl;
+    data['category_name'] =  categoryName;
     return data;
   }
 }

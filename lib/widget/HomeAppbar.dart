@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:Plastic4trade/widget/AddPost_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -27,7 +29,7 @@ class CustomeApp extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(60);
 }
 
 Widget myAppbar(String title, context) {
@@ -43,7 +45,7 @@ Widget myAppbar(String title, context) {
           Image.asset('assets/plastic4trade logo final.png',
               height: 50, width: MediaQuery.of(context).size.width / 2.9)
         else if (title == 'Saller')
-          Text('Sale Post',
+          const Text('Sale Post',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -52,7 +54,7 @@ Widget myAppbar(String title, context) {
                 fontFamily: 'Metropolis',
               )),
         if (title == 'Buyer')
-          Text('Buy Post',
+          const Text('Buy Post',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -61,7 +63,7 @@ Widget myAppbar(String title, context) {
                 fontFamily: 'Metropolis',
               )),
         if (title == 'News')
-          Text('News',
+          const Text('News',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -70,7 +72,7 @@ Widget myAppbar(String title, context) {
                 fontFamily: 'Metropolis',
               )),
         if (title == 'More')
-          Text('More',
+          const Text('More',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -85,11 +87,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Exhibition',
+              const Text('Exhibition',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -106,11 +108,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Directory',
+              const Text('Directory',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -127,11 +129,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Premium Member',
+              const Text('Premium Member',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 15.0,
@@ -148,11 +150,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Favourite',
+              const Text('Favourite',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -169,11 +171,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Videos',
+              const Text('Videos',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -194,7 +196,7 @@ Widget myAppbar(String title, context) {
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Tutorial Video',
+              const Text('Tutorial Video',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -232,11 +234,11 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
                   )),
-              Text('Exhibitor',
+              const Text('Exhibitor',
                   softWrap: false,
                   style: TextStyle(
                     fontSize: 20.0,
@@ -270,8 +272,6 @@ Widget myAppbar(String title, context) {
               onTap: () {
                 constanst.redirectpage="live_price";
                 if (constanst.appopencount == constanst.appopencount1) {
-                  print("APP OPEN 1st = ${constanst.appopencount}");
-                  print("APP OPEN 1st = ${constanst.appopencount1}");
 
                   if (!constanst.isgrade &&
                       !constanst.istype &&
@@ -296,17 +296,11 @@ Widget myAppbar(String title, context) {
                   }
                 }
                 else if (constanst.isprofile) {
-                  print("APP OPEN 2nd = ${constanst.appopencount}");
-                  print("APP OPEN 2nd = ${constanst.appopencount1}");
                   showInformationDialog(context);
                 }else if(constanst.appopencount == constanst.appopencount1){
-                  print("APP OPEN 3rd= ${constanst.appopencount}");
-                  print("APP OPEN 3rd= ${constanst.appopencount1}");
                   categoryDialog(context);
                 }
                 else {
-                  print("APP OPEN 4th= ${constanst.appopencount}");
-                  print("APP OPEN 4th= ${constanst.appopencount1}");
                   Navigator.push(
                       context,
                       MaterialPageRoute(

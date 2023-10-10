@@ -99,7 +99,7 @@ class _ContactUsState extends State<ContactUs> {
                                 AutovalidateMode.onUserInteraction,
                                 controller: _usernm,
                                 keyboardType: TextInputType.name,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                 textCapitalization:
                                 TextCapitalization.sentences,
                                 textInputAction: TextInputAction.next,
@@ -116,7 +116,7 @@ class _ContactUsState extends State<ContactUs> {
                                   fillColor: Colors.white,
                                   hintText: 'Your Name *',
                                   hintStyle:
-                                  TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(color: Colors.black45),
+                                  TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')?.copyWith(color: Colors.black45),
 
                                   enabledBorder: OutlineInputBorder(
                                       borderSide:

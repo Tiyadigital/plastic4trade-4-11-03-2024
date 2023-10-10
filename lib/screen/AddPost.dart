@@ -1,37 +1,36 @@
-// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, camel_case_types, unnecessary_null_comparison, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, camel_case_types, unnecessary_null_comparison, non_constant_identifier_names, prefer_typing_uninitialized_variables, list_remove_unrelated_type
 
 import 'dart:async';
+import 'dart:io' as io;
+import 'dart:io' show Platform;
+
+import 'package:Plastic4trade/constroller/GetColorsController.dart';
+import 'package:Plastic4trade/constroller/GetUnitController.dart';
+import 'package:Plastic4trade/model/GetCategory.dart' as cat;
+import 'package:Plastic4trade/model/GetCategoryGrade.dart' as grade;
+import 'package:Plastic4trade/model/GetCategoryType.dart' as type;
+import 'package:Plastic4trade/model/GetColors.dart' as color;
+import 'package:Plastic4trade/model/GetProductName.dart' as pnm;
+import 'package:Plastic4trade/utill/constant.dart';
 import 'package:Plastic4trade/widget/MainScreen.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:Plastic4trade/constroller/GetColorsController.dart';
-import 'package:Plastic4trade/constroller/GetUnitController.dart';
-
-import 'package:Plastic4trade/utill/constant.dart';
-import 'dart:io' as io;
-import 'package:Plastic4trade/model/GetCategory.dart' as cat;
-import 'package:Plastic4trade/model/GetCategoryType.dart' as type;
-import 'package:Plastic4trade/model/GetCategoryGrade.dart' as grade;
-import 'package:Plastic4trade/model/GetColors.dart' as color;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../api/api_interface.dart';
 import '../constroller/GetCategoryController.dart';
 import '../constroller/GetCategoryGradeController.dart';
 import '../constroller/GetCategoryTypeController.dart';
 import '../model/GetProductName.dart';
-import 'package:Plastic4trade/model/GetProductName.dart' as pnm;
-import 'dart:io' show Platform;
-
 import '../model/common.dart';
 
 class AddPost extends StatefulWidget {
@@ -92,7 +91,7 @@ class _AddPostState extends State<AddPost> {
   String googleApikey = "AIzaSyCyqsD3OPUWGJ5AWbN3iKbUzQGs3Q-ZlPE";
 
   CameraPosition? cameraPosition;
-  LatLng startLocation = LatLng(0, 0);
+  LatLng startLocation = const LatLng(0, 0);
   String location = "Search Location";
   BuildContext? dialogContext;
   List listrupes = ['₹', '\$', '€', '£', '¥'];
@@ -124,7 +123,6 @@ class _AddPostState extends State<AddPost> {
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: SizedBox(
-          // height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
@@ -173,7 +171,7 @@ class _AddPostState extends State<AddPost> {
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf')
+                                                'assets\fonstMetropolis-Black.otf')
                                         .copyWith(fontSize: 20.0),
                                   ))
                                 ],
@@ -192,7 +190,7 @@ class _AddPostState extends State<AddPost> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')
+                                                    'assets\fonstMetropolis-Black.otf')
                                             .copyWith(
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black38),
@@ -252,7 +250,7 @@ class _AddPostState extends State<AddPost> {
                                                                 color: Colors
                                                                     .black,
                                                                 fontFamily:
-                                                                    'assets\fonst\Metropolis-Black.otf')
+                                                                    'assets\fonstMetropolis-Black.otf')
                                                             .copyWith(
                                                                 fontSize: 17))
                                                   ],
@@ -300,7 +298,6 @@ class _AddPostState extends State<AddPost> {
                                                         category1 = true;
                                                         type_post = sampleData1
                                                             .last.buttonText;
-                                                        //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
                                                       });
                                                     },
                                                   ),
@@ -315,7 +312,7 @@ class _AddPostState extends State<AddPost> {
                                                               color:
                                                                   Colors.black,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
+                                                                  'assets\fonstMetropolis-Black.otf')
                                                           .copyWith(
                                                               fontSize: 17))
                                                 ],
@@ -329,7 +326,6 @@ class _AddPostState extends State<AddPost> {
                                               category1 = true;
                                               type_post =
                                                   sampleData1.last.buttonText;
-                                              //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
                                             });
                                           },
                                         ),
@@ -352,11 +348,10 @@ class _AddPostState extends State<AddPost> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf'),
+                                              'assets\fonstMetropolis-Black.otf'),
                                       onChanged: (value) {
-                                        // vaild_data();
                                         if (value.isEmpty) {
-                                          WidgetsBinding.instance?.focusManager
+                                          WidgetsBinding.instance.focusManager
                                               .primaryFocus
                                               ?.unfocus();
                                           Fluttertoast.showToast(
@@ -384,7 +379,7 @@ class _AddPostState extends State<AddPost> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')
+                                                    'assets\fonstMetropolis-Black.otf')
                                             .copyWith(color: Colors.grey),
                                         filled: true,
                                         fillColor: Colors.white,
@@ -417,7 +412,7 @@ class _AddPostState extends State<AddPost> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf'),
+                                                  'assets\fonstMetropolis-Black.otf'),
                                         ),
                                       );
                                     },
@@ -440,19 +435,19 @@ class _AddPostState extends State<AddPost> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
                                     readOnly: true,
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
                                       suffixIcon:
-                                          Icon(Icons.arrow_drop_down_sharp),
+                                          const Icon(Icons.arrow_drop_down_sharp),
                                       hintText: "Product Category*",
                                       hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
+                                                  'assets\fonstMetropolis-Black.otf')
                                           .copyWith(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white,
@@ -500,7 +495,7 @@ class _AddPostState extends State<AddPost> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
                                     readOnly: true,
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
@@ -512,7 +507,7 @@ class _AddPostState extends State<AddPost> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
+                                                  'assets\fonstMetropolis-Black.otf')
                                           .copyWith(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white,
@@ -560,7 +555,7 @@ class _AddPostState extends State<AddPost> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
                                     readOnly: true,
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
@@ -570,7 +565,7 @@ class _AddPostState extends State<AddPost> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
+                                                  'assets\fonstMetropolis-Black.otf')
                                           .copyWith(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white,
@@ -613,14 +608,14 @@ class _AddPostState extends State<AddPost> {
                                 height: 62,
                                 width: MediaQuery.of(context).size.width,
                                 margin:
-                                    EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
                                 decoration: BoxDecoration(
                                     border: Border.all(color: _color8),
                                     color: Colors.white,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                                        const BorderRadius.all(Radius.circular(10))),
                                 child: Row(children: [
-                                  Container(
+                                  SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           2.9,
                                       child: TextFormField(
@@ -628,12 +623,12 @@ class _AddPostState extends State<AddPost> {
                                             AutovalidateMode.onUserInteraction,
                                         controller: _prodprice,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets\fonstMetropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
@@ -641,9 +636,8 @@ class _AddPostState extends State<AddPost> {
                                           ),
                                           LengthLimitingTextInputFormatter(5)
                                         ],
-                                        decoration: InputDecoration(
-                                            // labelText: 'Your Name*',
-                                            // labelStyle: TextStyle(color: Colors.red),
+                                        decoration: const InputDecoration(
+
                                             filled: true,
                                             fillColor: Colors.white,
                                             hintText: 'Price *',
@@ -652,24 +646,16 @@ class _AddPostState extends State<AddPost> {
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.grey,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf'),
+                                                    'assets\fonstMetropolis-Black.otf'),
                                             border: InputBorder.none),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            /*  Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Add Your Product Price');*/
-                                          } else {
-                                            // setState(() {
-                                            // });
-                                          }
+                                          } else {}
                                           return null;
                                         },
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            /*  Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Add Your Product Price');*/
+
                                             setState(() {});
                                           }
                                         },
@@ -684,12 +670,12 @@ class _AddPostState extends State<AddPost> {
                                           }
                                         },
                                       )),
-                                  VerticalDivider(
+                                  const VerticalDivider(
                                     width: 1,
                                     color: Colors.black38,
                                   ),
                                   Unit_dropdown(constanst.unitdata, "Unit"),
-                                  VerticalDivider(
+                                  const VerticalDivider(
                                     width: 1,
                                     color: Colors.black38,
                                   ),
@@ -700,31 +686,31 @@ class _AddPostState extends State<AddPost> {
                                 height: 62,
                                 width: MediaQuery.of(context).size.width,
                                 margin:
-                                    EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
+                                      const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: _color10),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                                        const BorderRadius.all(Radius.circular(10))),
                                 child: Row(children: [
                                   Container(
-                                      //color: Colors.white,
+
 
                                       width: MediaQuery.of(context).size.width /
                                           1.7,
-                                      padding: EdgeInsets.only(
+                                      padding:   const EdgeInsets.only(
                                           top: 3, bottom: 3.0, left: 2.0),
                                       child: TextFormField(
                                         autovalidateMode:
                                             AutovalidateMode.onUserInteraction,
                                         controller: _prodqty,
                                         keyboardType: TextInputType.number,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf'),
+                                                'assets\fonstMetropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
@@ -733,49 +719,41 @@ class _AddPostState extends State<AddPost> {
                                           LengthLimitingTextInputFormatter(5)
                                         ],
                                         decoration: InputDecoration(
-                                            // labelText: 'Your Name*',
-                                            // labelStyle: TextStyle(color: Colors.red),
                                             filled: true,
                                             fillColor: Colors.white,
                                             hintText: 'Qty *',
-                                            hintStyle: TextStyle(
+                                            hintStyle: const TextStyle(
                                                     fontSize: 15.0,
                                                     fontWeight: FontWeight.w400,
                                                     color: Colors.grey,
                                                     fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf')
+                                                        'assets\fonstMetropolis-Black.otf')
                                                 .copyWith(height: 2),
                                             border: InputBorder.none),
                                         validator: (value) {
                                           if (value!.isEmpty) {
-                                            /*Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Add Your Product Quantity');*/
+
                                           } else {
-                                            // setState(() {
-                                            // });
+
                                           }
                                           return null;
                                         },
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            /*  Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Add Your Product Quantity');*/
+
                                             setState(() {});
                                           }
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            /*Fluttertoast.showToast(
-                                                  msg: 'Please Add Your Product Quantity');*/
+
                                             setState(() {});
                                           } else {
                                             setState(() {});
                                           }
                                         },
                                       )),
-                                  VerticalDivider(
+                                  const VerticalDivider(
                                     width: 1,
                                     color: Colors.black38,
                                   ),
@@ -784,31 +762,31 @@ class _AddPostState extends State<AddPost> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                                 child: TextFormField(
                                     controller: _prodcolor,
                                     keyboardType: TextInputType.text,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
                                     readOnly: true,
                                     textInputAction: TextInputAction.next,
                                     decoration: InputDecoration(
                                       hintText: "Color*",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
+                                                  'assets\fonstMetropolis-Black.otf')
                                           .copyWith(color: Colors.grey),
                                       filled: true,
                                       fillColor: Colors.white,
                                       suffixIcon:
-                                          Icon(Icons.arrow_drop_down_sharp),
+                                          const Icon(Icons.arrow_drop_down_sharp),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color5),
@@ -825,36 +803,27 @@ class _AddPostState extends State<AddPost> {
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
 
-                                      //errorText: _validusernm ? 'Name is not empty' : null),
+
                                     ),
                                     validator: (value) {
-                                      // if (!EmailValidator.validate(value!)) {
-                                      //   return 'Please enter a valid email';
-                                      // }
+
                                       if (value!.isEmpty) {
-                                        /* Fluttertoast.showToast(
-                                              msg: 'Please Select Product Colour');*/
+
+
                                         _color5 = Colors.red;
                                       } else {
-                                        // setState(() {
-                                        //_color3 = Colors.green.shade600;
-                                        //});
+
                                       }
                                       return null;
                                     },
                                     onTap: () {
-                                      //Fluttertoast.showToast(msg: 'hello');
-                                      /*InkWell(
-                                      onTap: () {*/
-                                      //Fluttertoast.showToast(msg: 'hello');
+
                                       ViewItem(context);
-                                      //},
-                                      //);
+
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        /*Fluttertoast.showToast(
-                                              msg: 'Please Select Product Colour');*/
+
                                         _color5 = Colors.red;
                                         setState(() {});
                                       } else if (value.isNotEmpty) {
@@ -873,7 +842,7 @@ class _AddPostState extends State<AddPost> {
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black,
                                       fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf'),
+                                          'assets\fonstMetropolis-Black.otf'),
                                   onTap: () async {
                                     place = await PlacesAutocomplete.show(
                                         context: context,
@@ -881,10 +850,8 @@ class _AddPostState extends State<AddPost> {
                                         mode: Mode.overlay,
                                         types: ['(cities)'],
                                         strictbounds: false,
-                                        // components: [Component(Component.country, 'np')],
-                                        //google_map_webservice package
+
                                         onError: (err) {
-                                          print(err);
                                         });
 
                                     if (place != null) {
@@ -896,12 +863,12 @@ class _AddPostState extends State<AddPost> {
                                   },
                                   decoration: InputDecoration(
                                     hintText: "Location/ Address / City",
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
 
                                     filled: true,
                                     fillColor: Colors.white,
@@ -921,19 +888,15 @@ class _AddPostState extends State<AddPost> {
                                             width: 1, color: _color6),
                                         borderRadius:
                                             BorderRadius.circular(10.0)),
-                                    //errorText: _validusernm ? 'Name is not empty' : null),
+
                                   ),
                                   validator: (value) {
-                                    // if (!EmailValidator.validate(value!)) {
-                                    //   return 'Please enter a valid email';
-                                    // }
+
                                     if (value!.isEmpty) {
-                                      // return 'Enter a Location!';
+
                                       _color6 = Colors.red;
                                     } else {
-                                      // setState(() {
-                                      //_color3 = Colors.green.shade600;
-                                      //});
+
                                     }
                                     return null;
                                   },
@@ -954,30 +917,30 @@ class _AddPostState extends State<AddPost> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
                                 child: TextFormField(
                                   controller: _proddetail,
                                   keyboardType: TextInputType.multiline,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black,
                                       fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf'),
+                                          'assets\fonstMetropolis-Black.otf'),
                                   maxLines: 4,
                                   textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.white,
                                     hintText: "Product Description ",
-                                    hintStyle: TextStyle(
+                                    hintStyle: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets\fonstMetropolis-Black.otf'),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             width: 1, color: _color7),
@@ -998,9 +961,7 @@ class _AddPostState extends State<AddPost> {
                                     if (value!.isEmpty) {
                                       _color7 = Colors.red;
                                     } else {
-                                      // setState(() {
-                                      //_color3 = Colors.green.shade600;
-                                      //});
+
                                     }
                                     return null;
                                   },
@@ -1052,12 +1013,12 @@ class _AddPostState extends State<AddPost> {
                                                 child: Container(
                                                   width: 40,
                                                   height: 40,
-                                                  margin: EdgeInsets.all(2.0),
+                                                  margin:  const EdgeInsets.all(2.0),
                                                   child: Card(
-                                                      //margin: EdgeInsets.all(5),
-                                                      shape: CircleBorder(),
+
+                                                      shape: const CircleBorder(),
                                                       child: GestureDetector(
-                                                        child: Icon(
+                                                        child: const Icon(
                                                             Icons.delete,
                                                             color: Colors.red),
                                                         onTap: () {
@@ -1112,7 +1073,7 @@ class _AddPostState extends State<AddPost> {
                                                 height: 100,
                                                 width: 100),
                                             onTap: () {
-                                              //takephoto1(ImageSource.gallery);
+
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
@@ -1129,12 +1090,12 @@ class _AddPostState extends State<AddPost> {
                                                 child: Container(
                                                   width: 40,
                                                   height: 40,
-                                                  margin: EdgeInsets.all(2.0),
+                                                  margin:  const EdgeInsets.all(2.0),
                                                   child: Card(
-                                                    //margin: EdgeInsets.all(5),
-                                                      shape: CircleBorder(),
+
+                                                      shape: const CircleBorder(),
                                                       child: GestureDetector(
-                                                        child: Icon(
+                                                        child: const Icon(
                                                             Icons.delete,
                                                             color: Colors.red),
                                                         onTap: () {
@@ -1162,8 +1123,7 @@ class _AddPostState extends State<AddPost> {
                                               width: 100,
                                             ),
                                             onTap: () {
-                                              // takephoto2(ImageSource.gallery);
-                                              // print('heeeeeee');
+
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
@@ -1177,12 +1137,12 @@ class _AddPostState extends State<AddPost> {
                                               child: Positioned(
                                                 bottom: -10,
                                                 left: 30,
-                                                child: Container(
+                                                child: SizedBox(
                                                   width: 40,
                                                   height: 40,
-                                                  //margin: EdgeInsets.all(2.0),
+
                                                   child: Card(
-                                                    //margin: EdgeInsets.all(5),
+
                                                       shape:
                                                       const CircleBorder(),
                                                       child: GestureDetector(
@@ -1217,7 +1177,7 @@ class _AddPostState extends State<AddPost> {
                                   decoration: BoxDecoration(
                                       border: Border.all(width: 1),
                                       borderRadius: BorderRadius.circular(50.0),
-                                      color: Color.fromARGB(255, 0, 91, 148)),
+                                      color: const Color.fromARGB(255, 0, 91, 148)),
                                   child: TextButton(
                                     onPressed: () {
                                       place ??= Prediction(
@@ -1253,24 +1213,9 @@ class _AddPostState extends State<AddPost> {
                                         state = list[3].toString();
                                       }
 
-// final plist = GoogleMapsPlaces(
-//   apiKey: googleApikey,
-//   apiHeaders: await GoogleApiHeaders()
-//       .getHeaders(),
-//
-// );
-// String placeid = place.placeId ?? "0";
-// final detail = await plist
-//     .getDetailsByPlaceId(placeid);
-//
-// final geometry = detail.result.geometry!;
-// lat = geometry.location.lat;
-//
-// log = geometry.location.lng;
 
                                       if (_formKey.currentState!.validate()) {
-                                        /*  Fluttertoast.showToast(
-                                              msg: "Data Proccess");*/
+
                                       }
                                       setState(() {
                                         vaild_data();
@@ -1297,12 +1242,11 @@ class _AddPostState extends State<AddPost> {
   }
 
   getProfiless() async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbussinessprofile(
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
     );
 
     if (res['status'] == 1) {
@@ -1322,7 +1266,7 @@ class _AddPostState extends State<AddPost> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        dialogContext = context; // Store the context in a variable
+        dialogContext = context;
         return Dialog(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -1356,13 +1300,13 @@ class _AddPostState extends State<AddPost> {
   }
 
   Future<bool> add_BuyPost() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     constanst.step = 11;
     int imageCounter = constanst.imagesList.length;
     var res = await addBuyPost(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         constanst.select_type_id,
         constanst.select_gradeId.join(","),
         _selectitem4.toString(),
@@ -1387,7 +1331,6 @@ class _AddPostState extends State<AddPost> {
       Fluttertoast.showToast(msg: res['message']);
       clear_data();
       _isloading1 = true;
-      print('123456 $_isloading1');
     } else {
       _isloading1 = true;
       Fluttertoast.showToast(msg: res['message']);
@@ -1430,14 +1373,13 @@ class _AddPostState extends State<AddPost> {
   }
 
   Future<bool> add_SalePost() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.step = 11;
-    print(_selectitem5);
     int imageCounter = constanst.imagesList.length;
 
     var res = await addSalePost(
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
       constanst.select_type_id,
       constanst.select_gradeId.join(","),
       _selectitem4.toString(),
@@ -1463,8 +1405,6 @@ class _AddPostState extends State<AddPost> {
       Fluttertoast.showToast(msg: res['message']);
       clear_data();
       _isloading1 = true;
-      // Navigator.of(context).pop();
-      print('123456 $_isloading1');
     } else {
       _isloading1 = true;
 
@@ -1477,7 +1417,7 @@ class _AddPostState extends State<AddPost> {
     return Container(
       height: 100.0,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin:  const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: <Widget>[
           const Text(
@@ -1506,7 +1446,7 @@ class _AddPostState extends State<AddPost> {
                   },
                   icon: const Icon(Icons.image,
                       color: Color.fromARGB(255, 0, 91, 148)),
-                  label: Text(
+                  label: const Text(
                     'Gallary',
                     style: TextStyle(color: Color.fromARGB(255, 0, 91, 148)),
                   )),
@@ -1553,6 +1493,7 @@ class _AddPostState extends State<AddPost> {
     } else {
       return null;
     }
+    return null;
   }
 
   List<String> _getSuggestions(String query) {
@@ -1568,14 +1509,14 @@ class _AddPostState extends State<AddPost> {
     return Container(
       height: 100.0,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const  EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: <Widget>[
           const Text(
             "Choose Profile Photo",
             style: TextStyle(fontSize: 18.0),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -1613,7 +1554,6 @@ class _AddPostState extends State<AddPost> {
         await _picker.getImage(source: imageSource, imageQuality: 50);
     setState(() async {
       _imagefiles1 = pickedfile!;
-      //file = io.File(_imagefiles!.path);
       file1 = await _cropImage1(imagefile: io.File(_imagefiles1!.path));
       constanst.imagesList.add(file1!);
       Navigator.of(context).pop();
@@ -1644,6 +1584,7 @@ class _AddPostState extends State<AddPost> {
     } else {
       return null;
     }
+    return null;
   }
 
   Widget bottomsheet2() {
@@ -1695,13 +1636,9 @@ class _AddPostState extends State<AddPost> {
         await _picker.getImage(source: imageSource, imageQuality: 50);
     setState(() async {
       _imagefiles2 = pickedfile!;
-      //file = io.File(_imagefiles!.path);
       file2 = await _cropImage2(imagefile: io.File(_imagefiles2!.path));
       constanst.imagesList.add(file2!);
       Navigator.of(context).pop();
-
-      // print('image path : ');
-      // print(_imagefiles!.path);
     });
   }
 
@@ -1714,7 +1651,7 @@ class _AddPostState extends State<AddPost> {
           uiSettings: [
             AndroidUiSettings(
                 toolbarTitle: 'Cropper',
-                toolbarColor: Color.fromARGB(255, 0, 91, 148),
+                toolbarColor: const Color.fromARGB(255, 0, 91, 148),
                 toolbarWidgetColor: Colors.white,
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
@@ -1729,6 +1666,7 @@ class _AddPostState extends State<AddPost> {
     } else {
       return null;
     }
+    return null;
   }
 
   Widget Unit_dropdown(List listitem, String hint) {
@@ -1746,12 +1684,12 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
             dropdownColor: Colors.white,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
             isExpanded: true,
-            underline: SizedBox(),
+            underline: const SizedBox(),
             items: listitem.map((valueItem) {
               return DropdownMenuItem(
                   value: valueItem,
@@ -1760,7 +1698,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf')));
+                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1776,7 +1714,7 @@ class _AddPostState extends State<AddPost> {
       width: MediaQuery.of(context).size.width / 4.2,
       height: 55,
       color: Colors.white,
-      padding: EdgeInsets.only(left: 15.0),
+      padding:  const EdgeInsets.only(left: 15.0),
       child: Align(
           alignment: Alignment.centerLeft,
           child: DropdownButton(
@@ -1786,7 +1724,7 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
             dropdownColor: Colors.white,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
@@ -1800,7 +1738,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf')));
+                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1814,9 +1752,7 @@ class _AddPostState extends State<AddPost> {
   Widget rupess_dropdown(List listitem, String hint) {
     return Container(
       width: MediaQuery.of(context).size.width / 3.88,
-      //height: 60,
-      //margin: EdgeInsets.only(right: 5,),
-      padding: EdgeInsets.only(left: 5.0, top: 5, bottom: 5),
+      padding:  const EdgeInsets.only(left: 5.0, top: 5, bottom: 5),
       color: Colors.white,
       child: Align(
           alignment: Alignment.centerLeft,
@@ -1827,9 +1763,9 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 14.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
             dropdownColor: Colors.white,
-            icon: Icon(Icons.arrow_drop_down),
+            icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
             isExpanded: true,
             underline: const SizedBox(),
@@ -1841,7 +1777,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf')));
+                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1871,7 +1807,6 @@ class _AddPostState extends State<AddPost> {
       _color1 = Colors.red;
       setState(() {});
     } else if (category1 == false) {
-      //_color1 = Colors.red;
       Fluttertoast.showToast(msg: 'Please Select Sale Post or Buy Post');
     } else if (_prodnm.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please Add Your Product Name');
@@ -1981,7 +1916,7 @@ class _AddPostState extends State<AddPost> {
         _onLoading();
         setState(() {
           _isloading1 =
-              false; // Hide the loader when the async operation completes
+              false;
         });
         add_SalePost().then((value) {
           if (value) {
@@ -1991,7 +1926,6 @@ class _AddPostState extends State<AddPost> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MainScreen(0)));
           }
-          // Navigator.of(dialogContext!).pop(); // loader
         });
       }
     } else if (type_post == 'Buy Post') {
@@ -2019,7 +1953,6 @@ class _AddPostState extends State<AddPost> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => MainScreen(0)));
           }
-          // Navigator.of(dialogContext!).pop(); // loader
         });
       }
     }
@@ -2031,25 +1964,23 @@ class _AddPostState extends State<AddPost> {
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          // <-- SEE HERE
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         )),
         builder: (context) => DraggableScrollableSheet(
             expand: false,
             initialChildSize:
-                0.80, // Initial height as a fraction of screen height
+                0.80,
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return selectcolor();
+                  return const selectcolor();
                 },
               );
             })).then(
       (value) {
         String color = constanst.select_color_name.toString();
         var arr = color.split(',');
-        print(arr);
         var stringList = arr.join(",");
         _prodcolor.text = stringList.toString();
       },
@@ -2062,18 +1993,18 @@ class _AddPostState extends State<AddPost> {
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          // <-- SEE HERE
+
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         )),
         builder: (context) => DraggableScrollableSheet(
             expand: false,
             initialChildSize:
-                0.90, // Initial height as a fraction of screen height
+                0.90,
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return selectcategory();
+                  return const selectcategory();
                 },
               );
             })).then(
@@ -2089,18 +2020,18 @@ class _AddPostState extends State<AddPost> {
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          // <-- SEE HERE
+
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         )),
         builder: (context) => DraggableScrollableSheet(
             expand: false,
             initialChildSize:
-                0.90, // Initial height as a fraction of screen height
+                0.90,
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return selectType();
+                  return const selectType();
                 },
               );
             })).then(
@@ -2116,14 +2047,14 @@ class _AddPostState extends State<AddPost> {
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          // <-- SEE HERE
+
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         )),
         builder: (context) => DraggableScrollableSheet(
             expand: false,
             initialChildSize:
-                0.90, // Initial height as a fraction of screen height
+                0.90,
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
@@ -2132,7 +2063,6 @@ class _AddPostState extends State<AddPost> {
               );
             })).then(
       (value) {
-        print(constanst.select_grade_name);
 
         _prod_grade.text = constanst.select_grade_name.join(',');
       },
@@ -2140,7 +2070,7 @@ class _AddPostState extends State<AddPost> {
   }
 
   void get_data1() async {
-    GetCategoryTypeController bType = await GetCategoryTypeController();
+    GetCategoryTypeController bType = GetCategoryTypeController();
     constanst.cat_typedata = bType.setType();
     _isloading = true;
     constanst.cat_typedata!.then((value) {
@@ -2153,11 +2083,11 @@ class _AddPostState extends State<AddPost> {
       _isloading = true;
       setState(() {});
     });
-    //
+
   }
 
   void get_data2() async {
-    GetCategoryGradeController bt = await GetCategoryGradeController();
+    GetCategoryGradeController bt = GetCategoryGradeController();
     constanst.cat_gradedata = bt.setGrade();
     _isloading = true;
     constanst.cat_gradedata!.then((value) {
@@ -2173,7 +2103,7 @@ class _AddPostState extends State<AddPost> {
   }
 
   void get_data4() async {
-    GetUnitController bType = await GetUnitController();
+    GetUnitController bType = GetUnitController();
     constanst.unit_data = bType.setunit();
     _isloading = true;
     constanst.unit_data!.then((value) {
@@ -2227,12 +2157,10 @@ class _AddPostState extends State<AddPost> {
 
     var res = await get_productname();
 
-    print(res);
     getdir = GetProductName.fromJson(res);
     List<pnm.Result>? results = getdir.result;
     if (results != null) {
       _suggestions = results.map((result) => result.productName ?? "").toList();
-      print('rsrsrser $_suggestions');
       return _suggestions;
     } else {
       return [];
@@ -2240,7 +2168,7 @@ class _AddPostState extends State<AddPost> {
   }
 
   void get_data() async {
-    GetCategoryController bt = await GetCategoryController();
+    GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
     _isloading = true;
     constanst.cat_data!.then((value) {
@@ -2253,11 +2181,11 @@ class _AddPostState extends State<AddPost> {
       _isloading = true;
       setState(() {});
     });
-    //
+
   }
 
   void get_data3() async {
-    GetColorsController bt = await GetColorsController();
+    GetColorsController bt = GetColorsController();
     constanst.color_data = bt.setlogin();
     _isloading = true;
     constanst.color_data!.then((value) {
@@ -2267,7 +2195,7 @@ class _AddPostState extends State<AddPost> {
       _isloading = true;
       setState(() {});
     });
-    //
+
   }
 }
 
@@ -2285,179 +2213,169 @@ class _selectcolorState extends State<selectcolor> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 5),
-            Image.asset(
-              'assets/hori_line.png',
-              width: 150,
-              height: 5,
-            ),
-            SizedBox(height: 5),
-            Center(
-              child: Text('Select Color of Product',
-                  style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-            ),
-            SizedBox(height: 5),
-            //-------CircularCheckBox()
+      child: Column(
+        children: [
+          const SizedBox(height: 5),
+          Image.asset(
+            'assets/hori_line.png',
+            width: 150,
+            height: 5,
+          ),
+          const SizedBox(height: 5),
+          const Center(
+            child: Text('Select Color of Product',
+                style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+          ),
+          const SizedBox(height: 5),
 
-            FutureBuilder(
 
-                //future: load_subcategory(),
+          FutureBuilder(
 
-                builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting &&
-                  snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                for (int i = 0; i <= constanst.colordata.length; i++) {
-                  constanst.colorsitemsCheck.add(Icons.circle_outlined);
-                }
 
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: constanst.colordata.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      color.Result record = constanst.colordata[index];
 
-                      if (constanst.colordata.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              constanst.select_prodcolor_idx = index;
-                              gender = true;
-                              constanst.select_prodcolor_idx = index;
-                              if (constanst.colorsitemsCheck[index] ==
-                                  Icons.circle_outlined) {
-                                constanst.colorsitemsCheck[index] =
-                                    Icons.check_circle_outline;
-
-                                constanst.color_name_list
-                                    .add(record.colorName.toString());
-                                constanst.select_color_name =
-                                    constanst.color_name_list.join(",");
-                                print(constanst.select_color_name);
-
-                                constanst.color_id_list
-                                    .add(record.colorId.toString());
-                                constanst.select_color_id =
-                                    constanst.color_id_list.join(",");
-                                print(constanst.select_color_id);
-                              } else {
-                                constanst.colorsitemsCheck[index] =
-                                    Icons.circle_outlined;
-                                constanst.color_name_list
-                                    .remove(record.colorName.toString());
-                                constanst.select_color_name =
-                                    constanst.color_name_list.join(",");
-
-                                constanst.color_id_list
-                                    .remove(record.colorId.toString());
-                                constanst.select_color_id =
-                                    constanst.color_id_list.join(",");
-                              }
-                            });
-                          },
-                          child: ListTile(
-                              title: Text(record.colorName.toString(),
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf')),
-                              leading: IconButton(
-                                  icon: constanst.colorsitemsCheck[index] ==
-                                          Icons.circle_outlined
-                                      ? Icon(Icons.circle_outlined,
-                                          color: Colors.black45)
-                                      : Icon(Icons.check_circle,
-                                          color: Colors.green.shade600),
-                                  onPressed: () {
-                                    setState(() {
-                                      constanst.select_prodcolor_idx = index;
-                                      gender = true;
-                                      constanst.select_prodcolor_idx = index;
-                                      if (constanst.colorsitemsCheck[index] ==
-                                          Icons.circle_outlined) {
-                                        constanst.colorsitemsCheck[index] =
-                                            Icons.check_circle_outline;
-
-                                        constanst.color_name_list
-                                            .add(record.colorName.toString());
-                                        constanst.select_color_name =
-                                            constanst.color_name_list.join(",");
-                                        print(constanst.select_color_name);
-
-                                        constanst.color_id_list
-                                            .add(record.colorId.toString());
-                                        constanst.select_color_id =
-                                            constanst.color_id_list.join(",");
-                                        print(constanst.select_color_id);
-                                      } else {
-                                        constanst.colorsitemsCheck[index] =
-                                            Icons.circle_outlined;
-                                        constanst.color_name_list.remove(
-                                            record.colorName.toString());
-                                        constanst.select_color_name =
-                                            constanst.color_name_list.join(",");
-
-                                        constanst.color_id_list
-                                            .remove(record.colorId.toString());
-                                        constanst.select_color_id =
-                                            constanst.color_id_list.join(",");
-                                      }
-                                    });
-                                  })),
-                        );
-                      }
-                    });
+              builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                snapshot.hasData == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              for (int i = 0; i <= constanst.colordata.length; i++) {
+                constanst.colorsitemsCheck.add(Icons.circle_outlined);
               }
-            }),
 
-            Container(
-              width: MediaQuery.of(context).size.width * 1.2,
-              height: 60,
-              margin: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Color.fromARGB(255, 0, 91, 148)),
-              child: TextButton(
-                onPressed: () {
-                  if (constanst.select_color_name.isNotEmpty) {
-                    Navigator.pop(context, constanst.Product_color);
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => CategoryScreen()));
-                  } else {
-                    Fluttertoast.showToast(msg: 'Select Minimum 1 Color ');
-                  }
-                },
-                child: Text('Update',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-              ),
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: constanst.colordata.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    color.Result record = constanst.colordata[index];
+
+                    if (constanst.colordata.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            constanst.select_prodcolor_idx = index;
+                            gender = true;
+                            constanst.select_prodcolor_idx = index;
+                            if (constanst.colorsitemsCheck[index] ==
+                                Icons.circle_outlined) {
+                              constanst.colorsitemsCheck[index] =
+                                  Icons.check_circle_outline;
+
+                              constanst.color_name_list
+                                  .add(record.colorName.toString());
+                              constanst.select_color_name =
+                                  constanst.color_name_list.join(",");
+
+                              constanst.color_id_list
+                                  .add(record.colorId.toString());
+                              constanst.select_color_id =
+                                  constanst.color_id_list.join(",");
+                            } else {
+                              constanst.colorsitemsCheck[index] =
+                                  Icons.circle_outlined;
+                              constanst.color_name_list
+                                  .remove(record.colorName.toString());
+                              constanst.select_color_name =
+                                  constanst.color_name_list.join(",");
+
+                              constanst.color_id_list
+                                  .remove(record.colorId.toString());
+                              constanst.select_color_id =
+                                  constanst.color_id_list.join(",");
+                            }
+                          });
+                        },
+                        child: ListTile(
+                            title: Text(record.colorName.toString(),
+                                style: const TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets\fonstMetropolis-Black.otf')),
+                            leading: IconButton(
+                                icon: constanst.colorsitemsCheck[index] ==
+                                        Icons.circle_outlined
+                                    ? const Icon(Icons.circle_outlined,
+                                        color: Colors.black45)
+                                    : Icon(Icons.check_circle,
+                                        color: Colors.green.shade600),
+                                onPressed: () {
+                                  setState(() {
+                                    constanst.select_prodcolor_idx = index;
+                                    gender = true;
+                                    constanst.select_prodcolor_idx = index;
+                                    if (constanst.colorsitemsCheck[index] ==
+                                        Icons.circle_outlined) {
+                                      constanst.colorsitemsCheck[index] =
+                                          Icons.check_circle_outline;
+
+                                      constanst.color_name_list
+                                          .add(record.colorName.toString());
+                                      constanst.select_color_name =
+                                          constanst.color_name_list.join(",");
+
+                                      constanst.color_id_list
+                                          .add(record.colorId.toString());
+                                      constanst.select_color_id =
+                                          constanst.color_id_list.join(",");
+                                    } else {
+                                      constanst.colorsitemsCheck[index] =
+                                          Icons.circle_outlined;
+                                      constanst.color_name_list.remove(
+                                          record.colorName.toString());
+                                      constanst.select_color_name =
+                                          constanst.color_name_list.join(",");
+
+                                      constanst.color_id_list
+                                          .remove(record.colorId.toString());
+                                      constanst.select_color_id =
+                                          constanst.color_id_list.join(",");
+                                    }
+                                  });
+                                })),
+                      );
+                    }
+                  });
+            }
+          }),
+
+          Container(
+            width: MediaQuery.of(context).size.width * 1.2,
+            height: 60,
+            margin:  const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1),
+                borderRadius: BorderRadius.circular(50.0),
+                color: const Color.fromARGB(255, 0, 91, 148)),
+            child: TextButton(
+              onPressed: () {
+                if (constanst.select_color_name.isNotEmpty) {
+                  Navigator.pop(context, constanst.Product_color);
+                } else {
+                  Fluttertoast.showToast(msg: 'Select Minimum 1 Color ');
+                }
+              },
+              child: const Text('Update',
+                  style: TextStyle(
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -2477,143 +2395,137 @@ class _selectcategoryState extends State<selectcategory> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 5),
-            Image.asset(
-              'assets/hori_line.png',
-              width: 150,
-              height: 5,
-            ),
-            SizedBox(height: 5),
-            Center(
-              child: Text('Select Product Category',
+      child: Column(
+        children: [
+          const SizedBox(height: 5),
+          Image.asset(
+            'assets/hori_line.png',
+            width: 150,
+            height: 5,
+          ),
+          const SizedBox(height: 5),
+          const Center(
+            child: Text('Select Product Category',
+                style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+          ),
+          const SizedBox(height: 5),
+
+
+          FutureBuilder(
+
+
+              builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                snapshot.hasData == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: constanst.catdata.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    cat.Result record = constanst.catdata[index];
+
+                    if (constanst.catdata.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            gender = true;
+
+                            constanst.select_cat_idx = index;
+
+                            if (constanst.select_cat_idx == index) {
+                              constanst.category_itemsCheck[index] =
+                                  Icons.check_circle_outline;
+
+
+                              constanst.select_cat_id =
+                                  record.categoryId.toString();
+                              constanst.select_cat_name =
+                                  record.categoryName.toString();
+                            } else {
+                              constanst.category_itemsCheck[index] =
+                                  Icons.circle_outlined;
+                            }
+                          });
+                        },
+                        child: ListTile(
+                            title: Text(record.categoryName.toString(),
+                                style: const TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets\fonstMetropolis-Black.otf')),
+                            leading: IconButton(
+                                icon: constanst.select_cat_idx == index
+                                    ? Icon(Icons.check_circle,
+                                        color: Colors.green.shade600)
+                                    : const Icon(Icons.circle_outlined,
+                                        color: Colors.black45),
+                                onPressed: () {
+                                  setState(() {
+                                    gender = true;
+
+                                    constanst.select_cat_idx = index;
+
+                                    if (constanst.select_cat_idx == index) {
+                                      constanst.category_itemsCheck[index] =
+                                          Icons.check_circle_outline;
+
+
+                                      constanst.select_cat_id =
+                                          record.categoryId.toString();
+                                      constanst.select_cat_name =
+                                          record.categoryName.toString();
+                                    } else {
+                                      constanst.category_itemsCheck[index] =
+                                          Icons.circle_outlined;
+                                    }
+                                  });
+                                })),
+                      );
+                    }
+                  });
+            }
+          }),
+
+          Container(
+            width: MediaQuery.of(context).size.width * 1.2,
+            height: 60,
+            margin:  const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1),
+                borderRadius: BorderRadius.circular(50.0),
+                color: const Color.fromARGB(255, 0, 91, 148)),
+            child: TextButton(
+              onPressed: () {
+                if (constanst.select_cat_name != "") {
+                  Navigator.pop(context, constanst.Product_color);
+                } else {
+                  Fluttertoast.showToast(msg: 'Select Minimum 1 Category ');
+                }
+              },
+              child: const Text('Update',
                   style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
             ),
-            SizedBox(height: 5),
-            //-------CircularCheckBox()
-
-            FutureBuilder(
-
-                //future: load_subcategory(),
-                builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting &&
-                  snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: constanst.catdata.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      cat.Result record = constanst.catdata[index];
-
-                      if (constanst.catdata.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              gender = true;
-                              //constanst.category_itemsCheck.clear();
-                              constanst.select_cat_idx = index;
-
-                              if (constanst.select_cat_idx == index) {
-                                constanst.category_itemsCheck[index] =
-                                    Icons.check_circle_outline;
-
-                                //constanst.select_categotyId.add(record.categoryId.toString());
-                                constanst.select_cat_id =
-                                    record.categoryId.toString();
-                                constanst.select_cat_name =
-                                    record.categoryName.toString();
-                              } else {
-                                constanst.category_itemsCheck[index] =
-                                    Icons.circle_outlined;
-                              }
-                            });
-                          },
-                          child: ListTile(
-                              title: Text(record.categoryName.toString(),
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf')),
-                              leading: IconButton(
-                                  icon: constanst.select_cat_idx == index
-                                      ? Icon(Icons.check_circle,
-                                          color: Colors.green.shade600)
-                                      : Icon(Icons.circle_outlined,
-                                          color: Colors.black45),
-                                  onPressed: () {
-                                    setState(() {
-                                      gender = true;
-                                      //constanst.category_itemsCheck.clear();
-                                      constanst.select_cat_idx = index;
-
-                                      if (constanst.select_cat_idx == index) {
-                                        constanst.category_itemsCheck[index] =
-                                            Icons.check_circle_outline;
-
-                                        //constanst.select_categotyId.add(record.categoryId.toString());
-                                        constanst.select_cat_id =
-                                            record.categoryId.toString();
-                                        constanst.select_cat_name =
-                                            record.categoryName.toString();
-                                      } else {
-                                        constanst.category_itemsCheck[index] =
-                                            Icons.circle_outlined;
-                                      }
-                                    });
-                                  })),
-                        );
-                      }
-                    });
-              }
-            }),
-
-            Container(
-              width: MediaQuery.of(context).size.width * 1.2,
-              height: 60,
-              margin: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Color.fromARGB(255, 0, 91, 148)),
-              child: TextButton(
-                onPressed: () {
-                  if (constanst.select_cat_name != "") {
-                    Navigator.pop(context, constanst.Product_color);
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => CategoryScreen()));
-                  } else {
-                    Fluttertoast.showToast(msg: 'Select Minimum 1 Category ');
-                  }
-                },
-                child: Text('Update',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -2634,141 +2546,133 @@ class _selectTypeState extends State<selectType> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 5),
-            Image.asset(
-              'assets/hori_line.png',
-              width: 150,
-              height: 5,
-            ),
-            SizedBox(height: 5),
-            Center(
-              child: Text('Select Product Type',
+      child: Column(
+        children: [
+          const SizedBox(height: 5),
+          Image.asset(
+            'assets/hori_line.png',
+            width: 150,
+            height: 5,
+          ),
+          const SizedBox(height: 5),
+          const Center(
+            child: Text('Select Product Type',
+                style: TextStyle(
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+          ),
+          const SizedBox(height: 5),
+
+          FutureBuilder(
+
+              builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting &&
+                snapshot.hasData == null) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: constanst.cat_type_data.length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    type.Result record = constanst.cat_type_data[index];
+
+                    if (constanst.cat_type_data.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            constanst.select_type_idx = index;
+                            gender = true;
+                            if (constanst.select_type_idx == index) {
+                              constanst.Type_itemsCheck[index] =
+                                  Icons.check_circle_outline;
+
+                              constanst.select_type_id =
+                                  record.producttypeId.toString();
+                              constanst.select_type_name =
+                                  record.productType.toString();
+
+                              setState(() {});
+                            } else {
+                              constanst.category_itemsCheck[index] =
+                                  Icons.circle_outlined;
+                            }
+                          });
+                        },
+                        child: ListTile(
+                            title: Text(record.productType.toString(),
+                                style: const TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets\fonstMetropolis-Black.otf')),
+                            leading: IconButton(
+                                icon: constanst.select_type_idx == index
+                                    ? Icon(Icons.check_circle,
+                                        color: Colors.green.shade600)
+                                    : const Icon(Icons.circle_outlined,
+                                        color: Colors.black45),
+                                onPressed: () {
+                                  setState(() {
+                                    constanst.select_type_idx = index;
+                                    gender = true;
+                                    if (constanst.select_type_idx == index) {
+                                      constanst.Type_itemsCheck[index] =
+                                          Icons.check_circle_outline;
+
+                                      constanst.select_type_id =
+                                          record.producttypeId.toString();
+                                      constanst.select_type_name =
+                                          record.productType.toString();
+
+                                      setState(() {});
+                                    } else {
+                                      constanst.category_itemsCheck[index] =
+                                          Icons.circle_outlined;
+                                    }
+                                  });
+                                })),
+                      );
+                    }
+                  });
+            }
+          }),
+
+          Container(
+            width: MediaQuery.of(context).size.width * 1.2,
+            height: 60,
+            margin: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1),
+                borderRadius: BorderRadius.circular(50.0),
+                color: const Color.fromARGB(255, 0, 91, 148)),
+            child: TextButton(
+              onPressed: () {
+                if (gender) {
+                  Navigator.pop(context, constanst.Product_color);
+                } else {
+                  Fluttertoast.showToast(msg: 'Select Minimum 1 Type ');
+                }
+              },
+              child: const Text('Update',
                   style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
             ),
-            SizedBox(height: 5),
-            //-------CircularCheckBox()
-
-            FutureBuilder(
-
-                //future: load_subcategory(),
-                builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting &&
-                  snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: constanst.cat_type_data.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      type.Result record = constanst.cat_type_data[index];
-
-                      if (constanst.cat_type_data.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Center(child: CircularProgressIndicator()),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              constanst.select_type_idx = index;
-                              gender = true;
-                              print(constanst.select_type_idx);
-                              print(constanst.Type_itemsCheck.length);
-                              if (constanst.select_type_idx == index) {
-                                constanst.Type_itemsCheck[index] =
-                                    Icons.check_circle_outline;
-
-                                constanst.select_type_id =
-                                    record.producttypeId.toString();
-                                constanst.select_type_name =
-                                    record.productType.toString();
-
-                                setState(() {});
-                              } else {
-                                constanst.category_itemsCheck[index] =
-                                    Icons.circle_outlined;
-                              }
-                            });
-                          },
-                          child: ListTile(
-                              title: Text(record.productType.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 17.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf')),
-                              leading: IconButton(
-                                  icon: constanst.select_type_idx == index
-                                      ? Icon(Icons.check_circle,
-                                          color: Colors.green.shade600)
-                                      : const Icon(Icons.circle_outlined,
-                                          color: Colors.black45),
-                                  onPressed: () {
-                                    setState(() {
-                                      constanst.select_type_idx = index;
-                                      gender = true;
-                                      print(constanst.select_type_idx);
-                                      print(constanst.Type_itemsCheck.length);
-                                      if (constanst.select_type_idx == index) {
-                                        constanst.Type_itemsCheck[index] =
-                                            Icons.check_circle_outline;
-
-                                        constanst.select_type_id =
-                                            record.producttypeId.toString();
-                                        constanst.select_type_name =
-                                            record.productType.toString();
-
-                                        setState(() {});
-                                      } else {
-                                        constanst.category_itemsCheck[index] =
-                                            Icons.circle_outlined;
-                                      }
-                                    });
-                                  })),
-                        );
-                      }
-                    });
-              }
-            }),
-
-            Container(
-              width: MediaQuery.of(context).size.width * 1.2,
-              height: 60,
-              margin: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: const Color.fromARGB(255, 0, 91, 148)),
-              child: TextButton(
-                onPressed: () {
-                  if (gender) {
-                    Navigator.pop(context, constanst.Product_color);
-                  } else {
-                    Fluttertoast.showToast(msg: 'Select Minimum 1 Type ');
-                  }
-                },
-                child: const Text('Update',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -2803,13 +2707,11 @@ class _selectGradeState extends State<selectGrade> {
                     fontSize: 17.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
           ),
           const SizedBox(height: 5),
-          //-------CircularCheckBox()
 
           FutureBuilder(
-              //future: load_subcategory(),
               builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
@@ -2827,56 +2729,82 @@ class _selectGradeState extends State<selectGrade> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        if (constanst.select_gradeId.length < 3) {
-                          constanst.select_grade_idx = index;
-                          gender = true;
-
-                          if (constanst.Grade_itemsCheck[index] ==
-                              Icons.circle_outlined) {
-                            constanst.Grade_itemsCheck[index] =
-                                Icons.check_circle_outline;
-
-                            constanst.select_grade_id =
-                                record.productgradeId.toString();
-                            constanst.select_gradeId
-                                .add(constanst.select_grade_id);
-                            constanst.select_grade_name
-                                .add(record.productGrade.toString());
+                        if (constanst.select_gradeId.length < 3 || constanst.Grade_itemsCheck[index] == Icons.check_circle_outline) {
+                          if (constanst.Grade_itemsCheck[index] == Icons.circle_outlined) {
+                            constanst.Grade_itemsCheck[index] = Icons.check_circle_outline;
+                            constanst.select_grade_id = record.productgradeId.toString();
+                            constanst.select_gradeId.add(constanst.select_grade_id);
+                            constanst.select_grade_name.add(record.productGrade.toString());
                           } else {
-                            constanst.Grade_itemsCheck[index] =
-                                Icons.circle_outlined;
-                            constanst.select_grade_id =
-                                record.productgradeId.toString();
-                            constanst.select_gradeId
-                                .remove(constanst.select_grade_id);
-                            constanst.select_grade_name
-                                .remove(record.productGrade.toString());
+                            constanst.Grade_itemsCheck[index] = Icons.circle_outlined;
+                            constanst.select_grade_id = record.productgradeId.toString();
+                            constanst.select_gradeId.remove(constanst.select_grade_id);
+                            constanst.select_grade_name.remove(record.productGrade.toString());
                           }
                         } else {
-                          if (constanst.Grade_itemsCheck[index] ==
-                              Icons.check_circle_outline) {
-                            constanst.Grade_itemsCheck[index] =
-                                Icons.circle_outlined;
-                            constanst.select_grade_id =
-                                record.productgradeId.toString();
-                            constanst.select_gradeId
-                                .remove(constanst.select_grade_id);
-                            constanst.select_grade_name
-                                .remove(record.productGrade.toString());
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: 'You Can Select Maximum 3 Grade');
-                          }
+                          Fluttertoast.showToast(
+                            msg: 'You Can Select Maximum 3 Grade',
+                            // Adjust the duration and gravity as needed
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                          );
                         }
                       });
                     },
+
+                    // onTap: () {
+                    //   setState(() {
+                    //     if (constanst.select_gradeId.length < 3) {
+                    //       constanst.select_grade_idx = index;
+                    //       gender = true;
+                    //
+                    //       if (constanst.Grade_itemsCheck[index] ==
+                    //           Icons.circle_outlined) {
+                    //         constanst.Grade_itemsCheck[index] =
+                    //             Icons.check_circle_outline;
+                    //
+                    //         constanst.select_grade_id =
+                    //             record.productgradeId.toString();
+                    //         constanst.select_gradeId
+                    //             .add(constanst.select_grade_id);
+                    //         constanst.select_grade_name
+                    //             .add(record.productGrade.toString());
+                    //       } else {
+                    //         constanst.Grade_itemsCheck[index] =
+                    //             Icons.circle_outlined;
+                    //         constanst.select_grade_id =
+                    //             record.productgradeId.toString();
+                    //         constanst.select_gradeId
+                    //             .remove(constanst.select_grade_id);
+                    //         constanst.select_grade_name
+                    //             .remove(record.productGrade.toString());
+                    //       }
+                    //     } else {
+                    //       if (constanst.Grade_itemsCheck[index] ==
+                    //           Icons.check_circle_outline) {
+                    //         constanst.Grade_itemsCheck[index] =
+                    //             Icons.circle_outlined;
+                    //         constanst.select_grade_id =
+                    //             record.productgradeId.toString();
+                    //         constanst.select_gradeId
+                    //             .remove(constanst.select_grade_id);
+                    //         constanst.select_grade_name
+                    //             .remove(record.productGrade.toString());
+                    //       } else {
+                    //         Fluttertoast.showToast(
+                    //
+                    //             msg: 'You Can Select Maximum 3 Grade');
+                    //       }
+                    //     }
+                    //   });
+                    // },
                     child: ListTile(
                       title: Text(record.productGrade.toString(),
                           style: const TextStyle(
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                              fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                              fontFamily: 'assets\fonstMetropolis-Black.otf')),
                       leading: IconButton(
                         icon: constanst.Grade_itemsCheck[index] !=
                                 Icons.circle_outlined
@@ -2886,34 +2814,25 @@ class _selectGradeState extends State<selectGrade> {
                                 color: Colors.black45),
                         onPressed: () {
                           setState(() {
-                            if (constanst.select_gradeId.length < 3) {
-                              constanst.select_grade_idx = index;
-                              gender = true;
-
-                              if (constanst.Grade_itemsCheck[index] ==
-                                  Icons.circle_outlined) {
-                                constanst.Grade_itemsCheck[index] =
-                                    Icons.check_circle_outline;
-
-                                constanst.select_grade_id =
-                                    record.productgradeId.toString();
-                                constanst.select_gradeId
-                                    .add(constanst.select_grade_id);
-                                constanst.select_grade_name
-                                    .add(record.productGrade.toString());
+                            if (constanst.select_gradeId.length < 3 || constanst.Grade_itemsCheck[index] == Icons.check_circle_outline) {
+                              if (constanst.Grade_itemsCheck[index] == Icons.circle_outlined) {
+                                constanst.Grade_itemsCheck[index] = Icons.check_circle_outline;
+                                constanst.select_grade_id = record.productgradeId.toString();
+                                constanst.select_gradeId.add(constanst.select_grade_id);
+                                constanst.select_grade_name.add(record.productGrade.toString());
                               } else {
-                                constanst.Grade_itemsCheck[index] =
-                                    Icons.circle_outlined;
-                                constanst.select_grade_id =
-                                    record.productgradeId.toString();
-                                constanst.select_gradeId
-                                    .remove(constanst.select_grade_id);
-                                constanst.select_grade_name
-                                    .remove(record.productGrade.toString());
+                                constanst.Grade_itemsCheck[index] = Icons.circle_outlined;
+                                constanst.select_grade_id = record.productgradeId.toString();
+                                constanst.select_gradeId.remove(constanst.select_grade_id);
+                                constanst.select_grade_name.remove(record.productGrade.toString());
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: 'You Can Select Maximum 3 Grade');
+                                msg: 'You Can Select Maximum 3 Grade',
+                                // Adjust the duration and gravity as needed
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                              );
                             }
                           });
                         },
@@ -2942,11 +2861,11 @@ class _selectGradeState extends State<selectGrade> {
                 }
               },
               child: const Text('Update',
-                  style: TextStyle(
+                  style:  TextStyle(
                       fontSize: 19.0,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
             ),
           ),
         ],

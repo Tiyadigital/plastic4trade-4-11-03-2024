@@ -47,6 +47,7 @@ dependencies:
   firebase_core_platform_interface: any
   firebase_auth: any
   flutter_firebase_chat_core: any
+  flutter_pdfview: ^1.3.1
 
 
   cloud_firestore: any
@@ -206,6 +207,6 @@ flutter:
   fonts:
         - family: Metropolis
           fonts:
-            - asset: assets\fonst\Metropolis-Regular.otf
-            - asset: assets\fonst\Metropolis-Black.otf
-            - asset: assets\fonst\Metropolis-SemiBold.otf
+            - asset: assets/fonst/Metropolis-Regular.otf
+            - asset: assets/fonst/Metropolis-Black.otf
+            - asset: assets/fonst/Metropolis-SemiBold.otf

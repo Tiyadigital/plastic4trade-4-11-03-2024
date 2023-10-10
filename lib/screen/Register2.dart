@@ -1,34 +1,32 @@
-// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names, camel_case_types, depend_on_referenced_packages
 
 import 'dart:developer';
+import 'dart:io' as io;
+import 'dart:io' show Platform;
 
+import 'package:Plastic4trade/constroller/GetBussinessTypeController.dart';
+import 'package:Plastic4trade/model/GetBusinessType.dart' as bt;
+import 'package:Plastic4trade/utill/constant.dart';
 import 'package:Plastic4trade/widget/MainScreen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:country_calling_code_picker/functions.dart';
 import 'package:country_calling_code_picker/picker.dart';
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/country_code_picker.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:io' as io;
-import 'package:email_validator/email_validator.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:Plastic4trade/constroller/GetBussinessTypeController.dart';
-import 'package:Plastic4trade/model/common.dart';
-import 'package:Plastic4trade/utill/constant.dart';
-import 'package:Plastic4trade/model/GetBusinessType.dart' as bt;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../api/api_interface.dart';
-import 'dart:io' show Platform;
 
 class Register2 extends StatefulWidget {
+  // ignore: prefer_const_constructors_in_immutables
   Register2({Key? key}) : super(key: key);
 
   @override
@@ -36,15 +34,14 @@ class Register2 extends StatefulWidget {
 }
 
 class _Register2State extends State<Register2> {
-  TextEditingController _bussname = TextEditingController();
-  //TextEditingController _busstype = TextEditingController();
-  TextEditingController _bussmbl = TextEditingController();
-  TextEditingController _bussemail = TextEditingController();
-  TextEditingController _loc = TextEditingController();
-  TextEditingController _gstno = TextEditingController();
-  TextEditingController _website = TextEditingController();
-  TextEditingController _aboutbuess = TextEditingController();
-  TextEditingController _userbussnature = TextEditingController();
+  final TextEditingController _bussname = TextEditingController();
+  final TextEditingController _bussmbl = TextEditingController();
+  final TextEditingController _bussemail = TextEditingController();
+  final TextEditingController _loc = TextEditingController();
+  final TextEditingController _gstno = TextEditingController();
+  final TextEditingController _website = TextEditingController();
+  final TextEditingController _aboutbuess = TextEditingController();
+  final TextEditingController _userbussnature = TextEditingController();
 
   Color _color1 = Colors.black26; //name
   Color _color2 = Colors.black26;
@@ -55,17 +52,15 @@ class _Register2State extends State<Register2> {
   Color _color7 = Colors.black26;
   Color _color8 = Colors.black26;
 
-  var _formKey = GlobalKey<FormState>();
   PickedFile? _imagefiles;
   io.File? file, file1, file2;
-  CroppedFile? _croppedFile;
   final ImagePicker _picker = ImagePicker();
   String googleApikey = "AIzaSyCyqsD3OPUWGJ5AWbN3iKbUzQGs3Q-ZlPE";
   late double lat = 0.0;
   late double log = 0.0;
   String state = '', country_code = '+91', city = '', country = '';
   CameraPosition? cameraPosition;
-  LatLng startLocation = LatLng(0, 0);
+  LatLng startLocation = const LatLng(0, 0);
   String location = "Search Location";
   bool _isValid = false;
   String defaultCountryCode = 'IN';
@@ -79,7 +74,6 @@ class _Register2State extends State<Register2> {
     super.initState();
     initCountry();
     constanst.Bussiness_nature_name = "";
-    print('init');
     get_data();
   }
 
@@ -110,32 +104,24 @@ class _Register2State extends State<Register2> {
 
   @override
   void dispose() {
+    super.dispose();
     // TODO: implement dispose
     constanst.itemsCheck.clear();
     constanst.lstBussiness_nature.clear();
   }
 
   void get_data() async {
-    GetBussinessTypeController bt = await GetBussinessTypeController();
+    GetBussinessTypeController bt = GetBussinessTypeController();
     constanst.bt_data = bt.getBussiness_Type();
 
     constanst.bt_data!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.btype_data.add(item);
-        }
+      for (var item in value) {
+        constanst.btype_data.add(item);
       }
     });
-    // setState(() {});
-    print(constanst.btype_data);
   }
 
   Future<bool> _onbackpress(BuildContext context) async {
-    /* Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-        ModalRoute.withName('/')
-    );*/
     Navigator.pop(context);
     return Future.value(true);
   }
@@ -149,10 +135,9 @@ class _Register2State extends State<Register2> {
         body: WillPopScope(
             onWillPop: () => _onbackpress(context),
             child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Form(
-                    // key: _formKey,
-                    child: Container(
+                    child: SizedBox(
                         // height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         child: Column(children: [
@@ -168,11 +153,6 @@ class _Register2State extends State<Register2> {
                                       child: Image.asset('assets/back.png',
                                           height: 50, width: 70),
                                       onTap: () {
-                                        /* Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-                                        ModalRoute.withName('/')
-                                    );*/
                                         Navigator.pop(context);
                                       },
                                     ),
@@ -203,7 +183,7 @@ class _Register2State extends State<Register2> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     textCapitalization:
                                         TextCapitalization.words,
                                     autovalidateMode:
@@ -223,8 +203,8 @@ class _Register2State extends State<Register2> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
-                                          ?.copyWith(color: Colors.black45),
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color1),
@@ -254,7 +234,8 @@ class _Register2State extends State<Register2> {
                                     },
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                        Fluttertoast.showToast(
+                                            timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Add Your Business Name');
                                         setState(() {
@@ -268,7 +249,8 @@ class _Register2State extends State<Register2> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                        Fluttertoast.showToast(
+                                            timeInSecForIosWeb: 2,
                                             msg: 'Please Enter Bussiness Name');
                                         setState(() {
                                           _color1 = Colors.red;
@@ -282,10 +264,9 @@ class _Register2State extends State<Register2> {
                                   ),
                                 ),
 
-
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                       controller: _userbussnature,
                                       keyboardType: TextInputType.text,
@@ -296,18 +277,18 @@ class _Register2State extends State<Register2> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf'),
+                                              'assets/fonst/Metropolis-Black.otf'),
                                       decoration: InputDecoration(
                                         hintText: "Nature Of Business *",
-                                        suffixIcon:
-                                            Icon(Icons.arrow_drop_down_sharp),
+                                        suffixIcon: const Icon(
+                                            Icons.arrow_drop_down_sharp),
                                         hintStyle: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')
-                                            ?.copyWith(color: Colors.black45),
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(color: Colors.black45),
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 width: 1, color: _color2),
@@ -323,7 +304,6 @@ class _Register2State extends State<Register2> {
                                                 width: 1, color: _color2),
                                             borderRadius:
                                                 BorderRadius.circular(10.0)),
-
                                       ),
                                       onTap: () async {
                                         setState(() {});
@@ -333,17 +313,18 @@ class _Register2State extends State<Register2> {
 
                                         if (connectivityResult ==
                                             ConnectivityResult.none) {
-                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                          Fluttertoast.showToast(
+                                              timeInSecForIosWeb: 2,
                                               msg:
                                                   'Internet Connection not available');
                                         } else {
-
                                           ViewItem1(context);
                                         }
                                       },
                                       onChanged: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                          Fluttertoast.showToast(
+                                              timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Select Nature Of Business');
                                           setState(() {
@@ -357,7 +338,8 @@ class _Register2State extends State<Register2> {
                                       },
                                       onFieldSubmitted: (value) {
                                         if (value.isEmpty) {
-                                          Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                          Fluttertoast.showToast(
+                                              timeInSecForIosWeb: 2,
                                               msg:
                                                   'Please Select Nature Of Business');
                                           setState(() {
@@ -372,8 +354,8 @@ class _Register2State extends State<Register2> {
                                 ),
 
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _loc,
                                     readOnly: true,
@@ -382,23 +364,21 @@ class _Register2State extends State<Register2> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     onTap: () async {
-                                      var place =
-                                      await PlacesAutocomplete.show(
+                                      var place = await PlacesAutocomplete.show(
                                         context: context,
                                         apiKey: googleApikey,
                                         mode: Mode.overlay,
                                         types: ['geocode', 'establishment'],
                                         strictbounds: false,
-                                        onError: (err) {
-                                          print(err);
-                                        },
+                                        onError: (err) {},
                                       );
 
                                       if (place != null) {
                                         setState(() {
-                                          location = place.description.toString();
+                                          location =
+                                              place.description.toString();
 
                                           List<String> list = place.description
                                               .toString()
@@ -419,8 +399,9 @@ class _Register2State extends State<Register2> {
                                         final plist = GoogleMapsPlaces(
                                           apiKey: googleApikey,
 
-                                          apiHeaders: await const GoogleApiHeaders()
-                                              .getHeaders(),
+                                          apiHeaders:
+                                              await const GoogleApiHeaders()
+                                                  .getHeaders(),
                                           //from google_api_headers package
                                         );
                                         String placeid = place.placeId ?? "0";
@@ -432,11 +413,6 @@ class _Register2State extends State<Register2> {
                                         lat = geometry.location.lat;
 
                                         log = geometry.location.lng;
-                                        print(log);
-                                        var newlatlang = LatLng(lat, log);
-
-                                        //move map camera to selected place with animation
-                                        //mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
                                       }
                                     },
                                     decoration: InputDecoration(
@@ -446,8 +422,8 @@ class _Register2State extends State<Register2> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
-                                          ?.copyWith(color: Colors.black45),
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color5),
@@ -481,7 +457,8 @@ class _Register2State extends State<Register2> {
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
-                                        Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                        Fluttertoast.showToast(
+                                            timeInSecForIosWeb: 2,
                                             msg:
                                                 'Please Search and Save your Business Location');
                                         setState(() {
@@ -496,11 +473,9 @@ class _Register2State extends State<Register2> {
                                   ),
                                 ),
 
-
-
                                 Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: Row(
                                     children: [
                                       Container(
@@ -513,7 +488,7 @@ class _Register2State extends State<Register2> {
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                           ),*/
-                                          margin: EdgeInsets.fromLTRB(
+                                          margin: const EdgeInsets.fromLTRB(
                                               0.0, 0.0, 5.0, 0.0),
                                           child: Row(
                                             mainAxisAlignment:
@@ -523,7 +498,8 @@ class _Register2State extends State<Register2> {
                                               Container(
                                                   height: 57,
                                                   padding:
-                                                      EdgeInsets.only(left: 2),
+                                                      const EdgeInsets.only(
+                                                          left: 2),
                                                   decoration: BoxDecoration(
                                                     border: /* verify_phone == 1
                                                       ? Border.all(
@@ -543,7 +519,7 @@ class _Register2State extends State<Register2> {
                                                     },
                                                     child: Row(
                                                       children: [
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           width: 5,
                                                         ),
                                                         Image.asset(
@@ -552,20 +528,21 @@ class _Register2State extends State<Register2> {
                                                               countryCodePackageName,
                                                           width: 30,
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 16,
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           width: 2,
                                                         ),
                                                         Text(
-                                                          '${country1.callingCode}',
+                                                          country1.callingCode,
                                                           textAlign:
                                                               TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 15),
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 15),
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           width: 10,
                                                         ),
                                                       ],
@@ -587,8 +564,8 @@ class _Register2State extends State<Register2> {
                                                     .size
                                                     .width /
                                                 1.59,
-                                            margin:
-                                                const EdgeInsets.only(bottom: 0.0),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 0.0),
                                             child: TextFormField(
                                               // controller: _usernm,
                                               controller: _bussmbl,
@@ -597,9 +574,10 @@ class _Register2State extends State<Register2> {
                                                   fontWeight: FontWeight.w400,
                                                   color: Colors.black,
                                                   fontFamily:
-                                                      'assets\fonst\Metropolis-Black.otf'),
+                                                      'assets/fonst/Metropolis-Black.otf'),
                                               inputFormatters: [
-                                                LengthLimitingTextInputFormatter(11),
+                                                LengthLimitingTextInputFormatter(
+                                                    11),
                                               ],
                                               keyboardType: TextInputType.phone,
                                               autovalidateMode: AutovalidateMode
@@ -618,8 +596,8 @@ class _Register2State extends State<Register2> {
                                                             FontWeight.w400,
                                                         color: Colors.black,
                                                         fontFamily:
-                                                            'assets\fonst\Metropolis-Black.otf')
-                                                    ?.copyWith(
+                                                            'assets/fonst/Metropolis-Black.otf')
+                                                    .copyWith(
                                                         color: Colors.black45),
                                                 enabledBorder:
                                                     OutlineInputBorder(
@@ -656,7 +634,8 @@ class _Register2State extends State<Register2> {
                                                       Colors.green.shade600;
                                                 } else {
                                                   _color8 = Colors.red;
-                                                  Fluttertoast.showToast(timeInSecForIosWeb: 2,
+                                                  Fluttertoast.showToast(
+                                                      timeInSecForIosWeb: 2,
                                                       msg:
                                                           'Please Enter Correct Number');
                                                 }
@@ -683,8 +662,8 @@ class _Register2State extends State<Register2> {
                                 ),
 
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _bussemail,
                                     keyboardType: TextInputType.emailAddress,
@@ -695,7 +674,7 @@ class _Register2State extends State<Register2> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     textInputAction: TextInputAction.done,
                                     decoration: InputDecoration(
                                       // labelText: 'Your email *',
@@ -706,8 +685,8 @@ class _Register2State extends State<Register2> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
-                                          ?.copyWith(color: Colors.black45),
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color4),
@@ -775,19 +754,19 @@ class _Register2State extends State<Register2> {
                                 // )
 
                                 Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _gstno,
                                     keyboardType: TextInputType.text,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     textInputAction: TextInputAction.next,
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
@@ -799,13 +778,13 @@ class _Register2State extends State<Register2> {
                                         TextCapitalization.characters,
                                     decoration: InputDecoration(
                                       hintText: "GST/Tax/VAT Number",
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
-                                          ?.copyWith(color: Colors.black45),
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 1, color: _color3),
@@ -823,10 +802,8 @@ class _Register2State extends State<Register2> {
                                               BorderRadius.circular(10.0)),
                                       //errorText: _validusernm ? 'Name is not empty' : null),
                                     ),
-
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-
                                         setState(() {
                                           _color3 = Colors.black26;
                                         });
@@ -857,8 +834,8 @@ class _Register2State extends State<Register2> {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: TextFormField(
                                     controller: _website,
                                     keyboardType: TextInputType.text,
@@ -867,7 +844,7 @@ class _Register2State extends State<Register2> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
                                     textInputAction: TextInputAction.next,
@@ -878,7 +855,7 @@ class _Register2State extends State<Register2> {
                                               fontWeight: FontWeight.w400,
                                               color: Colors.black,
                                               fontFamily:
-                                                  'assets\fonst\Metropolis-Black.otf')
+                                                  'assets/fonst/Metropolis-Black.otf')
                                           .copyWith(color: Colors.black45),
                                       enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
@@ -898,7 +875,6 @@ class _Register2State extends State<Register2> {
                                     ),
                                     onChanged: (value) {
                                       if (value.isEmpty) {
-
                                         setState(() {
                                           _color6 = Colors.black26;
                                         });
@@ -924,30 +900,30 @@ class _Register2State extends State<Register2> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.fromLTRB(
+                                  padding: const EdgeInsets.fromLTRB(
                                       25.0, 5.0, 25.0, 10.0),
                                   child: TextFormField(
                                     controller: _aboutbuess,
                                     keyboardType: TextInputType.multiline,
                                     autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 15.0,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets\fonst\Metropolis-Black.otf'),
+                                            'assets/fonst/Metropolis-Black.otf'),
                                     maxLines: 4,
                                     textInputAction: TextInputAction.done,
                                     decoration: InputDecoration(
                                         hintText: "About Bussiness",
-                                        hintStyle: TextStyle(
+                                        hintStyle: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.black,
                                                 fontFamily:
-                                                    'assets\fonst\Metropolis-Black.otf')
-                                            ?.copyWith(color: Colors.black45),
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(color: Colors.black45),
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 width: 1, color: _color7),
@@ -1015,7 +991,8 @@ class _Register2State extends State<Register2> {
                                   decoration: BoxDecoration(
                                       border: Border.all(width: 1),
                                       borderRadius: BorderRadius.circular(50.0),
-                                      color: Color.fromARGB(255, 0, 91, 148)),
+                                      color: const Color.fromARGB(
+                                          255, 0, 91, 148)),
                                   child: TextButton(
                                     onPressed: () async {
                                       //setState(()  {
@@ -1037,12 +1014,12 @@ class _Register2State extends State<Register2> {
                                       }
                                       // });
                                     },
-                                    child: Text('Continue',
+                                    child: const Text('Continue',
                                         style: TextStyle(
                                           fontSize: 15.0,
                                           color: Colors.white,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf',
+                                              'assets/fonst/Metropolis-Black.otf',
                                         )),
                                   ),
                                 ),
@@ -1058,16 +1035,16 @@ class _Register2State extends State<Register2> {
             radius: 60.0,
 
             backgroundImage: _imagefiles == null
-                ?AssetImage('assets/addphoto1.png') as ImageProvider
+                ? const AssetImage('assets/addphoto1.png') as ImageProvider
                 : FileImage(file!),
             //File imageFile = File(pickedFile.path);
 
-            backgroundColor: Color.fromARGB(255, 240, 238, 238),
+            backgroundColor: const Color.fromARGB(255, 240, 238, 238),
           ),
           Positioned(
             bottom: 3.0,
             right: 5.0,
-            child: Container(
+            child: SizedBox(
                 width: 40,
                 height: 33,
                 child: FloatingActionButton(
@@ -1076,7 +1053,7 @@ class _Register2State extends State<Register2> {
                     showModalBottomSheet(
                         context: context, builder: (context) => bottomsheet());
                   },
-                  child: ImageIcon(
+                  child: const ImageIcon(
                     AssetImage('assets/Vector (1).png'),
                     color: Color.fromARGB(255, 0, 91, 148),
                   ),
@@ -1091,14 +1068,14 @@ class _Register2State extends State<Register2> {
     return Container(
       height: 100.0,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
         children: <Widget>[
-          Text(
+          const Text(
             "Choose Profile Photo",
             style: TextStyle(fontSize: 18.0),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -1108,9 +1085,9 @@ class _Register2State extends State<Register2> {
                   onPressed: () {
                     takephoto(ImageSource.camera);
                   },
-                  icon: Icon(Icons.camera,
+                  icon: const Icon(Icons.camera,
                       color: Color.fromARGB(255, 0, 91, 148)),
-                  label: Text(
+                  label: const Text(
                     'Camera',
                     style: TextStyle(color: Color.fromARGB(255, 0, 91, 148)),
                   )),
@@ -1118,9 +1095,9 @@ class _Register2State extends State<Register2> {
                   onPressed: () {
                     takephoto(ImageSource.gallery);
                   },
-                  icon:
-                      Icon(Icons.image, color: Color.fromARGB(255, 0, 91, 148)),
-                  label: Text(
+                  icon: const Icon(Icons.image,
+                      color: Color.fromARGB(255, 0, 91, 148)),
+                  label: const Text(
                     'Gallary',
                     style: TextStyle(color: Color.fromARGB(255, 0, 91, 148)),
                   )),
@@ -1135,14 +1112,10 @@ class _Register2State extends State<Register2> {
     final pickedfile = await _picker.getImage(source: imageSource);
 
     _imagefiles = pickedfile!;
-    //file = io.File(_imagefiles!.path);
     file = await _cropImage(imagefile: io.File(_imagefiles!.path));
 
     Navigator.of(context).pop();
-
-
   }
-
 
   Future<io.File?> _cropImage({required io.File imagefile}) async {
     if (_imagefiles != null) {
@@ -1150,13 +1123,11 @@ class _Register2State extends State<Register2> {
           sourcePath: _imagefiles!.path,
           compressFormat: ImageCompressFormat.jpg,
           compressQuality: 100,
-
           uiSettings: [
             AndroidUiSettings(
                 toolbarTitle: 'Cropper',
-                toolbarColor: Color.fromARGB(255, 0, 91, 148),
+                toolbarColor: const Color.fromARGB(255, 0, 91, 148),
                 toolbarWidgetColor: Colors.white,
-
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
             IOSUiSettings(
@@ -1164,11 +1135,9 @@ class _Register2State extends State<Register2> {
             ),
           ]);
       if (croppedFile != null) {
-        setState(() {
-          _croppedFile = croppedFile;
-        });
+        setState(() {});
         return io.File(croppedFile.path);
-      } else{
+      } else {
         return io.File(_imagefiles!.path);
       }
     } else {
@@ -1177,44 +1146,32 @@ class _Register2State extends State<Register2> {
   }
 
   vaild_data() {
-
-    print("VALID DATA");
-
     _isValid = EmailValidator.validate(_bussemail.text);
 
     if (_bussname.text.isEmpty) {
-
       _color1 = Colors.red;
       setState(() {});
     }
     if (_userbussnature.text.isEmpty) {
-
       _color2 = Colors.red;
       setState(() {});
     }
     if (_loc.text.isEmpty) {
-
       _color5 = Colors.red;
       setState(() {});
     }
     if (file == null) {
-
       Fluttertoast.showToast(msg: 'Please Add and Save Your Image');
-    }
-    else if (_bussname.text.isEmpty) {
-
+    } else if (_bussname.text.isEmpty) {
       _color1 = Colors.red;
       setState(() {});
       Fluttertoast.showToast(msg: 'Please Add Your Business Name');
-    }
-    else if (_userbussnature.text.isEmpty) {
-
+    } else if (_userbussnature.text.isEmpty) {
       _color2 = Colors.red;
       setState(() {});
       Fluttertoast.showToast(
           msg: 'Please Select at least 1 Nature of Business');
-    }
-    else if (_loc.text.isEmpty) {
+    } else if (_loc.text.isEmpty) {
       if (constanst.Bussiness_nature.isNotEmpty) {
         _color2 = Colors.green.shade600;
         setState(() {});
@@ -1223,28 +1180,23 @@ class _Register2State extends State<Register2> {
       setState(() {});
       Fluttertoast.showToast(
           msg: 'Please Search and Save your Business Location');
-    }
-    else if (_bussname.text.isNotEmpty &&
+    } else if (_bussname.text.isNotEmpty &&
         _loc.text.isNotEmpty &&
         constanst.Bussiness_nature.isNotEmpty) {
-
       if (_bussmbl.text.isNotEmpty) {
         var numValue = _bussmbl.text.length;
         if (numValue >= 6 && numValue < 11) {
           _color8 = Colors.green.shade600;
           setState(() {});
           if (_bussemail.text.isNotEmpty) {
-
             if (!_isValid) {
               Fluttertoast.showToast(msg: 'Enter Valid Email Address');
               _color4 = Colors.red;
               setState(() {});
             } else if (_isValid) {
-
               _color4 = Colors.green.shade600;
               setState(() {});
               if (_gstno.text.isNotEmpty) {
-                print("Phase 6");
                 var numValue = _gstno.text.length;
                 if (numValue < 15) {
                   Fluttertoast.showToast(
@@ -1273,7 +1225,6 @@ class _Register2State extends State<Register2> {
                           ModalRoute.withName('/'));
                     }
                   });
-                  /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
                 }
               } else {
                 _onLoading();
@@ -1307,7 +1258,7 @@ class _Register2State extends State<Register2> {
                   _color3 = Colors.green.shade600;
                 });
 
-                /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
+
               }
             } else {
               _onLoading();
@@ -1358,7 +1309,6 @@ class _Register2State extends State<Register2> {
                 _color3 = Colors.green.shade600;
               });
 
-              /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
             }
           } else {
             _onLoading();
@@ -1384,8 +1334,7 @@ class _Register2State extends State<Register2> {
           setState(() {});
           Fluttertoast.showToast(msg: 'Please Enter Correct Number');
         }
-      }
-      else if (_bussemail.text.isNotEmpty) {
+      } else if (_bussemail.text.isNotEmpty) {
         if (!_isValid) {
           Fluttertoast.showToast(msg: 'Enter Valid Email Address');
           _color4 = Colors.red;
@@ -1430,7 +1379,7 @@ class _Register2State extends State<Register2> {
         } else if (_gstno.text.isNotEmpty) {
           var numValue = _gstno.text.length;
 
-          if (numValue < 15)  {
+          if (numValue < 15) {
             Fluttertoast.showToast(msg: 'Enter Valid GST/ VAT/Tax Number');
             setState(() {
               _color3 = Colors.red;
@@ -1459,8 +1408,7 @@ class _Register2State extends State<Register2> {
             }
           });
         }
-      }
-      else if (_gstno.text.isNotEmpty) {
+      } else if (_gstno.text.isNotEmpty) {
         var numValue = _gstno.text.length;
         if (numValue < 15) {
           Fluttertoast.showToast(msg: 'Enter Valid GST/ VAT/Tax Number');
@@ -1489,11 +1437,8 @@ class _Register2State extends State<Register2> {
               }
             });
           });
-
-          /* Fluttertoast.showToast(msg: 'Please Enter correct GST Number');*/
         }
-      }
-      else {
+      } else {
         _onLoading();
         add_bussinessProfile().then((value) {
           Navigator.of(dialogContext!).pop();
@@ -1511,20 +1456,16 @@ class _Register2State extends State<Register2> {
                 ModalRoute.withName('/'));
           }
         });
-
       }
     }
   }
 
   Future<bool> add_bussinessProfile() async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.step = 6;
-    print(_pref.getString('user_id').toString());
-    print(_pref.getString('api_token').toString());
     var res = await addbussiness(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         _bussname.text,
         constanst.Bussiness_nature,
         _loc.text,
@@ -1546,8 +1487,8 @@ class _Register2State extends State<Register2> {
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       constanst.isprofile = false;
-      _pref.setString('userImage', res['profile_image']).toString();
-      constanst.image_url = _pref.getString('userImage').toString();
+      pref.setString('userImage', res['profile_image']).toString();
+      constanst.image_url = pref.getString('userImage').toString();
       _isloading1 = true;
     } else {
       _isloading1 = true;
@@ -1574,7 +1515,7 @@ class _Register2State extends State<Register2> {
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return type();
+                  return const type();
                 },
               );
             })).then(
@@ -1597,32 +1538,34 @@ class _Register2State extends State<Register2> {
       builder: (BuildContext context) {
         dialogContext = context; // Store the context in a variable
         return Dialog(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            child: SizedBox(
-              width: 300.0,
-              height: 150.0,
-              child: Center(
-                child: SizedBox(
-                  height: 50.0,
-                  width: 50.0,
-                  child: Center(
-                      child: Platform.isAndroid
-                          ? const CircularProgressIndicator(
-                              value: null,
-                              strokeWidth: 2.0,
-                              color: Color.fromARGB(255, 0, 91, 148),
-                            )
-                          : Platform.isIOS
-                              ? const CupertinoActivityIndicator(
-                                  color: Color.fromARGB(255, 0, 91, 148),
-                                  radius: 20,
-                                  animating: true,
-                                )
-                              : Container()),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: SizedBox(
+            width: 300.0,
+            height: 150.0,
+            child: Center(
+              child: SizedBox(
+                height: 50.0,
+                width: 50.0,
+                child: Center(
+                    child: Platform.isAndroid
+                        ? const CircularProgressIndicator(
+                            value: null,
+                            strokeWidth: 2.0,
+                            color: Color.fromARGB(255, 0, 91, 148),
+                          )
+                        : Platform.isIOS
+                            ? const CupertinoActivityIndicator(
+                                color: Color.fromARGB(255, 0, 91, 148),
+                                radius: 20,
+                                animating: true,
+                              )
+                            : Container(),
                 ),
               ),
-            ));
+            ),
+          ),
+        );
       },
     );
   }
@@ -1640,6 +1583,8 @@ class _typeState extends State<type> {
 
   @override
   void initState() {
+    super.initState();
+
     // TODO: implement initState
   }
 
@@ -1665,10 +1610,9 @@ class _typeState extends State<type> {
                   fontSize: 17.0,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
-                  fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                  fontFamily: 'assets/fonst/Metropolis-Black.otf')),
         ),
         const SizedBox(height: 5),
-        //-------CircularCheckBox()
         Expanded(
           child: ListView.builder(
               shrinkWrap: true,
@@ -1696,9 +1640,7 @@ class _typeState extends State<type> {
                           constanst.Bussiness_nature =
                               constanst.lstBussiness_nature.join(",");
                         } else {
-                          Fluttertoast.showToast(
-                              msg:
-                                  'You Can Select Maximum 3 Nature Of Business ');
+                          Fluttertoast.showToast(msg: 'You Can Select Maximum 3 Nature Of Business ');
                         }
                       } else {
                         constanst.itemsCheck[index] = Icons.circle_outlined;
@@ -1719,7 +1661,7 @@ class _typeState extends State<type> {
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                              fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                       leading: IconButton(
                           icon: constanst.itemsCheck[index] ==
                                   Icons.circle_outlined
@@ -1766,14 +1708,10 @@ class _typeState extends State<type> {
                                     .join(",");
                               }
                             });
-                          }
-
-
-                          )),
+                          })),
                 );
               }),
         ),
-
         Container(
           width: MediaQuery.of(context).size.width * 1.2,
           height: 60,
@@ -1787,7 +1725,7 @@ class _typeState extends State<type> {
               if (gender) {
                 Navigator.pop(context);
                 setState(() {});
-              log("SELECTED NATURE === ${constanst.lstBussiness_nature}");
+                log("SELECTED NATURE === ${constanst.lstBussiness_nature}");
               } else {
                 Fluttertoast.showToast(msg: 'Select Minimum 1 Category ');
               }
@@ -1797,7 +1735,7 @@ class _typeState extends State<type> {
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
         ),
       ],

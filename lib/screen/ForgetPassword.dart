@@ -147,7 +147,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   fontSize: 15.0,
                   fontWeight: FontWeight.w400,
                   color: Color.fromARGB(255, 0, 91, 148),
-                  fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                  fontFamily: 'assets/fonst/Metropolis-Black.otf')),
         ),
       ),
     );
@@ -168,7 +168,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
-                fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                fontFamily: 'assets/fonst/Metropolis-Black.otf'),
             decoration: InputDecoration(
               hintText: "Enter Your Email",
               hintStyle: TextStyle(
@@ -284,7 +284,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
         ),
       ],
@@ -469,7 +469,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                       fontSize: 15.0,
                       fontWeight: FontWeight.w700,
                       color: Color.fromARGB(255, 0, 91, 148),
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(11),
                   ],
@@ -486,7 +486,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                             fontSize: 15.0,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                            fontFamily: 'assets/fonst/Metropolis-Black.otf')
                         ?.copyWith(color: Colors.black45),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: _color3),
@@ -604,7 +604,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
                     color: Colors.white,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
         ),
       ],
@@ -655,7 +655,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 fontSize: 26.0,
                 fontWeight: FontWeight.w700,
                 color: Colors.black,
-                fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                fontFamily: 'assets/fonst/Metropolis-Black.otf')),
       ),
 
       Container(
@@ -669,7 +669,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')
                 ?.copyWith(fontWeight: FontWeight.w400)),
       ),
 
@@ -685,7 +685,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')
                 ?.copyWith(fontWeight: FontWeight.w400)),
       ),
     ]);

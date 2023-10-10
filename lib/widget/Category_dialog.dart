@@ -58,9 +58,9 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
         const SizedBox(height: 10,),
         Image(image:const AssetImage('assets/bussines_profile.png'),height:MediaQuery.of(context).size.height/5.8,width: MediaQuery.of(context).size.width, ),
         const SizedBox(height: 30,),
-        Text('Select Interest \n Match Your Products',maxLines: 2,textAlign: TextAlign.center,style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontSize: 23)),
+        Text('Select Interest \n Match Your Products',maxLines: 2,textAlign: TextAlign.center,style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 23)),
         const SizedBox(height: 20,),
-        Text('Please Select your Interest from the \n Category, Type, and Grade to Match your Product Perfectly,  and Get your Interested Product Notification',maxLines: 4,textAlign: TextAlign.center,style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 14)),
+        Text('Please Select your Interest from the \n Category, Type, and Grade to Match your Product Perfectly,  and Get your Interested Product Notification',maxLines: 4,textAlign: TextAlign.center,style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets/fonst/Metropolis-Black.otf')?.copyWith(fontSize: 14)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -138,7 +138,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                         fontSize: 19.0,
                         fontWeight: FontWeight.w800,
                         color: Color.fromARGB(255, 0, 91, 148),
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                        fontFamily: 'assets/fonst/Metropolis-Black.otf')),
               ),
             ),
             Container(
@@ -155,11 +155,6 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
 
                   Navigator.pop(context);
                   getBussinessProfile();
-                  print('bottom');
-                  print(constanst.isgrade );
-                  print(constanst.isprofile );
-                  print(constanst.istype );
-                  print(constanst.iscategory);
                   if(constanst.isprofile){
                     Navigator.push(
                         context,
@@ -192,7 +187,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                         fontSize: 19.0,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                        fontFamily: 'assets/fonst/Metropolis-Black.otf')),
               ),
             ),
           ],

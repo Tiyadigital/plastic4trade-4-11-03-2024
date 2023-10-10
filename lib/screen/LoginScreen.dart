@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 40.0,
                                 child: Text(
                                   'Hello Again!',
-                                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                                  style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')
                                   // style: TextStyle(
                                   //   fontSize: 26.0,
                                   //   color: Colors.black,
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: 25.0,
                                   child: Text(
                                     'Log in into your account',
-                                    style:TextStyle(fontSize: 21.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf',)
+                                    style:TextStyle(fontSize: 21.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf',)
                                   )),
                               Padding(
                                 padding:
@@ -164,11 +164,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: _usernm,
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
-                                  style: const TextStyle(fontSize: 15.0,  fontFamily: 'assets\fonst\Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
+                                  style: const TextStyle(fontSize: 15.0,  fontFamily: 'assets/fonst/Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
                                   decoration: InputDecoration(
                                     hintText: "Enter Your Email/Mobile ",
                                     hintStyle:
-                                    const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                    const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             width: 1, color: _color2),
@@ -236,13 +236,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: TextFormField(
                                   controller: _userpass,
                                   obscureText: !_passwordVisible,
-                                  style:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                  style:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.done,
                                   decoration: InputDecoration(
                                     hintText: "Enter Your Password ",
                                     hintStyle:
-                                    TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                    TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                     //contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                                     suffixIcon: IconButton(
                                       icon:
@@ -337,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                     child: const Text(
                                       'Forgot Password?',
-                                      style: TextStyle(fontSize: 15.0,  fontFamily: 'assets\fonst\Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
+                                      style: TextStyle(fontSize: 15.0,  fontFamily: 'assets/fonst/Metropolis-Black.otf',color:  Color.fromARGB(255, 0, 91, 148)),
                                     )),
                               ),
                               Container(
@@ -372,7 +372,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       },
                                       child: Text(
                                         'Login',
-                                        style: TextStyle(fontSize: 15.0, color: Colors.white ,fontFamily: 'assets\fonst\Metropolis-Black.otf',),
+                                        style: TextStyle(fontSize: 15.0, color: Colors.white ,fontFamily: 'assets/fonst/Metropolis-Black.otf',),
                                       ))),
                               Container(
                                 // margin: EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 25.0),
@@ -383,7 +383,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Text(
                                       'Don' r"'" 't have an account?',
                                       style:
-                                      TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                      TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -394,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     Register()));
                                       },
                                       child: Text('Create an account',
-                                          style:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color:  Color.fromARGB(255, 0, 91, 148),fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                                          style:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color:  Color.fromARGB(255, 0, 91, 148),fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                                     )
                                   ],
                                 ),

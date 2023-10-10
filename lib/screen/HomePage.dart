@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, empty_catches, non_constant_identifier_names
+// ignore_for_file: unnecessary_null_comparison, empty_catches, non_constant_identifier_names, prefer_typing_uninitialized_variables, depend_on_referenced_packages
 
 import 'dart:async';
 import 'dart:convert';
@@ -31,9 +31,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../api/api_interface.dart';
 import '../constroller/GetCategoryController.dart';
 import '../constroller/Getmybusinessprofile.dart';
-import '../model/getBannerImage.dart';
-import '../model/getHomePost.dart';
-import '../model/gethome_quicknews.dart';
 import '../utill/constant.dart';
 import '../widget/HomeAppbar.dart';
 import '../widget/MainScreen.dart';
@@ -79,7 +76,6 @@ class _HomePageState extends State<HomePage> {
       post_type = '';
   final TextEditingController _loc = TextEditingController();
   final TextEditingController _search = TextEditingController();
-  Timer? _timer;
   Dio dio = Dio();
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -117,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 3,
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black,
                                       fontFamily:
-                                          'assets\fonst\Metropolis-Black.otf',
+                                          'assets/fonst/Metropolis-Black.otf',
                                     ),
                                     alignLabelWithHint: true,
                                   ),
@@ -281,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonst\Metropolis-Black.otf')),
+                                              'assets/fonst/Metropolis-Black.otf')),
                                   onSubmitted: (value) {
                                     WidgetsBinding
                                         .instance.focusManager.primaryFocus
@@ -316,7 +312,7 @@ class _HomePageState extends State<HomePage> {
                             height: 70,
                             margin: const EdgeInsets.only(
                                 bottom: 4.0, left: 1.2, top: 2.0),
-                            padding: EdgeInsets.all(3.0),
+                            padding: const EdgeInsets.all(3.0),
                             width: MediaQuery.of(context).size.width / 11,
                             // padding: EdgeInsets.only(right: 5),
                             decoration: const BoxDecoration(
@@ -508,7 +504,7 @@ class _HomePageState extends State<HomePage> {
                     'Please tap again to exit',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf',
+                        fontFamily: 'assets/fonst/Metropolis-Black.otf',
                         color: Colors.white,
                         fontSize: 14.0,
                         decoration: TextDecoration.none),
@@ -586,7 +582,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                   fontFamily:
-                                      'assets\fonst\Metropolis-Black.otf')
+                                      'assets/fonst/Metropolis-Black.otf')
                               .copyWith(
                                   color: _defaultChoiceIndex == index
                                       ? Colors.white
@@ -804,7 +800,7 @@ class _HomePageState extends State<HomePage> {
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w800,
                                     fontFamily:
-                                        'assets\fonst\Metropolis-Black.otf',
+                                        'assets/fonst/Metropolis-Black.otf',
                                     color: Colors.white)),
                           ),
                         ),
@@ -813,7 +809,7 @@ class _HomePageState extends State<HomePage> {
                                 top: -10,
                                 left: -30,
                                 child: Container(
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   /*decoration: BoxDecoration(
                                     color: Colors.red,
                                     borderRadius: BorderRadius.all(
@@ -843,7 +839,7 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w600,
                                       color: Colors.black,
                                       fontFamily:
-                                          'assets\fonst\Metropolis-SemiBold.otf'),
+                                          'assets/fonst/Metropolis-SemiBold.otf'),
                                   softWrap: false,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis)),
@@ -959,7 +955,7 @@ class _HomePageState extends State<HomePage> {
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return FilterScreen();
+                  return const FilterScreen();
                 },
               );
             })).then(
@@ -988,19 +984,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   getBussinessProfile() async {
-    GetmybusinessprofileController bt = await GetmybusinessprofileController();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    GetmybusinessprofileController bt = GetmybusinessprofileController();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.getmyprofile = bt.Getmybusiness_profile(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
+
   }
 
   getBussinessProfile1() async {
     String apiUrl = 'https://www.plastic4trade.com/api/getmybusinessprofile';
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     Map<String, dynamic> requestData = {
-      'userId': _pref.getString('user_id').toString(),
-      'userToken': _pref.getString('api_token').toString(),
+      'userId': pref.getString('user_id').toString(),
+      'userToken': pref.getString('api_token').toString(),
       // Add any other required parameters
     };
     Response response;
@@ -1009,7 +1006,6 @@ class _HomePageState extends State<HomePage> {
       if (response != null) {
         if (response.statusCode == 200) {
           // Successful response
-          Map<String, dynamic> responseData = response.data;
           // Process the response data
         } else {
           // Handle other status codes
@@ -1042,7 +1038,6 @@ class _HomePageState extends State<HomePage> {
       // Handle the response data
       if (response.statusCode == 200) {
         // API call was successful
-        var data = response.data;
         // Process the data
       } else {
         // API call failed
@@ -1053,14 +1048,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   get_Slider() async {
-    getBannerImage getcoloregory = getBannerImage();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getSlider(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+    var res = await getSlider(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
     var jsonarray;
     if (res['status'] == 1) {
-      getcoloregory = getBannerImage.fromJson(res);
       jsonarray = res['result'];
 
       for (var data in jsonarray) {
@@ -1073,17 +1066,13 @@ class _HomePageState extends State<HomePage> {
       Fluttertoast.showToast(msg: res['message']);
     }
     return jsonarray;
-    setState(() {});
   }
 
   getquicknews() async {
-    gethome_quicknews quicknes = gethome_quicknews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await gethomequicknew();
     var jsonarray;
     if (res['status'] == 1) {
-      quicknes = gethome_quicknews.fromJson(res);
       quicknews = res['result'];
 
       isload = true;
@@ -1102,7 +1091,6 @@ class _HomePageState extends State<HomePage> {
 
     if (response.statusCode == 200) {
       // API call successful
-      var data = response.data;
       // Process the data as needed
     } else {
       // API call failed
@@ -1110,12 +1098,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   get_HomePost() async {
-    getHomePost gethomepost = getHomePost();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getHome_Post(
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
       offset.toString(),
       category_id,
       category_filter_id,
@@ -1127,13 +1114,12 @@ class _HomePageState extends State<HomePage> {
       constanst.log,
       _search.text.toString(),
     );
-    var jsonarray;
+    var jsonArray;
     if (res['status'] == 1) {
-      gethomepost = getHomePost.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homepost.Result record = homepost.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -1158,7 +1144,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
+    return jsonArray;
   }
 
   void fetchData() async {
@@ -1167,7 +1153,6 @@ class _HomePageState extends State<HomePage> {
           'https://www.plastic4trade.com/api/getHomePost?userId=14969&userToken=0a1d9eb634ed272eb897bfcbb9a8f8b1&category_id=""&limit=0&offset=20');
       if (response.statusCode == 200) {
         // Request was successful
-        var data = response.data;
         // Process the data here
       } else {
         // Handle error cases
@@ -1181,12 +1166,12 @@ class _HomePageState extends State<HomePage> {
 
     var res = await getHomeSearch_Post(lat.toString(), log.toString(),
         _search.text.toString(), '20', offset.toString());
-    var jsonarray;
+    var jsonArray;
     if (res['status'] == 1) {
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homesearch.Result record = homesearch.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -1208,8 +1193,7 @@ class _HomePageState extends State<HomePage> {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 
   Future<void> checknetowork() async {
@@ -1220,13 +1204,12 @@ class _HomePageState extends State<HomePage> {
       //isprofile=true;
     } else {
       _loc.text = constanst.location.toString();
-      SharedPreferences _pref = await SharedPreferences.getInstance();
-      constanst.step = int.parse(_pref.getString('step').toString());
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      constanst.step = int.parse(pref.getString('step').toString());
       // DateTime startTime = DateTime.now();
       get_categorylist();
       getBussinessProfile();
       get_Slider();
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
 
       get_HomePost();
       getquicknews();
@@ -1244,9 +1227,9 @@ class _HomePageState extends State<HomePage> {
     if (Platform.isAndroid) {
       await Firebase.initializeApp();
 
-      final _firebaseMessaging = FirebaseMessaging.instance;
-      await _firebaseMessaging.requestPermission();
-      final FCMToken = await _firebaseMessaging
+      final firebaseMessaging0 = FirebaseMessaging.instance;
+      await firebaseMessaging0.requestPermission();
+      final FCMToken = await firebaseMessaging0
           .getToken(
               vapidKey:
                   "BC4eLOdjJWopUE-NEu_WCFLlByPe5-K5_AljnUINqx4QL7RmA3W5lC-__7WDfEWPJF0nVk05xpD3d4JjdrGnfVA")
@@ -1298,11 +1281,10 @@ class _HomePageState extends State<HomePage> {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
       if (payload != null) {
+        // ignore: unnecessary_non_null_assertion
         final message = RemoteMessage.fromMap(jsonDecode(payload!));
         String notificationType = message.data['type'];
-        String postType = message.data['post_type'];
         String userId = message.data['user_id'];
-        String postId = message.data['postId'];
 
         if (notificationType.toString() == "profile like") {
           if (userId.toString().isNotEmpty) {
@@ -1313,7 +1295,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                       builder: (context) =>
                           other_user_profile(int.parse(userId.toString()))));
-            } catch (e, stackTrace) {
+            } catch (e) {
             }
           } else {
           }
@@ -1326,14 +1308,14 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                       builder: (context) =>
                           other_user_profile(int.parse(userId.toString()))));
-            } catch (e, stackTrace) {}
+            } catch (e) {}
           } else {
           }
         } else if (message.data['type'] == 'profile_review') {
           try {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => bussinessprofile()));
-          } catch (e, stackTrace) {}
+                MaterialPageRoute(builder: (context) => const bussinessprofile()));
+          } catch (e) {}
         } else if (message.data['type'] == 'follower_profile_like') {
           Navigator.push(
               context,
@@ -1370,10 +1352,10 @@ class _HomePageState extends State<HomePage> {
           }
         } else if (message.data['type'] == "unfollowuser") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => follower()));
+              context, MaterialPageRoute(builder: (context) => const follower(initialIndex: 0,)));
         } else if (message.data['type'] == "followuser") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => follower()));
+              context, MaterialPageRoute(builder: (context) => const follower(initialIndex: 0,)));
         } else if (message.data['type'] == "profile_review") {
           Navigator.push(
               context,
@@ -1382,7 +1364,7 @@ class _HomePageState extends State<HomePage> {
                       int.parse(constanst.notiuser.toString()))));
         } else if (message.data['type'] == "live_price") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => LivepriceScreen()));
+              MaterialPageRoute(builder: (context) => const LivepriceScreen()));
         } else if (message.data['type'] == "quick_news_notification") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
@@ -1391,10 +1373,10 @@ class _HomePageState extends State<HomePage> {
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
         } else if (message.data['type'] == "blog") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Blog()));
+              context, MaterialPageRoute(builder: (context) => const Blog()));
         } else if (message.data['type'] == "video") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Videos()));
+              context, MaterialPageRoute(builder: (context) => const Videos()));
         } else if (message.data['type'] == "banner") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(0)));
@@ -1418,7 +1400,6 @@ class _HomePageState extends State<HomePage> {
     FirebaseMessaging.onMessageOpenedApp.listen(
       (RemoteMessage message) {
 
-        String notificationType = message.data['type'];
         String userId = message.data['user_id'];
         if (message.data['type'] == 'profile like') {
           try {
@@ -1427,14 +1408,14 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(
                     builder: (context) =>
                         other_user_profile(int.parse(userId.toString()))));
-          } catch (e, stackTrace) {
+          } catch (e) {
 
           }
         } else if (message.data['type'] == 'profile_review') {
           try {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => bussinessprofile()));
-          } catch (e, stackTrace) {
+                MaterialPageRoute(builder: (context) => const bussinessprofile()));
+          } catch (e) {
 
           }
         } else if (message.data['type'] == 'follower_profile_like') {
@@ -1473,10 +1454,10 @@ class _HomePageState extends State<HomePage> {
           }
         } else if (message.data['type'] == "unfollowuser") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => follower()));
+              context, MaterialPageRoute(builder: (context) => const follower(initialIndex: 0,)));
         } else if (message.data['type'] == "followuser") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => follower()));
+              context, MaterialPageRoute(builder: (context) => const follower(initialIndex: 0,)));
         } else if (message.data['type'] == "profile_review") {
           Navigator.push(
               context,
@@ -1485,7 +1466,7 @@ class _HomePageState extends State<HomePage> {
                       int.parse(constanst.notiuser.toString()))));
         } else if (message.data['type'] == "live_price") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => LivepriceScreen()));
+              MaterialPageRoute(builder: (context) => const LivepriceScreen()));
         } else if (message.data['type'] == "quick_news_notification") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
@@ -1494,19 +1475,19 @@ class _HomePageState extends State<HomePage> {
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
         } else if (message.data['type'] == "blog") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Blog()));
+              context, MaterialPageRoute(builder: (context) => const Blog()));
         } else if (message.data['type'] == "video") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Videos()));
+              context, MaterialPageRoute(builder: (context) => const Videos()));
         } else if (message.data['type'] == "banner") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(0)));
         } else if (message.data['type'] == "tutorial_video") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => Tutorial_Videos()));
+              MaterialPageRoute(builder: (context) => const Tutorial_Videos()));
         } else if (message.data['type'] == "exhibition") {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Exhibition()));
+              context, MaterialPageRoute(builder: (context) => const Exhibition()));
         } else if (message.data['type'] == "quicknews") {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreen(3)));
@@ -1530,10 +1511,8 @@ class _HomePageState extends State<HomePage> {
         notification.body ?? '',
         NotificationDetails(
           android: AndroidNotificationDetails(
-            _androidchannel.id ??
-                'default_channel_id', // Provide a default value
-            _androidchannel.name ??
-                'Default Channel', // Provide a default value
+            _androidchannel.id, // Provide a default value
+            _androidchannel.name, // Provide a default value
             channelDescription:
                 _androidchannel.description ?? 'Default Channel Description',
             importance: Importance.max,
@@ -1546,7 +1525,6 @@ class _HomePageState extends State<HomePage> {
         ),
         payload: jsonEncode(message.toMap()),
       );
-      RemoteNotification? remoteNotification = message.notification;
       AndroidNotification? notification1 = message.notification?.android;
       if (notification1 != null) {
       }
