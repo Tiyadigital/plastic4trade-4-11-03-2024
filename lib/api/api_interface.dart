@@ -607,7 +607,7 @@ Future addBuyPost(
     'product_qty': productQty,
     'color_id': colorId,
     'description': description,
-    'location': location,
+    // 'location': location,
     'latitude': latitude,
     'longitude': longitude,
     'image_counter': imageCounter,
@@ -684,7 +684,7 @@ Future addSalePost(
     'product_qty': productQty,
     'color_id': colorId,
     'description': description,
-    'location': location,
+    // 'location': location,
     'latitude': latitude,
     'longitude': longitude,
     'image_counter': imageCounter,
@@ -1960,7 +1960,7 @@ Future updateSalePost(
     'product_qty': productQty,
     'color_id': colorId,
     'description': description,
-    'location': location,
+    // 'location': location,
     'latitude': latitude,
     'longitude': longitude,
     'image_counter': imageCounter,
@@ -2014,17 +2014,6 @@ Future updateBuyerPost(
   );
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
 
-/*  for(int i=0;i<constanst.imagesList.length;i++){
-    j=j+1;
-    request.files.add(
-      http.MultipartFile(
-        'image$j',
-        constanst.imagesList[i]!.readAsBytes().asStream(),
-        constanst.imagesList[i]!.lengthSync(),
-        filename: constanst.imagesList[i]!.path,
-      ),
-    );
-  }*/
   if (file != null) {
     request.files.add(
       http.MultipartFile(
@@ -2049,7 +2038,7 @@ Future updateBuyerPost(
     'product_qty': productQty,
     'color_id': colorId,
     'description': description,
-    'location': location,
+    // 'location': location,
     'latitude': latitude,
     'longitude': longitude,
     'image_counter': imageCounter,

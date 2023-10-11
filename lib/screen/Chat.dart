@@ -181,9 +181,6 @@ class _ChatState extends State<Chat> {
     return userCredential;
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getDataStream() {
-    return FirebaseFirestore.instance.collection('users').snapshots();
-  }
 
   Widget init() {
     return Scaffold(

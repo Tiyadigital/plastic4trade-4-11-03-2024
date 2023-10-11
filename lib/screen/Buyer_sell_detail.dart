@@ -4,7 +4,6 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:Plastic4trade/model/CommonPostdetail.dart' as postdetail;
-import 'package:Plastic4trade/model/common.dart';
 import 'package:Plastic4trade/model/getsimilar_product.dart' as similar_prod;
 import 'package:Plastic4trade/screen/Chat.dart';
 import 'package:Plastic4trade/screen/other_user_profile.dart';
@@ -24,7 +23,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
 import '../model/CommonPostdetail.dart';
-import '../model/getsimilar_product.dart';
 
 class Buyer_sell_detail extends StatefulWidget {
   String? post_type;
@@ -58,7 +56,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   String is_Follow = "";
 
-  // int? islike;
   int? isView, user_id;
   String? product_status;
   String? prod_desc;
@@ -95,10 +92,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
   }
 
   @override
@@ -108,13 +102,15 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   Widget init() {
     return Scaffold(
-        backgroundColor: const Color(0xFFDADADA),
-        body: load == true
-            ? SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    Stack(fit: StackFit.passthrough, children: <Widget>[
+      backgroundColor: const Color(0xFFDADADA),
+      body: load == true
+          ? SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Stack(
+                    fit: StackFit.passthrough,
+                    children: <Widget>[
                       SingleChildScrollView(
                         physics: const NeverScrollableScrollPhysics(),
                         child: SizedBox(
@@ -125,14 +121,14 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                     _showImageDialog(context);
                                   },
                                   child: Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Image.network(
-                                        imagelist[0].toString(),
-                                        fit: BoxFit.cover,
-                                        height: 400,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                      )),
+                                    alignment: Alignment.topCenter,
+                                    child: Image.network(
+                                      imagelist[0].toString(),
+                                      fit: BoxFit.cover,
+                                      height: 400,
+                                      width: MediaQuery.of(context).size.width,
+                                    ),
+                                  ),
                                 )
                               : slider(),
                         ),
@@ -160,41 +156,47 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                         ),
                       ),
                       Positioned(
-                          right: 80,
-                          top: 30,
-                          child: Container(
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey.shade600),
-                            // color: Color.fromARGB(0, 255, 255, 255),
-                            child: prod_like
-                                ? GestureDetector(
-                                    onTap: () {
-                                      getremove_product();
-                                    },
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.favorite,
-                                        color: Colors.red.shade400,
-                                      ),
-                                    ))
-                                : GestureDetector(
-                                    onTap: () {
-                                      getadd_product();
-                                    },
-                                    child: const Center(
-                                        child: Icon(
+                        right: 80,
+                        top: 30,
+                        child: Container(
+                          padding: const EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade600),
+                          // color: Color.fromARGB(0, 255, 255, 255),
+                          child: prod_like
+                              ? GestureDetector(
+                                  onTap: () {
+                                    getremove_product();
+                                  },
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.favorite,
+                                      color: Colors.red.shade400,
+                                    ),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    getadd_product();
+                                  },
+                                  child: const Center(
+                                    child: Icon(
                                       Icons.favorite_border_outlined,
                                       color: Colors.white,
-                                    ))),
-                          )),
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ),
                       Positioned(
                         right: 30,
                         top: 30,
                         child: GestureDetector(
                           onTap: () {
-                            shareImage(url: main_product.toString());
+                            shareImage(
+                              url: main_product.toString(),
+                            );
                           },
                           child: Container(
                             padding: const EdgeInsets.all(5.0),
@@ -218,480 +220,487 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                         child: Column(
                           children: [
                             Container(
-                                padding: const EdgeInsets.all(10.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.white,
-                                ),
-                                //transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white,
+                              ),
+                              //transform: Matrix4.translationValues(0.0, -50.0, 0.0),
 
-                                //height: 320,
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  children: [
-                                    Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(prod_nm.toString(),
-                                            style: const TextStyle(
-                                                    fontSize: 26.0,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(fontSize: 17))),
-                                    Row(
-                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                                margin:
-                                                    const EdgeInsets.all(5.0),
-                                                padding: const EdgeInsets.all(5.0),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                  color: const Color.fromARGB(255, 0, 148, 95),),
-                                                child: Row(
-                                                  children: [
-                                                    Text('₹$price',
-                                                        style: const TextStyle(
-                                                                fontSize: 26.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-Black.otf')
-                                                            .copyWith(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Colors
-                                                                    .white)),
-                                                    Text('/Per $price_unit',
-                                                        style: const TextStyle(
-                                                                fontSize: 12.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-Black.otf')
-                                                            .copyWith(
-                                                                fontSize: 10,
-                                                                color: Colors
-                                                                    .white))
-                                                  ],
-                                                ))
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.all(5.0),
-                                              padding:
-                                                  const EdgeInsets.all(6.0),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: const Color.fromRGBO(
-                                                    90, 231, 131, 0.29),
-                                              ),
-                                              child: Text(
-                                                  product_status.toString(),
+                              //height: 320,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      prod_nm.toString(),
+                                      style: const TextStyle(
+                                              fontSize: 26.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(fontSize: 17),
+                                    ),
+                                  ),
+                                  Row(
+                                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: const Color.fromARGB(
+                                                  255, 0, 148, 95),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  '₹$price',
                                                   style: const TextStyle(
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'assets/fonst/Metropolis-SemiBold.otf')),
+                                                          fontSize: 26.0,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: Colors.black,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf')
+                                                      .copyWith(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                          color: Colors.white),
+                                                ),
+                                                Text(
+                                                  '/Per $price_unit',
+                                                  style: const TextStyle(
+                                                          fontSize: 12.0,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf')
+                                                      .copyWith(
+                                                          fontSize: 10,
+                                                          color: Colors.white),
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(6.0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: const Color.fromRGBO(
+                                                  90, 231, 131, 0.29),
+                                            ),
+                                            child: Text(
+                                              product_status.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black,
+                                                  fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.all(5.0),
+                                            padding: const EdgeInsets.all(6.0),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 1, color: Colors.grey),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                            child: Text(
+                                              widget.post_type.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black,
+                                                  fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 90,
+                                          child: Text(
+                                            'Category:',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                          ),
+                                        ),
+                                        Text(
+                                          cate_name,
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 90,
+                                          child: Text(
+                                            'Type:',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                          ),
+                                        ),
+                                        Text(
+                                          type,
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    // width: MediaQuery.of(context).size.width/1.5,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 90,
+                                          child: Text(
+                                            'Grade:',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2.5,
+                                          child: Text(
+                                            Grade,
+                                            overflow: TextOverflow.visible,
+                                            softWrap: false,
+                                            maxLines: 1,
+                                            style: const TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 90,
+                                          child: Text(
+                                            'Quantity:',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                          ),
+                                        ),
+                                        Text(
+                                          "$qty$unit",
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        width: 90,
+                                        height: 70,
+                                        child: Text(
+                                          'Color: ',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        ),
+                                      ),
+
+                                      Expanded(
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          // scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.zero,
+
+                                          itemCount:
+                                              postHaxCodeColors?.length ?? 0,
+                                          itemBuilder: (context, colorIndex) {
+                                            postdetail.PostHaxCodeColor result =
+                                                postHaxCodeColors![colorIndex];
+                                            String colorString =
+                                                result.haxCode.toString();
+                                            String newStr =
+                                                colorString.substring(1);
+
+                                            Color colors = Color(
+                                              int.parse(newStr, radix: 16),
+                                            ).withOpacity(1.0);
+                                            return Container(
+                                              margin: EdgeInsets.zero,
+                                              padding: EdgeInsets.zero,
+                                              child: Row(
+                                                children: [
+                                                  newStr == 'ffffff'
+                                                      ? const Icon(
+                                                          Icons.circle_outlined,
+                                                          size: 15)
+                                                      : Icon(
+                                                          Icons.circle_rounded,
+                                                          size: 15,
+                                                          color: colors),
+                                                  Flexible(
+                                                    child: Text(
+                                                      colorIndex + 1 ==
+                                                              postHaxCodeColors
+                                                                  ?.length
+                                                          ? postHaxCodeColors![
+                                                                  colorIndex]
+                                                              .colorName
+                                                              .toString()
+                                                          : '${postHaxCodeColors![colorIndex].colorName.toString()},',
+                                                      overflow:
+                                                          TextOverflow.visible,
+                                                      maxLines: 1,
+                                                    ),
+
+                                                    //width: 43,
+                                                    // height: 30,
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      prod_desc.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-SemiBold.otf',
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Posted on $create_formattedDate',
+                                        style: const TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(
+                                                fontSize: 10,
+                                                color: Colors.grey),
+                                      ),
+                                      Text(
+                                        'Updated on $update_formattedDate',
+                                        style: const TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(
+                                                fontSize: 10,
+                                                color: Colors.grey),
+                                      )
+                                    ],
+                                  ),
+                                  const Divider(
+                                    color: Colors.grey,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 140,
+                                        child: Row(
+                                          children: [
+                                            //Image.asset('assets/like1.png',height: 25,width: 40,),
+                                            Container(
+                                              child: like == "0"
+                                                  ? GestureDetector(
+                                                      child: Image.asset(
+                                                        'assets/like.png',
+                                                        height: 20,
+                                                        width: 40,
+                                                      ),
+                                                      onTap: () {
+                                                        Prodlike();
+                                                        like = '1';
+                                                        int add = likecount!;
+                                                        add++;
+                                                        likecount = add;
+
+                                                        setState(() {});
+                                                      },
+                                                    )
+                                                  : GestureDetector(
+                                                      child: Image.asset(
+                                                        'assets/like1.png',
+                                                        height: 20,
+                                                        width: 40,
+                                                      ),
+                                                      onTap: () {
+                                                        Prodlike();
+                                                        like = '0';
+                                                        int add = likecount!;
+                                                        add--;
+                                                        likecount = add;
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                            ),
+                                            Text(
+                                              'Interested ($likecount)',
+                                              style: const TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color.fromARGB(
+                                                      255, 0, 91, 148),
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf'),
                                             )
                                           ],
                                         ),
-                                        Row(
+                                      ),
+                                      SizedBox(
+                                        width: 130,
+                                        child: Row(
                                           children: [
-                                            Container(
-                                                margin:
-                                                    const EdgeInsets.all(5.0),
-                                                padding:
-                                                    const EdgeInsets.all(6.0),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: Colors.grey),
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  shape: BoxShape.rectangle,
-                                                ),
-                                                child: Text(
-                                                  widget.post_type.toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 14.0,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'assets/fonst/Metropolis-SemiBold.otf'),
-                                                ))
+                                            Image.asset(
+                                              'assets/view1.png',
+                                              height: 25,
+                                              width: 40,
+                                            ),
+                                            Text(
+                                              'Views ($viewcount)',
+                                              style: const TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Color.fromARGB(
+                                                      255, 0, 91, 148),
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf'),
+                                            )
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: 90,
-                                            child: Text(
-                                              'Category:',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          ),
-                                          Text(cate_name,
-                                              style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'))
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: 90,
-                                            child: Text(
-                                              'Type:',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          ),
-                                          Text(type,
-                                              style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'))
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                      // width: MediaQuery.of(context).size.width/1.5,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: 90,
-                                            child: Text(
-                                              'Grade:',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.5,
-                                            child: Text(Grade,
-                                                overflow: TextOverflow.visible,
-                                                softWrap: false,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-SemiBold.otf')),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 30,
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(
-                                            width: 90,
-                                            child: Text(
-                                              'Quantity:',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          ),
-                                          Text("$qty$unit",
-                                              style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'))
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          // Text('$colors'),]
-                                          //colors==null?Container(): getcolorlist()
-
-                                          const SizedBox(
-                                            width: 90,
-                                            height: 70,
-                                            child: Text(
-                                              'Color: ',
-                                              style: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          ),
-
-                                          Expanded(
-                                            child: ListView.builder(
-                                              shrinkWrap: true,
-                                              // scrollDirection: Axis.horizontal,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              padding: EdgeInsets.zero,
-
-                                              itemCount:
-                                                  postHaxCodeColors?.length ??
-                                                      0,
-                                              itemBuilder:
-                                                  (context, colorIndex) {
-                                                postdetail.PostHaxCodeColor
-                                                    result = postHaxCodeColors![
-                                                        colorIndex];
-                                                String colorString =
-                                                    result.haxCode.toString();
-                                                String newStr =
-                                                    colorString.substring(1);
-
-                                                Color colors = Color(int.parse(
-                                                        newStr,
-                                                        radix: 16))
-                                                    .withOpacity(1.0);
-                                                return Container(
-                                                    margin: EdgeInsets.zero,
-                                                    padding: EdgeInsets.zero,
-                                                    child: Row(
-                                                      children: [
-                                                        newStr == 'ffffff'
-                                                            ? const Icon(
-                                                                Icons
-                                                                    .circle_outlined,
-                                                                size: 15)
-                                                            : Icon(
-                                                                Icons
-                                                                    .circle_rounded,
-                                                                size: 15,
-                                                                color: colors),
-                                                        Flexible(
-                                                          child: Text(
-                                                            colorIndex + 1 ==
-                                                                    postHaxCodeColors
-                                                                        ?.length
-                                                                ? postHaxCodeColors![
-                                                                        colorIndex]
-                                                                    .colorName
-                                                                    .toString()
-                                                                : '${postHaxCodeColors![colorIndex].colorName.toString()},',
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .visible,
-                                                            maxLines: 1,
-                                                          ),
-
-                                                          //width: 43,
-                                                          // height: 30,
-                                                        )
-                                                      ],
-                                                    ));
-                                              },
-                                            ),
-                                          )
-                                        ]),
-                                    Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          prod_desc.toString(),
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf',
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        )),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Posted on $create_formattedDate',
-                                            style: const TextStyle(
-                                                    fontSize: 14.0,
+                                      GestureDetector(
+                                        onTap: () {
+                                          shareImage(
+                                            url: main_product.toString(),
+                                          );
+                                        },
+                                        child: SizedBox(
+                                          width: 90,
+                                          child: Row(
+                                            children: [
+                                              Image.asset(
+                                                'assets/send2.png',
+                                                height: 25,
+                                                width: 40,
+                                              ),
+                                              const Text(
+                                                'Send',
+                                                style: TextStyle(
+                                                    fontSize: 13.0,
                                                     fontWeight: FontWeight.w400,
-                                                    color: Colors.black,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 91, 148),
                                                     fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(
-                                                    fontSize: 10,
-                                                    color: Colors.grey)),
-                                        Text('Updated on $update_formattedDate',
-                                            style: const TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(
-                                                    fontSize: 10,
-                                                    color: Colors.grey))
-                                      ],
-                                    ),
-                                    const Divider(
-                                      color: Colors.grey,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                            width: 140,
-                                            child: Row(
-                                              children: [
-                                                //Image.asset('assets/like1.png',height: 25,width: 40,),
-                                                Container(
-                                                    child: like == "0"
-                                                        ? GestureDetector(
-                                                            child: Image.asset(
-                                                              'assets/like.png',
-                                                              height: 20,
-                                                              width: 40,
-                                                            ),
-                                                            onTap: () {
-                                                              Prodlike();
-                                                              like = '1';
-                                                              int add =
-                                                                  likecount!;
-                                                              add++;
-                                                              likecount = add;
-
-                                                              setState(() {});
-                                                            },
-                                                          )
-                                                        : GestureDetector(
-                                                            child: Image.asset(
-                                                              'assets/like1.png',
-                                                              height: 20,
-                                                              width: 40,
-                                                            ),
-                                                            onTap: () {
-                                                              Prodlike();
-                                                              like = '0';
-                                                              int add =
-                                                                  likecount!;
-                                                              add--;
-                                                              likecount = add;
-                                                              setState(() {});
-                                                            },
-                                                          )),
-                                                Text('Interested ($likecount)',
-                                                    style: const TextStyle(
-                                                        fontSize: 13.0,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Color.fromARGB(
-                                                            255, 0, 91, 148),
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf'))
-                                              ],
-                                            )),
-                                        SizedBox(
-                                            width: 130,
-                                            child: Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/view1.png',
-                                                  height: 25,
-                                                  width: 40,
-                                                ),
-                                                Text('Views ($viewcount)',
-                                                    style: const TextStyle(
-                                                        fontSize: 13.0,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Color.fromARGB(
-                                                            255, 0, 91, 148),
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf'))
-                                              ],
-                                            )),
-                                        GestureDetector(
-                                          onTap: () {
-                                            shareImage(
-                                                url: main_product.toString());
-                                          },
-                                          child: SizedBox(
-                                              width: 90,
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'assets/send2.png',
-                                                    height: 25,
-                                                    width: 40,
-                                                  ),
-                                                  const Text('Send',
-                                                      style: TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Color.fromARGB(
-                                                              255, 0, 91, 148),
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf'))
-                                                ],
-                                              )),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )),
+                                                        'assets/fonst/Metropolis-Black.otf'),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 12,
                             ),
@@ -734,16 +743,18 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                               Container(
                                                 width: 70.0,
                                                 height: 70.0,
-                                                margin: const EdgeInsets.only(top: 3),
+                                                margin: const EdgeInsets.only(
+                                                    top: 3),
                                                 decoration: BoxDecoration(
                                                   //color:  Colors.blue,
                                                   image: DecorationImage(
                                                     image: NetworkImage(
-                                                        user_image.toString()),
+                                                      user_image.toString(),
+                                                    ),
                                                     fit: BoxFit.cover,
                                                   ),
                                                   shape: BoxShape.circle,
-                                                  // borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                                                  // borderRadius: BorderRadius.all(Radius.circular(50.0),),
                                                   border: Border.all(
                                                     color:
                                                         const Color(0xffFFC107),
@@ -752,7 +763,8 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                 ),
                                               ),
                                               Container(
-                                                padding: const EdgeInsets.all(3.0),
+                                                padding:
+                                                    const EdgeInsets.all(3.0),
                                                 transform:
                                                     Matrix4.translationValues(
                                                         0.0, -10.0, 0.0),
@@ -788,7 +800,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                               height: 80,
                                               /*  decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.all(
-                                                        Radius.circular(5.0)),
+                                                        Radius.circular(5.0),),
                                                     border: Border.all(
                                                       color:
                                                           const Color(0xffFFC107),
@@ -846,8 +858,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                       child: Row(
                                                         children: [
                                                           const ImageIcon(
-                                                              AssetImage(
-                                                                  'assets/location.png')),
+                                                            AssetImage(
+                                                                'assets/location.png'),
+                                                          ),
                                                           Expanded(
                                                             child: Text(
                                                               location
@@ -887,7 +900,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                   ),
                                   Column(
                                     children: [
-                                      Expanded(child: Container()),
+                                      Expanded(
+                                        child: Container(),
+                                      ),
                                       Container(
                                         height: 35,
                                         width: 72,
@@ -933,20 +948,27 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                 ),
                                               ),
                                       ),
-                                      Expanded(child: Container()),
-                                      Container(
-                                        height: 35,
-                                        width: 72,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: const Color.fromARGB(
-                                              255, 0, 91, 148),
-                                        ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (_) => const Chat()));
-                                          },
+                                      Expanded(
+                                        child: Container(),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => const Chat(),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 35,
+                                          width: 72,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: const Color.fromARGB(
+                                                255, 0, 91, 148),
+                                          ),
                                           child: const Center(
                                             child: Text('Chat',
                                                 style: TextStyle(
@@ -957,48 +979,55 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                           ),
                                         ),
                                       ),
-                                      Expanded(child: Container()),
+                                      Expanded(
+                                        child: Container(),
+                                      ),
                                     ],
                                   ),
                                 ],
                               ),
                             ),
                             Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    15.0, 5.0, 15.0, 0.0),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text('Similar Posts',
-                                      style: const TextStyle(
-                                              fontSize: 26.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(fontSize: 17),
-                                      textAlign: TextAlign.left),
-                                )),
+                              margin: const EdgeInsets.fromLTRB(
+                                  15.0, 5.0, 15.0, 0.0),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text('Similar Posts',
+                                    style: const TextStyle(
+                                            fontSize: 26.0,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-Black.otf')
+                                        .copyWith(fontSize: 17),
+                                    textAlign: TextAlign.left),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ]),
-                    category()
-                  ],
-                ))
-            : Center(
-                child: Platform.isAndroid
-                    ? const CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
-                    : Platform.isIOS
-                        ? const CupertinoActivityIndicator(
-                            color: Color.fromARGB(255, 0, 91, 148),
-                            radius: 20,
-                            animating: true,
-                          )
-                        : Container()));
+                    ],
+                  ),
+                  category()
+                ],
+              ),
+            )
+          : Center(
+              child: Platform.isAndroid
+                  ? const CircularProgressIndicator(
+                      value: null,
+                      strokeWidth: 2.0,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    )
+                  : Platform.isIOS
+                      ? const CupertinoActivityIndicator(
+                          color: Color.fromARGB(255, 0, 91, 148),
+                          radius: 20,
+                          animating: true,
+                        )
+                      : Container(),
+            ),
+    );
   }
 
   Widget slider() {
@@ -1016,7 +1045,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
               _showImageSliderDialog(context);
             },
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8.0),
+              ),
               child: Image.network(url, fit: BoxFit.cover, width: 1500.0),
             ),
           );
@@ -1040,7 +1071,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       }
       if (snapshot.connectionState == ConnectionState.none &&
           snapshot.hasData == null) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       } else {
         //List<dynamic> users = snapshot.data as List<dynamic>;
         return simmilar_post_buyer.isNotEmpty
@@ -1048,14 +1081,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                 //padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                 padding: const EdgeInsets.only(top: 5.0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  // crossAxisCount: 2,
-                  // mainAxisSpacing: 5,
-                  // crossAxisSpacing: 5,
-                  // childAspectRatio: .90,
                   childAspectRatio: MediaQuery.of(context).size.width / 620,
-                  /*childAspectRatio: MediaQuery.of(context).size.height /
-                      1400,*/ //MediaQuery.of(context).size.aspectRatio * 1.3,
-                  // mainAxisSpacing: 1.0,
                   crossAxisCount: 2,
                 ),
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -1065,75 +1091,73 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                 itemBuilder: (context, index) {
                   similar_prod.Result result = simmilar_post_buyer[index];
                   return GestureDetector(
-                    onTap: (() {
-
-                    }),
+                    onTap: (() {}),
                     child: Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(children: [
-                        Stack(fit: StackFit.passthrough, children: <Widget>[
-                          Container(
-                            height: 165,
-                            width: 175,
-                            margin: const EdgeInsets.all(5.0),
-                            decoration: const BoxDecoration(
-                                //color: Colors.black26,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0))),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              /*shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(10.0)),*/
-                              child: Image(
-                                image: NetworkImage(
-                                    result.mainproductImage.toString()),
-                                fit: BoxFit.cover,
-                                height: 150,
-                                width: 170,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Stack(
+                            fit: StackFit.passthrough,
+                            children: <Widget>[
+                              Container(
+                                height: 165,
+                                width: 175,
+                                margin: const EdgeInsets.all(5.0),
+                                decoration: const BoxDecoration(
+                                  //color: Colors.black26,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
+                                  ),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  /*shape: RoundedRectangleBorder(
+                                     borderRadius: BorderRadius.circular(10.0),),*/
+                                  child: Image(
+                                    image: NetworkImage(
+                                      result.mainproductImage.toString(),
+                                    ),
+                                    fit: BoxFit.cover,
+                                    height: 150,
+                                    width: 170,
+                                  ),
+                                ),
                               ),
-                            ),
-                            /* child:Image(
-                                  errorBuilder: (context, object, trace) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Color.fromARGB(
-                                            255, 223, 220, 220),
-                                      ),
-                                    );
-                                  },
-                                  image: NetworkImage(result.mainproductImage.toString()),fit: BoxFit.cover,width: 170,height: 150,
-                              ),*/
+                              Positioned(
+                                bottom: 10,
+                                left: 10,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0, vertical: 5.0),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 0, 148, 95),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  // color: Color.fromARGB(0,255, 255, 255),
+                                  child: Text(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf',
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Positioned(
-                            bottom: 10,
-                            left: 10,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 5.0),
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 0, 148, 95),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              // color: Color.fromARGB(0,255, 255, 255),
-                              child: Text('₹${result.productPrice}',
-                                  style: const TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf',
-                                      color: Colors.white)),
-                            ),
-                          ),
-                        ]),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 10.0, left: 10.0),
                                   child: Text(result.postName.toString(),
@@ -1145,9 +1169,10 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                               'assets/fonst/Metropolis-SemiBold.otf'),
                                       softWrap: false,
                                       maxLines: 1,
-                                      overflow: TextOverflow.ellipsis)),
-                            ),
-                            Align(
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -1162,8 +1187,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                       softWrap: false,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis),
-                                )),
-                            Align(
+                                ),
+                              ),
+                              Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -1178,8 +1204,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                           softWrap: false,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis),
-                                )),
-                            Align(
+                                ),
+                              ),
+                              Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -1187,15 +1214,18 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                   child: Text(
                                     result.postType.toString(),
                                     style: const TextStyle(
-                                        fontSize: 13.0,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromRGBO(0, 148, 95, 1)),
+                                      fontSize: 13.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(0, 148, 95, 1),
+                                    ),
                                   ),
-                                )),
-                          ],
-                        )
-                      ]),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -1211,7 +1241,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
     } else {
-      Fluttertoast.showToast(msg: widget.post_type.toString());
+      Fluttertoast.showToast(
+        msg: widget.post_type.toString(),
+      );
       if (widget.post_type == 'BuyPost') {
         get_BuyerPostDatil();
         get_ral_buyerpost();
@@ -1229,10 +1261,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getPost_datail(
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),
-        widget.prod_id.toString(),
-        notiId.toString());
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.prod_id.toString(),
+      notiId.toString(),
+    );
     var jsonArray, subjsonarray, color_array;
     if (res['status'] == 1) {
       commonPostdetail = CommonPostdetail.fromJson(res);
@@ -1281,19 +1314,24 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
         DateFormat format = DateFormat("dd-MM-yyyy");
         var curret_date = format.parse(create_date);
         var updat_date = format.parse(update_date);
-        DateTime? dt1 = DateTime.parse(curret_date.toString());
-        DateTime? dt2 = DateTime.parse(updat_date.toString());
+        DateTime? dt1 = DateTime.parse(
+          curret_date.toString(),
+        );
+        DateTime? dt2 = DateTime.parse(
+          updat_date.toString(),
+        );
         // print(dt1);
         create_formattedDate =
             dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
         update_formattedDate =
             dt2 != null ? DateFormat('dd MMMM, yyyy').format(dt2) : "";
-
       }
       if (color_array != null) {
         for (var data in color_array) {
           postdetail.PostHaxCodeColor record = postdetail.PostHaxCodeColor(
-              colorName: data['colorName'], haxCode: data['HaxCode']);
+            colorName: data['colorName'],
+            haxCode: data['HaxCode'],
+          );
           colors.add(record);
         }
       }
@@ -1307,10 +1345,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       load = true;
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     return jsonArray;
-    setState(() {});
   }
 
   get_SalePostDatil() async {
@@ -1318,10 +1357,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getPost_datail1(
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),
-        widget.prod_id.toString(),
-        notiId.toString());
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.prod_id.toString(),
+      notiId.toString(),
+    );
     var jsonArray, subjsonarray, color_array;
 
     if (res['status'] == 1) {
@@ -1369,8 +1409,12 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
         DateFormat format = DateFormat("dd-MM-yyyy");
         var curret_date = format.parse(create_date);
         var updat_date = format.parse(update_date);
-        DateTime? dt1 = DateTime.parse(curret_date.toString());
-        DateTime? dt2 = DateTime.parse(updat_date.toString());
+        DateTime? dt1 = DateTime.parse(
+          curret_date.toString(),
+        );
+        DateTime? dt2 = DateTime.parse(
+          updat_date.toString(),
+        );
 
         create_formattedDate =
             dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
@@ -1380,7 +1424,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       if (color_array != null) {
         for (var data in color_array) {
           postdetail.PostHaxCodeColor record = postdetail.PostHaxCodeColor(
-              colorName: data['colorName'], haxCode: data['HaxCode']);
+            colorName: data['colorName'],
+            haxCode: data['HaxCode'],
+          );
           colors.add(record);
         }
       }
@@ -1395,7 +1441,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       load = true;
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     return jsonArray;
   }
@@ -1403,19 +1451,25 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
   getadd_product() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await addfav(pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(), widget.prod_id.toString());
+    var res = await addfav(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.prod_id.toString(),
+    );
     var jsonArray;
 
     if (res['status'] == 1) {
       jsonArray = res['result'];
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
       prod_like = true;
-
 
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     setState(() {});
     return jsonArray;
@@ -1424,18 +1478,25 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
   getremove_product() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await removefav(pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(), widget.prod_id.toString());
+    var res = await removefav(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.prod_id.toString(),
+    );
     var jsonArray;
 
     if (res['status'] == 1) {
       jsonArray = res['result'];
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
       prod_like = false;
 
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     setState(() {});
     return jsonArray;
@@ -1453,9 +1514,13 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     var jsonArray;
 
     if (response['status'] == 1) {
-      Fluttertoast.showToast(msg: response['message']);
+      Fluttertoast.showToast(
+        msg: response['message'],
+      );
     } else {
-      Fluttertoast.showToast(msg: response['message']);
+      Fluttertoast.showToast(
+        msg: response['message'],
+      );
     }
     setState(() {});
     return jsonArray;
@@ -1463,16 +1528,16 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   getcolorlist() {
     Expanded(
-      child: FutureBuilder(
-          builder: (context, snapshot) {
+      child: FutureBuilder(builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-
           return ListView.builder(
               shrinkWrap: true,
               physics: const AlwaysScrollableScrollPhysics(),
@@ -1481,14 +1546,22 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
               itemBuilder: (context, index) {
                 postdetail.PostHaxCodeColor record = colors[index];
 
-                return Row(children: [
-                  Icon(
-                    Icons.circle,
-                    size: 15,
-                    color: Color(int.parse(record.haxCode.toString())),
-                  ),
-                  Text(record.colorName.toString())
-                ]);
+                return Row(
+                  children: [
+                    Icon(
+                      Icons.circle,
+                      size: 15,
+                      color: Color(
+                        int.parse(
+                          record.haxCode.toString(),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      record.colorName.toString(),
+                    )
+                  ],
+                );
               });
         }
       }),
@@ -1497,7 +1570,10 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   get_ral_buyerpost() async {
     var res = await similar_product_buyer(
-        widget.prod_id.toString(), '20', offset.toString());
+      widget.prod_id.toString(),
+      '20',
+      offset.toString(),
+    );
     var jsonArray;
     if (res['status'] == 1) {
       if (res['result'] != null) {
@@ -1505,25 +1581,28 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
         for (var data in jsonArray) {
           similar_prod.Result record = similar_prod.Result(
-              postName: data['PostName'],
-              categoryName: data['CategoryName'],
-              productGrade: data['ProductGrade'],
-              currency: data['Currency'],
-              productPrice: data['ProductPrice'],
-              state: data['State'],
-              country: data['Country'],
-              postType: data['PostType'],
-              // isPaidPost: data['is_paid_post'],
-              productId: data['productId'],
-              productType: data['ProductType'],
-              mainproductImage: data['mainproductImage']);
+            postName: data['PostName'],
+            categoryName: data['CategoryName'],
+            productGrade: data['ProductGrade'],
+            currency: data['Currency'],
+            productPrice: data['ProductPrice'],
+            state: data['State'],
+            country: data['Country'],
+            postType: data['PostType'],
+            // isPaidPost: data['is_paid_post'],
+            productId: data['productId'],
+            productType: data['ProductType'],
+            mainproductImage: data['mainproductImage'],
+          );
 
           simmilar_post_buyer.add(record);
         }
         setState(() {});
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     return jsonArray;
   }
@@ -1549,7 +1628,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                   itemCount: imagelist.length,
                   builder: (BuildContext context, int index) {
                     return PhotoViewGalleryPageOptions(
-                      imageProvider: NetworkImage(imagelist[index]),
+                      imageProvider: NetworkImage(
+                        imagelist[index],
+                      ),
                       minScale: PhotoViewComputedScale.contained / 5.0,
                       maxScale: PhotoViewComputedScale.covered * 2.0,
                     );
@@ -1593,10 +1674,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.close_rounded)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close_rounded),
+                ),
               ),
               Center(
                 child: Container(
@@ -1622,7 +1704,10 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   get_ral_salerpost() async {
     var res = await similar_product_saler(
-        widget.prod_id.toString(), '20', offset.toString());
+      widget.prod_id.toString(),
+      '20',
+      offset.toString(),
+    );
 
     var jsonArray;
     if (res['status'] == 1) {
@@ -1631,28 +1716,30 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
         for (var data in jsonArray) {
           similar_prod.Result record = similar_prod.Result(
-              postName: data['PostName'],
-              categoryName: data['CategoryName'],
-              productGrade: data['ProductGrade'],
-              currency: data['Currency'],
-              productPrice: data['ProductPrice'],
-              state: data['State'],
-              country: data['Country'],
-              postType: data['PostType'],
-              // isPaidPost: data['is_paid_post'],
-              productId: data['productId'],
-              productType: data['ProductType'],
-              mainproductImage: data['mainproductImage']);
+            postName: data['PostName'],
+            categoryName: data['CategoryName'],
+            productGrade: data['ProductGrade'],
+            currency: data['Currency'],
+            productPrice: data['ProductPrice'],
+            state: data['State'],
+            country: data['Country'],
+            postType: data['PostType'],
+            // isPaidPost: data['is_paid_post'],
+            productId: data['productId'],
+            productType: data['ProductType'],
+            mainproductImage: data['mainproductImage'],
+          );
 
           simmilar_post_saler.add(record);
         }
         setState(() {});
       }
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     return jsonArray;
-    setState(() {});
   }
 
   void _scrollercontroller() {
@@ -1699,19 +1786,20 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                 height: 50.0,
                 width: 50.0,
                 child: Center(
-                    child: Platform.isAndroid
-                        ? const CircularProgressIndicator(
-                            value: null,
-                            strokeWidth: 2.0,
-                            color: Color.fromARGB(255, 0, 91, 148),
-                          )
-                        : Platform.isIOS
-                            ? const CupertinoActivityIndicator(
-                                color: Color.fromARGB(255, 0, 91, 148),
-                                radius: 20,
-                                animating: true,
-                              )
-                            : Container()),
+                  child: Platform.isAndroid
+                      ? const CircularProgressIndicator(
+                          value: null,
+                          strokeWidth: 2.0,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                        )
+                      : Platform.isIOS
+                          ? const CupertinoActivityIndicator(
+                              color: Color.fromARGB(255, 0, 91, 148),
+                              radius: 20,
+                              animating: true,
+                            )
+                          : Container(),
+                ),
               ),
             ),
           ),
@@ -1751,14 +1839,17 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await product_like(
-        widget.prod_id.toString(),
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString());
+      widget.prod_id.toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
 
     var jsonArray;
     if (res['status'] == 1) {
     } else {
-      Fluttertoast.showToast(msg: res['message']);
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     }
     setState(() {});
     return jsonArray;

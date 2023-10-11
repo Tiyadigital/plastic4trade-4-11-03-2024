@@ -956,7 +956,6 @@ class _bussinessprofileState extends State<other_user_profile>
                                                             'https://')
                                                     ? 'https://$urlString'
                                                     : urlString;
-
                                                 launch(formattedUrl,
                                                         forceSafariVC: false,
                                                         forceWebView: false,

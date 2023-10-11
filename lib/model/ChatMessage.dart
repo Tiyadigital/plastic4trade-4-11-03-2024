@@ -3,5 +3,11 @@ class ChatMessage {
   String userType;
   String msgtype;
   String fillname;
-  ChatMessage({required this.messageContent, required this.userType,required this.msgtype,required this.fillname});
+
+  ChatMessage({
+    required this.messageContent,
+    required this.userType,
+    required this.msgtype,
+    required this.fillname,
+  });
 }

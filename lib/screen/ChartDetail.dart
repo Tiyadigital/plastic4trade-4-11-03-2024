@@ -33,9 +33,7 @@ class ChartDetail extends StatefulWidget {
 class _ChartDetailState extends State<ChartDetail> {
   bool istext = false;
   bool isimage = false;
-  //PickedFile? _imagefiles;
   io.File? file;
-  //final ImagePicker _picker = ImagePicker();
   TextEditingController textMessage = TextEditingController();
   String? customUserId, imageurl;
   var jsonData;
@@ -45,6 +43,7 @@ class _ChartDetailState extends State<ChartDetail> {
   List<Message> childList = [];
 
   _ChartDetailState();
+
   List<MapEntry<String, dynamic>>? messageList;
 
   @override
@@ -63,7 +62,6 @@ class _ChartDetailState extends State<ChartDetail> {
     // TODO: implement initState
     super.initState();
 
-
     getUserList();
     _scrollToBottom();
   }
@@ -80,20 +78,21 @@ class _ChartDetailState extends State<ChartDetail> {
         );
       }
     });
-
   }
 
   Widget init() {
     return Scaffold(
-        backgroundColor: const Color(0xFFDADADA),
-        appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-          elevation: 0,
-          title: Row(children: [
+      backgroundColor: const Color(0xFFDADADA),
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        elevation: 0,
+        title: Row(
+          children: [
             CircleAvatar(
               radius: 16.0,
-              backgroundImage:
-                  NetworkImage(widget.user_image.toString()),
+              backgroundImage: NetworkImage(
+                widget.user_image.toString(),
+              ),
               //File imageFile = File(pickedFile.path);
 
               backgroundColor: const Color.fromARGB(255, 240, 238, 238),
@@ -101,36 +100,42 @@ class _ChartDetailState extends State<ChartDetail> {
             const SizedBox(
               width: 2,
             ),
-            Text(widget.user_name!,
-                softWrap: false,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Metropolis',
-                )),
-          ]),
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
+            Text(
+              widget.user_name!,
+              softWrap: false,
+              style: const TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Metropolis',
+              ),
             ),
+          ],
+        ),
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
-        body: Column(children: [
+      ),
+      body: Column(
+        children: [
           Expanded(
             child: buildListMessage(),
           ),
           addchat()
-        ]));
+        ],
+      ),
+    );
   }
 
   void sendMessage(String receiverId, String senderId, String messageText) {
     DatabaseReference messagesRef =
-        FirebaseDatabase.instance.reference().child('messages');
+        FirebaseDatabase.instance.ref().child('messages');
 
     DatabaseReference receiverRef = messagesRef.child('$senderId-$receiverId');
     DatabaseReference newMessageRef = receiverRef.push();
@@ -142,7 +147,9 @@ class _ChartDetailState extends State<ChartDetail> {
       'messageTime': DateTime.now().millisecondsSinceEpoch,
       'senderId': senderId,
       // This will use the server's timestamp
-    }).catchError((error) => print('Failed to send message: $error'));
+    }).catchError(
+      (error) => print('Failed to send message: $error'),
+    );
   }
 
   getUserList() async {
@@ -150,26 +157,27 @@ class _ChartDetailState extends State<ChartDetail> {
 
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
-          name: 'Plastic4Trade',
-          options: const FirebaseOptions(
-              apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
-              appId: "1:929685037367:android:4ee71ab0f0e0608492fab2",
-              messagingSenderId: "929685037367",
-              projectId: "plastic4trade-55372",
-              databaseURL:
-                  "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
+        name: 'Plastic4Trade',
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
+            appId: "1:929685037367:android:4ee71ab0f0e0608492fab2",
+            messagingSenderId: "929685037367",
+            projectId: "plastic4trade-55372",
+            databaseURL:
+                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+      );
     } else if (Platform.isAndroid) {
       await Firebase.initializeApp(
-          name: 'Plastic4Trade',
-          options: const FirebaseOptions(
-              apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
-              appId: "1:929685037367:ios:2ff9d0954f9bc0e292fab2",
-              messagingSenderId: "929685037367",
-              projectId: "plastic4trade-55372",
-              databaseURL:
-                  "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
+        name: 'Plastic4Trade',
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
+            appId: "1:929685037367:ios:2ff9d0954f9bc0e292fab2",
+            messagingSenderId: "929685037367",
+            projectId: "plastic4trade-55372",
+            databaseURL:
+                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+      );
     }
-
 
     customUserId = pref.getString('user_id').toString();
     imageurl = pref.getString('userImage').toString();
@@ -179,17 +187,18 @@ class _ChartDetailState extends State<ChartDetail> {
   List<Message> extractMessages() {
     List<Message> messages = [];
     data?.forEach((key, value) {
-      messages.add(Message(
-        messageText: value['messageText'],
-        messageTime: value['messageTime'],
-        senderId: value['senderId'],
-        mediaType: value['mediaType'],
-        mediaName: value['mediaName'],
-      ));
+      messages.add(
+        Message(
+          messageText: value['messageText'],
+          messageTime: value['messageTime'],
+          senderId: value['senderId'],
+          mediaType: value['mediaType'],
+          mediaName: value['mediaName'],
+        ),
+      );
     });
     return messages;
   }
-
 
   Stream<List<MapEntry<String, dynamic>>> getMessageStream() {
     messageList?.clear();
@@ -198,7 +207,6 @@ class _ChartDetailState extends State<ChartDetail> {
 
     controller.add(messageList!);
 
-
     controller.close();
 
     return controller.stream;
@@ -206,24 +214,24 @@ class _ChartDetailState extends State<ChartDetail> {
 
   Widget buildListMessage() {
     return StreamBuilder<DatabaseEvent>(
-        stream: FirebaseDatabase.instance.reference().child("messages").onValue,
+        stream: FirebaseDatabase.instance.ref().child("messages").onValue,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-
             return Center(
-                child: Platform.isAndroid
-                    ? const CircularProgressIndicator(
-                        value: null,
-                        strokeWidth: 2.0,
-                        color: Color.fromARGB(255, 0, 91, 148),
-                      )
-                    : Platform.isIOS
-                        ? const CupertinoActivityIndicator(
-                            color: Color.fromARGB(255, 0, 91, 148),
-                            radius: 20,
-                            animating: true,
-                          )
-                        : Container());
+              child: Platform.isAndroid
+                  ? const CircularProgressIndicator(
+                      value: null,
+                      strokeWidth: 2.0,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    )
+                  : Platform.isIOS
+                      ? const CupertinoActivityIndicator(
+                          color: Color.fromARGB(255, 0, 91, 148),
+                          radius: 20,
+                          animating: true,
+                        )
+                      : Container(),
+            );
           } else if (snapshot.hasError) {
             // If there's an error
             return Text('Error: ${snapshot.error}');
@@ -231,7 +239,6 @@ class _ChartDetailState extends State<ChartDetail> {
             // If there's no data
             return const Text('No data available');
           } else {
-
             DataSnapshot? dataSnapshot = snapshot.data?.snapshot;
             if (dataSnapshot != null) {
               for (var childSnapshot in dataSnapshot.children) {
@@ -241,23 +248,26 @@ class _ChartDetailState extends State<ChartDetail> {
                 if (parts.length == 2) {
                   if (parts[0].toString() == customUserId &&
                       parts[1].toString() == widget.user_id) {
-
-
                     dynamic myVariable = childSnapshot.value;
 
                     data = myVariable!.cast<String, dynamic>();
                     messageList = data!.entries.toList();
-                    messageList!.sort((a, b) => a.value["messageTime"]
-                        .compareTo(b.value["messageTime"]));
-
+                    messageList!.sort(
+                      (a, b) => a.value["messageTime"].compareTo(
+                        b.value["messageTime"],
+                      ),
+                    );
                   } else if (parts[1].toString() == customUserId &&
                       parts[0].toString() == widget.user_id) {
                     jsonData = childSnapshot.value;
                     dynamic myVariable = childSnapshot.value;
                     data = myVariable!.cast<String, dynamic>();
                     messageList = data!.entries.toList();
-                    messageList!.sort((a, b) => a.value["messageTime"]
-                        .compareTo(b.value["messageTime"]));
+                    messageList!.sort(
+                      (a, b) => a.value["messageTime"].compareTo(
+                        b.value["messageTime"],
+                      ),
+                    );
                   }
                 }
               }
@@ -278,12 +288,16 @@ class _ChartDetailState extends State<ChartDetail> {
                   final senderId = entry.value['senderId'];
 
                   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-                      int.parse(messageTime.toString()));
+                    int.parse(
+                      messageTime.toString(),
+                    ),
+                  );
 
                   String formattedDateTime =
                       DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
-                  var datetime =
-                      getTextForDate(DateTime.parse(formattedDateTime));
+                  var datetime = getTextForDate(
+                    DateTime.parse(formattedDateTime),
+                  );
                   return Container(
                     margin: const EdgeInsets.only(top: 5, right: 8, left: 8),
                     decoration: const BoxDecoration(),
@@ -294,8 +308,9 @@ class _ChartDetailState extends State<ChartDetail> {
                             children: [
                               CircleAvatar(
                                 radius: 10.0,
-                                backgroundImage:
-                                    NetworkImage(widget.user_image.toString()),
+                                backgroundImage: NetworkImage(
+                                  widget.user_image.toString(),
+                                ),
                                 backgroundColor:
                                     const Color.fromARGB(255, 240, 238, 238),
                               ),
@@ -535,8 +550,9 @@ class _ChartDetailState extends State<ChartDetail> {
                               const SizedBox(width: 5),
                               CircleAvatar(
                                 radius: 10.0,
-                                backgroundImage:
-                                    NetworkImage(imageurl.toString()),
+                                backgroundImage: NetworkImage(
+                                  imageurl.toString(),
+                                ),
                                 backgroundColor:
                                     const Color.fromARGB(255, 240, 238, 238),
                               ),
@@ -555,7 +571,7 @@ class _ChartDetailState extends State<ChartDetail> {
   Future<void> fetchDataAndUpdateStream() async {
     try {
       DataSnapshot snapshot =
-          await FirebaseDatabase.instance.reference().child("messages").get();
+          await FirebaseDatabase.instance.ref().child("messages").get();
       _dataStreamController.add(snapshot);
     } catch (e) {
       _dataStreamController.addError(e);
@@ -577,341 +593,332 @@ class _ChartDetailState extends State<ChartDetail> {
 
   Widget addchat() {
     return Align(
-        alignment: Alignment.bottomCenter,
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 0,  5,),
-                    height: 60,
-                    width: double.infinity,
-                    // color: Colors.white,
-                    child: Row(
-                      children: <Widget>[
-                        isimage
-                            ? GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isimage = false;
-                                    //ViewItem(context);
-                                  });
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    //color: Color.fromARGB(255, 0, 91, 148),
-                                    color: const Color(0xFFDADADA),
-                                    borderRadius: BorderRadius.circular(60),
-                                  ),
-                                  child: const Icon(
-                                    Icons.cancel_rounded,
-                                    color: Colors.red,
-                                    size: 45,
-                                  ),
+      alignment: Alignment.bottomCenter,
+      child: Stack(
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(
+                    10,
+                    10,
+                    0,
+                    5,
+                  ),
+                  height: 60,
+                  width: double.infinity,
+                  // color: Colors.white,
+                  child: Row(
+                    children: <Widget>[
+                      isimage
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isimage = false;
+                                  //ViewItem(context);
+                                });
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  //color: Color.fromARGB(255, 0, 91, 148),
+                                  color: const Color(0xFFDADADA),
+                                  borderRadius: BorderRadius.circular(60),
                                 ),
-                              )
-                            : GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isimage = true;
-                                    //ViewItem(context);
-                                  });
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(255, 0, 91, 148),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
+                                child: const Icon(
+                                  Icons.cancel_rounded,
+                                  color: Colors.red,
+                                  size: 45,
                                 ),
                               ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: textMessage,
-                            keyboardType: TextInputType.multiline,
-                            textCapitalization: TextCapitalization.sentences,
-                            minLines: 1,
-                            maxLines: null,
-                            onChanged: ((value) {
-                              setState(() {
-                                // _messageEntrer = value;
-                                istext = true;
-                                if (value.toString().isEmpty) {
-                                  istext = false;
-                                }
-                              });
-                            }),
-                            decoration: InputDecoration(
-                              hintText: "Type your message here",
-                              hintMaxLines: 1,
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0, vertical: 10),
-                              hintStyle: const TextStyle(
-                                fontSize: 16,
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                                borderSide: const BorderSide(
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isimage = true;
+                                  //ViewItem(context);
+                                });
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: const Color.fromARGB(255, 0, 91, 148),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: const Icon(
+                                  Icons.add,
                                   color: Colors.white,
-                                  width: 0.2,
+                                  size: 20,
                                 ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                                borderSide: const BorderSide(
-                                  color: Colors.black26,
-                                  width: 0.2,
-                                ),
+                            ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: textMessage,
+                          keyboardType: TextInputType.multiline,
+                          textCapitalization: TextCapitalization.sentences,
+                          minLines: 1,
+                          maxLines: null,
+                          onChanged: ((value) {
+                            setState(() {
+                              // _messageEntrer = value;
+                              istext = true;
+                              if (value.toString().isEmpty) {
+                                istext = false;
+                              }
+                            });
+                          }),
+                          decoration: InputDecoration(
+                            hintText: "Type your message here",
+                            hintMaxLines: 1,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 10),
+                            hintStyle: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 0.2,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                                width: 0.2,
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        istext
-                            ? FloatingActionButton(
-                                onPressed: () {
-                                  sendMessage(
-                                      widget.user_id.toString(),
-                                      customUserId.toString(),
-                                      textMessage.text);
-                                  setState(() {
-                                    messageList?.clear();
-                                    getUserList();
-                                  });
-                                  //constanst.messages.add(ChatMessage(messageContent: textMessage.text.toString(), userType: 'sender', msgtype: 'text',fillname: ""));
-                                  setState(() {
-                                    textMessage.text = '';
-                                    istext = false;
-                                  });
-                                },
-                                // backgroundColor: Colors.blue,
-                                elevation: 0,
-                                child: const Icon(
-                                  Icons.send,
-                                  color: Colors.white,
-                                  size: 18,
-                                ),
-                              )
-                            : FloatingActionButton(
-                                onPressed: () {},
-                                // backgroundColor: Colors.blue,
-                                elevation: 0,
-                                child: const Icon(
-                                  Icons.keyboard_voice,
-                                  color: Colors.white,
-                                  size: 18,
-                                ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      istext
+                          ? FloatingActionButton(
+                              onPressed: () {
+                                sendMessage(widget.user_id.toString(),
+                                    customUserId.toString(), textMessage.text);
+                                setState(() {
+                                  messageList?.clear();
+                                  getUserList();
+                                });
+                                //constanst.messages.add(ChatMessage(messageContent: textMessage.text.toString(), userType: 'sender', msgtype: 'text',fillname: ""),);
+                                setState(() {
+                                  textMessage.text = '';
+                                  istext = false;
+                                });
+                              },
+                              // backgroundColor: Colors.blue,
+                              elevation: 0,
+                              child: const Icon(
+                                Icons.send,
+                                color: Colors.white,
+                                size: 18,
                               ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                      visible: isimage,
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 15,
+                            )
+                          : FloatingActionButton(
+                              onPressed: () {},
+                              // backgroundColor: Colors.blue,
+                              elevation: 0,
+                              child: const Icon(
+                                Icons.keyboard_voice,
+                                color: Colors.white,
+                                size: 18,
+                              ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: isimage,
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
                               children: [
-                                Column(
-                                  children: [
-                                    GestureDetector(
-                                        child: Image.asset(
-                                          "assets/add_image.png",
-                                          width: 150,
-                                          height: 120,
-                                        ),
-                                        onTap: () {
-                                          showDialog(
-                                            barrierColor: Colors.black26,
-                                            context: context,
-                                            builder: (context) {
-                                              isimage = false;
+                                GestureDetector(
+                                    child: Image.asset(
+                                      "assets/add_image.png",
+                                      width: 150,
+                                      height: 120,
+                                    ),
+                                    onTap: () {
+                                      showDialog(
+                                        barrierColor: Colors.black26,
+                                        context: context,
+                                        builder: (context) {
+                                          isimage = false;
 
-                                              return bottomsheet();
-                                            },
-                                          );
-                                        }),
-                                    const SizedBox(
-                                        width: 68,
-                                        child: Text(
-                                          'Image',
-                                          style: TextStyle(
-                                              fontSize: 13.0,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf'),
-                                          textAlign: TextAlign.center,
-                                        ))
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    GestureDetector(
-                                        child: Image.asset(
-                                          "assets/add_doc.png",
-                                          width: 150,
-                                          height: 120,
-                                        ),
-                                        onTap: () async {
-                                          FilePickerResult? result =
-                                              await FilePicker.platform
-                                                  .pickFiles();
-
-                                          if (result != null) {
-                                            PlatformFile files =
-                                                result.files.first;
-                                            setState(() {
-                                              isimage = isimage = false;
-                                            });
-
-                                            constanst.messages.add(ChatMessage(
-                                                messageContent: "",
-                                                userType: "sender",
-                                                msgtype: "pdf",
-                                                fillname: files.name));
-                                          } else {
-                                          }
-                                        }),
-                                    const SizedBox(
-                                        width: 68,
-                                        child: Text(
-                                          'Attach Document',
-                                          style: TextStyle(
-                                              fontSize: 13.0,
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf'),
-                                          textAlign: TextAlign.center,
-                                        ))
-                                  ],
+                                          return bottomsheet();
+                                        },
+                                      );
+                                    }),
+                                const SizedBox(
+                                  width: 68,
+                                  child: Text(
+                                    'Image',
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textAlign: TextAlign.center,
+                                  ),
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 15,
+                            Column(
+                              children: [
+                                GestureDetector(
+                                    child: Image.asset(
+                                      "assets/add_doc.png",
+                                      width: 150,
+                                      height: 120,
+                                    ),
+                                    onTap: () async {
+                                      FilePickerResult? result =
+                                          await FilePicker.platform.pickFiles();
+
+                                      if (result != null) {
+                                        PlatformFile files = result.files.first;
+                                        setState(() {
+                                          isimage = isimage = false;
+                                        });
+
+                                        constanst.messages.add(
+                                          ChatMessage(
+                                              messageContent: "",
+                                              userType: "sender",
+                                              msgtype: "pdf",
+                                              fillname: files.name),
+                                        );
+                                      } else {}
+                                    }),
+                                const SizedBox(
+                                  width: 68,
+                                  child: Text(
+                                    'Attach Document',
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
                             )
                           ],
                         ),
-                      ))
-                ],
-              ),
-            )
-          ],
-        ));
+                        const SizedBox(
+                          height: 15,
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget bottomsheet() {
     return Dialog(
-        elevation: 0,
-        backgroundColor: const Color(0xffffffff),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            height: 100.0,
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              children: <Widget>[
-                const Text(
-                  "Choose Profile Photo",
-                  style: TextStyle(fontSize: 18.0),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextButton.icon(
-                        onPressed: () {
-                          //takephoto(ImageSource.camera);
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.camera,
-                            color: Color.fromARGB(255, 0, 91, 148)),
-                        label: const Text(
-                          'Camera',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 0, 91, 148)),
-                        )),
-                    TextButton.icon(
-                        onPressed: () {
-                          // takephoto(ImageSource.gallery);
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.image,
-                            color: Color.fromARGB(255, 0, 91, 148)),
-                        label: const Text(
-                          'Gallary',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 0, 91, 148)),
-                        )),
-                  ],
-                )
-              ],
-            ),
-          );
-        }));
+      elevation: 0,
+      backgroundColor: const Color(0xffffffff),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return Container(
+          height: 100.0,
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: <Widget>[
+              const Text(
+                "Choose Profile Photo",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton.icon(
+                    onPressed: () {
+                      //takephoto(ImageSource.camera);
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.camera,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    ),
+                    label: const Text(
+                      'Camera',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 91, 148),
+                      ),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.image,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    ),
+                    label: const Text(
+                      'Gallery',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 0, 91, 148),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      }),
+    );
   }
 
-  /*void takephoto(ImageSource imageSource) async {
-    final pickedfile = await _picker.getImage(source: imageSource);
-    setState(() {
-      _imagefiles = pickedfile!;
-      file = io.File(_imagefiles!.path);
-
-
-      setState(() {
-        Navigator.of(context).pop();
-       // Navigator.of(context).pop();
-        isimage = false;
-        constanst.messages.add(ChatMessage(messageContent: "", userType: "sender", msgtype: "image",fillname: _imagefiles!.path ));
-      });
-      setState(() {
-
-      });
-      print('dw');
-      print(constanst.messages.length);
-      // print('image path : ');
-      // print(_imagefiles!.path);
-    });
-  }
-*/
   ViewItem(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        // <-- SEE HERE
-        topLeft: Radius.circular(25.0),
-        topRight: Radius.circular(25.0),
-      )),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
       builder: (context) => const YourWidget(),
     );
   }
@@ -927,9 +934,7 @@ class YourWidget extends StatefulWidget {
 class _YourWidgetState extends State<YourWidget> {
   String? assignedName;
   bool gender = false;
-  //PickedFile? _imagefiles;
   io.File? file;
-  //final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -955,23 +960,22 @@ class _YourWidgetState extends State<YourWidget> {
                           barrierColor: Colors.black26,
                           context: context,
                           builder: (context) {
-                            setState(() {
-                              //  isimage=false;
-                            });
+                            setState(() {});
                             return bottomsheet();
                           },
                         );
                       }),
                   const SizedBox(
-                      width: 68,
-                      child: Text(
-                        'Image',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets/fonst/Metropolis-Black.otf'),
-                        textAlign: TextAlign.center,
-                      ))
+                    width: 68,
+                    child: Text(
+                      'Image',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 ],
               ),
               Column(
@@ -988,24 +992,26 @@ class _YourWidgetState extends State<YourWidget> {
 
                         if (result != null) {
                           PlatformFile files = result.files.first;
-                          constanst.messages.add(ChatMessage(
-                              messageContent: "",
-                              userType: "sender",
-                              msgtype: "pdf",
-                              fillname: files.name));
-                        } else {
-                        }
+                          constanst.messages.add(
+                            ChatMessage(
+                                messageContent: "",
+                                userType: "sender",
+                                msgtype: "pdf",
+                                fillname: files.name),
+                          );
+                        } else {}
                       }),
                   const SizedBox(
-                      width: 68,
-                      child: Text(
-                        'Attach Document',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets/fonst/Metropolis-Black.otf'),
-                        textAlign: TextAlign.center,
-                      ))
+                    width: 68,
+                    child: Text(
+                      'Attach Document',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 ],
               )
             ],
@@ -1020,50 +1026,55 @@ class _YourWidgetState extends State<YourWidget> {
 
   Widget bottomsheet() {
     return Dialog(
-        elevation: 0,
-        backgroundColor: const Color(0xffffffff),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return Container(
-            height: 100.0,
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              children: <Widget>[
-                const Text(
-                  "Choose Profile Photo",
-                  style: TextStyle(fontSize: 18.0),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TextButton.icon(
-                        onPressed: () {
-                          //takephoto(ImageSource.camera);
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.camera,
-                            color: Color.fromARGB(255, 0, 91, 148)),
-                        label: const Text('Camera')),
-                    TextButton.icon(
-                        onPressed: () {
-                          // takephoto(ImageSource.gallery);
-                          setState(() {});
-                        },
-                        icon: const Icon(Icons.image),
-                        label: const Text('Gallary')),
-                  ],
-                )
-              ],
-            ),
-          );
-        }));
+      elevation: 0,
+      backgroundColor: const Color(0xffffffff),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+        return Container(
+          height: 100.0,
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: <Widget>[
+              const Text(
+                "Choose Profile Photo",
+                style: TextStyle(fontSize: 18.0),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton.icon(
+                    onPressed: () {
+                      //takephoto(ImageSource.camera);
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.camera,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    ),
+                    label: const Text('Camera'),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      // takephoto(ImageSource.gallery);
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.image),
+                    label: const Text('Gallary'),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      }),
+    );
   }
 
 /*void takephoto(ImageSource imageSource) async {
@@ -1077,7 +1088,7 @@ class _YourWidgetState extends State<YourWidget> {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
        // constanst.isimage = true;
-        constanst.messages.add(ChatMessage(messageContent: "", userType: "sender", msgtype: "image",fillname: _imagefiles!.path ));
+        constanst.messages.add(ChatMessage(messageContent: "", userType: "sender", msgtype: "image",fillname: _imagefiles!.path ),);
       });
       print('dw');
       print(constanst.messages.length);

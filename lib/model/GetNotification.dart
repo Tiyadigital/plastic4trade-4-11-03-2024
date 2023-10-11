@@ -9,23 +9,24 @@ class GetNotification {
 
   GetNotification.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message = json['message'];
+    message = json[''
+        'message'];
     notificationCount = json['NotificationCount'];
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+        result!.add(Result.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['NotificationCount'] = this.notificationCount;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['NotificationCount'] = notificationCount;
+    if (result != null) {
+      data['result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -102,28 +103,28 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['notificationId'] = this.notificationId;
-    data['name'] = this.name;
-    data['from_user_id'] = this.fromUserId;
-    data['profilepic'] = this.profilepic;
-    data['heading'] = this.heading;
-    data['description'] = this.description;
-    data['type'] = this.type;
-    data['notification_type'] = this.notificationType;
-    data['salepost_id'] = this.salepostId;
-    data['buypost_id'] = this.buypostId;
-    data['post_image'] = this.postImage;
-    data['blog_id'] = this.blogId;
-    data['news_id'] = this.newsId;
-    data['liveprice_id'] = this.livepriceId;
-    data['advertise_id'] = this.advertiseId;
-    data['is_read'] = this.isRead;
-    data['time'] = this.time;
-    data['profile_user_id'] = this.profileUserId;
-    data['is_follow'] = this.isFollow;
-    data['follow_id'] = this.followId;
-    data['other_image'] = this.otherImage;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['notificationId'] = notificationId;
+    data['name'] = name;
+    data['from_user_id'] = fromUserId;
+    data['profilepic'] = profilepic;
+    data['heading'] = heading;
+    data['description'] = description;
+    data['type'] = type;
+    data['notification_type'] = notificationType;
+    data['salepost_id'] = salepostId;
+    data['buypost_id'] = buypostId;
+    data['post_image'] = postImage;
+    data['blog_id'] = blogId;
+    data['news_id'] = newsId;
+    data['liveprice_id'] = livepriceId;
+    data['advertise_id'] = advertiseId;
+    data['is_read'] = isRead;
+    data['time'] = time;
+    data['profile_user_id'] = profileUserId;
+    data['is_follow'] = isFollow;
+    data['follow_id'] = followId;
+    data['other_image'] = otherImage;
     return data;
   }
 }
