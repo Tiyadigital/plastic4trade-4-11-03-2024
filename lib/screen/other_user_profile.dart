@@ -356,7 +356,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                       image: AssetImage(
                                                                           'assets/verify.png'),),
                                                                   Text(
-                                                                      'Unverified'),
+                                                                      'Verified'),
                                                                 ],
                                                               )
                                                             : verify_status ==
@@ -367,7 +367,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                                                           image:
                                                                               AssetImage('assets/verify.png'),),
                                                                       const Text(
-                                                                          'Unverified'),
+                                                                          'Verified'),
                                                                       const SizedBox(
                                                                           width:
                                                                               5),

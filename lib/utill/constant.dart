@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, camel_case_types
+
 import 'dart:core';
 import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
@@ -8,7 +10,6 @@ import 'package:Plastic4trade/model/GetCategoryGrade.dart' as grade;
 import 'package:Plastic4trade/model/Getmybusinessprofile.dart' as profile;
 import 'package:Plastic4trade/model/getUserProfile.dart' as user_profile;
 import 'package:Plastic4trade/model/GetColors.dart' as color;
-import 'package:Plastic4trade/model/GetUnit.dart' as unit;
 import '../model/ChatMessage.dart';
 import 'package:Plastic4trade/model/getannualcapacity.dart' as cat;
 import 'package:Plastic4trade/model/Getbusiness_document_types.dart'

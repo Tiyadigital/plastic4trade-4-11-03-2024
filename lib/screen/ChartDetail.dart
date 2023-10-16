@@ -11,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,14 +60,11 @@ class _ChartDetailState extends State<ChartDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     getUserList();
     _scrollToBottom();
   }
 
   void _scrollToBottom() {
-    Fluttertoast.showToast(msg: "i m in down");
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -146,6 +142,7 @@ class _ChartDetailState extends State<ChartDetail> {
       'messageText': messageText,
       'messageTime': DateTime.now().millisecondsSinceEpoch,
       'senderId': senderId,
+
       // This will use the server's timestamp
     }).catchError(
       (error) => print('Failed to send message: $error'),
@@ -163,10 +160,10 @@ class _ChartDetailState extends State<ChartDetail> {
             appId: "1:929685037367:android:4ee71ab0f0e0608492fab2",
             messagingSenderId: "929685037367",
             projectId: "plastic4trade-55372",
-            databaseURL:
-                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+            databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
       );
-    } else if (Platform.isAndroid) {
+    }
+    else if (Platform.isAndroid) {
       await Firebase.initializeApp(
         name: 'Plastic4Trade',
         options: const FirebaseOptions(
@@ -174,8 +171,7 @@ class _ChartDetailState extends State<ChartDetail> {
             appId: "1:929685037367:ios:2ff9d0954f9bc0e292fab2",
             messagingSenderId: "929685037367",
             projectId: "plastic4trade-55372",
-            databaseURL:
-                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+            databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
       );
     }
 
@@ -204,11 +200,8 @@ class _ChartDetailState extends State<ChartDetail> {
     messageList?.clear();
 
     final controller = StreamController<List<MapEntry<String, dynamic>>>();
-
     controller.add(messageList!);
-
     controller.close();
-
     return controller.stream;
   }
 
@@ -236,7 +229,6 @@ class _ChartDetailState extends State<ChartDetail> {
             // If there's an error
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData) {
-            // If there's no data
             return const Text('No data available');
           } else {
             DataSnapshot? dataSnapshot = snapshot.data?.snapshot;
@@ -321,7 +313,7 @@ class _ChartDetailState extends State<ChartDetail> {
                                       constraints: BoxConstraints(
                                         maxWidth:
                                             MediaQuery.of(context).size.width *
-                                                .4,
+                                                0.4,
                                       ),
                                       padding: const EdgeInsets.only(
                                         left: 15,
@@ -1051,7 +1043,6 @@ class _YourWidgetState extends State<YourWidget> {
                 children: <Widget>[
                   TextButton.icon(
                     onPressed: () {
-                      //takephoto(ImageSource.camera);
                       setState(() {});
                     },
                     icon: const Icon(
@@ -1062,7 +1053,6 @@ class _YourWidgetState extends State<YourWidget> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      // takephoto(ImageSource.gallery);
                       setState(() {});
                     },
                     icon: const Icon(Icons.image),
@@ -1076,24 +1066,4 @@ class _YourWidgetState extends State<YourWidget> {
       }),
     );
   }
-
-/*void takephoto(ImageSource imageSource) async {
-    final pickedfile = await _picker.getImage(source: imageSource);
-    setState(() {
-      _imagefiles = pickedfile!;
-      file = io.File(_imagefiles!.path);
-
-
-      setState(() {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-       // constanst.isimage = true;
-        constanst.messages.add(ChatMessage(messageContent: "", userType: "sender", msgtype: "image",fillname: _imagefiles!.path ),);
-      });
-      print('dw');
-      print(constanst.messages.length);
-      // print('image path : ');
-      // print(_imagefiles!.path);
-    });
-  }*/
 }

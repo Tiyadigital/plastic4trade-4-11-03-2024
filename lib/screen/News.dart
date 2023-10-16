@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -512,13 +514,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
 
               DateFormat format = new DateFormat("yyyy-MM-dd");
               create_date = record.newsDate.toString();
-              var updat_date = format.parse(create_date);
+              var updatDate = format.parse(create_date);
 
               create_date1 = record.newsDate.toString();
-              var curret_date = format.parse(create_date);
+              var curretDate = format.parse(create_date);
 
-              DateTime? dt1 = DateTime.parse(curret_date.toString());
-              DateTime? dt2 = DateTime.parse(updat_date.toString());
+              DateTime? dt1 = DateTime.parse(curretDate.toString());
+              DateTime? dt2 = DateTime.parse(updatDate.toString());
               //print('dt1 $dt2');
               update_formattedDate =
                   dt2 != null ? DateFormat('dd-MMMM-yyyy').format(dt2) : "";
@@ -529,7 +531,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
               create_formattedDate =
                   dt1 != null ? DateFormat("dd-MM-yyyy").format(dt1) : "";
               // print('Todat $create_formattedDate');
-              String display_date = dateConverter(create_formattedDate);
+              String displayDate = dateConverter(create_formattedDate);
 
               return GestureDetector(
                   onTap: (() {
@@ -550,7 +552,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                       ),
                       Align(
                           alignment: Alignment.topLeft,
-                          child: Text(display_date.toString(),
+                          child: Text(displayDate.toString(),
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: 'Metropolis',
@@ -784,13 +786,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     return jsonarray;
   }
 
-  Future<void> Newslike(String news_id) async {
+  Future<void> Newslike(String newsId) async {
     GetNews getsimmilar = GetNews();
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
-    print(news_id);
+    print(newsId);
     var res = await news_like(
-        news_id.toString(),
+        newsId.toString(),
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
 

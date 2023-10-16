@@ -45,7 +45,6 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
     getUserList();
   }
@@ -53,7 +52,6 @@ class _ChatState extends State<Chat> {
   Future<void> updateChatCountToZero(
       String count, String receiverId, String senderId) async {
     try {
-      Fluttertoast.showToast(msg: 'in');
 
       var collection = FirebaseFirestore.instance.collection('users');
       var docRef = collection.doc('$receiverId-$senderId');
@@ -101,7 +99,8 @@ class _ChatState extends State<Chat> {
               projectId: "plastic4trade-55372",
               databaseURL:
                   "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
-    } else if (Platform.isAndroid) {
+    }
+    else if (Platform.isAndroid) {
       await Firebase.initializeApp(
           name: 'Plastic4Trade',
           options: const FirebaseOptions(
@@ -115,13 +114,16 @@ class _ChatState extends State<Chat> {
 
     customUserId = pref.getString('user_id').toString();
 
-    yourStream = FirebaseFirestore.instance
-        .collection('users')
-        .where('senderId', isEqualTo: '14969');
+    yourStream = FirebaseFirestore.instance.collection('users').where('senderId', isEqualTo: "14969");
+
+    // print("DATA 1  ==  $yourStream");
+
     Future<DataSnapshot> newRef2 =
         FirebaseDatabase.instance.ref().child("users").get();
 
     newRef2.then((DataSnapshot snapshot) {
+
+
       if (snapshot.value != null) {
         for (var childSnapshot in snapshot.children) {
           String childData = childSnapshot.key.toString();
@@ -155,10 +157,12 @@ class _ChatState extends State<Chat> {
             }
           }
         }
-      } else {}
+      } else {
+      }
       load = true;
       setState(() {});
     });
+
 
     return yourStream;
   }
@@ -176,8 +180,7 @@ class _ChatState extends State<Chat> {
   }
 
   Future<UserCredential> signInAnonymously() async {
-    UserCredential userCredential =
-        await FirebaseAuth.instance.signInAnonymously();
+    UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
     return userCredential;
   }
 
@@ -195,7 +198,7 @@ class _ChatState extends State<Chat> {
               color: Colors.black,
               fontWeight: FontWeight.w600,
               fontFamily: 'Metropolis',
-            )),
+            ),),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -368,7 +371,8 @@ class _ChatState extends State<Chat> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                  },
                                                   icon: Image.asset(
                                                       'assets/delete2.png',
                                                       color: Colors.white,
@@ -379,8 +383,7 @@ class _ChatState extends State<Chat> {
                                                   'Remove',
                                                   style: TextStyle(
                                                       fontSize: 9,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                      fontWeight: FontWeight.w600,
                                                       color: Colors.white),
                                                 )
                                               ],
@@ -399,6 +402,7 @@ class _ChatState extends State<Chat> {
                             onTap: () {
                               updateChatCountToZero(
                                 "1",
+                                // customUserId!,
                                 "14969",
                                 "19559",
                               );

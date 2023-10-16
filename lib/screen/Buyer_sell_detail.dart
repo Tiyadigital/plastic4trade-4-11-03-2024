@@ -23,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
 import '../model/CommonPostdetail.dart';
+import 'ChartDetail.dart';
 
 class Buyer_sell_detail extends StatefulWidget {
   String? post_type;
@@ -956,7 +957,12 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (_) => const Chat(),
+                                              // builder: (_) => const Chat(),
+                                              builder: (_) =>  ChartDetail(
+                                                user_id!.toString(),
+                                                  usernm.toString(),
+                                                  user_image.toString(),
+                                              ),
                                             ),
                                           );
                                         },
@@ -1114,8 +1120,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(20.0),
-                                  /*shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(10.0),),*/
                                   child: Image(
                                     image: NetworkImage(
                                       result.mainproductImage.toString(),

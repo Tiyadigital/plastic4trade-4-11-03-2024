@@ -1,17 +1,15 @@
+// ignore_for_file: depend_on_referenced_packages, unnecessary_null_comparison, non_constant_identifier_names, prefer_typing_uninitialized_variables, library_private_types_in_public_api
+
 import 'dart:io';
 
+import 'package:Plastic4trade/api/api_interface.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/api/api_interface.dart';
-import 'package:Plastic4trade/model/GetVideoList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'package:flutter/gestures.dart';
-import 'package:Plastic4trade/model/GetVideoList.dart' as video;
+
 import '../widget/HomeAppbar.dart';
 
 class Videos extends StatefulWidget {
@@ -22,8 +20,6 @@ class Videos extends StatefulWidget {
 }
 
 class _YourWidgetState extends State<Videos> {
-  int? _radioValue = 0;
-  int? _managerValue = 0;
   String? assignedName;
   bool load = false;
   String link = "";
@@ -40,18 +36,18 @@ class _YourWidgetState extends State<Videos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(240, 218, 218, 218),
+      backgroundColor: const Color.fromARGB(240, 218, 218, 218),
       appBar: CustomeApp('Videos'),
       body: load
           ? Container(
-              margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+              margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               child: SingleChildScrollView(child: FutureBuilder(
 
                   //future: load_subcategory(),
                   builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.none &&
                     snapshot.hasData == null) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -59,30 +55,30 @@ class _YourWidgetState extends State<Videos> {
                   //List<dynamic> users = snapshot.data as List<dynamic>;
                   return ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: videolist.length,
                       //padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
                       itemBuilder: (context, index) {
                         //Choice record = choices[index];
                         return Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                                 color: Colors.white),
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 5),
                             child: Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Column(children: [
                                   YoutubeViewer(videolist[index]),
                                   Text(
                                     videocontent[index].toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                             fontSize: 13.0,
                                             fontWeight: FontWeight.w500,
                                             fontFamily:
-                                                'assets\fonst\Metropolis-Black.otf')
-                                        ?.copyWith(fontSize: 15),
+                                                'assets/fonst/Metropolis-Black.otf')
+                                        .copyWith(fontSize: 15),
                                   )
                                 ])));
                       });
@@ -90,13 +86,13 @@ class _YourWidgetState extends State<Videos> {
               })))
           : Center(
               child: Platform.isAndroid
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                       value: null,
                       strokeWidth: 2.0,
                       color: Color.fromARGB(255, 0, 91, 148),
                     )
                   : Platform.isIOS
-                      ? CupertinoActivityIndicator(
+                      ? const CupertinoActivityIndicator(
                           color: Color.fromARGB(255, 0, 91, 148),
                           radius: 20,
                           animating: true,
@@ -118,21 +114,18 @@ class _YourWidgetState extends State<Videos> {
   }
 
   Future<void> get_videolist() async {
-    GetVideoList getsimmilar = GetVideoList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getvideolist(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+    var res = await getvideolist(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetVideoList.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
         //
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           link = data['videoendUrl'];
           content = data['videoTitle'];
 
@@ -141,7 +134,6 @@ class _YourWidgetState extends State<Videos> {
           //loadmore = true;
         }
         load = true;
-        print(link);
         if (mounted) {
           setState(() {});
         }
@@ -149,8 +141,7 @@ class _YourWidgetState extends State<Videos> {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 }
 
@@ -201,38 +192,12 @@ class _YoutubeViewerState extends State<YoutubeViewer>
     final player = YoutubePlayer(
       controller: controller,
       key: ValueKey(widget.videoID),
-
-      // gestureRecognizers: Set()
-      //   ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-      //   ..add(Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()))
-      //   ..add(Factory<TapGestureRecognizer>(() => TapGestureRecognizer()))
-      //   ..add(Factory<VerticalDragGestureRecognizer>(
-      //           () => VerticalDragGestureRecognizer())),
-      //gestureRecognizers: isPlaying ? null : isPlaying =true //<Factory<OneSequenceGestureRecognizer>>{},
     );
 
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(20), // Image border
       child: player,
-      // Positioned.fill(
-      //   child: PointerInterceptor(
-      //     intercepting: !isPlaying,
-      //     child: MouseRegion(
-      //
-      //       cursor: SystemMouseCursors.move,
-      //       child: GestureDetector(
-      //         //onTap: () async => controller.playVideo(),
-      //         onTap: () {
-      //           // final _newCode = videosList[index].youtubeId;
-      //           isPlaying == false ? controller
-      //               .playVideo() : controller
-      //               .pauseVideo();
-      //         },
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

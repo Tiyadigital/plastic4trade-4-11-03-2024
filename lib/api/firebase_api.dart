@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, use_build_context_synchronously, empty_catches
 
 import 'dart:convert';
 import 'dart:io' show Platform;
@@ -106,14 +106,7 @@ class FirebaseApi {
           payload: jsonEncode(message.toMap()),);
       AndroidNotification? notification1 = message.notification?.android;
       if (notification1 != null) {
-        /*  show_notification(notification.title,
-            notification.body,
-            message.data);*/
       }
-
-      /*show_notification(notification.title,
-        notification.body,
-       message.data);*/
     });
   }
 
@@ -132,8 +125,7 @@ class FirebaseApi {
       await Firebase.initializeApp();
       final firebaseMessaging0 = FirebaseMessaging.instance;
       await firebaseMessaging0.requestPermission();
-      await FirebaseMessaging.instance
-          .setForegroundNotificationPresentationOptions(
+      await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
         alert: true,
         badge: true,
         sound: true,
@@ -168,9 +160,7 @@ class FirebaseApi {
                   builder: (context) =>
                       other_user_profile(int.parse(user_id.toString()))));
         } catch (e) {
-          // Handle the exception or error
-          // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Exception: $e');
-          // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg:'Stack trace: $stackTrace');
+
         }
       } else {
       }
@@ -221,10 +211,7 @@ class FirebaseApi {
       }
     }  else if (notification_type.toString() == "followuser") {
       if (user_id.toString().isNotEmpty) {
-        /* Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => other_user_profile(int.parse(user_id.toString()))));*/
+
         await Navigator.push(
             _context,
             MaterialPageRoute(

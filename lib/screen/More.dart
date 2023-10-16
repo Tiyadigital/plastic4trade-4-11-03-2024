@@ -12,7 +12,6 @@ import 'package:Plastic4trade/screen/LoginScreen.dart';
 import 'package:Plastic4trade/screen/ManageBuyPost.dart';
 import 'package:Plastic4trade/screen/Premium.dart';
 import 'package:Plastic4trade/screen/Videos.dart';
-import 'package:Plastic4trade/screen/terms_condtion.dart';
 import 'package:Plastic4trade/screen/updateCategoryScreen.dart';
 import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -113,226 +112,144 @@ class _moreState extends State<more> {
                         width: MediaQuery.of(context).size.width,
                         padding:
                             const EdgeInsets.fromLTRB(15.0, 10.0, 5.0, 5.0),
-                        child:
-                            Column(mainAxisSize: MainAxisSize.min, children: [
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.all(5.0),
-                                  height: 90,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      constanst.redirectpage = "edit_profile";
-
-                                      if (constanst.appopencount ==
-                                          constanst.appopencount1) {
-                                        if (!constanst.isprofile) {
-                                          redirectToBussinessProfileScreen(
-                                              context);
-                                        } else if (constanst.isprofile) {
-                                          showInformationDialog(context);
-                                        }
-                                      } else {
-                                        if (constanst.isprofile) {
-                                          showInformationDialog(context);
-                                        } else {
-                                          redirectToBussinessProfileScreen(
-                                              context);
-                                        }
-                                      }
-                                    },
-                                    child: Row(
-                                      children: [
-                                        image_url != null
-                                            ? Container(
-                                                width: 70.0,
-                                                height: 70.0,
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xff7c94b6),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                      image_url.toString(),
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(50.0),
-                                                  ),
-                                                ),
-                                              )
-                                            : Container(
-                                                width: 70.0,
-                                                height: 70.0,
-                                                decoration: BoxDecoration(
-                                                  /*color: const Color(
-                                                                0xff7c94b6),*/
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                      'assets/plastic4trade logo final 1 (2).png'
-                                                          .toString(),
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                    Radius.circular(50.0),
-                                                  ),
-                                                ),
-                                              ),
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 20.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            // or CrossAxisAlignment.center
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                username!,
-                                                style: const TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0.0),
-                                                child: business_name != null
-                                                    ? Text(
-                                                        business_name!,
-                                                        style: const TextStyle(
-                                                          fontSize: 16.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
-                                                        ),
-                                                      )
-                                                    : Container(),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          category(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ContactUs(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.fromLTRB(
-                                  5.0, 10.0, 8.0, 0.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Card(
-                                    elevation: 2,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
+                                  Container(
+                                    margin: const EdgeInsets.all(5.0),
+                                    height: 90,
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ContactUs(),
-                                          ),
-                                        );
+                                        constanst.redirectpage = "edit_profile";
+
+                                        if (constanst.appopencount ==
+                                            constanst.appopencount1) {
+                                          if (!constanst.isprofile) {
+                                            redirectToBussinessProfileScreen(
+                                                context);
+                                          } else if (constanst.isprofile) {
+                                            showInformationDialog(context);
+                                          }
+                                        } else {
+                                          if (constanst.isprofile) {
+                                            showInformationDialog(context);
+                                          } else {
+                                            redirectToBussinessProfileScreen(
+                                                context);
+                                          }
+                                        }
                                       },
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SizedBox(
-                                            height: 55,
-                                            child: Center(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: const [
-                                                  Align(
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20.0),
-                                                      child: Text(
-                                                        'Contact Us/Feedback',
-                                                        style: TextStyle(
-                                                            fontSize: 14.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                          image_url != null
+                                              ? Container(
+                                                  width: 70.0,
+                                                  height: 70.0,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xff7c94b6),
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(
+                                                        image_url.toString(),
                                                       ),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(50.0),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ContactUs(),
+                                                )
+                                              : Container(
+                                                  width: 70.0,
+                                                  height: 70.0,
+                                                  decoration: BoxDecoration(
+                                                    /*color: const Color(
+                                                                0xff7c94b6),*/
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                        'assets/plastic4trade logo final 1 (2).png'
+                                                            .toString(),
+                                                      ),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                      Radius.circular(50.0),
+                                                    ),
+                                                  ),
                                                 ),
-                                              );
-                                            },
-                                            icon: Image.asset(
-                                                'assets/forward.png'),
-                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              // or CrossAxisAlignment.center
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  username!,
+                                                  style: const TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 0.0),
+                                                  child: business_name != null
+                                                      ? Text(
+                                                          business_name!,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            color: Colors.black,
+                                                            fontFamily:
+                                                                'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
+                                                          ),
+                                                        )
+                                                      : Container(),
+                                                ),
+                                              ],
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Adwithus(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.fromLTRB(
-                                  5.0, 10.0, 8.0, 0.0),
-                              child: Column(
+                            category(),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ContactUs(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 10.0, 8.0, 0.0),
+                                child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Card(
@@ -340,7 +257,17 @@ class _moreState extends State<more> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Row(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const ContactUs(),
+                                            ),
+                                          );
+                                        },
+                                        child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
@@ -359,7 +286,7 @@ class _moreState extends State<more> {
                                                             EdgeInsets.only(
                                                                 left: 20.0),
                                                         child: Text(
-                                                          'Advertise with us',
+                                                          'Contact Us/Feedback',
                                                           style: TextStyle(
                                                               fontSize: 14.0,
                                                               fontWeight:
@@ -382,331 +309,417 @@ class _moreState extends State<more> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const Adwithus(),
+                                                        const ContactUs(),
                                                   ),
                                                 );
                                               },
                                               icon: Image.asset(
                                                   'assets/forward.png'),
-                                            )
-                                          ]),
-                                    )
-                                  ]),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const aboutplastic(),
-                                  // builder: (context) => const AppTermsCondition(),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              height: 55,
-                                              child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: const [
-                                                      Align(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 20.0),
-                                                          child: Text(
-                                                            'About Plastic4trade',
-                                                            style: TextStyle(
-                                                                fontSize: 14.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-SemiBold.otf'),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const aboutplastic(),
-                                                  ),
-                                                );
-                                              },
-                                              icon: Image.asset(
-                                                  'assets/forward.png'),
-                                            )
-                                          ]),
-                                    )
-                                  ]),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const Notificationsetting(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              height: 55,
-                                              child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: const [
-                                                      Align(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 20.0),
-                                                          child: Text(
-                                                            'Notification Settings',
-                                                            style: TextStyle(
-                                                                fontSize: 14.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-SemiBold.otf'),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const Notificationsetting(),
-                                                  ),
-                                                );
-                                              },
-                                              icon: Image.asset(
-                                                  'assets/forward.png'),
-                                            )
-                                          ]),
-                                    )
-                                  ]),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showlogoutDialog(context);
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              height: 55,
-                                              child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: const [
-                                                      Align(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 20.0),
-                                                          child: Text(
-                                                            'Logout',
-                                                            style: TextStyle(
-                                                                fontSize: 14.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-SemiBold.otf'),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ]),
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                showlogoutDialog(context);
-                                              },
-                                              icon: Image.asset(
-                                                  'assets/forward.png'),
-                                            )
-                                          ]),
-                                    )
-                                  ]),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: const Center(
-                              child: Text(
-                                'Follow Plastic4trade',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf',
-                                    color: Colors.black),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding:
-                                const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/whatsapp.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/facebook.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/instagram.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/linkdin.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/youtube.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/Telegram.png'),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/Twitter.png'),
-                                ),
-                              ],
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Adwithus(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 10.0, 8.0, 0.0),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Card(
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 55,
+                                                child: Center(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: const [
+                                                      Align(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 20.0),
+                                                          child: Text(
+                                                            'Advertise with us',
+                                                            style: TextStyle(
+                                                                fontSize: 14.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const Adwithus(),
+                                                    ),
+                                                  );
+                                                },
+                                                icon: Image.asset(
+                                                    'assets/forward.png'),
+                                              )
+                                            ]),
+                                      )
+                                    ]),
+                              ),
                             ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding:
-                                const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'App Version $version  -1.4 ',
-                                  style: const TextStyle(
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const aboutplastic(),
+                                    // builder: (context) => const AppTermsCondition(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 5.0, 8.0, 0.0),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Card(
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 55,
+                                                child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: const [
+                                                        Align(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 20.0),
+                                                            child: Text(
+                                                              'About Plastic4trade',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const aboutplastic(),
+                                                    ),
+                                                  );
+                                                },
+                                                icon: Image.asset(
+                                                    'assets/forward.png'),
+                                              )
+                                            ]),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Notificationsetting(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 5.0, 8.0, 0.0),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Card(
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 55,
+                                                child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: const [
+                                                        Align(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 20.0),
+                                                            child: Text(
+                                                              'Notification Settings',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const Notificationsetting(),
+                                                    ),
+                                                  );
+                                                },
+                                                icon: Image.asset(
+                                                    'assets/forward.png'),
+                                              )
+                                            ]),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showlogoutDialog(context);
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 5.0, 8.0, 0.0),
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Card(
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                height: 55,
+                                                child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: const [
+                                                        Align(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 20.0),
+                                                            child: Text(
+                                                              'Logout',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  showlogoutDialog(context);
+                                                },
+                                                icon: Image.asset(
+                                                    'assets/forward.png'),
+                                              )
+                                            ]),
+                                      )
+                                    ]),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: const Center(
+                                child: Text(
+                                  'Follow Plastic4trade',
+                                  style: TextStyle(
                                       fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.italic,
                                       fontFamily:
                                           'assets/fonst/Metropolis-Black.otf',
-                                      color: Colors.black,
-                                      fontSize: 13),
+                                      color: Colors.black),
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    if (Platform.isAndroid) {
-                                      _openGooglePlayStore();
-                                    } else if (Platform.isIOS) {
-                                      _launchAppStore();
-                                    }
-                                  },
-                                  child: const Text(
-                                    'Check Latest Update',
-                                    style: TextStyle(
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding:
+                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/whatsapp.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/facebook.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/instagram.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/linkdin.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/youtube.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/Telegram.png'),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Image.asset('assets/Twitter.png'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding:
+                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'App Version $version  -1.4 ',
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontFamily:
                                             'assets/fonst/Metropolis-Black.otf',
+                                        color: Colors.black,
                                         fontSize: 13),
                                   ),
-                                )
-                              ],
+                                  TextButton(
+                                    onPressed: () {
+                                      if (Platform.isAndroid) {
+                                        _openGooglePlayStore();
+                                      } else if (Platform.isIOS) {
+                                        _launchAppStore();
+                                      }
+                                    },
+                                    child: const Text(
+                                      'Check Latest Update',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf',
+                                          fontSize: 13),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-
-                          //SizedBox(height: 10,),
-                        ]),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -1224,7 +1237,9 @@ class _moreState extends State<more> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const follower(initialIndex: 1,),
+                          builder: (context) => const follower(
+                            initialIndex: 1,
+                          ),
                         ),
                       );
                     } else if (record.id == '7') {

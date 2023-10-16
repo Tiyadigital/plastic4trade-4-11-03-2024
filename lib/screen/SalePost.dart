@@ -1,5 +1,6 @@
+// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables
+
 import 'dart:io';
-import 'package:Plastic4trade/screen/Type.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,8 +11,6 @@ import 'package:Plastic4trade/model/getHomePostSearch.dart' as homesearch;
 import '../api/api_interface.dart';
 import '../constroller/GetCategoryController.dart';
 import '../constroller/Getmybusinessprofile.dart';
-import '../model/getHomePostSearch.dart';
-import '../model/getSalePost.dart';
 import '../utill/constant.dart';
 import 'package:Plastic4trade/model/getSalePost.dart' as salepost;
 import 'package:Plastic4trade/model/GetCategory.dart' as cat;
@@ -19,15 +18,12 @@ import 'package:Plastic4trade/model/GetCategory.dart' as cat;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Plastic4trade/widget/HomeAppbar.dart';
-import 'package:Plastic4trade/widget/bottombar.dart';
 
 import '../widget/FilterScreen.dart';
 import '../widget/MainScreen.dart';
 import 'AddPost.dart';
 import 'Buyer_sell_detail.dart';
-import 'CategoryScreen.dart';
 import 'GradeScreen.dart';
-import 'Register2.dart';
 
 class SalePost extends StatefulWidget {
   const SalePost({Key? key}) : super(key: key);
@@ -52,8 +48,8 @@ class _SalePostState extends State<SalePost> {
       post_type = '';
   List<homesearch.Result> homepostsearch_data = [];
   String googleApikey = "AIzaSyCyqsD3OPUWGJ5AWbN3iKbUzQGs3Q-ZlPE";
-  TextEditingController _loc = TextEditingController();
-  TextEditingController _search = TextEditingController();
+  final TextEditingController _loc = TextEditingController();
+  final TextEditingController _search = TextEditingController();
   int offset = 0;
   int count = 0;
   bool isload = false;
@@ -76,21 +72,21 @@ class _SalePostState extends State<SalePost> {
     return WillPopScope(
         onWillPop: () => _onbackpress(context),
         child: Scaffold(
-          backgroundColor: Color(0xFFDADADA),
+          backgroundColor: const Color(0xFFDADADA),
 
           body: isload == true
               ? Column(mainAxisSize: MainAxisSize.min, children: [
                   horiztallist(),
-                  SizedBox(
+                  const SizedBox(
                     height: 3,
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(40.0),
                                     bottomRight: Radius.circular(40.0),
@@ -98,13 +94,13 @@ class _SalePostState extends State<SalePost> {
                                     bottomLeft: Radius.circular(40.0)),
                                 color: Colors.white),
                             height: 40,
-                            margin: EdgeInsets.only(left: 8.0),
+                            margin: const EdgeInsets.only(left: 8.0),
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                                 child: TextField(
                                   controller: _loc,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.black, fontSize: 14),
                                   readOnly: true,
                                   textAlign: TextAlign.start,
@@ -118,7 +114,6 @@ class _SalePostState extends State<SalePost> {
                                         // components: [Component(Component.country, 'np')],
                                         //google_map_webservice package
                                         onError: (err) {
-                                          print(err);
                                         });
 
                                     if (place != null) {
@@ -132,7 +127,7 @@ class _SalePostState extends State<SalePost> {
                                       //form google_maps_webservice package
                                       final plist = GoogleMapsPlaces(
                                         apiKey: googleApikey,
-                                        apiHeaders: await GoogleApiHeaders()
+                                        apiHeaders: await const GoogleApiHeaders()
                                             .getHeaders(),
                                         //from google_api_headers package
                                       );
@@ -146,8 +141,6 @@ class _SalePostState extends State<SalePost> {
 
                                       constanst.log =
                                           geometry.location.lng.toString();
-                                      print(constanst.log);
-                                      print(constanst.lat);
                                     /*  WidgetsBinding
                                           .instance?.focusManager.primaryFocus
                                           ?.unfocus();*/
@@ -168,12 +161,12 @@ class _SalePostState extends State<SalePost> {
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 0.80),
+                                          const EdgeInsets.symmetric(vertical: 0.80),
                                       prefixIconConstraints:
-                                          BoxConstraints(minWidth: 24),
+                                          const BoxConstraints(minWidth: 24),
                                       suffixIconConstraints:
-                                          BoxConstraints(minWidth: 24),
-                                      prefixIcon: Padding(
+                                          const BoxConstraints(minWidth: 24),
+                                      prefixIcon: const Padding(
                                         padding:
                                             EdgeInsets.only(right: 2, left: 2),
                                         child: Icon(
@@ -194,7 +187,7 @@ class _SalePostState extends State<SalePost> {
                                           get_salePost();
                                           setState(() {});
                                         },
-                                        child: Padding(
+                                        child: const Padding(
                                           padding: EdgeInsets.only(
                                               right: 2, left: 2),
                                           child: Icon(
@@ -205,7 +198,7 @@ class _SalePostState extends State<SalePost> {
                                         ),
                                       ),
                                       hintText: 'Location',
-                                      hintStyle: TextStyle(
+                                      hintStyle: const TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
@@ -222,10 +215,10 @@ class _SalePostState extends State<SalePost> {
                                     bottomLeft: Radius.circular(40.0)),
                                 color: Colors.white),
                             height: 40,
-                            margin: EdgeInsets.only(left: 6.0),
+                            margin: const EdgeInsets.only(left: 6.0),
                             width: MediaQuery.of(context).size.width / 2.2,
                             child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0 ),
+                                padding: const EdgeInsets.only(left: 5.0, right: 5.0 ),
                                 child: TextField(
                                   style: const TextStyle(color: Colors.black, fontSize: 14),
                                   controller: _search,
@@ -259,7 +252,6 @@ class _SalePostState extends State<SalePost> {
                                     setState(() {});
                                   },
                                   onTap: () {
-                                    print('fdrrf');
                                   },
                                   onChanged: (value) {
                                     if(value.isEmpty){
@@ -281,11 +273,11 @@ class _SalePostState extends State<SalePost> {
                             },
                             child: Container(
                                 height: 45,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     bottom: 3.0, left: 1.2, top: 3.0),
                                 width: MediaQuery.of(context).size.width / 11.2,
                                 // padding: EdgeInsets.only(right: 5),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Colors.white),
                                 child: const Icon(
@@ -299,7 +291,7 @@ class _SalePostState extends State<SalePost> {
                 ])
               : Center(
                   child: Platform.isAndroid
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           value: null,
                           strokeWidth: 2.0,
                           color: Color.fromARGB(255, 0, 91, 148),
@@ -371,7 +363,7 @@ class _SalePostState extends State<SalePost> {
                   }
                 }
               },
-              icon: Icon(Icons.add, color: Colors.white, size: 40),
+              icon: const Icon(Icons.add, color: Colors.white, size: 40),
             ),
             //
           ),
@@ -406,7 +398,7 @@ class _SalePostState extends State<SalePost> {
     return showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        shape:  RoundedRectangleBorder(
+        shape:  const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           // <-- SEE HERE
           topLeft: Radius.circular(25.0),
@@ -419,12 +411,11 @@ class _SalePostState extends State<SalePost> {
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return FilterScreen();
+                  return const FilterScreen();
                 },
               );
             })).then(
       (value) {
-        print(constanst.location);
         _loc.text = constanst.location.toString();
         category_filter_id = constanst.select_categotyId.join(",");
         type_id = constanst.select_typeId.join(",");
@@ -460,7 +451,7 @@ class _SalePostState extends State<SalePost> {
             builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               snapshot.hasData == null) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -468,20 +459,20 @@ class _SalePostState extends State<SalePost> {
             //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
                 shrinkWrap: false,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: constanst.catdata.length,
                 itemBuilder: (context, index) {
                   cat.Result result = constanst.catdata[index];
                   return Padding(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: Wrap(spacing: 6.0, runSpacing: 6.0, children: <
                           Widget>[
                         ChoiceChip(
                           label: Text(
                               constanst.catdata[index].categoryName.toString()),
                           selected: _defaultChoiceIndex == index,
-                          selectedColor: Color.fromARGB(255, 0, 91, 148),
+                          selectedColor: const Color.fromARGB(255, 0, 91, 148),
                           onSelected: (bool selected) {
                             setState(() {
                               _defaultChoiceIndex = selected ? index : -1;
@@ -500,18 +491,18 @@ class _SalePostState extends State<SalePost> {
                             });
                           },
                           // padding: EdgeInsets.all(5),
-                          backgroundColor: Color.fromARGB(255, 236, 232, 232),
-                          labelStyle: TextStyle(
+                          backgroundColor: const Color.fromARGB(255, 236, 232, 232),
+                          labelStyle: const TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
                                   fontFamily:
                                       'assets/fonst/Metropolis-Black.otf')
-                              ?.copyWith(
+                              .copyWith(
                                   color: _defaultChoiceIndex == index
                                       ? Colors.white
                                       : Colors.black),
-                          labelPadding: EdgeInsets.symmetric(horizontal: 14.0),
+                          labelPadding: const EdgeInsets.symmetric(horizontal: 14.0),
                           /*shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(10.0))
                               ),*/
@@ -533,11 +524,11 @@ class _SalePostState extends State<SalePost> {
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 
                     childAspectRatio: MediaQuery.of(context).size.width /
@@ -559,8 +550,6 @@ class _SalePostState extends State<SalePost> {
 
 
                         if (constanst.appopencount == constanst.appopencount1) {
-                          print("APP OPEN 1st = ${constanst.appopencount}");
-                          print("APP OPEN 1st = ${constanst.appopencount1}");
 
                           if (!constanst.isgrade &&
                               !constanst.istype &&
@@ -587,17 +576,11 @@ class _SalePostState extends State<SalePost> {
                           }
                         }
                         else if (constanst.isprofile) {
-                          print("APP OPEN 2nd = ${constanst.appopencount}");
-                          print("APP OPEN 2nd = ${constanst.appopencount1}");
                           showInformationDialog(context);
                         }else if(constanst.appopencount == constanst.appopencount1){
-                          print("APP OPEN 3rd= ${constanst.appopencount}");
-                          print("APP OPEN 3rd= ${constanst.appopencount1}");
                           categoryDialog(context);
                         }
                         else {
-                          print("APP OPEN 4th= ${constanst.appopencount}");
-                          print("APP OPEN 4th= ${constanst.appopencount1}");
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -616,8 +599,8 @@ class _SalePostState extends State<SalePost> {
                             Container(
                               height: 165,
                               width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.all(5.0),
+                              decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(30.0))),
@@ -647,8 +630,8 @@ class _SalePostState extends State<SalePost> {
                                         Radius.circular(10.0))),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
@@ -661,7 +644,7 @@ class _SalePostState extends State<SalePost> {
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       /*decoration: BoxDecoration(
                                             color: Colors.red,
                                             borderRadius: BorderRadius.all(
@@ -684,9 +667,9 @@ class _SalePostState extends State<SalePost> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
@@ -700,12 +683,10 @@ class _SalePostState extends State<SalePost> {
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.categoryName.toString() +
-                                            ' | ' +
-                                            result.productGrade.toString(),
-                                        style: TextStyle(
+                                        '${result.categoryName} | ${result.productGrade}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -718,12 +699,10 @@ class _SalePostState extends State<SalePost> {
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.state.toString() +
-                                            ', ' +
-                                            result.country.toString(),
-                                        style: TextStyle(
+                                        '${result.state}, ${result.country}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -735,9 +714,9 @@ class _SalePostState extends State<SalePost> {
                               Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
-                                      padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                                      padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                                       child: result.postType.toString() == "BuyPost"
-                                          ? Text(
+                                          ? const Text(
                                         'Buy Post',
                                         style: TextStyle(
                                             fontSize: 13.0,
@@ -747,7 +726,7 @@ class _SalePostState extends State<SalePost> {
                                             Color.fromRGBO(0, 148, 95, 1)),
                                       )
                                           : result.postType.toString() == "SalePost"
-                                          ? Text(
+                                          ? const Text(
                                         "Sale Post",
                                         style: TextStyle(
                                             fontSize: 13.0,
@@ -766,7 +745,6 @@ class _SalePostState extends State<SalePost> {
                 );
               }
 
-              return CircularProgressIndicator();
             }),
           )
         : Expanded(
@@ -778,11 +756,11 @@ class _SalePostState extends State<SalePost> {
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     // crossAxisCount: 2,
                     // mainAxisSpacing: 5,
@@ -793,7 +771,7 @@ class _SalePostState extends State<SalePost> {
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: homepostsearch_data.length,
                   shrinkWrap: true,
@@ -804,18 +782,12 @@ class _SalePostState extends State<SalePost> {
                         constanst.productId = result.productId.toString();
                         constanst.post_type = result.postType.toString();
                         constanst.redirectpage = "sale_buy";
-                        print(constanst.appopencount);
-                        print(constanst.appopencount1);
-                        print(constanst.isprofile);
-                        print(constanst.iscategory);
                         if (constanst.appopencount == constanst.appopencount1) {
-                          print(constanst.step);
                           if (!constanst.isgrade &&
                               !constanst.istype &&
                               !constanst.iscategory &&
                               !constanst.isprofile &&
                               constanst.step == 11) {
-                            print(constanst.step);
 
                             Navigator.push(
                                 context,
@@ -861,8 +833,8 @@ class _SalePostState extends State<SalePost> {
                             Container(
                               height: 165,
                               width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.all(5.0),
+                              decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(30.0))),
@@ -895,16 +867,16 @@ class _SalePostState extends State<SalePost> {
                               bottom: 10,
                               left: 10,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
@@ -917,7 +889,7 @@ class _SalePostState extends State<SalePost> {
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       /*decoration: BoxDecoration(
                                             color: Colors.red,
                                             borderRadius: BorderRadius.all(
@@ -940,9 +912,9 @@ class _SalePostState extends State<SalePost> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
@@ -956,12 +928,12 @@ class _SalePostState extends State<SalePost> {
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
                                         /* result.productType.toString() +
                                           ' | ' +*/
                                         result.productGrade.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -974,12 +946,10 @@ class _SalePostState extends State<SalePost> {
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.state.toString() +
-                                            ',' +
-                                            result.country.toString(),
-                                        style: TextStyle(
+                                        '${result.state},${result.country}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1011,7 +981,6 @@ class _SalePostState extends State<SalePost> {
                 );
               }
 
-              return CircularProgressIndicator();
             }),
           );
   }
@@ -1036,14 +1005,12 @@ class _SalePostState extends State<SalePost> {
   }
 
   void get_categorylist() async {
-    GetCategoryController bt = await GetCategoryController();
+    GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
 
     constanst.cat_data!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.catdata.add(item);
-        }
+      for (var item in value) {
+        constanst.catdata.add(item);
       }
 
       setState(() {});
@@ -1052,46 +1019,22 @@ class _SalePostState extends State<SalePost> {
   }
 
   getBussinessProfile() async {
-    /* Getmybusinessprofile register = Getmybusinessprofile();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-
-
-    var res = await getbussinessprofile(_pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),);
-
-    if (res['status'] == 1) {
-      register = Getmybusinessprofile.fromJson(res);
-      if(register.profile==null){
-        constanst.isprofile=true;
-      }else if(register.user!.categoryId.isEmpty){
-        constanst.iscategory=true;
-      }else if(register.user!.typeId.isEmpty){
-        constanst.istype=true;
-      }else if(register.user!.gradeId.isEmpty){
-        constanst.isgrade=true;
-      }
-      setState(() {});
-    } else {
-
-      setState(() {});
-    }*/
-    GetmybusinessprofileController bt = await GetmybusinessprofileController();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    GetmybusinessprofileController bt = GetmybusinessprofileController();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.getmyprofile = bt.Getmybusiness_profile(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
     // setState(() {});
     // print(constanst.btype_data);
   }
 
   get_salePost() async {
-    getSalePost getsalepost = getSalePost();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getSale_Post(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         '20',
         offset.toString(),
         category_filter_id,
@@ -1103,12 +1046,9 @@ class _SalePostState extends State<SalePost> {
         constanst.log,
         _search.text.toString());
     var jsonarray;
-    print(res);
 
     if (res['status'] == 1) {
-      getsalepost = getSalePost.fromJson(res);
       jsonarray = res['result'];
-      print(jsonarray);
 
       for (var data in jsonarray) {
         salepost.Result record = salepost.Result(
@@ -1128,14 +1068,12 @@ class _SalePostState extends State<SalePost> {
         loadmore = true;
       }
       isload = true;
-      print(salepost_data);
       setState(() {});
     } else {
       Fluttertoast.showToast(msg: res['message']);
 
     }
     return jsonarray;
-    setState(() {});
   }
 
   void _scrollercontroller() {
@@ -1187,85 +1125,41 @@ class _SalePostState extends State<SalePost> {
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                               value: null,
                               strokeWidth: 2.0,
                               color: Color.fromARGB(255, 0, 91, 148),
                             )
                           : Platform.isIOS
-                              ? CupertinoActivityIndicator(
+                              ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
                                 )
                               : Container()),
                 ),
-              ), /*Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 300.0,
-                  height: 150.0,
-                  alignment: AlignmentDirectional.center,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    width: 300.0,
-                    height: 150.0,
-                    alignment: AlignmentDirectional.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const
-                      */ /*  Container(
-                          margin: const EdgeInsets.only(top: 25.0),
-                          child: Center(
-                            child: Text(
-                              "loading.. wait...",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),*/ /*
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )*/
+              ),
             ));
       },
     );
 
-    Future.delayed( Duration(seconds: 5), () {
-      print('exit');
+    Future.delayed( const Duration(seconds: 5), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
+      // Dialog closed
     });
   }
 
   get_HomePostSearch() async {
-    getHomePostSearch gethomepostsearch = getHomePostSearch();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
     var res = await getsaleSearch_Post(lat.toString(), log.toString(),
         _search.text.toString(), '20', offset.toString());
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      gethomepostsearch = getHomePostSearch.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
-        print(jsonarray);
+        jsonArray = res['result'];
 
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homesearch.Result record = homesearch.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -1282,13 +1176,11 @@ class _SalePostState extends State<SalePost> {
           homepostsearch_data.add(record);
           loadmore = true;
         }
-        print(homepostsearch_data);
         setState(() {});
       }
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 }

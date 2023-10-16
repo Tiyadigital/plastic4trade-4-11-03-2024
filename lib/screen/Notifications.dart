@@ -3,8 +3,7 @@
 import 'dart:io';
 
 import 'package:Plastic4trade/model/GetNotification.dart' as getnotifi;
-import 'package:Plastic4trade/model/GetadminNotification.dart'
-    as admin_getnotifi;
+import 'package:Plastic4trade/model/GetadminNotification.dart' as admin_getnotifi;
 import 'package:Plastic4trade/screen/Blog.dart';
 import 'package:Plastic4trade/screen/BussinessProfile.dart';
 import 'package:Plastic4trade/screen/Buyer_sell_detail.dart';
@@ -62,14 +61,16 @@ class _NotificationState extends State<notification>
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
-        title: const Text('Notifications',
-            softWrap: false,
-            style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Metropolis',
-            )),
+        title: const Text(
+          'Notifications',
+          softWrap: false,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Metropolis',
+          ),
+        ),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -161,40 +162,41 @@ class _NotificationState extends State<notification>
                           height: 45,
                           margin: const EdgeInsets.only(bottom: 20, left: 20),
                           child: TextButton(
-                              onPressed: () {
-                                get_allread();
-                                getnotifydata.clear();
-                                unread_getnotifydata.clear();
-                                isload = false;
-                                get_notification(
-                                    read_status, offset.toString(), '20');
-                                get_notification_unread(
-                                    read_status, offset.toString(), '20');
-                              },
-                              child: Text(
-                                'Mark all as read',
-                                style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf')
-                                    .copyWith(fontWeight: FontWeight.w600),
-                              )))
+                            onPressed: () {
+                              get_allread();
+                              getnotifydata.clear();
+                              unread_getnotifydata.clear();
+                              isload = false;
+                              get_notification(
+                                  read_status, offset.toString(), '20');
+                              get_notification_unread(
+                                  read_status, offset.toString(), '20');
+                            },
+                            child: Text(
+                              'Mark all as read',
+                              style: const TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromARGB(255, 0, 91, 148),
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf')
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ))
                     ],
                   ),
 
                   // tab bar view here
                   Expanded(
-                      child: TabBarView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _tabController,
-                          // first tab bar view widget
-                          children: [
-                        notificationsetting(),
-                        notificationsetting_unread()
-                      ])
-                      ),
+                    child: TabBarView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        controller: _tabController,
+                        // first tab bar view widget
+                        children: [
+                          notificationsetting(),
+                          notificationsetting_unread()
+                        ]),
+                  ),
                 ],
               ),
             )
@@ -211,7 +213,8 @@ class _NotificationState extends State<notification>
                           radius: 20,
                           animating: true,
                         )
-                      : Container()),
+                      : Container(),
+            ),
     );
   }
 
@@ -263,19 +266,20 @@ class _NotificationState extends State<notification>
                 height: 50.0,
                 width: 50.0,
                 child: Center(
-                    child: Platform.isAndroid
-                        ? const CircularProgressIndicator(
-                            value: null,
-                            strokeWidth: 2.0,
-                            color: Color.fromARGB(255, 0, 91, 148),
-                          )
-                        : Platform.isIOS
-                            ? const CupertinoActivityIndicator(
-                                color: Color.fromARGB(255, 0, 91, 148),
-                                radius: 20,
-                                animating: true,
-                              )
-                            : Container()),
+                  child: Platform.isAndroid
+                      ? const CircularProgressIndicator(
+                          value: null,
+                          strokeWidth: 2.0,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                        )
+                      : Platform.isIOS
+                          ? const CupertinoActivityIndicator(
+                              color: Color.fromARGB(255, 0, 91, 148),
+                              radius: 20,
+                              animating: true,
+                            )
+                          : Container(),
+                ),
               ),
             ),
           ),
@@ -297,7 +301,9 @@ class _NotificationState extends State<notification>
         builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.none &&
           snapshot.hasData == null) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       }
       if (snapshot.hasError) {
         return Text('Error: ${snapshot.error}');
@@ -314,9 +320,13 @@ class _NotificationState extends State<notification>
               //DateFormat format = new DateFormat("dd-MM-yyyy HH:mm:ss");
               DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
 
-              var curret_date = format.parse(result.time.toString());
+              var curret_date = format.parse(
+                result.time.toString(),
+              );
 
-              DateTime? dt1 = DateTime.parse(curret_date.toString());
+              DateTime? dt1 = DateTime.parse(
+                curret_date.toString(),
+              );
 
               // print(dt1);
               create_formattedDate = dt1 != null
@@ -331,19 +341,21 @@ class _NotificationState extends State<notification>
                     children: [
                       Positioned.fill(
                         child: Builder(
-                            builder: (context) => Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 0.3),
-                                  child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(8.0)),
-                                        color: result.isRead == "0"
-                                            ? Colors.white
-                                            : Colors.grey.shade50),
+                          builder: (context) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 0.3),
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.0),
                                   ),
-                                )),
+                                  color: result.isRead == "0"
+                                      ? Colors.white
+                                      : Colors.grey.shade50),
+                            ),
+                          ),
+                        ),
                       ),
                       ClipRRect(
                         //clipBehavior: Clip.antiAlias,
@@ -375,9 +387,10 @@ class _NotificationState extends State<notification>
                                                 children: [
                                                   IconButton(
                                                     onPressed: () {
-                                                      remove_notification(result
-                                                          .notificationId
-                                                          .toString());
+                                                      remove_notification(
+                                                        result.notificationId
+                                                            .toString(),
+                                                      );
                                                       /* getnotifydata.removeAt(index);
                                                       unread_getnotifydata.removeAt(index);
                                                       setState(() {
@@ -430,10 +443,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.fromUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.fromUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "follower_profile_like") {
@@ -441,10 +455,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.fromUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.fromUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "profile_review") {
@@ -452,8 +467,9 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                const bussinessprofile()));
+                                          builder: (context) =>
+                                              const bussinessprofile(),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "Business profile dislike") {
@@ -461,10 +477,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.fromUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.fromUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "salepost") {
@@ -472,11 +489,12 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Buyer_sell_detail(
-                                                  post_type: 'SalePost',
-                                                  prod_id: result.salepostId,
-                                                )));
+                                          builder: (context) =>
+                                              Buyer_sell_detail(
+                                            post_type: 'SalePost',
+                                            prod_id: result.salepostId,
+                                          ),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "buypost") {
@@ -484,11 +502,12 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Buyer_sell_detail(
-                                                  post_type: 'BuyPost',
-                                                  prod_id: result.salepostId,
-                                                )));
+                                          builder: (context) =>
+                                              Buyer_sell_detail(
+                                            post_type: 'BuyPost',
+                                            prod_id: result.salepostId,
+                                          ),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "followuser") {
@@ -496,10 +515,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.fromUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.fromUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "unfollowuser") {
@@ -507,10 +527,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.fromUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.fromUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "profile_review") {
@@ -520,10 +541,11 @@ class _NotificationState extends State<notification>
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                other_user_profile(int.parse(
-                                                    result.profileUserId
-                                                        .toString()))));
+                                          builder: (context) =>
+                                              other_user_profile(int.parse(
+                                            result.profileUserId.toString(),
+                                          )),
+                                        ));
                                   }
                                 } else if (result.notificationType.toString() ==
                                     "live_price") {
@@ -531,8 +553,9 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LivepriceScreen()));
+                                        builder: (context) =>
+                                            const LivepriceScreen(),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "quick_news_notification") {
@@ -540,7 +563,8 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MainScreen(3)));
+                                        builder: (context) => MainScreen(3),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "news") {
@@ -548,7 +572,8 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MainScreen(3)));
+                                        builder: (context) => MainScreen(3),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "blog") {
@@ -556,7 +581,8 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const Blog()));
+                                        builder: (context) => const Blog(),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "video") {
@@ -564,8 +590,8 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Videos()));
+                                        builder: (context) => const Videos(),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "banner") {
@@ -573,7 +599,8 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => MainScreen(0)));
+                                        builder: (context) => MainScreen(0),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "tutorial_video") {
@@ -581,8 +608,9 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Tutorial_Videos()));
+                                        builder: (context) =>
+                                            const Tutorial_Videos(),
+                                      ));
                                   // }
                                 } else if (result.notificationType.toString() ==
                                     "exhibition") {
@@ -590,8 +618,9 @@ class _NotificationState extends State<notification>
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Exhibition()));
+                                        builder: (context) =>
+                                            const Exhibition(),
+                                      ));
                                   // }
                                 }
                               },
@@ -616,7 +645,8 @@ class _NotificationState extends State<notification>
                                         margin: const EdgeInsets.all(5.0),
                                         decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0)),
+                                            Radius.circular(8.0),
+                                          ),
                                           // color: Color.fromARGB(255, 0, 91, 148)
                                           //   color: result.isRead=="0"?Colors.white:Colors.white70,
                                         ),
@@ -695,60 +725,64 @@ class _NotificationState extends State<notification>
                                             ),
                                           ),
                                           SizedBox(
-                                              height: 15,
-                                              child: Text(create_formattedDate,
-                                                  style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf')
-                                                      .copyWith(
-                                                          fontSize: 11,
-                                                          color: Colors.black),
-                                                  maxLines: 1,
-                                                  softWrap: false)),
+                                            height: 15,
+                                            child: Text(create_formattedDate,
+                                                style: const TextStyle(
+                                                        fontSize: 13.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontFamily:
+                                                            'assets/fonst/Metropolis-Black.otf')
+                                                    .copyWith(
+                                                        fontSize: 11,
+                                                        color: Colors.black),
+                                                maxLines: 1,
+                                                softWrap: false),
+                                          ),
                                           SizedBox(
-                                              height: 25,
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
-                                                      //width: 20,
-                                                      child: Image.asset(
-                                                          'assets/plastic4trade logo final 1 (2).png')),
-                                                  result.fromUserId.toString() == 0
-                                                      ? Text(result.name.toString(),
-                                                          style: const TextStyle(
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontFamily:
-                                                                      'assets/fonst/Metropolis-Black.otf')
-                                                              .copyWith(
-                                                                  fontSize: 11,
-                                                                  color: Colors
-                                                                      .black),
-                                                          maxLines: 1,
-                                                          softWrap: false)
-                                                      : Text(result.name.toString(),
-                                                          style: const TextStyle(
-                                                                  fontSize:
-                                                                      13.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontFamily:
-                                                                      'assets/fonst/Metropolis-Black.otf')
-                                                              .copyWith(
-                                                                  fontSize: 11,
-                                                                  color:
-                                                                      Colors.black),
-                                                          maxLines: 1,
-                                                          softWrap: false),
-                                                ],
-                                              )),
+                                            height: 25,
+                                            child: Row(
+                                              children: [
+                                                SizedBox(
+                                                  //width: 20,
+                                                  child: Image.asset(
+                                                      'assets/plastic4trade logo final 1 (2).png'),
+                                                ),
+                                                result.fromUserId.toString() ==
+                                                        0
+                                                    ? Text(
+                                                        result.name.toString(),
+                                                        style: const TextStyle(
+                                                                fontSize: 13.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')
+                                                            .copyWith(
+                                                                fontSize: 11,
+                                                                color: Colors
+                                                                    .black),
+                                                        maxLines: 1,
+                                                        softWrap: false)
+                                                    : Text(
+                                                        result.name.toString(),
+                                                        style: const TextStyle(
+                                                                fontSize: 13.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')
+                                                            .copyWith(
+                                                                fontSize: 11,
+                                                                color: Colors
+                                                                    .black),
+                                                        maxLines: 1,
+                                                        softWrap: false),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       result.isRead == "0"
@@ -784,18 +818,19 @@ class _NotificationState extends State<notification>
   }
 
   Widget notificationsetting_unread() {
-
     return unread_getnotifydata.isNotEmpty
         ? FutureBuilder(
             builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.none && snapshot.hasData == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            else {
-              return ListView.builder(
+              if (snapshot.connectionState == ConnectionState.none &&
+                  snapshot.hasData == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return ListView.builder(
                   shrinkWrap: true,
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: unread_getnotifydata.length,
@@ -806,39 +841,46 @@ class _NotificationState extends State<notification>
                     //DateFormat format = new DateFormat("dd-MM-yyyy HH:mm:ss");
                     DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss");
 
-                    var curret_date = format.parse(result.time.toString());
+                    var curret_date = format.parse(
+                      result.time.toString(),
+                    );
 
-                    DateTime? dt1 = DateTime.parse(curret_date.toString());
+                    DateTime? dt1 = DateTime.parse(
+                      curret_date.toString(),
+                    );
 
                     // print(dt1);
                     create_formattedDate = dt1 != null
                         ? DateFormat('dd MMMM, yyyy hh:mm aaa ').format(dt1)
                         : "";
                     return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Stack(clipBehavior: Clip.antiAlias, children: [
+                      padding: const EdgeInsets.all(4.0),
+                      child: Stack(
+                        clipBehavior: Clip.antiAlias,
+                        children: [
                           Positioned.fill(
                             child: Builder(
-                                builder: (context) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0, vertical: 0.3),
-                                      child: Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(8.0)),
-                                            color: result.isRead == "0"
-                                                ? Colors.white
-                                                : Colors.grey.shade50),
+                              builder: (context) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5.0, vertical: 0.3),
+                                child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(8.0),
                                       ),
-                                    )),
+                                      color: result.isRead == "0"
+                                          ? Colors.white
+                                          : Colors.grey.shade50),
+                                ),
+                              ),
+                            ),
                           ),
                           ClipRRect(
-                              //clipBehavior: Clip.antiAlias,
-                              borderRadius: BorderRadius.circular(20),
-                              child: SlidableAutoCloseBehavior(
-                                  child: Slidable(
+                            //clipBehavior: Clip.antiAlias,
+                            borderRadius: BorderRadius.circular(20),
+                            child: SlidableAutoCloseBehavior(
+                              child: Slidable(
                                 direction: Axis.horizontal,
                                 endActionPane: ActionPane(
                                   motion: const BehindMotion(),
@@ -866,9 +908,10 @@ class _NotificationState extends State<notification>
                                                       IconButton(
                                                         onPressed: () {
                                                           adminremove_notification(
-                                                              result
-                                                                  .notificationId
-                                                                  .toString());
+                                                            result
+                                                                .notificationId
+                                                                .toString(),
+                                                          );
                                                           getnotifydata.clear();
                                                           unread_getnotifydata
                                                               .clear();
@@ -919,11 +962,11 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    other_user_profile(
-                                                        int.parse(result
-                                                            .fromUserId
-                                                            .toString()))));
+                                              builder: (context) =>
+                                                  other_user_profile(int.parse(
+                                                result.fromUserId.toString(),
+                                              )),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -934,11 +977,11 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    other_user_profile(
-                                                        int.parse(result
-                                                            .fromUserId
-                                                            .toString()))));
+                                              builder: (context) =>
+                                                  other_user_profile(int.parse(
+                                                result.fromUserId.toString(),
+                                              )),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -949,8 +992,9 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const bussinessprofile()));
+                                              builder: (context) =>
+                                                  const bussinessprofile(),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -961,11 +1005,11 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    other_user_profile(
-                                                        int.parse(result
-                                                            .fromUserId
-                                                            .toString()))));
+                                              builder: (context) =>
+                                                  other_user_profile(int.parse(
+                                                result.fromUserId.toString(),
+                                              )),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -976,12 +1020,12 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Buyer_sell_detail(
-                                                      post_type: 'SalePost',
-                                                      prod_id:
-                                                          result.salepostId,
-                                                    )));
+                                              builder: (context) =>
+                                                  Buyer_sell_detail(
+                                                post_type: 'SalePost',
+                                                prod_id: result.salepostId,
+                                              ),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -992,12 +1036,12 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Buyer_sell_detail(
-                                                      post_type: 'BuyPost',
-                                                      prod_id:
-                                                          result.salepostId,
-                                                    )));
+                                              builder: (context) =>
+                                                  Buyer_sell_detail(
+                                                post_type: 'BuyPost',
+                                                prod_id: result.salepostId,
+                                              ),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1008,11 +1052,11 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    other_user_profile(
-                                                        int.parse(result
-                                                            .fromUserId
-                                                            .toString()))));
+                                              builder: (context) =>
+                                                  other_user_profile(int.parse(
+                                                result.fromUserId.toString(),
+                                              )),
+                                            ));
                                       }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1023,11 +1067,11 @@ class _NotificationState extends State<notification>
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) =>
-                                                    other_user_profile(
-                                                        int.parse(result
-                                                            .fromUserId
-                                                            .toString()))));
+                                              builder: (context) =>
+                                                  other_user_profile(int.parse(
+                                                result.fromUserId.toString(),
+                                              )),
+                                            ));
                                       }
                                     }
                                     /*else if(result.notificationType.toString()=="profile_review"){
@@ -1035,7 +1079,7 @@ class _NotificationState extends State<notification>
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => other_user_profile(int.parse(result.profileUserId.toString()))));
+                                                  builder: (context) => other_user_profile(int.parse(result.profileUserId.toString(),)),));
                                         }
                                       }*/
                                     else if (result.notificationType
@@ -1045,8 +1089,9 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LivepriceScreen()));
+                                            builder: (context) =>
+                                                const LivepriceScreen(),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1055,8 +1100,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainScreen(3)));
+                                            builder: (context) => MainScreen(3),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1065,8 +1110,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainScreen(3)));
+                                            builder: (context) => MainScreen(3),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1075,8 +1120,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainScreen(3)));
+                                            builder: (context) => MainScreen(3),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1085,8 +1130,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainScreen(3)));
+                                            builder: (context) => MainScreen(3),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1095,8 +1140,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Blog()));
+                                            builder: (context) => const Blog(),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1105,8 +1150,9 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Videos()));
+                                            builder: (context) =>
+                                                const Videos(),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1115,8 +1161,9 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Tutorial_Videos()));
+                                            builder: (context) =>
+                                                const Tutorial_Videos(),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1125,8 +1172,9 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Exhibition()));
+                                            builder: (context) =>
+                                                const Exhibition(),
+                                          ));
                                       // }
                                     } else if (result.notificationType
                                             .toString() ==
@@ -1135,8 +1183,8 @@ class _NotificationState extends State<notification>
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MainScreen(0)));
+                                            builder: (context) => MainScreen(0),
+                                          ));
                                       // }
                                     }
                                   },
@@ -1149,186 +1197,176 @@ class _NotificationState extends State<notification>
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Row(
-                                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        //mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 75,
-                                            width: 80,
-                                            //margin: EdgeInsets.symmetric(horizontal:10.0 ,vertical: 15),
-                                            margin: const EdgeInsets.all(5.0),
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0)),
-                                              // color: Color.fromARGB(255, 0, 91, 148)
-                                              //   color: result.isRead=="0"?Colors.white:Colors.white70,
+                                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      //mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 75,
+                                          width: 80,
+                                          //margin: EdgeInsets.symmetric(horizontal:10.0 ,vertical: 15),
+                                          margin: const EdgeInsets.all(5.0),
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0),
                                             ),
-                                            child: ClipRRect(
-                                              clipBehavior: Clip.antiAlias,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              // Image border
-                                              child: SizedBox.fromSize(
-                                                size: const Size.fromRadius(48),
-                                                // Image radius
-
-                                                child: Image(
-                                                  errorBuilder:
-                                                      (context, object, trace) {
-                                                    return Image.asset(
-                                                        'assets/plastic4trade logo final 1 (2).png');
-                                                  },
-                                                  image: NetworkImage(result
-                                                          .profilepic
-                                                          .toString()
-                                                      //data[index]['member_image'] ?? '',
-                                                      ),
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      1.2,
-                                                  /*   width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,*/
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
-                                            ),
+                                            // color: Color.fromARGB(255, 0, 91, 148)
+                                            //   color: result.isRead=="0"?Colors.white:Colors.white70,
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              /* SizedBox(
-                                                  height: 20,
-                                                  child: Text(
-                                                      result.heading
-                                                          .toString(),
-                                                      style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
-                                                          ?.copyWith(
-                                                          fontSize: 12,
-                                                          color: Colors
-                                                              .black),
-                                                      maxLines: 1,
-                                                      softWrap: false,
-                                                     overflow: TextOverflow.clip),
-                                                ),*/
-                                              SizedBox(
-                                                height: 20,
+                                          child: ClipRRect(
+                                            clipBehavior: Clip.antiAlias,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            // Image border
+                                            child: SizedBox.fromSize(
+                                              size: const Size.fromRadius(48),
+                                              // Image radius
+
+                                              child: Image(
+                                                errorBuilder:
+                                                    (context, object, trace) {
+                                                  return Image.asset(
+                                                      'assets/plastic4trade logo final 1 (2).png');
+                                                },
+                                                image: NetworkImage(
+                                                    result.profilepic.toString()
+                                                    //data[index]['member_image'] ?? '',
+                                                    ),
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    1.8,
-                                                child: Text(
-                                                  result.heading.toString(),
+                                                    1.2,
+                                                /*   width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,*/
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 20,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.8,
+                                              child: Text(
+                                                result.heading.toString(),
+                                                style: const TextStyle(
+                                                        fontSize: 15.0,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color: Color.fromARGB(
+                                                            255, 0, 91, 148),
+                                                        fontFamily:
+                                                            'assets/fonst/Metropolis-Black.otf')
+                                                    .copyWith(
+                                                        fontSize: 12,
+                                                        color: Colors.black),
+                                                maxLines: 1,
+                                                softWrap: true,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                              child: Text(create_formattedDate,
                                                   style: const TextStyle(
-                                                          fontSize: 15.0,
+                                                          fontSize: 13.0,
                                                           fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Color.fromARGB(
-                                                              255, 0, 91, 148),
+                                                              FontWeight.w500,
                                                           fontFamily:
                                                               'assets/fonst/Metropolis-Black.otf')
                                                       .copyWith(
-                                                          fontSize: 12,
+                                                          fontSize: 11,
                                                           color: Colors.black),
                                                   maxLines: 1,
-                                                  softWrap: true,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                  height: 15,
-                                                  child: Text(
-                                                      create_formattedDate,
-                                                      style: const TextStyle(
-                                                              fontSize: 13.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              fontSize: 11,
-                                                              color:
-                                                                  Colors.black),
-                                                      maxLines: 1,
-                                                      softWrap: false)),
-                                              SizedBox(
-                                                  height: 25,
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                          //width: 20,
-                                                          child: Image.asset(
-                                                              'assets/plastic4trade logo final 1 (2).png')),
-                                                      result.fromUserId.toString() == 0
-                                                          ? Text(result.name.toString(),
-                                                              style: const TextStyle(
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontFamily:
-                                                                          'assets/fonst/Metropolis-Black.otf')
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          11,
-                                                                      color: Colors
-                                                                          .black),
-                                                              maxLines: 1,
-                                                              softWrap: false)
-                                                          : Text(result.name.toString(),
-                                                              style: const TextStyle(
-                                                                      fontSize:
-                                                                          13.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontFamily:
-                                                                          'assets/fonst/Metropolis-Black.otf')
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          11,
-                                                                      color: Colors
-                                                                          .black),
-                                                              maxLines: 1,
-                                                              softWrap: false),
-                                                    ],
-                                                  )),
-                                            ],
-                                          ),
-                                          result.isRead == "0"
-                                              ? Container(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  margin: const EdgeInsets.only(
-                                                      left: 30, top: 60),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomLeft,
-                                                    child: Icon(
-                                                      Icons.circle_rounded,
-                                                      size: 10,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                    ),
+                                                  softWrap: false),
+                                            ),
+                                            SizedBox(
+                                              height: 25,
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    //width: 20,
+                                                    child: Image.asset(
+                                                        'assets/plastic4trade logo final 1 (2).png'),
                                                   ),
-                                                )
-                                              : Container()
-                                        ]),
+                                                  result.fromUserId.toString() == 0
+                                                      ? Text(result.name.toString(),
+                                                          style: const TextStyle(
+                                                                  fontSize:
+                                                                      13.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-Black.otf')
+                                                              .copyWith(
+                                                                  fontSize: 11,
+                                                                  color: Colors
+                                                                      .black),
+                                                          maxLines: 1,
+                                                          softWrap: false)
+                                                      : Text(result.name.toString(),
+                                                          style: const TextStyle(
+                                                                  fontSize:
+                                                                      13.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-Black.otf')
+                                                              .copyWith(
+                                                                  fontSize: 11,
+                                                                  color:
+                                                                      Colors.black),
+                                                          maxLines: 1,
+                                                          softWrap: false),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        result.isRead == "0"
+                                            ? Container(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                margin: const EdgeInsets.only(
+                                                    left: 30, top: 60),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.bottomLeft,
+                                                  child: Icon(
+                                                    Icons.circle_rounded,
+                                                    size: 10,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                                ),
+                                              )
+                                            : Container()
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              )))
-                        ]));
-                  });
-            }
-          })
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+            },
+          )
         : const Text('Not data Found');
   }
 
@@ -1380,7 +1418,6 @@ class _NotificationState extends State<notification>
               isRead: data['is_read']);
 
           getnotifydata.add(record);
-
         }
 
         if (mounted) {
@@ -1493,8 +1530,10 @@ class _NotificationState extends State<notification>
   Future<void> get_allread() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getread_all(pref.getString('user_id').toString(),
-        pref.getString('api_token').toString());
+    var res = await getread_all(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
 
     if (res['status'] == 1) {
       isload = true;

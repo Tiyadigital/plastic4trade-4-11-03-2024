@@ -1,38 +1,34 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, camel_case_types, non_constant_identifier_names, invalid_return_type_for_catch_error, unnecessary_null_comparison, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, depend_on_referenced_packages
 
 import 'dart:developer';
 import 'dart:io';
+
+import 'package:Plastic4trade/model/GetSalePostList.dart' as homepost;
+import 'package:Plastic4trade/model/Get_likeUser.dart' as like;
+import 'package:Plastic4trade/model/Get_shareUser.dart' as share_pro;
+import 'package:Plastic4trade/model/Get_viewUser.dart' as view_pro;
+import 'package:Plastic4trade/screen/Bussinessinfo.dart';
 import 'package:Plastic4trade/utill/constant.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:Plastic4trade/screen/Bussinessinfo.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui';
-import 'package:Plastic4trade/model/GetSalePostList.dart' as homepost;
-import 'package:Plastic4trade/model/Get_likeUser.dart' as like;
-import 'package:Plastic4trade/model/Get_viewUser.dart' as view_pro;
-import 'package:Plastic4trade/model/Get_shareUser.dart' as share_pro;
 import 'package:url_launcher/url_launcher.dart';
+
 import '../api/api_interface.dart';
 import '../model/GetSalePostList.dart';
 import '../model/Get_likeUser.dart';
 import '../model/Get_shareUser.dart';
 import '../model/Get_viewUser.dart';
-import '../model/common.dart';
-import '../widget/HomeAppbar.dart';
 import '../widget/MainScreen.dart';
 import 'Buyer_sell_detail.dart';
-import 'dart:io' show Platform;
-
-import 'EditBussinessProfile.dart';
 import 'Follower_Following.dart';
 import 'Review.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
 class bussinessprofile extends StatefulWidget {
   const bussinessprofile({Key? key}) : super(key: key);
@@ -219,7 +215,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                     width:
                                         10), // Add spacing between the two columns
                                 Expanded(
@@ -244,7 +240,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 2),
+                                      const SizedBox(height: 2),
                                       // Add spacing between the business name and contact details
                                       SizedBox(
                                         width:
@@ -259,7 +255,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                               children: [
                                                 const ImageIcon(AssetImage(
                                                     'assets/user.png')),
-                                                SizedBox(width: 5),
+                                                const SizedBox(width: 5),
                                                 SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
@@ -268,7 +264,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                   child: Text(
                                                     username.toString(),
                                                     softWrap: true,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 16.0,
                                                       fontWeight:
                                                           FontWeight.w400,
@@ -281,12 +277,12 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 2),
+                                            const SizedBox(height: 2),
                                             Row(
                                               children: [
                                                 const ImageIcon(AssetImage(
                                                     'assets/call.png')),
-                                                SizedBox(width: 5),
+                                                const SizedBox(width: 5),
                                                 SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
@@ -316,12 +312,12 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 2),
+                                            const SizedBox(height: 2),
                                             Row(
                                               children: [
                                                 const ImageIcon(AssetImage(
                                                     'assets/location.png')),
-                                                SizedBox(width: 5),
+                                                const SizedBox(width: 5),
                                                 Expanded(
                                                   child: SizedBox(
                                                     width:
@@ -368,7 +364,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                                   image: AssetImage(
                                                                       'assets/verify.png')),
                                                               Text(
-                                                                  'Unverified'),
+                                                                  'Verified'),
                                                             ],
                                                           )
                                                         : verify_status == "3"
@@ -378,7 +374,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                                       image: AssetImage(
                                                                           'assets/verify.png')),
                                                                   const Text(
-                                                                      'Unverified'),
+                                                                      'Verified'),
                                                                   const SizedBox(
                                                                       width: 5),
                                                                   Row(
@@ -490,12 +486,12 @@ class _bussinessprofileState extends State<bussinessprofile>
                           scrollDirection: Axis.horizontal,
                           child: Row(children: [
                             Container(
-                                padding: EdgeInsets.all(5.0),
-                                margin: EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
+                                padding: const EdgeInsets.all(5.0),
+                                margin: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black26),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(18)),
+                                      const BorderRadius.all(Radius.circular(18)),
                                 ),
                                 child: SizedBox(
                                     width:
@@ -522,13 +518,13 @@ class _bussinessprofileState extends State<bussinessprofile>
                                       ),
                                     ))),
                             Container(
-                                padding: EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.all(5.0),
                                 margin: const EdgeInsets.fromLTRB(
                                     5.0, 0.0, 5.0, 0.0),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black26),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(18)),
+                                      const BorderRadius.all(Radius.circular(18)),
                                 ),
                                 child: SizedBox(
                                     width:
@@ -670,7 +666,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                          margin: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
                           height: 40,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 3.8,
@@ -690,7 +686,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                       'assets/star.png',
                                       color: Colors.black,
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   width: 2,
                                 ),
                                 Text('Reviews ($reviews_count)',
@@ -705,7 +701,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                          margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                           height: 40,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 4.3,
@@ -717,12 +713,12 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     onTap: () {
                                       ViewItem(context);
                                     },
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.remove_red_eye_outlined,
                                       color: Colors.black54,
                                     )),
                                 Text('Views ($view_count)',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 11.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w600,
@@ -733,7 +729,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                          margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                           height: 40,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 5.5,
@@ -752,11 +748,11 @@ class _bussinessprofileState extends State<bussinessprofile>
                                       'assets/Send.png',
                                       height: 15,
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   width: 2,
                                 ),
                                 GestureDetector(
-                                  child: Text('Share',
+                                  child: const Text('Share',
                                       style: TextStyle(
                                         fontSize: 11.0,
                                         fontFamily: 'Metropolis',
@@ -774,7 +770,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                       ],
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: Colors.black26,
                     height: 2.0,
                   ),
@@ -784,7 +780,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                     controller: _parentController,
                     tabs: [
                       Tab(text: 'Product Catalogue ($post_count)'),
-                      Tab(text: 'Business Info'),
+                      const Tab(text: 'Business Info'),
                     ],
                   ),
                   Expanded(
@@ -793,7 +789,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                       children: [
                         _subtabSection(context),
                         Container(
-                            margin: EdgeInsets.all(20.0),
+                            margin: const EdgeInsets.all(20.0),
                             width: MediaQuery.of(context).size.width,
                             child: SingleChildScrollView(
                                 child: Column(
@@ -805,7 +801,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
                                       //height: 300,
-                                      padding: EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Column(
                                         children: [
                                           const Align(
@@ -1055,7 +1051,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                         width:
                                             MediaQuery.of(context).size.width,
                                         height: 60,
-                                        padding: EdgeInsets.all(10.0),
+                                        padding: const EdgeInsets.all(10.0),
                                         child: Column(children: [
                                           const Align(
                                             alignment: Alignment.topLeft,
@@ -1092,7 +1088,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
                                       //height: 320,
-                                      padding: EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Column(
                                         children: [
                                           const Align(
@@ -1243,7 +1239,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                           const SizedBox(
                                             height: 10.0,
                                           ),
-                                          Align(
+                                          const Align(
                                             alignment: Alignment.topLeft,
                                             child: Text('Annual Turnover',
                                                 style: TextStyle(
@@ -1452,10 +1448,10 @@ class _bussinessprofileState extends State<bussinessprofile>
   }
 
   Future<void> sharecount() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await share_count(_pref.getString('user_id').toString(),
-        _pref.getString('user_id').toString());
+    var res = await share_count(pref.getString('user_id').toString(),
+        pref.getString('user_id').toString());
 
     if (res['status'] == 1) {
       if (mounted) {
@@ -1485,7 +1481,7 @@ class _bussinessprofileState extends State<bussinessprofile>
             borderRadius: BorderRadius.circular(
               25.0,
             ),
-            color: Color.fromARGB(255, 0, 91, 148),
+            color: const Color.fromARGB(255, 0, 91, 148),
           ),
           labelColor: Colors.white,
           unselectedLabelColor: Colors.black,
@@ -1537,7 +1533,7 @@ class _bussinessprofileState extends State<bussinessprofile>
   Widget Buyer_post() {
     return buypostlist_data.isNotEmpty
         ? Container(
-            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
                 //future: load_category(),
@@ -1547,11 +1543,11 @@ class _bussinessprofileState extends State<bussinessprofile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
+                  padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     // crossAxisCount: 2,
                     // mainAxisSpacing: 5,
@@ -1562,7 +1558,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: buypostlist_data.length,
                   shrinkWrap: true,
@@ -1588,8 +1584,8 @@ class _bussinessprofileState extends State<bussinessprofile>
                             Container(
                               height: 165,
                               width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.all(5.0),
+                              decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(30.0))),
@@ -1610,16 +1606,16 @@ class _bussinessprofileState extends State<bussinessprofile>
                               bottom: 10,
                               left: 10,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
@@ -1632,7 +1628,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       /*decoration: BoxDecoration(
                                             color: Colors.red,
                                             borderRadius: BorderRadius.all(
@@ -1655,9 +1651,9 @@ class _bussinessprofileState extends State<bussinessprofile>
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
@@ -1671,12 +1667,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.productType.toString() +
-                                            ' | ' +
-                                            result.productGrade.toString(),
-                                        style: TextStyle(
+                                        '${result.productType} | ${result.productGrade}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1689,12 +1683,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.state.toString() +
-                                            ',' +
-                                            result.country.toString(),
-                                        style: TextStyle(
+                                        '${result.state},${result.country}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1707,10 +1699,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
                                       result.postType.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 13.0,
                                           fontFamily: 'Metropolis',
                                           fontWeight: FontWeight.w600,
@@ -1726,9 +1718,8 @@ class _bussinessprofileState extends State<bussinessprofile>
                 );
               }
 
-              return CircularProgressIndicator();
             }))
-        : Center(
+        : const Center(
             child: Text('Buy Post not Found',
                 style: TextStyle(color: Color.fromARGB(255, 0, 91, 148))),
           );
@@ -1770,9 +1761,6 @@ class _bussinessprofileState extends State<bussinessprofile>
     super.dispose();
   }
 
-  void _launchSocialMediaAppIfInstalled() {
-    instagram_url;
-  }
 
   void _onLoading() {
     BuildContext dialogContext = context;
@@ -1794,13 +1782,13 @@ class _bussinessprofileState extends State<bussinessprofile>
                 width: 50.0,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                             value: null,
                             strokeWidth: 2.0,
                             color: Color.fromARGB(255, 0, 91, 148),
                           )
                         : Platform.isIOS
-                            ? CupertinoActivityIndicator(
+                            ? const CupertinoActivityIndicator(
                                 color: Color.fromARGB(255, 0, 91, 148),
                                 radius: 20,
                                 animating: true,
@@ -1832,7 +1820,7 @@ class _bussinessprofileState extends State<bussinessprofile>
   Widget Sale_post() {
     return salepostlist_data.isNotEmpty
         ? Container(
-            padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
                 //future: load_category(),
@@ -1842,11 +1830,11 @@ class _bussinessprofileState extends State<bussinessprofile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
-                  padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
+                  padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     // crossAxisCount: 2,
                     // mainAxisSpacing: 5,
@@ -1857,7 +1845,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                     mainAxisSpacing: 3.0,
                     crossAxisCount: 2,
                   ),
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollercontroller,
                   itemCount: salepostlist_data.length,
                   shrinkWrap: true,
@@ -1883,8 +1871,8 @@ class _bussinessprofileState extends State<bussinessprofile>
                             Container(
                               height: 165,
                               width: 175,
-                              margin: EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
+                              margin: const EdgeInsets.all(5.0),
+                              decoration: const BoxDecoration(
                                   //color: Colors.black26,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(30.0))),
@@ -1905,16 +1893,16 @@ class _bussinessprofileState extends State<bussinessprofile>
                               bottom: 10,
                               left: 10,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 0, 148, 95),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0))),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹' + result.productPrice.toString(),
-                                    style: TextStyle(
+                                    '₹${result.productPrice}',
+                                    style: const TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily:
@@ -1927,7 +1915,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                     top: -10,
                                     left: -30,
                                     child: Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       /*decoration: BoxDecoration(
                                             color: Colors.red,
                                             borderRadius: BorderRadius.all(
@@ -1950,9 +1938,9 @@ class _bussinessprofileState extends State<bussinessprofile>
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(result.postName.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black,
@@ -1966,12 +1954,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.productType.toString() +
-                                            ' | ' +
-                                            result.productGrade.toString(),
-                                        style: TextStyle(
+                                        '${result.productType} | ${result.productGrade}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -1984,12 +1970,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
-                                        result.state.toString() +
-                                            ',' +
-                                            result.country.toString(),
-                                        style: TextStyle(
+                                        '${result.state},${result.country}',
+                                        style: const TextStyle(
                                           fontSize: 13.0,
                                           color: Colors.grey,
                                           fontFamily: 'Metropolis',
@@ -2002,7 +1986,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                   alignment: Alignment.topLeft,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10.0, left: 10.0),
+                                        const EdgeInsets.only(top: 10.0, left: 10.0),
                                     child: Text(
                                       result.postType.toString(),
                                       style: const TextStyle(
@@ -2143,23 +2127,22 @@ class _bussinessprofileState extends State<bussinessprofile>
 
   get_buypostlist() async {
     buyPostList = GetSalePostList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbuy_PostList(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         '20',
         offset.toString(),
-        _pref.getString('user_id').toString());
-    var jsonarray;
+        pref.getString('user_id').toString());
+    var jsonArray;
     if (res['status'] == 1) {
       buyPostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        var color_array;
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homepost.Result record = homepost.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -2191,27 +2174,25 @@ class _bussinessprofileState extends State<bussinessprofile>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   Future<void> Profilelike() async {
-    common_par getsimmilar = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await profile_like(
         profileid.toString(),
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = common_par.fromJson(res);
       // Fluttertoast.showToast(msg: res['message']);
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   ViewItem(BuildContext context) {
@@ -2231,7 +2212,7 @@ class _bussinessprofileState extends State<bussinessprofile>
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return ViewWidget();
+                  return const ViewWidget();
                 },
               );
             })).then(
@@ -2247,23 +2228,22 @@ class _bussinessprofileState extends State<bussinessprofile>
 
   get_salepostlist() async {
     salePostList = GetSalePostList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getsale_PostList(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         '20',
         offset.toString(),
-        _pref.getString('user_id').toString());
-    var jsonarray;
+        pref.getString('user_id').toString());
+    var jsonArray;
     if (res['status'] == 1) {
       salePostList = GetSalePostList.fromJson(res);
 
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        var color_array;
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           homepost.Result record = homepost.Result(
               postName: data['PostName'],
               categoryName: data['CategoryName'],
@@ -2295,15 +2275,12 @@ class _bussinessprofileState extends State<bussinessprofile>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
   }
 
   void shareImage({required String url, required String title}) async {
@@ -2325,15 +2302,13 @@ class _bussinessprofileState extends State<bussinessprofile>
 }
 
 class ViewWidget extends StatefulWidget {
-  ViewWidget({Key? key}) : super(key: key);
+  const ViewWidget({Key? key}) : super(key: key);
 
   @override
   State<ViewWidget> createState() => _ViewState();
 }
 
 class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
-  int? _radioValue = 0;
-  int? _managerValue = 0;
   String? assignedName;
   bool? isload;
   late TabController _tabController;
@@ -2341,9 +2316,9 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
   List<view_pro.Data> dataList1 = [];
   List<share_pro.Data> dataList2 = [];
 
-  //List<Data> dataList2=[];
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _tabController = TabController(length: 3, vsync: this);
     get_like();
@@ -2353,10 +2328,10 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_like() async {
     Get_likeUser common = Get_likeUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res =
-        await get_profileliked_user(_pref.getString('user_id').toString());
+        await get_profileliked_user(pref.getString('user_id').toString());
 
     if (res['status'] == 1) {
       common = Get_likeUser.fromJson(res);
@@ -2370,10 +2345,10 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
 
   get_view() async {
     Get_viewUser common = Get_viewUser();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res =
-        await get_profileviewd_user(_pref.getString('user_id').toString());
+        await get_profileviewd_user(pref.getString('user_id').toString());
     if (res['status'] == 1) {
       common = Get_viewUser.fromJson(res);
       dataList1 = common.data ?? [];
@@ -2401,22 +2376,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     setState(() {});
   }
 
-  void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
-  void _callNumber(String number) async {
-    final url = 'tel:$number';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
