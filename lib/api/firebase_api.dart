@@ -316,80 +316,8 @@ class FirebaseApi {
   }
 
   static Future _handleMessage(RemoteMessage? message) async {
-    //print('message.data:::::::${message.data['menuId'] == '1'}');
-    //_handleMessage(message)
-    // navigatorKey.currentState?.push(MaterialPageRoute(
-    //   builder: (context) => MainScreen(3),
-    // ));
-    return 3;
-    /*Navigator.push(navigatorKey.currentState.context, MaterialPageRoute(
-      builder: (context) => MainScreen(3),
-    ));*/
-    //  navigatorKey.currentState?.pushNamed('/MainScreen(3)');
 
-    /* if (message.data['menuId'] == '1') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => TimeTablePage(),
-        ),
-      );
-    } else if (message.data['menuId'] == '2') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => PendingAttendance(),
-        ),
-      );
-    } else if (message.data['menuId'] == '3') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => StaffAttendanceSummary(),
-        ),
-      );
-    } else if (message.data['menuId'] == '4') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => SearchStudentScreen(),
-        ),
-      );
-    } else if (message.data['menuId'] == '5') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => LeaveBalanceScreen(),
-        ),
-      );
-    } else if (message.data['menuId'] == '6') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => LeaveApprove(),
-        ),
-      );
-    } else if (message.data['menuId'] == '7') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => LoadAlterApprove(),
-        ),
-      );
-    } else if (message.data['menuId'] == '8') {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => DailyDiaryScreen(),
-        ),
-      );
-    } else {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(),
-        ),
-      );
-    }*/
+    return 3;
+
   }
 }

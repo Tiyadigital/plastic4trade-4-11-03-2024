@@ -75,13 +75,13 @@ class _bussinessprofileState extends State<other_user_profile>
   String? First_currency_sign = "",
       Second_currency_sign = "",
       Third_currency_sign = "";
-  int? view_count, like, reviews_count, following_count, followers_count;
+  int? view_count, like, reviews_count, following_count, followers_count,is_prime;
   bool? isload;
   GetSalePostList salePostList = GetSalePostList();
   GetSalePostList buyPostList = GetSalePostList();
   int offset = 0;
   int count = 0;
-  String? profileid, post_count = "0";
+  String profileid = "", post_count = "0";
   String? packageName;
   PackageInfo? packageInfo;
   List<homepost.PostColor> colors = [];
@@ -122,14 +122,16 @@ class _bussinessprofileState extends State<other_user_profile>
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0,
-        title: const Text('Business Profile',
-            softWrap: false,
-            style: TextStyle(
-              fontSize: 20.0,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Metropolis',
-            ),),
+        title: const Text(
+          'Business Profile',
+          softWrap: false,
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Metropolis',
+          ),
+        ),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
@@ -144,458 +146,480 @@ class _bussinessprofileState extends State<other_user_profile>
           ? Column(
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
-                    child: Column(children: [
-                      Column(children: [
-                        Container(
-                            //width: MediaQuery.of(context).size.width,
-                            padding:
-                                const EdgeInsets.fromLTRB(5.0, 10.0, 0.0, 0.0),
-                            child: Column(children: [
-                              Column(children: [
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                      top: 5.0, left: 2.0, right: 5.0),
-                                  height: 140,
-                                  child: Row(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 0.0),
+                  child: Column(children: [
+                    Column(children: [
+                      Container(
+                        //width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.fromLTRB(5.0, 10.0, 0.0, 0.0),
+                        child: Column(children: [
+                          Column(children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  top: 5.0, left: 2.0, right: 5.0),
+                              height: 140,
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        // Align children in the center horizontally
-                                        children: [
-                                          Container(
-                                            width: 110.0,
-                                            height: 110.0,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xff7c94b6),
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                    image_url.toString(),),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(50.0),),
-                                              border: Border.all(
-                                                color: const Color(0xffFFC107),
-                                                width: 2.0,
-                                              ),
+                                      Container(
+                                        width: 110.0,
+                                        height: 110.0,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xff7c94b6),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              image_url.toString(),
                                             ),
+                                            fit: BoxFit.cover,
                                           ),
-                                          Container(
-                                            // Adjust alignment and padding of the "Premium" label
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              color: const Color(0xffFFC107),
-                                            ),
-                                            child: const Text(
-                                              'Premium',
-                                              style: TextStyle(fontSize: 9),
-                                            ),
+                                          borderRadius: const BorderRadius.all(
+                                            Radius.circular(50.0),
                                           ),
-                                        ],
+                                          border: Border.all(
+                                            color: const Color(0xffFFC107),
+                                            width: 2.0,
+                                          ),
+                                        ),
                                       ),
-
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // Align children to the start (left) side
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.9,
-                                            child: Text(
-                                              business_name.toString(),
-                                              softWrap: false,
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.visible,
-                                                fontSize: 19.0,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-SemiBold.otf',
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 2),
-                                          // Add spacing between the business name and contact details
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.8,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              // Align children to the start (left) side
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    const ImageIcon(AssetImage(
-                                                        'assets/user.png'),),
-                                                    const SizedBox(width: 5),
-                                                    SizedBox(
-                                                      //width: MediaQuery.of(context).size.width/2.3,
-                                                      child: Text(
-                                                          username.toString(),
-                                                          //softWrap: true,
-                                                          style:
-                                                              const TextStyle(
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .visible,
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-SemiBold.otf',
-                                                          ),
-                                                          softWrap: false,
-                                                          maxLines: 1,
-                                                          overflow: TextOverflow
-                                                              .ellipsis),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 2),
-                                                Row(
-                                                  children: [
-                                                    const ImageIcon(AssetImage(
-                                                        'assets/call.png'),),
-                                                    const SizedBox(width: 5),
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              3.5,
-                                                      child: GestureDetector(
-                                                        onTap: () => launchUrl(
-                                                          Uri.parse(
-                                                              'tel:$countryCode + $usermbl'),
-                                                          mode: LaunchMode
-                                                              .externalApplication,
-                                                        ),
-                                                        child: Text(
-                                                          overflow: TextOverflow
-                                                              .visible,
-                                                          softWrap: false,
-                                                          maxLines: 1,
-                                                          countryCode
-                                                                  .toString() +
-                                                              usermbl
-                                                                  .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-SemiBold.otf',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 2),
-                                                Row(
-                                                  children: [
-                                                    const ImageIcon(AssetImage(
-                                                        'assets/location.png'),),
-                                                    const SizedBox(width: 5),
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context).size.width / 2.2,
-                                                      child: Text(
-                                                        address.toString(),
-                                                        softWrap: false,
-                                                        style: const TextStyle(
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          fontSize: 16.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-SemiBold.otf',
-                                                        ),
-                                                        maxLines: 1,
-                                                        overflow:
-                                                            TextOverflow.clip,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  5.0, 5.0, 5.0, 5.0),
-                                              child: Row(children: [
-                                                Column(
-                                                  children: [
-                                                    verify_status == "1"
-                                                        ? Row(children: const [
-                                                            Text('Unverified'),
-                                                          ])
-                                                        : verify_status == "2"
-                                                            ? Row(
-                                                                children: const [
-                                                                  Image(
-                                                                      image: AssetImage(
-                                                                          'assets/verify.png'),),
-                                                                  Text(
-                                                                      'Verified'),
-                                                                ],
-                                                              )
-                                                            : verify_status ==
-                                                                    "3"
-                                                                ? Row(
-                                                                    children: [
-                                                                      const Image(
-                                                                          image:
-                                                                              AssetImage('assets/verify.png'),),
-                                                                      const Text(
-                                                                          'Verified'),
-                                                                      const SizedBox(
-                                                                          width:
-                                                                              5),
-                                                                      Row(
-                                                                        children: const [
-                                                                          Image(
-                                                                            image:
-                                                                                AssetImage('assets/trust.png'),
-                                                                            height:
-                                                                                20,
-                                                                            width:
-                                                                                30,
-                                                                          ),
-                                                                          Text(
-                                                                              'Trusted'),
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  )
-                                                                : Container()
-                                                  ],
-                                                ),
-                                              ]),),
-                                        ],
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: const Color(0xffFFC107),
+                                        ),
+                                        child:  Text(
+                                          (is_prime == 0) ? "Free":
+                                          'Premium',
+                                          style: const TextStyle(fontSize: 9),
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ]),
-
-                              //category(),
-
-                              //SizedBox(height: 10,),
-                            ]),),
-                      ]),
-
-                      //category(),
-
-                      //SizedBox(height: 10,),
-                    ]),),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            height: 25,
-                            width: 55,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: const Color.fromARGB(255, 0, 91, 148),
-                            ),
-                            child: is_follow == "0"
-                                ? GestureDetector(
-                                    onTap: () {
-                                      followUnfollowUser("1");
-                                      is_follow = "1";
-                                      setState(() {});
-                                    },
-                                    child: const Center(
-                                      child: Text('Follow',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      followUnfollowUser("0");
-                                      is_follow = "0";
-                                      setState(() {});
-                                    },
-                                    child: const Center(
-                                      child: Text('Followed',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white),
-                                          textAlign: TextAlign.center),
-                                    ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.9,
+                                        child: Text(
+                                          business_name.toString(),
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                            overflow: TextOverflow.visible,
+                                            fontSize: 19.0,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf',
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.8,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const ImageIcon(
+                                                  AssetImage('assets/user.png'),
+                                                ),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  //width: MediaQuery.of(context).size.width/2.3,
+                                                  child: Text(
+                                                      username.toString(),
+                                                      //softWrap: true,
+                                                      style: const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .visible,
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.black,
+                                                        fontFamily:
+                                                            'assets/fonst/Metropolis-SemiBold.otf',
+                                                      ),
+                                                      softWrap: false,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow
+                                                          .ellipsis),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Row(
+                                              children: [
+                                                const ImageIcon(
+                                                  AssetImage('assets/call.png'),
+                                                ),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      3.5,
+                                                  child: GestureDetector(
+                                                    onTap: () => launchUrl(
+                                                      Uri.parse(
+                                                          'tel:$countryCode + $usermbl'),
+                                                      mode: LaunchMode
+                                                          .externalApplication,
+                                                    ),
+                                                    child: Text(
+                                                      overflow:
+                                                          TextOverflow.visible,
+                                                      softWrap: false,
+                                                      maxLines: 1,
+                                                      countryCode.toString() +
+                                                          usermbl.toString(),
+                                                      style: const TextStyle(
+                                                        fontSize: 16.0,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Colors.black,
+                                                        fontFamily:
+                                                            'assets/fonst/Metropolis-SemiBold.otf',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Row(
+                                              children: [
+                                                const ImageIcon(
+                                                  AssetImage(
+                                                      'assets/location.png'),
+                                                ),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2.2,
+                                                  child: Text(
+                                                    address.toString(),
+                                                    softWrap: false,
+                                                    style: const TextStyle(
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      fontSize: 16.0,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-SemiBold.otf',
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.clip,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            5.0, 5.0, 5.0, 5.0),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              children: [
+                                                verify_status == "1"
+                                                    ? Row(children: const [
+                                                        Text('Unverified'),
+                                                      ])
+                                                    : verify_status == "2"
+                                                        ? Row(
+                                                            children: const [
+                                                              Image(
+                                                                image: AssetImage(
+                                                                    'assets/verify.png'),
+                                                              ),
+                                                              Text('Verified'),
+                                                            ],
+                                                          )
+                                                        : verify_status == "3"
+                                                            ? Row(
+                                                                children: [
+                                                                  const Image(
+                                                                    image: AssetImage(
+                                                                        'assets/verify.png'),
+                                                                  ),
+                                                                  const Text(
+                                                                      'Verified'),
+                                                                  const SizedBox(
+                                                                      width: 5),
+                                                                  Row(
+                                                                    children: const [
+                                                                      Image(
+                                                                        image: AssetImage(
+                                                                            'assets/trust.png'),
+                                                                        height:
+                                                                            20,
+                                                                        width:
+                                                                            30,
+                                                                      ),
+                                                                      Text(
+                                                                          'Trusted'),
+                                                                    ],
+                                                                  )
+                                                                ],
+                                                              )
+                                                            : Container()
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                ],
+                              ),
+                            ),
+                          ]),
+
+                          //category(),
+
+                          //SizedBox(height: 10,),
+                        ]),
+                      ),
+                    ]),
+
+                    //category(),
+
+                    //SizedBox(height: 10,),
+                  ]),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          height: 25,
+                          width: 55,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color.fromARGB(255, 0, 91, 148),
                           ),
-                          Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(followers_count.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),),
-                                const Text('Followers',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),),
-                              ]),
-                          Row(children: [
-                            Text(following_count.toString(),
+                          child: is_follow == "0"
+                              ? GestureDetector(
+                                  onTap: () {
+                                    followUnfollowUser("1");
+                                    is_follow = "1";
+                                    setState(() {});
+                                  },
+                                  child: const Center(
+                                    child: Text('Follow',
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    followUnfollowUser("0");
+                                    is_follow = "0";
+                                    setState(() {});
+                                  },
+                                  child: const Center(
+                                    child: Text('Followed',
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center),
+                                  ),
+                                ),
+                        ),
+                        Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                followers_count.toString(),
                                 style: const TextStyle(
                                     fontSize: 17.0,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),),
-                            const Text('Following',
+                                        'assets/fonst/Metropolis-SemiBold.otf'),
+                              ),
+                              const Text(
+                                'Followers',
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),),
-                          ])
-                        ]),),
-                Container(
-                    margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                    height: 60,
-                    child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(children: [
-                          Container(
-                              padding: const EdgeInsets.all(5.0),
-                              margin: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black26),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(18),),
+                                        'assets/fonst/Metropolis-SemiBold.otf'),
                               ),
-                              child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 4.2,
-                                  height: 25,
-                                  child: Row(
-                                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () {},
-                                          child: const ImageIcon(
-                                              AssetImage('assets/sms.png'),),),
-                                      const Text(' Chat',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf',
-                                              fontSize: 14,
-                                              color: Colors.black),),
-                                    ],
-                                  ),),),
-                          Container(
-                            padding: const EdgeInsets.all(5.0),
-                            margin:
-                                const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black26),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(18),),
-                            ),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 3.8,
-                              height: 25,
-                              child: GestureDetector(
-                                onTap: () {
-                                  launchUrl(
-                                    Uri.parse('https://wa.me/$bussmbl'),
-                                    mode: LaunchMode.externalApplication,
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    Image.asset(('assets/whatsapp.png'),),
-                                    const Text('WhatsApp',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf',
-                                            fontSize: 14,
-                                            color: Colors.black),),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            ]),
+                        Row(children: [
+                          Text(
+                            following_count.toString(),
+                            style: const TextStyle(
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontFamily:
+                                    'assets/fonst/Metropolis-SemiBold.otf'),
                           ),
-                          Row(
-                            //mainAxisAlignment: MainAxisAlignment.center,
+                          const Text(
+                            'Following',
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontFamily:
+                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                          ),
+                        ])
+                      ]),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+                  height: 60,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: [
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        margin: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(18),
+                          ),
+                        ),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 4.2,
+                          height: 25,
+                          child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               GestureDetector(
-                                  onTap: () => launchUrl(
-                                        Uri.parse(facebook_url!),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                  child: Image.asset(
-                                    'assets/facebook.png',
-                                    width: 30,
-                                    height: 30,
-                                  ),),
-                              IconButton(
-                                  onPressed: () => launchUrl(
-                                        Uri.parse(instagram_url!),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                  icon: Image.asset('assets/instagram.png'),),
-                              IconButton(
-                                  onPressed: () => launchUrl(
-                                        Uri.parse(linkedin_url!),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                  icon: Image.asset('assets/linkdin.png'),),
-                              IconButton(
-                                  onPressed: () => launchUrl(
-                                        Uri.parse(youtube_url!),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                  icon: Image.asset('assets/youtube.png'),),
-                              IconButton(
-                                  onPressed: () => launchUrl(
-                                        Uri.parse(twitter_url!),
-                                        mode: LaunchMode.externalApplication,
-                                      ),
-                                  icon: Image.asset('assets/Twitter.png'),),
+                                onTap: () {},
+                                child: const ImageIcon(
+                                  AssetImage('assets/sms.png'),
+                                ),
+                              ),
+                              const Text(
+                                ' Chat',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf',
+                                    fontSize: 14,
+                                    color: Colors.black),
+                              ),
                             ],
-                          )
-                        ]),),),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5.0),
+                        margin: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black26),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(18),
+                          ),
+                        ),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 3.8,
+                          height: 25,
+                          child: GestureDetector(
+                            onTap: () {
+                              launchUrl(
+                                Uri.parse('https://wa.me/$bussmbl'),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  ('assets/whatsapp.png'),
+                                ),
+                                const Text(
+                                  'WhatsApp',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf',
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => launchUrl(
+                              Uri.parse(facebook_url!),
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            child: Image.asset(
+                              'assets/facebook.png',
+                              width: 30,
+                              height: 30,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => launchUrl(
+                              Uri.parse(instagram_url!),
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            icon: Image.asset('assets/instagram.png'),
+                          ),
+                          IconButton(
+                            onPressed: () => launchUrl(
+                              Uri.parse(linkedin_url!),
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            icon: Image.asset('assets/linkdin.png'),
+                          ),
+                          IconButton(
+                            onPressed: () => launchUrl(
+                              Uri.parse(youtube_url!),
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            icon: Image.asset('assets/youtube.png'),
+                          ),
+                          IconButton(
+                            onPressed: () => launchUrl(
+                              Uri.parse(twitter_url!),
+                              mode: LaunchMode.externalApplication,
+                            ),
+                            icon: Image.asset('assets/Twitter.png'),
+                          ),
+                        ],
+                      )
+                    ]),
+                  ),
+                ),
                 const Divider(
                   color: Colors.black26,
                   height: 2.0,
@@ -614,40 +638,41 @@ class _bussinessprofileState extends State<other_user_profile>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                  onTap: () {},
-                                  child: like == 0
-                                      ? GestureDetector(
-                                          child: Image.asset(
-                                            'assets/like.png',
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          onTap: () {
-                                            Profilelike();
-                                            like = 1;
-                                            int add = int.parse(like_count!);
-                                            add++;
-                                            like_count = add.toString();
+                                onTap: () {},
+                                child: like == 0
+                                    ? GestureDetector(
+                                        child: Image.asset(
+                                          'assets/like.png',
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        onTap: () {
+                                          Profilelike();
+                                          like = 1;
+                                          int add = int.parse(like_count!);
+                                          add++;
+                                          like_count = add.toString();
 
-                                            setState(() {});
-                                          },
-                                        )
-                                      : GestureDetector(
-                                          child: Image.asset(
-                                            'assets/like1.png',
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          onTap: () {
-                                            Profilelike();
-                                            like = 0;
-                                            int add = int.parse(like_count!);
-                                            add--;
-                                            like_count = add.toString();
+                                          setState(() {});
+                                        },
+                                      )
+                                    : GestureDetector(
+                                        child: Image.asset(
+                                          'assets/like1.png',
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        onTap: () {
+                                          Profilelike();
+                                          like = 0;
+                                          int add = int.parse(like_count!);
+                                          add--;
+                                          like_count = add.toString();
 
-                                            setState(() {});
-                                          },
-                                        ),),
+                                          setState(() {});
+                                        },
+                                      ),
+                              ),
                               const SizedBox(
                                 width: 2,
                               ),
@@ -655,13 +680,15 @@ class _bussinessprofileState extends State<other_user_profile>
                                 onTap: () {
                                   ViewItem(context);
                                 },
-                                child: Text('Like ($like_count)',
-                                    style: const TextStyle(
-                                      fontSize: 11.0,
-                                      fontFamily: 'Metropolis',
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),),
+                                child: Text(
+                                  'Like ($like_count)',
+                                  style: const TextStyle(
+                                    fontSize: 11.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               )
                             ],
                           ),
@@ -677,27 +704,33 @@ class _bussinessprofileState extends State<other_user_profile>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                review(profileid.toString(),),),);
-                                  },
-                                  child: Image.asset(
-                                    'assets/star.png',
-                                    color: Colors.black,
-                                  ),),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => review(
+                                        profileid.toString(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/star.png',
+                                  color: Colors.black,
+                                ),
+                              ),
                               const SizedBox(
                                 width: 2,
                               ),
-                              Text('Reviews ($reviews_count)',
-                                  style: const TextStyle(
-                                    fontSize: 11.0,
-                                    fontFamily: 'Metropolis',
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),)
+                              Text(
+                                'Reviews ($reviews_count)',
+                                style: const TextStyle(
+                                  fontSize: 11.0,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -712,20 +745,23 @@ class _bussinessprofileState extends State<other_user_profile>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                  onTap: () {
-                                    ViewItem(context);
-                                  },
-                                  child: const Icon(
-                                    Icons.remove_red_eye_outlined,
-                                    color: Colors.black54,
-                                  ),),
-                              Text('Views ($view_count)',
-                                  style: const TextStyle(
-                                    fontSize: 11.0,
-                                    fontFamily: 'Metropolis',
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),)
+                                onTap: () {
+                                  ViewItem(context);
+                                },
+                                child: const Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              Text(
+                                'Views ($view_count)',
+                                style: const TextStyle(
+                                  fontSize: 11.0,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -740,27 +776,31 @@ class _bussinessprofileState extends State<other_user_profile>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               GestureDetector(
-                                  onTap: () {
-                                    sharecount();
-                                    shareImage(
-                                        url: image_url.toString(),
-                                        title: business_name.toString(),);
-                                  },
-                                  child: Image.asset(
-                                    'assets/Send.png',
-                                    height: 15,
-                                  ),),
+                                onTap: () {
+                                  sharecount();
+                                  shareImage(
+                                    url: image_url.toString(),
+                                    title: business_name.toString(),
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/Send.png',
+                                  height: 15,
+                                ),
+                              ),
                               const SizedBox(
                                 width: 2,
                               ),
                               GestureDetector(
-                                child: const Text('Share',
-                                    style: TextStyle(
-                                      fontSize: 11.0,
-                                      fontFamily: 'Metropolis',
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),),
+                                child: const Text(
+                                  'Share',
+                                  style: TextStyle(
+                                    fontSize: 11.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
                                 onTap: () {
                                   ViewItem(context);
                                 },
@@ -776,7 +816,6 @@ class _bussinessprofileState extends State<other_user_profile>
                   color: Colors.black26,
                   height: 2.0,
                 ),
-
                 TabBar(
                   controller: _parentController,
                   tabs: [
@@ -790,577 +829,613 @@ class _bussinessprofileState extends State<other_user_profile>
                     children: [
                       _subtabSection(context),
                       Container(
-                          margin: const EdgeInsets.all(20.0),
-                          width: MediaQuery.of(context).size.width,
-                          child: SingleChildScrollView(
-                              child: Column(
+                        margin: const EdgeInsets.all(20.0),
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                          child: Column(
                             children: [
                               Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    //height: 300,
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      children: [
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Nature Of Business',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  //height: 300,
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Nature Of Business',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
                                         ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                                business_type.toString(),
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf',
-                                                    fontSize: 13,
-                                                    color: Colors.black),),),
-                                        const SizedBox(
-                                          height: 10.0,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          business_type.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 13,
+                                              color: Colors.black),
                                         ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Align(
-                                                  alignment: Alignment.topLeft,
-                                                  child: Text('Business Phone',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.black26),),
-                                                ),
-                                                Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: GestureDetector(
-                                                      onTap: () => launchUrl(
-                                                        Uri.parse(
-                                                            'tel:$b_countryCode + $bussmbl'),
-                                                        mode: LaunchMode
-                                                            .externalApplication,
-                                                      ),
-                                                      child: Text(
-                                                          b_countryCode
-                                                                  .toString() +
-                                                              bussmbl
-                                                                  .toString(),
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf',
-                                                              fontSize: 13,
-                                                              color: Colors
-                                                                  .black),),
-                                                    ),)
-                                              ],
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Align(
-                                                  alignment: Alignment.topLeft,
-                                                  child: Text('Business Email',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.black26),),
-                                                ),
-                                                Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: GestureDetector(
-                                                      onTap: () => launchUrl(
-                                                        Uri.parse(
-                                                            'mailto:${b_email.toString()}'),
-                                                        mode: LaunchMode
-                                                            .externalApplication,
-                                                      ),
-                                                      child: Text(
-                                                          b_email.toString(),
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf',
-                                                              fontSize: 13,
-                                                              color: Colors
-                                                                  .black),),
-                                                    ),)
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Website',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                final urlString =
-                                                    website.toString();
-                                                final formattedUrl = !urlString
-                                                            .startsWith(
-                                                                'http://') &&
-                                                        !urlString.startsWith(
-                                                            'https://')
-                                                    ? 'https://$urlString'
-                                                    : urlString;
-                                                launch(formattedUrl,
-                                                        forceSafariVC: false,
-                                                        forceWebView: false,
-                                                        enableJavaScript: true)
-                                                    .catchError((e) => print(
-                                                        'Error launching URL: $e'),);
-                                              },
-                                              child: Text(website.toString(),
-                                                  style: const TextStyle(
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  'Business Phone',
+                                                  style: TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       fontFamily:
                                                           'assets/fonst/Metropolis-Black.otf',
-                                                      fontSize: 13,
-                                                      color: Colors.black),),
-                                            ),),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('About Your Business',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            ...buildWidgets(abot_buss!),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),),
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                  child: Expanded(
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        //height: 60,
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(children: [
-                                          const Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text('Our Products',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf',
-                                                    fontSize: 12,
-                                                    color: Colors.black26),),
-                                          ),
-                                          Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                  product_name.toString(),
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontFamily:
-                                                          'assets/fonst/Metropolis-Black.otf',
-                                                      fontSize: 13,
-                                                      color: Colors.black),),),
-                                        ]),),
-                                  ),),
-
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    //height: 320,
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      children: [
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('GST/VAT/TAX',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Row(
-                                              children: [
-                                                gst_number != ""
-                                                    ? Icon(
-                                                        Icons
-                                                            .check_circle_rounded,
-                                                        color: Colors
-                                                            .green.shade600,
-                                                      )
-                                                    : Container(),
-                                                Text(gst_number.toString(),
+                                                      fontSize: 12,
+                                                      color: Colors.black26),
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: GestureDetector(
+                                                  onTap: () => launchUrl(
+                                                    Uri.parse(
+                                                        'tel:$b_countryCode + $bussmbl'),
+                                                    mode: LaunchMode
+                                                        .externalApplication,
+                                                  ),
+                                                  child: Text(
+                                                    b_countryCode.toString() +
+                                                        bussmbl.toString(),
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontFamily:
                                                             'assets/fonst/Metropolis-Black.otf',
                                                         fontSize: 13,
-                                                        color: Colors.black),),
-                                              ],
-                                            ),),
-                                        const SizedBox(
-                                          height: 10.0,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  'Business Email',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf',
+                                                      fontSize: 12,
+                                                      color: Colors.black26),
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: GestureDetector(
+                                                  onTap: () => launchUrl(
+                                                    Uri.parse(
+                                                        'mailto:${b_email.toString()}'),
+                                                    mode: LaunchMode
+                                                        .externalApplication,
+                                                  ),
+                                                  child: Text(
+                                                    b_email.toString(),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontFamily:
+                                                            'assets/fonst/Metropolis-Black.otf',
+                                                        fontSize: 13,
+                                                        color: Colors.black),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Website',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
                                         ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            final urlString =
+                                                website.toString();
+                                            final formattedUrl = !urlString
+                                                        .startsWith(
+                                                            'http://') &&
+                                                    !urlString
+                                                        .startsWith('https://')
+                                                ? 'https://$urlString'
+                                                : urlString;
+                                            launch(formattedUrl,
+                                                    forceSafariVC: false,
+                                                    forceWebView: false,
+                                                    enableJavaScript: true)
+                                                .catchError(
+                                              (e) => print(
+                                                  'Error launching URL: $e'),
+                                            );
+                                          },
+                                          child: Text(
+                                            website.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-Black.otf',
+                                                fontSize: 13,
+                                                color: Colors.black),
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          height: 10.0,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'About Your Business',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
                                         ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Pan Number: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ...buildWidgets(abot_buss!),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Expanded(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    //height: 60,
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(children: [
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Our Products',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
                                         ),
-                                        Row(
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          product_name.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 13,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  //height: 320,
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'GST/VAT/TAX',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
                                           children: [
-                                            pan_number!.isEmpty
-                                                ? Container()
-                                                : Icon(
+                                            gst_number != ""
+                                                ? Icon(
                                                     Icons.check_circle_rounded,
                                                     color:
                                                         Colors.green.shade600,
-                                                  ),
-                                            Align(
-                                                alignment: Alignment.topLeft,
-                                                child: Text(
-                                                    pan_number.toString(),
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf',
-                                                        fontSize: 13,
-                                                        color: Colors.black),),),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('IEC Number: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              ex_import_number.toString(),
+                                                  )
+                                                : Container(),
+                                            Text(
+                                              gst_number.toString(),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
                                                       'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 13,
                                                   color: Colors.black),
-                                            ),),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Production Capacity',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              production_capacity.toString(),
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 13,
-                                                  color: Colors.black),
-                                            ),),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
-                                        ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Annual Turnover',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        const SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                const Text('2020 - 2021 :',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf',
-                                                        fontSize: 14,
-                                                        color: Colors.black),),
-                                                First_currency.toString()
-                                                        .isNotEmpty
-                                                    ? Text(
-                                                        First_currency
-                                                            .toString(),
-                                                        style: const  TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container(),
-                                                First_currency_sign.toString()
-                                                        .isEmpty
-                                                    ? Text(
-                                                        First_currency_sign
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container()
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text('2021 - 2022 :',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf',
-                                                        fontSize: 14,
-                                                        color: Colors.black),),
-                                                First_currency.toString()
-                                                        .isNotEmpty
-                                                    ? Text(
-                                                        First_currency
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container(),
-                                                Second_currency_sign.toString()
-                                                        .isEmpty
-                                                    ? Text(
-                                                        Second_currency_sign
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container()
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                const Text('2022 - 2023 :',
-                                                    style:  TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf',
-                                                        fontSize: 14,
-                                                        color: Colors.black),),
-                                                Third_currency.toString()
-                                                        .isNotEmpty
-                                                    ? Text(
-                                                        Third_currency
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container(),
-                                                Third_currency_sign.toString()
-                                                        .isEmpty
-                                                    ? Text(
-                                                        Third_currency_sign
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf',
-                                                            fontSize: 13,
-                                                            color:
-                                                                Colors.black),)
-                                                    : Container()
-                                              ],
                                             ),
                                           ],
                                         ),
-                                        const Divider(
-                                          height: 1.0,
-                                          color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Pan Number: ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
                                         ),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        const Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text('Premises Type',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 12,
-                                                  color: Colors.black26),),
-                                        ),
-                                        Align(
+                                      ),
+                                      Row(
+                                        children: [
+                                          pan_number!.isEmpty
+                                              ? Container()
+                                              : Icon(
+                                                  Icons.check_circle_rounded,
+                                                  color: Colors.green.shade600,
+                                                ),
+                                          Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
-                                              Premises_Type.toString(),
+                                              pan_number.toString(),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontFamily:
                                                       'assets/fonst/Metropolis-Black.otf',
                                                   fontSize: 13,
                                                   color: Colors.black),
-                                            ),),
-                                      ],
-                                    ),
-                                  ),),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'IEC Number: ',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          ex_import_number.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 13,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Production Capacity',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          production_capacity.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 13,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Annual Turnover',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                '2020 - 2021 :',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf',
+                                                    fontSize: 14,
+                                                    color: Colors.black),
+                                              ),
+                                              First_currency.toString()
+                                                      .isNotEmpty
+                                                  ? Text(
+                                                      First_currency.toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container(),
+                                              First_currency_sign.toString()
+                                                      .isEmpty
+                                                  ? Text(
+                                                      First_currency_sign
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container()
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                '2021 - 2022 :',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf',
+                                                    fontSize: 14,
+                                                    color: Colors.black),
+                                              ),
+                                              Second_currency.toString()
+                                                      .isNotEmpty
+                                                  ? Text(
+                                                      First_currency.toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container(),
+                                              Second_currency_sign.toString()
+                                                      .isEmpty
+                                                  ? Text(
+                                                      Second_currency_sign
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container()
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                '2022 - 2023 :',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf',
+                                                    fontSize: 14,
+                                                    color: Colors.black),
+                                              ),
+                                              Third_currency.toString()
+                                                      .isNotEmpty
+                                                  ? Text(
+                                                      Third_currency.toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container(),
+                                              Third_currency_sign.toString()
+                                                      .isEmpty
+                                                  ? Text(
+                                                      Third_currency_sign
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf',
+                                                          fontSize: 13,
+                                                          color: Colors.black),
+                                                    )
+                                                  : Container()
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(
+                                        height: 1.0,
+                                        color: Colors.black26,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      const Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Premises Type',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 12,
+                                              color: Colors.black26),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          Premises_Type.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 13,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
-                          ),),)
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -1379,7 +1454,8 @@ class _bussinessprofileState extends State<other_user_profile>
                           radius: 20,
                           animating: true,
                         )
-                      : Container(),),
+                      : Container(),
+            ),
     );
   }
 
@@ -1387,10 +1463,11 @@ class _bussinessprofileState extends State<other_user_profile>
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await share_count(
-        profileid.toString(), pref.getString('user_id').toString(),);
+      profileid.toString(),
+      pref.getString('user_id').toString(),
+    );
 
     if (res['status'] == 1) {
-
       if (mounted) {
         setState(() {});
       }
@@ -1480,13 +1557,14 @@ class _bussinessprofileState extends State<other_user_profile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator(),);
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
                   padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-
                     childAspectRatio: MediaQuery.of(context).size.height /
                         1300, //MediaQuery.of(context).size.aspectRatio * 1.3,
                     mainAxisSpacing: 3.0,
@@ -1501,18 +1579,20 @@ class _bussinessprofileState extends State<other_user_profile>
                     return GestureDetector(
                       onTap: (() {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Buyer_sell_detail(
-                                prod_id: result.productId.toString(),
-                                post_type: result.postType.toString(),
-                              ),
-                            ),);
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Buyer_sell_detail(
+                              prod_id: result.productId.toString(),
+                              post_type: result.postType.toString(),
+                            ),
+                          ),
+                        );
                       }),
                       child: Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: Column(children: [
                           Stack(fit: StackFit.passthrough, children: <Widget>[
                             Container(
@@ -1520,16 +1600,19 @@ class _bussinessprofileState extends State<other_user_profile>
                               width: 175,
                               margin: const EdgeInsets.all(5.0),
                               decoration: const BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0),),),
+                                //color: Colors.black26,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                              ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 /*shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.circular(10.0),),*/
                                 child: Image(
                                   image: NetworkImage(
-                                      result.mainproductImage.toString(),),
+                                    result.mainproductImage.toString(),
+                                  ),
                                   fit: BoxFit.cover,
                                   height: 150,
                                   width: 170,
@@ -1543,18 +1626,21 @@ class _bussinessprofileState extends State<other_user_profile>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
                                 decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0),),),
+                                  color: Color.fromARGB(255, 0, 148, 95),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
                                 // color: Color.fromARGB(0,255, 255, 255),
                                 child: Text(
-                                    '₹${result.productPrice}',
-                                    style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.white),),
+                                  '₹${result.productPrice}',
+                                  style: const TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf',
+                                      color: Colors.white),
+                                ),
                               ),
                             ),
                             result.isPaidPost == 'Paid'
@@ -1563,7 +1649,6 @@ class _bussinessprofileState extends State<other_user_profile>
                                     left: -30,
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
-
                                       child: Image.asset(
                                         'assets/PaidPost.png',
                                         height: 50,
@@ -1574,70 +1659,74 @@ class _bussinessprofileState extends State<other_user_profile>
                                 : Container()
                           ]),
                           Column(
-
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),),
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(result.postName.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-SemiBold.otf'),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
                               ),
                               Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.productType} | ${result.productGrade}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.state},${result.country}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                      result.postType.toString(),
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(
+                                      '${result.productType} | ${result.productGrade}',
                                       style: const TextStyle(
-                                          fontSize: 13.0,
-                                          fontFamily: 'Metropolis',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1),),
+                                        fontSize: 13.0,
+                                        color: Colors.grey,
+                                        fontFamily: 'Metropolis',
+                                      ),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child:
+                                      Text('${result.state},${result.country}',
+                                          style: const TextStyle(
+                                            fontSize: 13.0,
+                                            color: Colors.grey,
+                                            fontFamily: 'Metropolis',
+                                          ),
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(
+                                    result.postType.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 13.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(0, 148, 95, 1),
                                     ),
-                                  ),),
+                                  ),
+                                ),
+                              ),
                             ],
                           )
                         ]),
@@ -1646,18 +1735,21 @@ class _bussinessprofileState extends State<other_user_profile>
                   },
                 );
               }
-
-            }),)
+            }),
+          )
         : const Center(
-            child: Text('Buy Post not Found',
-                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148),),),
+            child: Text(
+              'Buy Post not Found',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 91, 148),
+              ),
+            ),
           );
   }
 
   void _scrollercontroller() {
     if (scrollercontroller.position.pixels ==
         scrollercontroller.position.maxScrollExtent) {
-
       if (_childController.index == 0) {
         if (salepostlist_data.isNotEmpty) {
           count++;
@@ -1703,19 +1795,20 @@ class _bussinessprofileState extends State<other_user_profile>
                 height: 50.0,
                 width: 50.0,
                 child: Center(
-                    child: Platform.isAndroid
-                        ? const CircularProgressIndicator(
-                            value: null,
-                            strokeWidth: 2.0,
-                            color: Color.fromARGB(255, 0, 91, 148),
-                          )
-                        : Platform.isIOS
-                            ? const CupertinoActivityIndicator(
-                                color: Color.fromARGB(255, 0, 91, 148),
-                                radius: 20,
-                                animating: true,
-                              )
-                            : Container(),),
+                  child: Platform.isAndroid
+                      ? const CircularProgressIndicator(
+                          value: null,
+                          strokeWidth: 2.0,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                        )
+                      : Platform.isIOS
+                          ? const CupertinoActivityIndicator(
+                              color: Color.fromARGB(255, 0, 91, 148),
+                              radius: 20,
+                              animating: true,
+                            )
+                          : Container(),
+                ),
               ),
             ),
           ),
@@ -1743,7 +1836,9 @@ class _bussinessprofileState extends State<other_user_profile>
               }
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator(),);
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
                 return GridView.builder(
@@ -1763,18 +1858,20 @@ class _bussinessprofileState extends State<other_user_profile>
                     return GestureDetector(
                       onTap: (() {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Buyer_sell_detail(
-                                prod_id: result.productId.toString(),
-                                post_type: result.postType.toString(),
-                              ),
-                            ),);
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Buyer_sell_detail(
+                              prod_id: result.productId.toString(),
+                              post_type: result.postType.toString(),
+                            ),
+                          ),
+                        );
                       }),
                       child: Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: Column(children: [
                           Stack(fit: StackFit.passthrough, children: <Widget>[
                             Container(
@@ -1782,16 +1879,19 @@ class _bussinessprofileState extends State<other_user_profile>
                               width: 175,
                               margin: const EdgeInsets.all(5.0),
                               decoration: const BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0),),),
+                                //color: Colors.black26,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                              ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 /*shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.circular(10.0),),*/
                                 child: Image(
                                   image: NetworkImage(
-                                      result.mainproductImage.toString(),),
+                                    result.mainproductImage.toString(),
+                                  ),
                                   fit: BoxFit.cover,
                                   height: 150,
                                   width: 170,
@@ -1805,17 +1905,21 @@ class _bussinessprofileState extends State<other_user_profile>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0, vertical: 5.0),
                                 decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0),),),
+                                  color: Color.fromARGB(255, 0, 148, 95),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
                                 // color: Color.fromARGB(0,255, 255, 255),
-                                child: Text('₹${result.productPrice}',
-                                    style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.white),),
+                                child: Text(
+                                  '₹${result.productPrice}',
+                                  style: const TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w800,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf',
+                                      color: Colors.white),
+                                ),
                               ),
                             ),
                             result.isPaidPost == 'Paid'
@@ -1824,7 +1928,6 @@ class _bussinessprofileState extends State<other_user_profile>
                                     left: -30,
                                     child: Container(
                                       padding: const EdgeInsets.all(5),
-
                                       child: Image.asset(
                                         'assets/PaidPost.png',
                                         height: 50,
@@ -1840,65 +1943,70 @@ class _bussinessprofileState extends State<other_user_profile>
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),),
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(result.postName.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-SemiBold.otf'),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
                               ),
                               Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.productType} | ${result.productGrade}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.state},${result.country}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                      result.postType.toString(),
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(
+                                      '${result.productType} | ${result.productGrade}',
                                       style: const TextStyle(
-                                          fontSize: 13.0,
-                                          fontFamily: 'Metropolis',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1),),
+                                        fontSize: 13.0,
+                                        color: Colors.grey,
+                                        fontFamily: 'Metropolis',
+                                      ),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child:
+                                      Text('${result.state},${result.country}',
+                                          style: const TextStyle(
+                                            fontSize: 13.0,
+                                            color: Colors.grey,
+                                            fontFamily: 'Metropolis',
+                                          ),
+                                          softWrap: false,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0),
+                                  child: Text(
+                                    result.postType.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 13.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(0, 148, 95, 1),
                                     ),
-                                  ),),
+                                  ),
+                                ),
+                              ),
                             ],
                           )
                         ]),
@@ -1907,11 +2015,15 @@ class _bussinessprofileState extends State<other_user_profile>
                   },
                 );
               }
-
-            }),)
+            }),
+          )
         : const Center(
-            child: Text('Sale Post not Found',
-                style: TextStyle(color: Color.fromARGB(255, 0, 91, 148),),),
+            child: Text(
+              'Sale Post not Found',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 91, 148),
+              ),
+            ),
           );
   }
 
@@ -1919,14 +2031,15 @@ class _bussinessprofileState extends State<other_user_profile>
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbusinessprofileDetail(
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),
-        widget.user_id.toString(),);
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.user_id.toString(),
+    );
 
     log("RESPONSE === $res");
 
     if (res['status'] == 1) {
-      profileid = res['profile']['user_id'];
+      profileid = res['profile']['user_id'] ?? "";
       username = res['user']['username'];
       instagram_url = res['profile']['instagram_link'] ?? "";
       youtube_url = res['profile']['youtube_link'] ?? "";
@@ -1958,6 +2071,7 @@ class _bussinessprofileState extends State<other_user_profile>
       is_follow = res['profile']['is_follow'];
       abot_buss = res['profile']['about_business'] ?? "";
       image_url = res['user']['image_url'];
+      is_prime = res['user']['is_prime'];
 
       gst_number = res['profile']['gst_tax_vat'] ?? "";
       Premises_Type = res['profile']['premises'] ?? '';
@@ -2001,11 +2115,12 @@ class _bussinessprofileState extends State<other_user_profile>
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await getbuy_PostList(
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),
-        '20',
-        offset.toString(),
-        widget.user_id.toString(),);
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      '20',
+      offset.toString(),
+      widget.user_id.toString(),
+    );
     var jsonArray;
     if (res['status'] == 1) {
       buyPostList = GetSalePostList.fromJson(res);
@@ -2053,9 +2168,10 @@ class _bussinessprofileState extends State<other_user_profile>
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await profile_like(
-        profileid.toString(),
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),);
+      profileid.toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
 
     var jsonArray;
 
@@ -2091,25 +2207,29 @@ class _bussinessprofileState extends State<other_user_profile>
 
   ViewItem(BuildContext context) {
     return showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
           // <-- SEE HERE
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
-        ),),
-        builder: (context) => DraggableScrollableSheet(
-            expand: false,
-            initialChildSize:
-                0.60, // Initial height as a fraction of screen height
-            builder: (BuildContext context, ScrollController scrollController) {
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return ViewWidget(profileid.toString(),);
-                },
-              );
-            }),).then(
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize:
+              0.60, // Initial height as a fraction of screen height
+          builder: (BuildContext context, ScrollController scrollController) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return ViewWidget(
+                  profileid.toString(),
+                );
+              },
+            );
+          }),
+    ).then(
       (value) {},
     );
   }
@@ -2194,7 +2314,9 @@ class _bussinessprofileState extends State<other_user_profile>
     final lines = text.split('\n');
 
     for (var line in lines) {
-      widgets.add(buildLineWidget(line),);
+      widgets.add(
+        buildLineWidget(line),
+      );
     }
 
     return widgets;
@@ -2207,79 +2329,88 @@ class _bussinessprofileState extends State<other_user_profile>
     for (var word in words) {
       if (RegExp(r'https?://[^\s/$.?#].[^\s]*').hasMatch(word)) {
         // Handle links
-        lineWidgets.add(GestureDetector(
-          onTap: () async {
-            if (await canLaunch(word)) {
-              await launch(word);
-            } else {
-              throw 'Could not launch $word';
-            }
-          },
-          child: Text(
-            word,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
+        lineWidgets.add(
+          GestureDetector(
+            onTap: () async {
+              if (await canLaunch(word)) {
+                await launch(word);
+              } else {
+                throw 'Could not launch $word';
+              }
+            },
+            child: Text(
+              word,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
-        ),);
+        );
       } else if (RegExp(r'\b\d{10}\b').hasMatch(word)) {
         // Handle phone numbers
         String phoneNumber = RegExp(r'\b\d{10}\b').stringMatch(word)!;
-        lineWidgets.add(GestureDetector(
-          onTap: () async {
-            final url = 'tel:$phoneNumber';
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
-          },
-          child: Text(
-            phoneNumber,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
+        lineWidgets.add(
+          GestureDetector(
+            onTap: () async {
+              final url = 'tel:$phoneNumber';
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: Text(
+              phoneNumber,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
-        ),);
+        );
       } else if (word.endsWith('.com') || word.endsWith('.in')) {
         // Handle website URLs with .com or .in extension
         String url = word;
         if (!url.startsWith('http')) {
           url = 'http://$url';
         }
-        lineWidgets.add(GestureDetector(
-          onTap: () async {
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
-          },
-          child: Text(
+        lineWidgets.add(
+          GestureDetector(
+            onTap: () async {
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            child: Text(
+              word,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        );
+      } else {
+        // Handle regular text
+        lineWidgets.add(
+          Text(
             word,
             style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
             ),
           ),
-        ),);
-      } else {
-        // Handle regular text
-        lineWidgets.add(Text(
-          word,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),);
+        );
       }
-      lineWidgets
-          .add(const SizedBox(width: 4),); // Add some spacing between words
+      lineWidgets.add(
+        const SizedBox(width: 4),
+      ); // Add some spacing between words
     }
     return Wrap(
       direction: Axis.horizontal,
@@ -2299,7 +2430,7 @@ class ViewWidget extends StatefulWidget {
 }
 
 class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
-  String? assignedName;
+
   bool? isload;
   late TabController _tabController;
   List<like.Data> dataList = [];
@@ -2328,7 +2459,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-
     setState(() {});
   }
 
@@ -2389,17 +2519,20 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                         itemCount: dataList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            title: Text(dataList[index].username.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf'),),
+                            title: Text(
+                              dataList[index].username.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                            ),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: NetworkImage(
-                                  dataList[index].imageUrl.toString(),),
+                                dataList[index].imageUrl.toString(),
+                              ),
                               //File imageFile = File(pickedFile.path);
 
                               backgroundColor:
@@ -2413,25 +2546,30 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             title: dataList1[index].username != null
-                                ? Text(dataList1[index].username.toString(),
+                                ? Text(
+                                    dataList1[index].username.toString(),
                                     style: const TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),)
-                                : const Text('unknow',
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  )
+                                : const Text(
+                                    'unknow',
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),),
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  ),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: dataList1[index].imageUrl != null
                                   ? NetworkImage(
-                                      dataList1[index].imageUrl.toString(),)
+                                      dataList1[index].imageUrl.toString(),
+                                    )
                                   : const AssetImage('assets/more.png')
                                       as ImageProvider,
                               backgroundColor:
@@ -2444,17 +2582,20 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                         itemCount: dataList2.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            title: Text(dataList2[index].username.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf'),),
+                            title: Text(
+                              dataList2[index].username.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                            ),
                             leading: CircleAvatar(
                               radius: 16.0,
                               backgroundImage: NetworkImage(
-                                  dataList2[index].imageUrl.toString(),),
+                                dataList2[index].imageUrl.toString(),
+                              ),
                               backgroundColor:
                                   const Color.fromARGB(255, 240, 238, 238),
                             ),

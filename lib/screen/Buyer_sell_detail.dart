@@ -1,11 +1,11 @@
-// ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages, camel_case_types, must_be_immutable, prefer_interpolation_to_compose_strings, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages, camel_case_types, must_be_immutable, prefer_interpolation_to_compose_strings, non_constant_identifier_names, prefer_typing_uninitialized_variables, library_prefixes
 
 import 'dart:core';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:Plastic4trade/model/CommonPostdetail.dart' as postdetail;
 import 'package:Plastic4trade/model/getsimilar_product.dart' as similar_prod;
-import 'package:Plastic4trade/screen/Chat.dart';
 import 'package:Plastic4trade/screen/other_user_profile.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +23,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
 import '../model/CommonPostdetail.dart';
+import '../model/get_product_interest.dart' as interest;
+import '../model/get_product_interest.dart';
+import '../model/get_product_share.dart' as productShare;
+import '../model/get_product_share.dart';
+import '../model/get_product_view.dart' as viewInterest;
+import '../model/get_product_view.dart';
 import 'ChartDetail.dart';
 
 class Buyer_sell_detail extends StatefulWidget {
@@ -52,9 +58,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
   String city = "";
   String state = "";
   String country = "";
-  int? likecount, viewcount;
-  String? isFavorite = "", unit = "", price_unit = "";
-
+  int? likecount, viewcount, is_prime;
+  String? isFavorite = "0", unit = "", price_unit = "";
+  String profileid = "";
   String is_Follow = "";
 
   int? isView, user_id;
@@ -62,7 +68,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
   String? prod_desc;
   String? prod_nm;
   String? loc;
-  bool prod_like = false;
   String create_date = "";
   String update_date = "";
   bool load = false;
@@ -165,7 +170,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                               shape: BoxShape.circle,
                               color: Colors.grey.shade600),
                           // color: Color.fromARGB(0, 255, 255, 255),
-                          child: prod_like
+                          child: isFavorite == "1"
                               ? GestureDetector(
                                   onTap: () {
                                     getremove_product();
@@ -248,96 +253,90 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                   Row(
                                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.all(5.0),
-                                            padding: const EdgeInsets.all(5.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: const Color.fromARGB(
-                                                  255, 0, 148, 95),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '₹$price',
-                                                  style: const TextStyle(
-                                                          fontSize: 26.0,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf')
-                                                      .copyWith(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                          color: Colors.white),
-                                                ),
-                                                Text(
-                                                  '/Per $price_unit',
-                                                  style: const TextStyle(
-                                                          fontSize: 12.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf')
-                                                      .copyWith(
-                                                          fontSize: 10,
-                                                          color: Colors.white),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.all(5.0),
-                                            padding: const EdgeInsets.all(6.0),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: const Color.fromRGBO(
-                                                  90, 231, 131, 0.29),
-                                            ),
-                                            child: Text(
-                                              product_status.toString(),
+                                      Container(
+                                        margin: const EdgeInsets.all(5.0),
+                                        padding: const EdgeInsets.all(5.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: const Color.fromARGB(
+                                              255, 0, 148, 95),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '₹$price',
                                               style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),
+                                                      fontSize: 26.0,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Colors.black,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      color: Colors.white),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.all(5.0),
-                                            padding: const EdgeInsets.all(6.0),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 1, color: Colors.grey),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              shape: BoxShape.rectangle,
-                                            ),
-                                            child: Text(
-                                              widget.post_type.toString(),
+                                            Text(
+                                              '/$price_unit',
                                               style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black,
-                                                  fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),
-                                            ),
-                                          )
-                                        ],
+                                                      fontSize: 12.0,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                      fontSize: 10,
+                                                      color: Colors.white),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.all(5.0),
+                                        padding: const EdgeInsets.all(6.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: const Color.fromRGBO(
+                                              90, 231, 131, 0.29),
+                                        ),
+                                        child: Text(
+                                          product_status.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.all(5.0),
+                                        padding: const EdgeInsets.all(6.0),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 1, color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          shape: BoxShape.rectangle,
+                                        ),
+                                        child: Text(
+                                          (widget.post_type == 'BuyPost')
+                                              ? "Buy Post"
+                                              : (widget.post_type == 'SalePost')
+                                                  ? "Sell Post"
+                                                  : "",
+                                          style: const TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -452,7 +451,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                           ),
                                         ),
                                         Text(
-                                          "$qty$unit",
+                                          "$qty $unit",
                                           style: const TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.w600,
@@ -464,13 +463,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                     ),
                                   ),
                                   Row(
-                                    mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: <Widget>[
                                       const SizedBox(
-                                        width: 90,
-                                        height: 70,
+                                        width: 80,
                                         child: Text(
                                           'Color: ',
                                           style: TextStyle(
@@ -481,66 +478,76 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                   'assets/fonst/Metropolis-SemiBold.otf'),
                                         ),
                                       ),
-
                                       Expanded(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          // scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          padding: EdgeInsets.zero,
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 45,
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.horizontal,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            padding: EdgeInsets.zero,
+                                            itemCount:
+                                                postHaxCodeColors?.length ?? 0,
+                                            itemBuilder: (context, colorIndex) {
+                                              postdetail.PostHaxCodeColor
+                                                  result = postHaxCodeColors![
+                                                      colorIndex];
+                                              String colorString =
+                                                  result.haxCode.toString();
+                                              String newStr =
+                                                  colorString.substring(1);
 
-                                          itemCount:
-                                              postHaxCodeColors?.length ?? 0,
-                                          itemBuilder: (context, colorIndex) {
-                                            postdetail.PostHaxCodeColor result =
-                                                postHaxCodeColors![colorIndex];
-                                            String colorString =
-                                                result.haxCode.toString();
-                                            String newStr =
-                                                colorString.substring(1);
-
-                                            Color colors = Color(
-                                              int.parse(newStr, radix: 16),
-                                            ).withOpacity(1.0);
-                                            return Container(
-                                              margin: EdgeInsets.zero,
-                                              padding: EdgeInsets.zero,
-                                              child: Row(
-                                                children: [
-                                                  newStr == 'ffffff'
-                                                      ? const Icon(
-                                                          Icons.circle_outlined,
-                                                          size: 15)
-                                                      : Icon(
-                                                          Icons.circle_rounded,
-                                                          size: 15,
-                                                          color: colors),
-                                                  Flexible(
-                                                    child: Text(
-                                                      colorIndex + 1 ==
-                                                              postHaxCodeColors
-                                                                  ?.length
-                                                          ? postHaxCodeColors![
-                                                                  colorIndex]
-                                                              .colorName
-                                                              .toString()
-                                                          : '${postHaxCodeColors![colorIndex].colorName.toString()},',
-                                                      overflow:
-                                                          TextOverflow.visible,
-                                                      maxLines: 1,
+                                              Color colors = Color(
+                                                int.parse(newStr, radix: 16),
+                                              ).withOpacity(1.0);
+                                              return Container(
+                                                alignment: Alignment.center,
+                                                width: 50,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    newStr == 'ffffff'
+                                                        ? const Icon(
+                                                            Icons
+                                                                .circle_outlined,
+                                                            size: 18)
+                                                        : Icon(
+                                                            Icons
+                                                                .circle_rounded,
+                                                            size: 18,
+                                                            color: colors),
+                                                    const SizedBox(
+                                                      height: 5,
                                                     ),
-
-                                                    //width: 43,
-                                                    // height: 30,
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          },
+                                                    Flexible(
+                                                      child: Text(
+                                                        colorIndex + 1 ==
+                                                                postHaxCodeColors
+                                                                    ?.length
+                                                            ? postHaxCodeColors![
+                                                                    colorIndex]
+                                                                .colorName
+                                                                .toString()
+                                                            : '${postHaxCodeColors![colorIndex].colorName.toString()},',
+                                                        overflow: TextOverflow
+                                                            .visible,
+                                                        maxLines: 1,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       )
                                     ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
                                   Align(
                                     alignment: Alignment.topLeft,
@@ -598,7 +605,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                         width: 140,
                                         child: Row(
                                           children: [
-                                            //Image.asset('assets/like1.png',height: 25,width: 40,),
                                             Container(
                                               child: like == "0"
                                                   ? GestureDetector(
@@ -633,15 +639,20 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                       },
                                                     ),
                                             ),
-                                            Text(
-                                              'Interested ($likecount)',
-                                              style: const TextStyle(
-                                                  fontSize: 13.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromARGB(
-                                                      255, 0, 91, 148),
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf'),
+                                            GestureDetector(
+                                              onTap: () {
+                                                ViewItem(context);
+                                              },
+                                              child: Text(
+                                                'Interested ($likecount)',
+                                                style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 91, 148),
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf'),
+                                              ),
                                             )
                                           ],
                                         ),
@@ -650,26 +661,35 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                         width: 130,
                                         child: Row(
                                           children: [
-                                            Image.asset(
-                                              'assets/view1.png',
-                                              height: 25,
-                                              width: 40,
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: Image.asset(
+                                                'assets/view1.png',
+                                                height: 25,
+                                                width: 40,
+                                              ),
                                             ),
-                                            Text(
-                                              'Views ($viewcount)',
-                                              style: const TextStyle(
-                                                  fontSize: 13.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color.fromARGB(
-                                                      255, 0, 91, 148),
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf'),
+                                            GestureDetector(
+                                              onTap: () {
+                                                ViewItem(context);
+                                              },
+                                              child: Text(
+                                                'Views ($viewcount)',
+                                                style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 91, 148),
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf'),
+                                              ),
                                             )
                                           ],
                                         ),
                                       ),
                                       GestureDetector(
                                         onTap: () {
+                                          sharecount();
                                           shareImage(
                                             url: main_product.toString(),
                                           );
@@ -706,11 +726,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                               height: 12,
                             ),
                             Container(
-                              // margin: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                               padding: const EdgeInsets.only(
                                   top: 5.0, left: 2.0, right: 2.0, bottom: 2),
                               height: 100,
-                              //transform: Matrix4.translationValues(0.0, -40.0, 0.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 color: Colors.white,
@@ -775,9 +793,12 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                   color:
                                                       const Color(0xffFFC107),
                                                 ),
-                                                child: const Text(
-                                                  'Premium',
-                                                  style: TextStyle(fontSize: 9),
+                                                child: Text(
+                                                  (is_prime == 0)
+                                                      ? "Free"
+                                                      : 'Premium',
+                                                  style: const TextStyle(
+                                                      fontSize: 9),
                                                 ),
                                               ),
                                             ],
@@ -799,15 +820,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                                       .width /
                                                   2.2,
                                               height: 80,
-                                              /*  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(5.0),),
-                                                    border: Border.all(
-                                                      color:
-                                                          const Color(0xffFFC107),
-                                                      width: 2.0,
-                                                    ),
-                                                  ),*/
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
@@ -958,10 +970,10 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                             context,
                                             MaterialPageRoute(
                                               // builder: (_) => const Chat(),
-                                              builder: (_) =>  ChartDetail(
+                                              builder: (_) => ChartDetail(
                                                 user_id!.toString(),
-                                                  usernm.toString(),
-                                                  user_image.toString(),
+                                                usernm.toString(),
+                                                user_image.toString(),
                                               ),
                                             ),
                                           );
@@ -1070,6 +1082,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
   Widget category() {
     return FutureBuilder(
+
         //future: load_category(),
         builder: (context, snapshot) {
       if (snapshot.hasError) {
@@ -1084,8 +1097,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
         //List<dynamic> users = snapshot.data as List<dynamic>;
         return simmilar_post_buyer.isNotEmpty
             ? GridView.builder(
-                //padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                padding: const EdgeInsets.only(top: 5.0),
+                padding: EdgeInsets.zero,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: MediaQuery.of(context).size.width / 620,
                   crossAxisCount: 2,
@@ -1216,7 +1228,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
                                   padding: const EdgeInsets.only(
                                       top: 10.0, left: 10.0),
                                   child: Text(
-                                    result.postType.toString(),
+                                    (result.postType.toString() == "BuyPost")
+                                        ? "Buy Post"
+                                        : "Sell Post",
                                     style: const TextStyle(
                                       fontSize: 13.0,
                                       fontFamily: 'Metropolis',
@@ -1270,6 +1284,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       widget.prod_id.toString(),
       notiId.toString(),
     );
+
+    print("RESPONSE DATA == $res");
+
     var jsonArray, subjsonarray, color_array;
     if (res['status'] == 1) {
       commonPostdetail = CommonPostdetail.fromJson(res);
@@ -1301,6 +1318,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
           likecount = data['likeCount'];
           isFavorite = data['isFavorite'];
           is_Follow = data['isFollow'];
+          is_prime = data['is_prime'];
           viewcount = data['isView'];
           unit = data['Unit'];
           usernm = data['Username'];
@@ -1313,8 +1331,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
         imagelist.add(main_product!);
 
-        //var date = Jiffy.parse("12.04.2020", pattern: "dd.MM.yyyy").format("dd, Oct yy");
-        //11-05-2023
         DateFormat format = DateFormat("dd-MM-yyyy");
         var curret_date = format.parse(create_date);
         var updat_date = format.parse(update_date);
@@ -1398,6 +1414,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
           likecount = data['likeCount'];
           isFavorite = data['isFavorite'];
           is_Follow = data['isFollow'];
+          is_prime = data['is_prime'];
           viewcount = data['isView'];
           unit = data['Unit'];
           price_unit = data['unit_of_price'];
@@ -1438,7 +1455,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       if (subjsonarray != null) {
         for (var data in subjsonarray) {
           main_product = data['sub_image_url'];
-
           imagelist.add(main_product!);
         }
       }
@@ -1464,16 +1480,11 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
     if (res['status'] == 1) {
       jsonArray = res['result'];
-      Fluttertoast.showToast(
-        msg: res['message'],
-      );
-      prod_like = true;
-
+      Fluttertoast.showToast(msg: res['message']);
+      isFavorite = "1";
       setState(() {});
     } else {
-      Fluttertoast.showToast(
-        msg: res['message'],
-      );
+      Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
     return jsonArray;
@@ -1494,7 +1505,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       Fluttertoast.showToast(
         msg: res['message'],
       );
-      prod_like = false;
+      isFavorite = "0";
 
       setState(() {});
     } else {
@@ -1850,6 +1861,9 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
 
     var jsonArray;
     if (res['status'] == 1) {
+      Fluttertoast.showToast(
+        msg: res['message'],
+      );
     } else {
       Fluttertoast.showToast(
         msg: res['message'],
@@ -1857,5 +1871,262 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
     }
     setState(() {});
     return jsonArray;
+  }
+
+  ViewItem(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          // <-- SEE HERE
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize:
+              0.60, // Initial height as a fraction of screen height
+          builder: (BuildContext context, ScrollController scrollController) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return ViewWidget(
+                  profileid.toString(),
+                  widget.prod_id.toString(),
+                );
+              },
+            );
+          }),
+    ).then(
+      (value) {},
+    );
+  }
+
+  Future<void> sharecount() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var res = await getProductShareCount(
+      pref.getString('user_id').toString(),
+      widget.prod_id,
+    );
+
+    if (res['status'] == 1) {
+      if (mounted) {
+        setState(() {});
+      }
+    } else {
+      Fluttertoast.showToast(msg: res['message']);
+    }
+  }
+}
+
+class ViewWidget extends StatefulWidget {
+  String profileid;
+  String prod_id;
+
+  ViewWidget(this.profileid, this.prod_id, {Key? key}) : super(key: key);
+
+  @override
+  State<ViewWidget> createState() => _ViewWidgetState();
+}
+
+class _ViewWidgetState extends State<ViewWidget>
+    with SingleTickerProviderStateMixin {
+  bool? isload;
+  late TabController _tabController;
+  List<interest.Result> dataList = [];
+  List<viewInterest.Data> dataList1 = [];
+  List<productShare.Data> dataList2 = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    getInterest(widget.prod_id);
+    getViews(widget.prod_id);
+    getShare(widget.profileid, widget.prod_id);
+  }
+
+  getInterest(prod_id) async {
+    ApiResponse common = ApiResponse();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var res = await getProductInterest(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      widget.prod_id.toString(),
+    );
+    if (res['status'] == 1) {
+      common = ApiResponse.fromJson(res);
+      dataList = common.result ?? [];
+      isload = true;
+      print("DATA LIST  == $dataList");
+    } else {}
+    setState(() {});
+  }
+
+  getViews(prod_id) async {
+    GetProductView common = GetProductView();
+
+    var res = await getProductView(prod_id);
+
+    print("RES == RES  == $res");
+
+    if (res['status'] == 1) {
+      common = GetProductView.fromJson(res);
+      dataList1 = common.data ?? [];
+    } else {
+      Fluttertoast.showToast(msg: res['message']);
+    }
+
+    setState(() {});
+  }
+
+  getShare(userId, productId) async {
+    ProductShare common = ProductShare();
+
+    var res = await getProductShare(userId, productId);
+
+    if (res['status'] == 1) {
+      common = ProductShare.fromJson(res);
+      dataList2 = common.data ?? [];
+      isload = true;
+    } else {
+      Fluttertoast.showToast(msg: res['message']);
+    }
+
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return isload == true
+        ? Column(
+            children: [
+              const SizedBox(height: 5),
+              Image.asset(
+                'assets/hori_line.png',
+                width: 150,
+                height: 5,
+              ),
+              TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Like'),
+                  Tab(text: 'View'),
+                  Tab(text: 'Share'),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: dataList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => other_user_profile(
+                                          int.parse(dataList[index]
+                                              .userId
+                                              .toString()))));
+                            },
+                            child: ListTile(
+                              title: Text(
+                                dataList[index].username.toString(),
+                                style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                              ),
+                              leading: CircleAvatar(
+                                radius: 16.0,
+                                backgroundImage: NetworkImage(
+                                  dataList[index].imageUrl.toString(),
+                                ),
+                                //File imageFile = File(pickedFile.path);
+
+                                backgroundColor:
+                                    const Color.fromARGB(255, 240, 238, 238),
+                              ),
+                            ),
+                          );
+                        }),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: dataList1.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: dataList1[index].username != null
+                                ? Text(
+                                    dataList1[index].username.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  )
+                                : const Text(
+                                    'unknow',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  ),
+                            leading: CircleAvatar(
+                              radius: 16.0,
+                              backgroundImage: dataList1[index].imageUrl != null
+                                  ? NetworkImage(
+                                      dataList1[index].imageUrl.toString(),
+                                    )
+                                  : const AssetImage('assets/more.png')
+                                      as ImageProvider,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 240, 238, 238),
+                            ),
+                          );
+                        }),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: dataList2.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text(
+                              dataList2[index].username.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                            ),
+                            leading: CircleAvatar(
+                              radius: 16.0,
+                              backgroundImage: NetworkImage(
+                                dataList2[index].imageUrl.toString(),
+                              ),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 240, 238, 238),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ],
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }

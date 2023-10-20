@@ -512,7 +512,7 @@ class _Grade_updateState extends State<Grade_update> {
       pref.getString('user_id').toString(),
       pref.getString('api_token').toString(),
 
-      stringgrade,
+      stringgrade.trim(),
       '9',
     );
 

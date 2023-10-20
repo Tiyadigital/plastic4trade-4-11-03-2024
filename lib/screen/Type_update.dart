@@ -446,8 +446,11 @@ class _Type_updateState extends State<Type_update> {
   Future<bool> setType() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await addProducttype(pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(), constanst.select_type_id, '7');
+    var res = await addProducttype(
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        constanst.select_type_id.trim(),
+        '7');
 
     String? msg = res['message'];
     Fluttertoast.showToast(msg: "$msg");

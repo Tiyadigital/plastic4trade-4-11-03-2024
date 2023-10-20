@@ -1,5 +1,5 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: non_constant_identifier_names, must_be_immutable, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'Videos.dart';
 
@@ -15,17 +15,17 @@ class Choice {
   final String icon;
 }
 
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  const Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+const List<Choice> choices = <Choice>[
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
+  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
 ];
 class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  {
 
-   int init_page=0;
+   var init_page=0;
   late TabController _tabController;
    PageController? _pageController;
   //late TabController _tabController1;
@@ -48,11 +48,11 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
     return DefaultTabController(length: 5,
         initialIndex: init_page,
         child: Scaffold(
-          backgroundColor: Color(0xFFDADADA),
+          backgroundColor: const Color(0xFFDADADA),
           appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             elevation: 0,
-            title: Text('Premium',
+            title: const Text('Premium',
                 softWrap: false,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -64,7 +64,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
               ),
@@ -75,7 +75,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => YoutubeViewer('i9t8rSVLUxg')));
+                            builder: (context) => const YoutubeViewer('i9t8rSVLUxg')));
                   },
 
                   child: SizedBox(
@@ -96,7 +96,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                    _pageController?.jumpToPage(init_page);
                 });
               },
-              tabs: [
+              tabs: const [
                 Tab(child: Text('Free',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600))),
                 Tab(child: Text('Basic',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600))),
                 Tab(child: Text('Standard',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600))),
@@ -124,7 +124,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
      return SingleChildScrollView(
        child: Container(
          // color: Colors.white,
-         margin: EdgeInsets.all(15),
+         margin: const EdgeInsets.all(15),
          width: 150,
          height: 500,
          decoration: BoxDecoration(
@@ -132,7 +132,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
            color:Colors.white,
          ),
          child: Container(
-             margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+             margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
 
              child: Column(
                  children: [
@@ -141,15 +141,15 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                        Image.asset('assets/Premium1.png'),
 
 
-                       Positioned(
+                       const Positioned(
                            top: 55,
                            left: 155,
                            child: Text('Free')),
-                       Positioned(
+                       const Positioned(
                            bottom: 25,
                            left: 25,
                            child: Text('₹0/Month')),
-                       Positioned(
+                       const Positioned(
                            bottom: 25,
                            right: 25,
                            child: Text('0/M                  ')
@@ -172,7 +172,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                                mainAxisSpacing: 1.0,
                                crossAxisCount: 1,
                              ),*/
-                             physics: AlwaysScrollableScrollPhysics(),
+                             physics: const AlwaysScrollableScrollPhysics(),
                              itemCount: 1,
                              shrinkWrap: true,
                              itemBuilder: (context, index) {
@@ -186,34 +186,34 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                                      elevation: 2,
 
                                      child: Container(
-                                       margin: EdgeInsets.all(8.0),
+                                       margin: const EdgeInsets.all(8.0),
                                        child: Column(children: [
                                          Row(
                                            children: [
                                              Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                             Text('Free Post')
+                                             const Text('Free Post')
                                            ],
                                          ),
                                          Row(
                                            children: [
                                              Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                             Text('Domestic Live Price')
+                                             const Text('Domestic Live Price')
                                            ],
                                          ),
                                          Row(
                                            children: [
                                              Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                             Text('International Live Price')
+                                             const Text('International Live Price')
                                            ],
                                          ),
                                          Row(
                                            children: [
                                              Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                             Text('International News')
+                                             const Text('International News')
                                            ],
                                          ),
                                          Row(
-                                           children: [
+                                           children: const [
                                              Icon(Icons.cancel,color: Colors.red ,),
                                              Text('Chat Functionality')
                                            ],
@@ -227,63 +227,17 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                            );
                          }
 
-                         return CircularProgressIndicator();
                        })
                  ])),
        ),
      );
    }
-   Widget demo( init_page){
+
+   Widget demo( initPage){
      return SingleChildScrollView(
        child: _buildCarousel(context),
-     );
-
-
-     // Container(
-     // //padding: const EdgeInsets.only(left: 20),
-     // height: 300,
-     // //width: double.maxFinite,
-     // child: Row(
-     //   //controller: _tabController,
-     //   children: [
-     //
-     //    // Container(
-     //    //              width: 150,
-     //    //              height: 50,
-     //    //              margin: const EdgeInsets.only(
-     //    //                  right: 10, top: 10, bottom: 0),
-     //    //              decoration: BoxDecoration(
-     //    //                borderRadius: BorderRadius.circular(20),
-     //    //                image: DecorationImage(
-     //    //                    image: AssetImage("assets/web.png"),),
-     //    //              ),
-     //    //       child: Text("Hello first container"),
-     //    //            ),
-     //     tab(),
-     //
-     //   Container(
-     //                   padding: EdgeInsets.all(24),
-     //                   color: Colors.white.withOpacity(0.3),
-     //                   // child:  BackdropFilter(
-     //                   //   filter: ImageFilter.blur(
-     //                   //     sigmaX: 10.0,
-     //                   //     sigmaY: 10.0,)),
-     //                     child: Text(
-     //                     "Flutter Dev's",
-     //                     style: TextStyle(
-     //                       fontSize: 28,
-     //                       fontWeight: FontWeight.bold,
-     //                       color: Colors.white,
-     //                     ),
-     //                   ),
-     //
-     //               ),
-     //             ]));
-
-
-
-
-   }
+     );}
+   
    Widget _buildCarousel(BuildContext context) {
      return Column(
        mainAxisSize: MainAxisSize.min,
@@ -309,7 +263,6 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
 
                  _tabController.animateTo(init_page);
                  //});
-                 print(init_page);
                });
 
              },
@@ -323,16 +276,16 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
    Widget _buildCarouselItem(BuildContext context, int itemIndex) {
      return Container(
 
-         padding: EdgeInsets.symmetric(horizontal: 4.0),
+         padding: const EdgeInsets.symmetric(horizontal: 4.0),
          //padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-         margin: EdgeInsets.fromLTRB(0,10.0,0.0,150.0),
+         margin: const EdgeInsets.fromLTRB(0,10.0,0.0,150.0),
 
          child: Container(
-           decoration: BoxDecoration(
+           decoration: const BoxDecoration(
              color: Colors.white,
              borderRadius: BorderRadius.all(Radius.circular(10.0)),
            ),
-           padding: EdgeInsets.all(10),
+           padding: const EdgeInsets.all(10),
            // child: Container(
            //   margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
 
@@ -346,15 +299,15 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                      Positioned(
                          top: 28,
                          left: 98,
-                         child: Text('Free',style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 41,color: Colors.white))),
+                         child: Text('Free',style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 41,color: Colors.white))),
                      Positioned(
                          bottom: 18,
                          left: 25,
-                         child: Text('₹0/Month',style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 15,color: Colors.white))),
+                         child: Text('₹0/Month',style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 15,color: Colors.white))),
                      Positioned(
                          bottom: 18,
                          right: 25,
-                         child: Text('0/Month',style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 15,color: Colors.white)))
+                         child: Text('0/Month',style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 15,color: Colors.white)))
 
                    ],),
                  FutureBuilder(
@@ -375,7 +328,7 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                              mainAxisSpacing: 1.0,
                              crossAxisCount: 1,
                            ),*/
-                           physics: AlwaysScrollableScrollPhysics(),
+                           physics: const AlwaysScrollableScrollPhysics(),
                            itemCount: 1,
                            shrinkWrap: true,
                            itemBuilder: (context, index) {
@@ -387,187 +340,187 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
 
 
                                child: Container(
-                                 margin: EdgeInsets.all(8.0),
+                                 margin: const EdgeInsets.all(8.0),
                                  child: Column(children: [
                                    Row(
                                      children: [
                                        Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                       SizedBox(width: 3,),
-                                       Text('Free Post',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),)
+                                       const SizedBox(width: 3,),
+                                       const Text('Free Post',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),)
                                      ],
                                    ),
-                                   SizedBox(height: 6,),
+                                   const SizedBox(height: 6,),
                                    Row(
                                      children: [
                                        Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                       SizedBox(width: 3,),
-                                       Text('Domestic Live Price',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),)
+                                       const SizedBox(width: 3,),
+                                       const Text('Domestic Live Price',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),)
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      children: [
                                        Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                       SizedBox(width: 3,),
-                                       Text('International Live Price',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),)
+                                       const SizedBox(width: 3,),
+                                       const Text('International Live Price',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),)
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      children: [
                                        Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                       SizedBox(width: 3,),
-                                       Text('International News',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),)
+                                       const SizedBox(width: 3,),
+                                       const Text('International News',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),)
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Chat Functionality',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Chat Functionality',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
 
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Business Profile View',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Business Profile View',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
 
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Chat Functionality',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Chat Functionality',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
 
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Reversible (Open Contact)',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Reversible (Open Contact)',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Notification Ads',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Notification Ads',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Paid Post',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Paid Post',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Business Directory',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Business Directory',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
                                      ],
-                                   ),SizedBox(height: 6,),
+                                   ),const SizedBox(height: 6,),
                                    Row(
                                      mainAxisAlignment:MainAxisAlignment.spaceBetween ,
                                      children: [
                                        Row(
-                                         children: [
+                                         children: const [
                                            Icon(Icons.cancel,color: Colors.red ,),
                                            SizedBox(width: 3,),
-                                           Text('Time Duration: Monthly',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf'),),
+                                           Text('Time Duration: Monthly',style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-SemiBold.otf'),),
                                          ],
                                        ),
 
                                        Row(
                                          mainAxisAlignment: MainAxisAlignment.end,
-                                         children: [
+                                         children: const [
                                            Icon(Icons.info_outline,color: Colors.grey ,),
                                          ],
                                        )
@@ -576,18 +529,18 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                                    SizedBox(height: MediaQuery.of(context).size.height/20,),
                                    Container(
                                      width: MediaQuery.of(context).size.width * 0.9,
-                                     margin: EdgeInsets.only(bottom: 10),
+                                     margin: const EdgeInsets.only(bottom: 10),
                                      decoration: BoxDecoration(
                                          border: Border.all(width: 1),
                                          borderRadius: BorderRadius.circular(50.0),
-                                         color: Color.fromARGB(255, 0, 91, 148)),
+                                         color: const Color.fromARGB(255, 0, 91, 148)),
                                      child: TextButton(
                                        onPressed: () {
 
                                        },
-                                       child: Text('Free',
+                                       child: const Text('Free',
 
-                                           style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                                           style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                                      ),
                                    ),
                                    //SizedBox(height: 5.0,)
@@ -599,7 +552,6 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin  
                          );
                        }
 
-                       return CircularProgressIndicator();
                      })
 
                ]),
@@ -645,23 +597,22 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
   ];
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     _tabController = TabController(length: 5, vsync: this);
-    print('inside init .' );
-    print(widget.init_pages);
   }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(length: 5,
     initialIndex: widget.init_pages,
     child: Scaffold(
-        backgroundColor: Color(0xFFDADADA),
+        backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           elevation: 0,
           title: Text(widget.init_pages.toString(),
               softWrap: false,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20.0,
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
@@ -671,7 +622,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
@@ -682,7 +633,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => YoutubeViewer('i9t8rSVLUxg')));
+                          builder: (context) => const YoutubeViewer('i9t8rSVLUxg')));
                 },
 
                 child: SizedBox(
@@ -697,10 +648,10 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
 
             tabs: [
               Tab(text: widget.init_pages.toString()),
-              Tab(text: 'Basic'),
-              Tab(text: 'Standard'),
-              Tab(text: 'Premium'),
-              Tab(text: 'Gold'),
+              const Tab(text: 'Basic'),
+              const Tab(text: 'Standard'),
+              const Tab(text: 'Premium'),
+              const Tab(text: 'Gold'),
 
             ],
           ),
@@ -718,88 +669,13 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
           ],
         ),
       ));
-     /* SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 5),
-            Image.asset(
-              'assets/hori_line.png',
-              width: 150,
-              height: 5,
-            ),
-            SizedBox(height: 5),
-            Center(
-              child: Text('Select Nature of Business',
-                  style: TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-            ),
-            SizedBox(height: 5),
-            //-------CircularCheckBox()
-
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                      title: Text(items[index],
-                          style: TextStyle(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-                      leading: IconButton(
-                          icon: itemsCheck[index] == Icons.circle_outlined
-                              ? Icon(Icons.circle_outlined,
-                              color: Colors.black45)
-                              : Icon(Icons.check_circle,
-                              color: Colors.green.shade600),
-                          onPressed: () {
-                            setState(() {
-                              gender=true;
-                              if (itemsCheck[index] == Icons.circle_outlined) {
-                                itemsCheck[index] = Icons.check_circle_outline;
-
-                              } else
-                                itemsCheck[index] = Icons.circle_outlined;
-                            });
-                          }));
-                }),
-
-            Container(
-              width: MediaQuery.of(context).size.width * 1.2,
-              height: 60,
-              margin: EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                  border: Border.all(width: 1),
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Color.fromARGB(255, 0, 91, 148)),
-              child: TextButton(
-                onPressed: () {
-
-                },
-                child: Text('Update',
-                    style: TextStyle(
-                        fontSize: 19.0,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );*/
   }
 
   Widget tab() {
     return SingleChildScrollView(
       child: Container(
         // color: Colors.white,
-        margin: EdgeInsets.all(15),
+        margin: const EdgeInsets.all(15),
         width: 150,
         height: 500,
         decoration: BoxDecoration(
@@ -807,7 +683,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
           color: Colors.white,
         ),
         child: Container(
-            margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+            margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
 
             child: Column(
                 children: [
@@ -816,15 +692,15 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                       Image.asset('assets/Premium1.png'),
 
 
-                      Positioned(
+                      const Positioned(
                           top: 55,
                           left: 155,
                           child: Text('Free')),
-                      Positioned(
+                      const Positioned(
                           bottom: 25,
                           left: 25,
                           child: Text('₹0/Month')),
-                      Positioned(
+                      const Positioned(
                           bottom: 25,
                           right: 25,
                           child: Text('0/Month'))
@@ -848,7 +724,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                               mainAxisSpacing: 1.0,
                               crossAxisCount: 1,
                             ),
-                            physics: AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: 1,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
@@ -862,34 +738,34 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                                     elevation: 2,
 
                                     child: Container(
-                                      margin: EdgeInsets.all(8.0),
+                                      margin: const EdgeInsets.all(8.0),
                                       child: Column(children: [
                                         Row(
                                           children: [
                                             Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                            Text('Free Post')
+                                            const Text('Free Post')
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                            Text('Domestic Live Price')
+                                            const Text('Domestic Live Price')
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                            Text('International Live Price')
+                                            const Text('International Live Price')
                                           ],
                                         ),
                                         Row(
                                           children: [
                                             Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                            Text('International News')
+                                            const Text('International News')
                                           ],
                                         ),
                                         Row(
-                                          children: [
+                                          children: const [
                                             Icon(Icons.cancel,color: Colors.red ,),
                                             Text('Chat Functionality')
                                           ],
@@ -903,58 +779,15 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                           );
                         }
 
-                        return CircularProgressIndicator();
                       })
                 ])),
       ),
     );
   }
-  Widget demo( init_page){
+  Widget demo( initPage){
     return SingleChildScrollView(
       child: _buildCarousel(context),
     );
-
-
-    // Container(
-    // //padding: const EdgeInsets.only(left: 20),
-    // height: 300,
-    // //width: double.maxFinite,
-    // child: Row(
-    //   //controller: _tabController,
-    //   children: [
-    //
-    //    // Container(
-    //    //              width: 150,
-    //    //              height: 50,
-    //    //              margin: const EdgeInsets.only(
-    //    //                  right: 10, top: 10, bottom: 0),
-    //    //              decoration: BoxDecoration(
-    //    //                borderRadius: BorderRadius.circular(20),
-    //    //                image: DecorationImage(
-    //    //                    image: AssetImage("assets/web.png"),),
-    //    //              ),
-    //    //       child: Text("Hello first container"),
-    //    //            ),
-    //     tab(),
-    //
-    //   Container(
-    //                   padding: EdgeInsets.all(24),
-    //                   color: Colors.white.withOpacity(0.3),
-    //                   // child:  BackdropFilter(
-    //                   //   filter: ImageFilter.blur(
-    //                   //     sigmaX: 10.0,
-    //                   //     sigmaY: 10.0,)),
-    //                     child: Text(
-    //                     "Flutter Dev's",
-    //                     style: TextStyle(
-    //                       fontSize: 28,
-    //                       fontWeight: FontWeight.bold,
-    //                       color: Colors.white,
-    //                     ),
-    //                   ),
-    //
-    //               ),
-    //             ]));
 
 
 
@@ -985,7 +818,6 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
 
             _tabController.animateTo(widget.init_pages);
               //});
-              print(widget.init_pages);
                });
 
             },
@@ -999,11 +831,11 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
   Widget _buildCarouselItem(BuildContext context, int itemIndex) {
     return Container(
 
-        padding: EdgeInsets.symmetric(horizontal: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
         //padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-        margin: EdgeInsets.fromLTRB(0,10.0,0.0,10.0),
+        margin: const EdgeInsets.fromLTRB(0,10.0,0.0,10.0),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
           ),
@@ -1017,15 +849,15 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                     Image.asset('assets/Premium1.png'),
 
 
-                    Positioned(
+                    const Positioned(
                         top: 55,
                         left: 155,
                         child: Text('Free')),
-                    Positioned(
+                    const Positioned(
                         bottom: 25,
                         left: 25,
                         child: Text('₹0/Month')),
-                    Positioned(
+                    const Positioned(
                         bottom: 25,
                         right: 25,
                         child: Text('0/Month'))
@@ -1049,7 +881,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                             mainAxisSpacing: 1.0,
                             crossAxisCount: 1,
                           ),
-                          physics: AlwaysScrollableScrollPhysics(),
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: 1,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
@@ -1061,7 +893,7 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
 
 
                               child: Container(
-                                margin: EdgeInsets.all(8.0),
+                                margin: const EdgeInsets.all(8.0),
                                 child: Column(children: [
                                   Row(
                                     children: [
@@ -1072,23 +904,23 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                                   Row(
                                     children: [
                                       Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                      Text('Domestic Live Price')
+                                      const Text('Domestic Live Price')
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                      Text('International Live Price')
+                                      const Text('International Live Price')
                                     ],
                                   ),
                                   Row(
                                     children: [
                                       Icon(Icons.check_circle,color: Colors.green.shade600 ,),
-                                      Text('International News')
+                                      const Text('International News')
                                     ],
                                   ),
                                   Row(
-                                    children: [
+                                    children: const [
                                       Icon(Icons.cancel,color: Colors.red ,),
                                       Text('Chat Functionality')
                                     ],
@@ -1102,7 +934,6 @@ class _YourWidgetState extends State<YourWidget> with SingleTickerProviderStateM
                         );
                       }
 
-                      return CircularProgressIndicator();
                     })
 
               ]),

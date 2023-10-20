@@ -4,10 +4,10 @@ class Get_likeUser {
 
   Get_likeUser({int? status, List<Data>? data}) {
     if (status != null) {
-      this._status = status;
+      _status = status;
     }
     if (data != null) {
-      this._data = data;
+      _data = data;
     }
   }
 
@@ -21,16 +21,16 @@ class Get_likeUser {
     if (json['data'] != null) {
       _data = <Data>[];
       json['data'].forEach((v) {
-        _data!.add(new Data.fromJson(v));
+        _data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this._status;
-    if (this._data != null) {
-      data['data'] = this._data!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = _status;
+    if (_data != null) {
+      data['data'] = _data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -58,31 +58,31 @@ class Data {
         String? userImage,
         String? imageUrl}) {
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (userId != null) {
-      this._userId = userId;
+      _userId = userId;
     }
     if (profileId != null) {
-      this._profileId = profileId;
+      _profileId = profileId;
     }
     if (isLike != null) {
-      this._isLike = isLike;
+      _isLike = isLike;
     }
     if (createdAt != null) {
-      this._createdAt = createdAt;
+      _createdAt = createdAt;
     }
     if (updatedAt != null) {
-      this._updatedAt = updatedAt;
+      _updatedAt = updatedAt;
     }
     if (username != null) {
-      this._username = username;
+      _username = username;
     }
     if (userImage != null) {
-      this._userImage = userImage;
+      _userImage = userImage;
     }
     if (imageUrl != null) {
-      this._imageUrl = imageUrl;
+      _imageUrl = imageUrl;
     }
   }
 
@@ -118,16 +118,16 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['user_id'] = this._userId;
-    data['profile_id'] = this._profileId;
-    data['isLike'] = this._isLike;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
-    data['username'] = this._username;
-    data['userImage'] = this._userImage;
-    data['image_url'] = this._imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['user_id'] = _userId;
+    data['profile_id'] = _profileId;
+    data['isLike'] = _isLike;
+    data['created_at'] = _createdAt;
+    data['updated_at'] = _updatedAt;
+    data['username'] = _username;
+    data['userImage'] = _userImage;
+    data['image_url'] = _imageUrl;
     return data;
   }
 }

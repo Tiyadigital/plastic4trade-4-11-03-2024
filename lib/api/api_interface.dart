@@ -1120,10 +1120,10 @@ Future getsaleSearch_Post(String latitude, String longitude,
 
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
+  final response =
+      await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
     "Accept": "application/json"
-  },
-          body: {
+  }, body: {
     'latitude': latitude,
     'longitude': longitude,
     'searchKeyword': searchKeyword,
@@ -2268,6 +2268,58 @@ Future get_profileliked_user(String profileId) async {
   return res;
 }
 
+Future getProductInterest(userId, userToken, productId) async {
+  String productInterest =
+      "getProductInterest?user_id=$userId&userToken=$userToken&product_id=$productId";
+
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + productInterest));
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+Future getProductView(productId) async {
+  String productView =
+      "getpostviewed_user?post_id=$productId";
+
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + productView));
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+Future getProductShareCount(userId,productId) async {
+  String productShare =
+      "countpostshare?user_id=$userId&post_id=$productId";
+
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + productShare));
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+Future getProductShare(userId,productId) async {
+  String productShare =
+      "getpostshareuser?user_id=$userId&post_id=$productId";
+
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + productShare));
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
 Future get_profileviewd_user(String profileId) async {
   String gethomepostUrl = 'getprofileviewed_user?profile_id=$profileId';
 
@@ -2419,6 +2471,7 @@ Future editReview(String userId, String userToken, String commentId,
       ),
     );
   }
+
   request.headers.addAll(headers);
   request.fields.addAll({
     'user_id': userId,
@@ -2460,5 +2513,23 @@ Future get_databytimeduration(String codeId) async {
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
   }
+  return res;
+}
+
+Future deleteAccount(userId, userToken) async {
+  String deleteAccount = "deletemyaccount";
+  var res;
+  final response =
+      await http.post(Uri.parse(baseurl + deleteAccount), headers: {
+    "Accept": "application/json"
+  }, body: {
+    "userId": userId,
+    "userToken": userToken,
+  });
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+
   return res;
 }

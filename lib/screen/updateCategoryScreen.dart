@@ -996,7 +996,7 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
           pref.getString('api_token').toString(),
           location_interest.toString(),
           post_type.toString(),
-          stringCategory,
+          stringCategory.trim(),
           '7');
 
       if (res['status'] == 1) {

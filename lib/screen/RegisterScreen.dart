@@ -106,7 +106,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return initwidget();
+    return initWidget();
   }
 
   void _onPressedShowBottomSheet() async {
@@ -122,7 +122,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  Widget initwidget() {
+  Widget initWidget() {
     final country = _selectedCountry;
     if (Platform.isAndroid) {
       // Android-specific code
@@ -130,6 +130,7 @@ class _RegisterState extends State<Register> {
     } else if (Platform.isIOS) {
       device_name = 'ios';
     }
+
     init(context);
     return Material(
       child: Scaffold(
@@ -296,7 +297,8 @@ class _RegisterState extends State<Register> {
                                     GestureDetector(
                                       child: Container(
                                           height: 57,
-                                          padding: const EdgeInsets.only(left: 2),
+                                          padding:
+                                              const EdgeInsets.only(left: 2),
                                           decoration: BoxDecoration(
                                             border: verify_phone == 1
                                                 ? Border.all(
@@ -327,7 +329,9 @@ class _RegisterState extends State<Register> {
                                               Text(
                                                 country.callingCode,
                                                 textAlign: TextAlign.center,
-                                                style: const TextStyle(fontSize: 15),
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                ),
                                               ),
                                               const SizedBox(
                                                 width: 10,
@@ -341,10 +345,7 @@ class _RegisterState extends State<Register> {
                                     Expanded(
                                       flex: 2,
                                       child: Container(
-                                        //padding: EdgeInsets.only(bottom: 3.0),
                                         height: 57,
-                                        /*width: MediaQuery.of(context).size.width /
-                                            1.58,*/
                                         margin: const EdgeInsets.only(
                                             left: 5.0, right: 25),
                                         child: TextFormField(
@@ -364,8 +365,6 @@ class _RegisterState extends State<Register> {
                                                 11),
                                           ],
                                           decoration: InputDecoration(
-                                            // labelText: 'Your phone *',
-                                            // labelStyle: TextStyle(color: Colors.red),
                                             filled: true,
                                             fillColor: Colors.white,
                                             hintText: "Mobile Number",
@@ -496,7 +495,8 @@ class _RegisterState extends State<Register> {
                                                           50.0),
                                                   color: const Color.fromARGB(
                                                       255, 0, 91, 148)),
-                                              margin: const EdgeInsets.only(top: 5.0),
+                                              margin: const EdgeInsets.only(
+                                                  top: 5.0),
                                               // Set the height of the container
                                               alignment: Alignment.center,
                                               child: TextButton(
@@ -666,21 +666,16 @@ class _RegisterState extends State<Register> {
                                                   width: 1, color: _color6),
                                               borderRadius:
                                                   BorderRadius.circular(15.0)),
-                                          //errorText: _validusernm ? 'Name is not empty' : null),
                                         ),
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             _color6 = Colors.red;
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter OTP');
                                             setState(() {});
-                                            /*setState(() {
-
-                                            _color6 = Colors.red;
-                                          });*/
                                           } else {
                                             _color6 = Colors.green.shade600;
                                             setState(() {});
@@ -688,8 +683,8 @@ class _RegisterState extends State<Register> {
                                         },
                                         onFieldSubmitted: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg: 'Please Enter OTP');
@@ -715,8 +710,8 @@ class _RegisterState extends State<Register> {
                                           border: Border.all(width: 1),
                                           borderRadius:
                                               BorderRadius.circular(50.0),
-                                          color:
-                                              const Color.fromARGB(255, 0, 91, 148)),
+                                          color: const Color.fromARGB(
+                                              255, 0, 91, 148)),
                                       child: TextButton(
                                         onPressed: () {
                                           if (_formKey.currentState!
@@ -799,10 +794,8 @@ class _RegisterState extends State<Register> {
                                                 if (connectivityResult ==
                                                     ConnectivityResult.none) {
                                                   //this.getData();
-                                                  WidgetsBinding
-                                                      .instance
-                                                      .focusManager
-                                                      .primaryFocus
+                                                  WidgetsBinding.instance
+                                                      .focusManager.primaryFocus
                                                       ?.unfocus();
                                                   Fluttertoast.showToast(
                                                       msg:
@@ -913,8 +906,8 @@ class _RegisterState extends State<Register> {
                                   : Container(),
                           verify_phone == 1
                               ? Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
                                   child: Column(
                                     children: [
                                       TextFormField(
@@ -932,7 +925,6 @@ class _RegisterState extends State<Register> {
                                                 'assets/fonst/Metropolis-Black.otf'),
                                         textInputAction: TextInputAction.next,
                                         decoration: InputDecoration(
-
                                           enabled:
                                               verify_email == 1 ? false : true,
                                           suffixIcon: verify_email == 1
@@ -963,7 +955,6 @@ class _RegisterState extends State<Register> {
                                                   width: 1, color: _color3),
                                               borderRadius:
                                                   BorderRadius.circular(10.0)),
-
                                           errorText: _validemail
                                               ? 'Email no is not empty'
                                               : null,
@@ -1007,16 +998,14 @@ class _RegisterState extends State<Register> {
                                         onFieldSubmitted: (value) {
                                           if (!EmailValidator.validate(value)) {
                                             _color3 = Colors.red;
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
                                                     'Please Enter Correct Email');
                                             // setState(() {});
-                                          }
-
-                                          else if (value.isNotEmpty) {
+                                          } else if (value.isNotEmpty) {
                                             // setState(() {
                                             _color3 = Colors.green.shade600;
                                             // });
@@ -1031,19 +1020,19 @@ class _RegisterState extends State<Register> {
                                                           .width *
                                                       0.9,
                                                   height: 60,
-                                                  margin:
-                                                      const EdgeInsets.only(top: 15),
+                                                  margin: const EdgeInsets.only(
+                                                      top: 15),
                                                   decoration: BoxDecoration(
                                                       border:
                                                           Border.all(width: 1),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               50.0),
-                                                      color: const Color.fromARGB(
-                                                          255, 0, 91, 148)),
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 0, 91, 148)),
                                                   child: TextButton(
                                                     onPressed: () async {
-
                                                       log("EMAIL OTP BUTTON PRESSED");
 
                                                       final connectivityResult =
@@ -1157,17 +1146,19 @@ class _RegisterState extends State<Register> {
                                                                 .center,
                                                             child: Text(
                                                               '0:$_countdown',
-                                                              style: const TextStyle(
+                                                              style:
+                                                                  const TextStyle(
                                                                 fontSize: 15.0,
                                                                 color: Colors
                                                                     .white,
                                                                 fontFamily:
                                                                     'assets/fonst/Metropolis-Black.otf',
                                                               ).copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                  fontSize: 17),
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                      fontSize:
+                                                                          17),
                                                             ))
                                                         : Container(
                                                             width: MediaQuery.of(
@@ -1177,7 +1168,8 @@ class _RegisterState extends State<Register> {
                                                                 0.9,
                                                             height: 60,
                                                             margin:
-                                                                const EdgeInsets.only(
+                                                                const EdgeInsets
+                                                                        .only(
                                                                     top: 15),
                                                             decoration: BoxDecoration(
                                                                 border:
@@ -1495,24 +1487,27 @@ class _RegisterState extends State<Register> {
                                                         },
                                                         child: Text(
                                                             'Verify OTP',
-                                                            style: const TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 15.0,
                                                               color:
                                                                   Colors.white,
                                                               fontFamily:
                                                                   'assets/fonst/Metropolis-Black.otf',
                                                             ).copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                fontSize: 19)),
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800,
+                                                                    fontSize:
+                                                                        19)),
                                                       ),
                                                     ),
                                                   ],
                                                 )
                                           : Container()
                                     ],
-                                  ))
+                                  ),
+                                )
                               : Container(),
                           verify_email == 1
                               ? Column(
@@ -1599,8 +1594,8 @@ class _RegisterState extends State<Register> {
                                               });
                                             }
                                           } else if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1724,8 +1719,8 @@ class _RegisterState extends State<Register> {
                                       },*/
                                         onChanged: (value) {
                                           if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
+                                            WidgetsBinding.instance.focusManager
+                                                .primaryFocus
                                                 ?.unfocus();
                                             Fluttertoast.showToast(
                                                 msg:
@@ -1776,11 +1771,13 @@ class _RegisterState extends State<Register> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                      builder: (context) => const AppTermsCondition(),
+                                                      builder: (context) =>
+                                                          const AppTermsCondition(),
                                                     ),
                                                   );
                                                 },
-                                                child: const Text('Terms & Condition',
+                                                child: const Text(
+                                                    'Terms & Condition',
                                                     style: TextStyle(
                                                         fontSize: 15.0,
                                                         fontWeight:
@@ -1802,8 +1799,8 @@ class _RegisterState extends State<Register> {
                                           border: Border.all(width: 1),
                                           borderRadius:
                                               BorderRadius.circular(50.0),
-                                          color:
-                                              const Color.fromARGB(255, 0, 91, 148)),
+                                          color: const Color.fromARGB(
+                                              255, 0, 91, 148)),
                                       child: TextButton(
                                         onPressed: () async {
                                           final connectivityResult =
@@ -1838,8 +1835,11 @@ class _RegisterState extends State<Register> {
                               : Container(),
                         ],
                       ),
-                    )
-                  ]))),
+                    ),
+                  ],
+                  ),
+              ),
+          ),
         ),
         bottomNavigationBar: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1852,8 +1852,10 @@ class _RegisterState extends State<Register> {
                     fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                 },
                 child: const Text('Log in',
                     style: TextStyle(
@@ -1935,7 +1937,6 @@ class _RegisterState extends State<Register> {
   Future<bool?> setRegisterUserPhoneno() async {
     RegisterUserPhoneno register = RegisterUserPhoneno();
 
-
     var res = await registerUserPhoneno(
       _usermbl.text,
       country_code.toString(),
@@ -1981,7 +1982,6 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> setRegisterUserEmail() async {
-
     log("setRegisterUserEmail Method Called");
 
     var res = await registerUserEmail(
@@ -1993,7 +1993,6 @@ class _RegisterState extends State<Register> {
         device_name);
 
     if (res['status'] == 1) {
-
       email_otp = 1;
       _isloading = true;
       Fluttertoast.showToast(msg: res['message']);
@@ -2016,8 +2015,6 @@ class _RegisterState extends State<Register> {
 
   Future<void> init(BuildContext context) async {
     await FirebaseApi().initNOtification(context);
-
-    // APIs.getSelfInfo();
   }
 
   Future<bool> register_mo_verifyotp(
@@ -2027,11 +2024,7 @@ class _RegisterState extends State<Register> {
     String apiToken,
     String step,
   ) async {
-    log("VERIFY OTP PRESSED");
-
     var res = await reg_mo_verifyotp(otp, userId, phoneno, apiToken, step);
-
-    //String? msg = res['message'];
 
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
@@ -2055,9 +2048,7 @@ class _RegisterState extends State<Register> {
     String phoneno,
     countryCode,
   ) async {
-
     var res = await reg_mo_resendotp(userId, phoneno, apiToken, countryCode);
-
 
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
@@ -2085,9 +2076,7 @@ class _RegisterState extends State<Register> {
 
   Future<bool> register_email_resendotp(
       String userId, String apiToken, String email) async {
-
     var res = await reg_email_resendotp(userId, apiToken, email);
-
 
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
@@ -2115,10 +2104,7 @@ class _RegisterState extends State<Register> {
     String email,
     String step,
   ) async {
-    log("VERIFY EMAIL OTP PRESSED..!");
-
     var res = await reg_email_verifyotp(otp, userId, apiToken, email, step);
-
 
     if (res['status'] == 1) {
       // Fluttertoast.showToast(msg: res['message']);
@@ -2155,7 +2141,6 @@ class _RegisterState extends State<Register> {
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
 
-
     if (res['status'] == 1) {
       register = FinalRegister.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
@@ -2189,7 +2174,6 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> add_android_device() async {
-
     /*_onLoading();*/
     var res = await androidDevice_Register(_usermbl.text.toString());
     if (res['status'] == 1) {
@@ -2215,7 +2199,6 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> add_ios_device() async {
-
     var res = await iosDevice_Register();
 
     if (res['status'] == 1) {

@@ -1,6 +1,7 @@
+// ignore_for_file: camel_case_types
+
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Plastic4trade/screen/AddPost.dart';
 import 'package:Plastic4trade/screen/GradeScreen.dart';
@@ -34,7 +35,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
       alignment: Alignment.bottomCenter,
       elevation: 0,
 
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35.0),
       ),
@@ -48,7 +49,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
             Navigator.of(context).pop();
           },
           child: Container(
-            margin: EdgeInsets.only(right: 15,top: 15),
+            margin: const EdgeInsets.only(right: 15,top: 15),
             child: const Align(
               alignment: Alignment.topRight,
               child: Icon(Icons.clear),
@@ -60,7 +61,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
         const SizedBox(height: 30,),
         Text('Select Interest \n Match Your Products',maxLines: 2,textAlign: TextAlign.center,style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 23)),
         const SizedBox(height: 20,),
-        Text('Please Select your Interest from the \n Category, Type, and Grade to Match your Product Perfectly,  and Get your Interested Product Notification',maxLines: 4,textAlign: TextAlign.center,style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets/fonst/Metropolis-Black.otf')?.copyWith(fontSize: 14)),
+        Text('Please Select your Interest from the \n Category, Type, and Grade to Match your Product Perfectly,  and Get your Interested Product Notification',maxLines: 4,textAlign: TextAlign.center,style: const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 14)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -90,16 +91,18 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                     if(constanst.redirectpage=="sale_buy"){
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)));
+                          MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(
+                            prod_id: constanst.productId,
+                            post_type: constanst.post_type,)));
                     }else if(constanst.redirectpage=="add_post"){
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => AddPost()));
+                          context, MaterialPageRoute(builder: (context) => const AddPost()));
                     }else if(constanst.redirectpage=="chat"){
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => Chat()));
+                          context, MaterialPageRoute(builder: (context) => const Chat()));
                     }else if(constanst.redirectpage=="live_price"){
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => LivepriceScreen()));
+                          context, MaterialPageRoute(builder: (context) => const LivepriceScreen()));
                     }else if(constanst.redirectpage=="Manage_Sell_Posts"){
                       Navigator.push(
                           context,
@@ -113,11 +116,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                             builder: (context) => const managebuypost(Title: 'Manage Buy Posts'),
                           ));
                     }else if(constanst.redirectpage=="update_category"){
-                     /* Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UpdateCategoryScreen(),
-                          ));*/
+
                     }else if(constanst.redirectpage=="edit_profile"){
                       Navigator.push(
                           context,

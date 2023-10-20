@@ -114,7 +114,7 @@ class _ChatState extends State<Chat> {
 
     customUserId = pref.getString('user_id').toString();
 
-    yourStream = FirebaseFirestore.instance.collection('users').where('senderId', isEqualTo: "14969");
+    yourStream = FirebaseFirestore.instance.collection('users').where('senderId', isEqualTo: customUserId);
 
     // print("DATA 1  ==  $yourStream");
 

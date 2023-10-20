@@ -142,6 +142,32 @@ class _ChartDetailState extends State<ChartDetail> {
       'messageText': messageText,
       'messageTime': DateTime.now().millisecondsSinceEpoch,
       'senderId': senderId,
+      // This will use the server's timestamp
+    }).catchError(
+      (error) => print('Failed to send message: $error'),
+    );
+  }
+
+  void setUserData(
+      String receiverId, String senderId, String messageText) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    DatabaseReference messagesRef =
+        FirebaseDatabase.instance.ref().child('users');
+
+    DatabaseReference receiverRef = messagesRef.child('$senderId-$receiverId');
+    DatabaseReference newMessageRef = receiverRef.push();
+
+    newMessageRef.set({
+      "count": "0",
+      'mediaName': '',
+      'mediaType': 'text',
+      'messageText': messageText,
+      "messageTime": DateTime.now().millisecondsSinceEpoch,
+      "senderId": senderId,
+      "userImage1": "",
+      "userImage2": "",
+      "userName1": "",
+      "userName2": "",
 
       // This will use the server's timestamp
     }).catchError(
@@ -160,10 +186,10 @@ class _ChartDetailState extends State<ChartDetail> {
             appId: "1:929685037367:android:4ee71ab0f0e0608492fab2",
             messagingSenderId: "929685037367",
             projectId: "plastic4trade-55372",
-            databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+            databaseURL:
+                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
       );
-    }
-    else if (Platform.isAndroid) {
+    } else if (Platform.isAndroid) {
       await Firebase.initializeApp(
         name: 'Plastic4Trade',
         options: const FirebaseOptions(
@@ -171,7 +197,8 @@ class _ChartDetailState extends State<ChartDetail> {
             appId: "1:929685037367:ios:2ff9d0954f9bc0e292fab2",
             messagingSenderId: "929685037367",
             projectId: "plastic4trade-55372",
-            databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
+            databaseURL:
+                "https://plastic4trade-55372-default-rtdb.firebaseio.com/"),
       );
     }
 
@@ -226,7 +253,6 @@ class _ChartDetailState extends State<ChartDetail> {
                       : Container(),
             );
           } else if (snapshot.hasError) {
-            // If there's an error
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData) {
             return const Text('No data available');
@@ -280,16 +306,13 @@ class _ChartDetailState extends State<ChartDetail> {
                   final senderId = entry.value['senderId'];
 
                   DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(
-                      messageTime.toString(),
-                    ),
+                    int.parse(messageTime.toString()),
                   );
 
                   String formattedDateTime =
                       DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
-                  var datetime = getTextForDate(
-                    DateTime.parse(formattedDateTime),
-                  );
+                  var datetime =
+                      getTextForDate(DateTime.parse(formattedDateTime));
                   return Container(
                     margin: const EdgeInsets.only(top: 5, right: 8, left: 8),
                     decoration: const BoxDecoration(),
@@ -349,10 +372,6 @@ class _ChartDetailState extends State<ChartDetail> {
                                           ),
                                           Image.network(
                                             messageText.toString(),
-                                            /*maxLines: null,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,*/
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -442,7 +461,8 @@ class _ChartDetailState extends State<ChartDetail> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               messageText.toString().startsWith(
-                                      'https://firebasestorage.googleapis.com')
+                                        'https://firebasestorage.googleapis.com',
+                                      )
                                   ? Container(
                                       padding: const EdgeInsets.all(5),
                                       decoration: const BoxDecoration(
@@ -660,7 +680,6 @@ class _ChartDetailState extends State<ChartDetail> {
                           maxLines: null,
                           onChanged: ((value) {
                             setState(() {
-                              // _messageEntrer = value;
                               istext = true;
                               if (value.toString().isEmpty) {
                                 istext = false;
@@ -706,7 +725,6 @@ class _ChartDetailState extends State<ChartDetail> {
                                   messageList?.clear();
                                   getUserList();
                                 });
-                                //constanst.messages.add(ChatMessage(messageContent: textMessage.text.toString(), userType: 'sender', msgtype: 'text',fillname: ""),);
                                 setState(() {
                                   textMessage.text = '';
                                   istext = false;
@@ -863,7 +881,6 @@ class _ChartDetailState extends State<ChartDetail> {
                 children: <Widget>[
                   TextButton.icon(
                     onPressed: () {
-                      //takephoto(ImageSource.camera);
                       setState(() {});
                     },
                     icon: const Icon(

@@ -836,11 +836,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         pref.getString('api_token').toString(),
         stringList,
         stringtype,
-        stringCategory,
+        stringCategory.trim(),
         constanst.step.toString());
-
-    log("API RESPONSE === $res");
-
 
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);

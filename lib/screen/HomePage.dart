@@ -721,6 +721,8 @@ class _HomePageState extends State<HomePage> {
                         !constanst.iscategory &&
                         !constanst.isprofile &&
                         constanst.step == 11) {
+                      print("ID = ${result.productId.toString()}");
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -745,6 +747,7 @@ class _HomePageState extends State<HomePage> {
                       constanst.appopencount1) {
                     categoryDialog(context);
                   } else {
+                    print("ID = ${result.productId.toString()}");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1331,6 +1334,7 @@ class _HomePageState extends State<HomePage> {
         } else if (message.data['type'] == "post like") {
           if (constanst.notypost_type.toString() == "SalePost") {
             if (constanst.notipostid.toString().isNotEmpty) {
+              print("ID = ${constanst.notipostid}");
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -1341,6 +1345,7 @@ class _HomePageState extends State<HomePage> {
           } else {
             if (constanst.notypost_type.toString() == "BuyPost") {
               if (constanst.notipostid.toString().isNotEmpty) {
+                print("ID = ${constanst.notipostid}");
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -1433,6 +1438,7 @@ class _HomePageState extends State<HomePage> {
         } else if (message.data['type'] == "post like") {
           if (message.data['post_type'] == "SalePost") {
             if (message.data['postId'].toString().isNotEmpty) {
+              print("ID = ${message.data['postId']}");
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -1443,6 +1449,7 @@ class _HomePageState extends State<HomePage> {
           } else {
             if (message.data['post_type'] == "BuyPost") {
               if (message.data['postId'].toString().isNotEmpty) {
+                print("ID = ${message.data['postId']}");
                 Navigator.push(
                     context,
                     MaterialPageRoute(

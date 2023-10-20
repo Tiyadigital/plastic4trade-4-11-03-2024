@@ -5,8 +5,9 @@ class Message {
   String? mediaType;
   String? mediaName;
 
+
   Message(
-      {this.messageText,
+  {this.messageText,
       this.messageTime,
       this.senderId,
       this.mediaType,

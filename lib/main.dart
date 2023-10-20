@@ -1,5 +1,5 @@
 // @dart=2.19
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
 import 'dart:async';
 import 'dart:io' show Platform;
@@ -110,21 +110,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 add_android_device() async {
-  Login login1 = Login();
 
-  /*_onLoading();*/
   var res = await androidDevice_Register(
       constanst.usernm.toString());
   print('Inside Api ');
   if (res['status'] == 1) {
-    login1 = Login.fromJson(res);
-
-    /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
-    /*  Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => MainScreen(0)),
-        ModalRoute.withName('/'));*/
     Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
   } else {
     Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);

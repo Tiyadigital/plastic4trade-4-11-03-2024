@@ -70,6 +70,7 @@ class _bussinessprofileState extends State<bussinessprofile>
       Premises_Type,
       business_type,
       is_follow,
+
       abot_buss,
       pan_number,
       product_name,
@@ -79,7 +80,7 @@ class _bussinessprofileState extends State<bussinessprofile>
   String? First_currency_sign = "",
       Second_currency_sign = "",
       Third_currency_sign = "";
-  int? view_count, like, reviews_count, following_count, followers_count;
+  int? view_count, like, reviews_count, following_count, followers_count,is_prime;
   bool? isload;
   GetSalePostList salePostList = new GetSalePostList();
   GetSalePostList buyPostList = new GetSalePostList();
@@ -208,9 +209,10 @@ class _bussinessprofileState extends State<bussinessprofile>
                                         borderRadius: BorderRadius.circular(15),
                                         color: const Color(0xffFFC107),
                                       ),
-                                      child: const Text(
+                                      child:  Text(
+                                        (is_prime == 0) ? "Free":
                                         'Premium',
-                                        style: TextStyle(fontSize: 9),
+                                        style: const TextStyle(fontSize: 9),
                                       ),
                                     ),
                                   ],
@@ -2092,6 +2094,7 @@ class _bussinessprofileState extends State<bussinessprofile>
       is_follow = res['profile']['is_follow'];
       abot_buss = res['profile']['about_business'] ?? "";
       image_url = res['user']['image_url'];
+      is_prime = res['user']['is_prime'];
 
       gst_number = res['profile']['gst_tax_vat'] ?? "";
       Premises_Type = res['profile']['premises'] ?? '';

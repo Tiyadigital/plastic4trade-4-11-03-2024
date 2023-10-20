@@ -508,7 +508,7 @@ class _TypeState extends State<Grade> {
     var res = await addgrade(
         pref.getString('user_id').toString(),
         pref.getString('api_token').toString(),
-        stringgrade,
+        stringgrade.trim(),
         constanst.step.toString());
 
 

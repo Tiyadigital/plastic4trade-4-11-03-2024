@@ -167,7 +167,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
             constanst.Prodcap_itemsCheck[0] = Icons.circle_outlined;
             constanst.select_product_cap_id = "";
             constanst.Product_Capcity_name = "";
-
             constanst.select_prodcap_idx = -1;
           },
         );
@@ -260,10 +259,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                           ],
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
-                                            // labelText: 'Your phone *',
-                                            // labelStyle: TextStyle(color: Colors.red),
                                             filled: true,
-                                            // errorText: _errorText,
                                             fillColor: Colors.white,
                                             hintText: 'GST/VAT/TAX Number',
                                             hintStyle: const TextStyle(
@@ -274,7 +270,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                         'assets/fonst/Metropolis-Black.otf')
                                                 .copyWith(
                                                     color: Colors.black45),
-
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   width: 1, color: _color1),
@@ -300,12 +295,8 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                               _color1 = Colors.green.shade600;
                                             } else {
                                               _color1 = Colors.red;
-                                              WidgetsBinding.instance
-                                                  .focusManager.primaryFocus
-                                                  ?.unfocus();
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Enter  a GST/VAT/TAX Number');
+                                              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                              Fluttertoast.showToast(msg: 'Please Enter a GST/VAT/TAX Number');
                                             }
                                           },
                                           onChanged: (value) {
@@ -313,19 +304,11 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                               WidgetsBinding.instance
                                                   .focusManager.primaryFocus
                                                   ?.unfocus();
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Your GST/VAT/TAX  Number');
-                                              setState(
-                                                () {
-                                                  _color1 = Colors.red;
-                                                },
-                                              );
+                                              Fluttertoast.showToast(msg: 'Please Your GST/VAT/TAX  Number');
+                                              setState(() {_color1 = Colors.red;});
                                             } else {
                                               setState(
-                                                () {
-                                                  _color1 =
-                                                      Colors.green.shade600;
+                                                () {_color1 = Colors.green.shade600;
                                                 },
                                               );
                                             }
@@ -1639,11 +1622,11 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                           ],
                                         ),
                                       ),
-
                                       SizedBox(
                                         height: (get_doctype.isEmpty)
                                             ? 0
-                                            : (get_doctype.isNotEmpty && get_doctype.length <= 3)
+                                            : (get_doctype.isNotEmpty &&
+                                                    get_doctype.length <= 3)
                                                 ? 60
                                                 : (get_doctype.length >= 4 &&
                                                         get_doctype.length <= 6)
@@ -1739,7 +1722,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
         double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
 
         if (fileSizeInMB > 2) {
-
           Fluttertoast.showToast(msg: "Selected File must be less than 2 mb");
           return;
         }
@@ -1842,10 +1824,10 @@ class _BussinessverificationState extends State<Bussinessverification> {
               child: (extension == 'jpg' || extension == 'png')
                   ? Image.file(filename!, fit: BoxFit.cover)
                   : (extension == 'pdf')
-                  ? const Icon(Icons.picture_as_pdf,
-                  size: 50, color: Colors.red)
-                  : const Icon(Icons.insert_drive_file,
-                  size: 50, color: Colors.blue)),
+                      ? const Icon(Icons.picture_as_pdf,
+                          size: 50, color: Colors.red)
+                      : const Icon(Icons.insert_drive_file,
+                          size: 50, color: Colors.blue)),
         );
       },
     );
@@ -1871,10 +1853,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
             return Stack(
               children: [
                 GestureDetector(
-                  // onTap: () {
-                  //   // print("URL === ${doc.documentUrl}");
-                  //   showImagePreview(size, doc.documentUrl ?? "");
-                  // },
                   onTap: () {
                     if (doc.documentUrl != null) {
                       if (doc.documentUrl!.toLowerCase().endsWith('.pdf')) {
@@ -1919,8 +1897,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                         Future.delayed(const Duration(seconds: 2), () {
                           // After 2 seconds, refresh the page
                           setState(() {
-                            isload =
-                                true; // Hide the circular progress indicator
+                            isload = true; // Hide the circular progress indicator
                             getProfiless();
                           });
                         });
@@ -1967,7 +1944,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
             width: size.width * 0.8,
             child: PDFView(
               filePath: pdfUrl,
-
               autoSpacing: true,
               swipeHorizontal: true,
               onRender: (pages) {
@@ -2758,7 +2734,6 @@ class _document_typeState extends State<document_type> {
           ),
           child: TextButton(
             onPressed: () {
-
               Navigator.pop(context);
               setState(
                 () {},

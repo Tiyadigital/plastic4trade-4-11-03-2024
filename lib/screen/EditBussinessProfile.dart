@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names, depend_on_referenced_packages
 
 import 'dart:io' as io;
 import 'dart:io' show Platform;
@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
 import '../constroller/GetBussinessTypeController.dart';
-import '../model/common.dart';
 import 'Bussinessinfo.dart';
 
 class EditBussinessProfile extends StatefulWidget {
@@ -73,8 +72,6 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
 
   io.File? file;
 
-  //enum FavoriteMethod { flutter, kotlin, swift, reactNative }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -95,10 +92,8 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
     constanst.bt_data = bt.getBussiness_Type();
 
     constanst.bt_data!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.btype_data.add(item);
-        }
+      for (var item in value) {
+        constanst.btype_data.add(item);
       }
     });
 
@@ -139,7 +134,7 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0xFFDADADA),
+      backgroundColor: const Color(0xFFDADADA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -166,874 +161,873 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
           ? SingleChildScrollView(
               child: Column(
               children: [
-                Container(
-                    child: Column(
+                Column(
                   children: [
-                    Form(
-                        key: _formKey,
-                        child: Container(
-                            // height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(children: [
-                              SafeArea(
-                                top: true,
-                                left: true,
-                                right: true,
-                                maintainBottomViewPadding: true,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 18.0, 25.0, 10.0),
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _usernm,
-                                        keyboardType: TextInputType.name,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"[a-zA-Z]+|\s"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(30)
-                                        ],
-                                        decoration: InputDecoration(
-                                          // labelText: 'Your Name*',
-                                          // labelStyle: TextStyle(color: Colors.red),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'User Name *',
-                                          hintStyle: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')
-                                              .copyWith(color: Colors.black45),
+                Form(
+                    key: _formKey,
+                    child: SizedBox(
+                        // height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(children: [
+                          SafeArea(
+                            top: true,
+                            left: true,
+                            right: true,
+                            maintainBottomViewPadding: true,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 18.0, 25.0, 10.0),
+                                  child: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _usernm,
+                                    keyboardType: TextInputType.name,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"[a-zA-Z]+|\s"),
+                                      ),
+                                      LengthLimitingTextInputFormatter(30)
+                                    ],
+                                    decoration: InputDecoration(
+                                      // labelText: 'Your Name*',
+                                      // labelStyle: TextStyle(color: Colors.red),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'User Name *',
+                                      hintStyle: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
 
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color1),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color1),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color1),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                        ),
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Enter Your Name');
-                                            setState(() {
-                                              _color1 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color1 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Enter Your Name');
-                                            setState(() {
-                                              _color1 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color1 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color1),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color1),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color1),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                    ),
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Enter Your Name');
+                                        setState(() {
+                                          _color1 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color1 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Enter Your Name');
+                                        setState(() {
+                                          _color1 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color1 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 0.0, 25.0, 10.0),
+                                  child: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _userbussnm,
+                                    keyboardType: TextInputType.name,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"[a-zA-Z]+|\s"),
+                                      ),
+                                      LengthLimitingTextInputFormatter(30)
+                                    ],
+                                    decoration: InputDecoration(
+                                      // labelText: 'Your Name*',
+                                      // labelStyle: TextStyle(color: Colors.red),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Business Name*',
+                                      hintStyle: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
+
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color2),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color2),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color2),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+
+                                    ),
+
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance
+                                            .focusManager.primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Enter Your Business Name');
+                                        setState(() {
+                                          _color2 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color2 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance
+                                            .focusManager.primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Enter Your Name');
+                                        setState(() {
+                                          _color2 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color2 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 0.0, 25.0, 10.0),
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _userbussnature,
+                                    keyboardType: TextInputType.name,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"[a-zA-Z]+|\s"),
+                                      ),
+                                    ],
+                                    onTap: () async {
+                                      setState(() {});
+                                      final connectivityResult =
+                                          await Connectivity()
+                                              .checkConnectivity();
+
+                                      if (connectivityResult ==
+                                          ConnectivityResult.none) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Internet Connection not available');
+                                      } else {
+                                        ViewItem(context);
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Nature Of Business *',
+                                      hintStyle: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color4),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color4),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color4),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),),
+                                    ),
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Enter Nature Of Business');
+                                        setState(() {
+                                          _color4 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color4 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Nature Of Business');
+                                        setState(() {
+                                          _color4 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color4 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 0.0, 25.0, 5.0),
+                                  child: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _userloc,
+                                    keyboardType: TextInputType.name,
+                                    style: const TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf',
+                                    ),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"[a-zA-Z]+|\s"),
+                                      ),
+                                    ],
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Location/ Address/ City*',
+                                      hintStyle: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf',
+                                      ).copyWith(color: Colors.black45),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color5),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color5),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color5),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 0.0, 25.0, 10.0),
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _userbussnm,
-                                        keyboardType: TextInputType.name,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"[a-zA-Z]+|\s"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(30)
-                                        ],
-                                        decoration: InputDecoration(
-                                          // labelText: 'Your Name*',
-                                          // labelStyle: TextStyle(color: Colors.red),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'Business Name*',
-                                          hintStyle: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')
-                                              .copyWith(color: Colors.black45),
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Enter Your Location');
+                                        setState(() {
+                                          _color5 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color5 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                    onTap: () async {
+                                      var place =
+                                          await PlacesAutocomplete.show(
+                                        context: context,
+                                        apiKey: googleApikey,
+                                        mode: Mode.overlay,
+                                        types: ['establishment', 'geocode'],
+                                        // types: ['geocode', 'ADDRESS'],
 
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color2),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color2),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color2),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-
-                                        ),
-
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Your Business Name');
-                                            setState(() {
-                                              _color2 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color2 = Colors.green.shade600;
-                                            });
-                                          }
+                                        strictbounds: false,
+                                        onError: (err) {
                                         },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Enter Your Name');
-                                            setState(() {
-                                              _color2 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color2 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 0.0, 25.0, 10.0),
-                                      child: TextFormField(
-                                        readOnly: true,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _userbussnature,
-                                        keyboardType: TextInputType.name,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"[a-zA-Z]+|\s"),
-                                          ),
-                                        ],
-                                        onTap: () async {
+                                      );
+
+                                      if (place != null) {
+                                        setState(() {
+                                          location =
+                                              place.description.toString();
+                                          _userloc.text = location;
+                                          _color5 = Colors.green.shade600;
                                           setState(() {});
-                                          final connectivityResult =
-                                              await Connectivity()
-                                                  .checkConnectivity();
+                                        });
 
-                                          if (connectivityResult ==
-                                              ConnectivityResult.none) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Internet Connection not available');
-                                          } else {
-                                            ViewItem(context);
-                                          }
-                                        },
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'Nature Of Business *',
-                                          hintStyle: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')
-                                              .copyWith(color: Colors.black45),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color4),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color4),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color4),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),),
-                                        ),
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Nature Of Business');
-                                            setState(() {
-                                              _color4 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color4 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Nature Of Business');
-                                            setState(() {
-                                              _color4 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color4 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 0.0, 25.0, 5.0),
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _userloc,
-                                        keyboardType: TextInputType.name,
-                                        style: const TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                          fontFamily:
-                                              'assets/fonst/Metropolis-Black.otf',
-                                        ),
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"[a-zA-Z]+|\s"),
-                                          ),
-                                        ],
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: 'Location/ Address/ City*',
-                                          hintStyle: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf',
-                                          ).copyWith(color: Colors.black45),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color5),
+                                        final plist = GoogleMapsPlaces(
+                                          apiKey: googleApikey,
+                                          apiHeaders:
+                                              await const GoogleApiHeaders()
+                                                  .getHeaders(),
+                                        );
+                                        String placeid =
+                                            place.placeId ?? "0";
+                                        final detail = await plist
+                                            .getDetailsByPlaceId(placeid);
+
+                                        final geometry =
+                                            detail.result.geometry!;
+                                        lat = geometry.location.lat;
+                                        log = geometry.location.lng;
+                                      }
+                                    },
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance.focusManager
+                                            .primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Enter Your Location');
+                                        setState(() {
+                                          _color5 = Colors.red;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _color5 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                        height: 55,
+                                        //width: 130,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                width: 1,
+                                                color: Colors.grey),
                                             borderRadius:
-                                                BorderRadius.circular(15.0),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color5),
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color5),
-                                            borderRadius:
-                                                BorderRadius.circular(15.0),
-                                          ),
-                                        ),
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Your Location');
-                                            setState(() {
-                                              _color5 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color5 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                        onTap: () async {
-                                          var place =
-                                              await PlacesAutocomplete.show(
-                                            context: context,
-                                            apiKey: googleApikey,
-                                            mode: Mode.overlay,
-                                            types: ['establishment', 'geocode'],
-                                            // types: ['geocode', 'ADDRESS'],
-
-                                            strictbounds: false,
-                                            onError: (err) {
-                                            },
-                                          );
-
-                                          if (place != null) {
-                                            setState(() {
-                                              location =
-                                                  place.description.toString();
-                                              _userloc.text = location;
-                                              _color5 = Colors.green.shade600;
-                                              setState(() {});
-                                            });
-
-                                            final plist = GoogleMapsPlaces(
-                                              apiKey: googleApikey,
-                                              apiHeaders:
-                                                  await GoogleApiHeaders()
-                                                      .getHeaders(),
-                                            );
-                                            String placeid =
-                                                place.placeId ?? "0";
-                                            final detail = await plist
-                                                .getDetailsByPlaceId(placeid);
-
-                                            final geometry =
-                                                detail.result.geometry!;
-                                            lat = geometry.location.lat;
-                                            log = geometry.location.lng;
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance.focusManager
-                                                .primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Enter Your Location');
-                                            setState(() {
-                                              _color5 = Colors.red;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              _color5 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                            height: 55,
-                                            //width: 130,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 1,
-                                                    color: Colors.grey),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                color: Colors.white),
-                                            margin: const EdgeInsets.fromLTRB(
-                                                28.0, 5.0, 5.0, 10.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              //mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Container(
-                                                    height: 57,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 2),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 1,
-                                                          color:
-                                                              Colors.black26),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                    ),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        _onPressedShowBottomSheet();
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Image.asset(
-                                                            country1!.flag,
-                                                            package:
-                                                                countryCodePackageName,
-                                                            width: 30,
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 16,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 2,
-                                                          ),
-                                                          Text(
-                                                            country1
-                                                                .callingCode,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        15),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                        ],
+                                                BorderRadius.circular(10.0),
+                                            color: Colors.white),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            28.0, 5.0, 5.0, 10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          //mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                                height: 57,
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        left: 2),
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color:
+                                                          Colors.black26),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _onPressedShowBottomSheet();
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      const SizedBox(
+                                                        width: 5,
                                                       ),
-                                                    )),
-                                              ],
-                                            )),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                left: 0.0,
-                                                right: 25,
-                                                bottom: 5.0),
-                                            child: TextFormField(
-                                              // controller: _usernm,
-                                              controller: _bussmbl,
-                                              style: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf'),
-                                              inputFormatters: [
-                                                LengthLimitingTextInputFormatter(
-                                                    11),
-                                              ],
+                                                      Image.asset(
+                                                        country1!.flag,
+                                                        package:
+                                                            countryCodePackageName,
+                                                        width: 30,
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 16,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                      Text(
+                                                        country1
+                                                            .callingCode,
+                                                        textAlign: TextAlign
+                                                            .center,
+                                                        style:
+                                                            const TextStyle(
+                                                                fontSize:
+                                                                    15),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
+                                          ],
+                                        )),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 0.0,
+                                            right: 25,
+                                            bottom: 5.0),
+                                        child: TextFormField(
+                                          // controller: _usernm,
+                                          controller: _bussmbl,
+                                          style: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf'),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(
+                                                11),
+                                          ],
 
-                                              keyboardType: TextInputType.phone,
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                // labelText: 'Your phone *',
-                                                // labelStyle: TextStyle(color: Colors.red),
-                                                filled: true,
-                                                fillColor: Colors.white,
-                                                hintText: "Bussiness Moblie",
-                                                hintStyle: const TextStyle(
-                                                        fontSize: 15.0,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Colors.black,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf')
-                                                    .copyWith(
-                                                        color: Colors.black45),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            width: 1,
-                                                            color: _color6),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    10.0)),
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        width: 1,
-                                                        color: _color6),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            width: 1,
-                                                            color: _color6),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    10.0)),
-                                              ),
-                                              /*   validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          'Please Your Bussiness Mobile Number');
-                                                } else {
-                                                  // setState(() {
-                                                  _color2 =
-                                                      Colors.green.shade600;
-                                                  //});
-                                                }
-
-                                                return null;
-                                              },*/
-                                              onFieldSubmitted: (value) {
-                                                var numValue = value.length;
-                                                if (numValue >= 6 &&
-                                                    numValue < 12) {
-                                                  _color6 =
-                                                      Colors.green.shade600;
-                                                } else {
-                                                  _color6 = Colors.red;
-                                                  WidgetsBinding
-                                                      .instance
-                                                      .focusManager
-                                                      .primaryFocus
-                                                      ?.unfocus();
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          'Please Enter Correct Number');
-                                                }
-                                              },
-                                              onChanged: (value) {
-                                                if (value.isEmpty) {
-                                                  WidgetsBinding
-                                                      .instance
-                                                      .focusManager
-                                                      .primaryFocus
-                                                      ?.unfocus();
-                                                  Fluttertoast.showToast(
-                                                      msg:
-                                                          'Please Add Correct Mobile Numbe');
-                                                  setState(() {
-                                                    _color6 = Colors.red;
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    _color6 =
-                                                        Colors.green.shade600;
-                                                  });
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          25.0, 0.0, 25.0, 5.0),
-                                      child: TextFormField(
-                                        controller: _bussemail,
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        decoration: InputDecoration(
-                                          // labelText: 'Your email *',
-                                          // labelStyle: TextStyle(color: Colors.red),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: "Bussiness Email",
-                                          hintStyle: TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')
-                                              .copyWith(color: Colors.black45),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color7),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color7),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color7),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                        ),
-                                        /*  validator: (value) {
-                                          // if (!EmailValidator.validate(value!)) {
-                                          //   return 'Please enter a valid email';
-                                          // }
-                                          if (value!.isEmpty) {
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Your Email');
-                                          } else {
-                                            // setState(() {
-                                            //_color3 = Colors.green.shade600;
-                                            //});
-                                          }
-                                          return null;
-                                        },*/
-                                        onFieldSubmitted: (value) {
-                                          if (!EmailValidator.validate(value)) {
-                                            _color7 = Colors.red;
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please enter a valid email');
-                                            setState(() {});
-                                          } else if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg: 'Please Your Email');
-                                            setState(() {
-                                              _color7 = Colors.red;
-                                            });
-                                          } else if (value.isNotEmpty) {
-                                            setState(() {
-                                              _color7 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 5.0, 25.0, 5.0),
-                                      child: TextFormField(
-                                        controller: _bussweb,
-                                        keyboardType: TextInputType.text,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        decoration: InputDecoration(
-                                          // labelText: 'Your email *',
-                                          // labelStyle: TextStyle(color: Colors.red),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          hintText: "Website",
-                                          hintStyle: const TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')
-                                              .copyWith(color: Colors.black45),
-
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 1, color: _color8),
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0)),
-                                        ),
-                                        onFieldSubmitted: (value) {
-                                          if (value != '') {
-                                            setState(() {
-                                              _color8 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          25.0, 5.0, 25.0, 10.0),
-                                      child: TextFormField(
-                                        controller: _bussabout,
-                                        keyboardType: TextInputType.multiline,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        maxLength: 2000,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        maxLines: 4,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                            hintText: "About Bussiness",
+                                          keyboardType: TextInputType.phone,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          textInputAction:
+                                              TextInputAction.next,
+                                          decoration: InputDecoration(
+                                            // labelText: 'Your phone *',
+                                            // labelStyle: TextStyle(color: Colors.red),
                                             filled: true,
                                             fillColor: Colors.white,
+                                            hintText: "Bussiness Moblie",
                                             hintStyle: const TextStyle(
                                                     fontSize: 15.0,
-                                                    fontWeight: FontWeight.w400,
+                                                    fontWeight:
+                                                        FontWeight.w400,
                                                     color: Colors.black,
                                                     fontFamily:
                                                         'assets/fonst/Metropolis-Black.otf')
                                                 .copyWith(
                                                     color: Colors.black45),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 1, color: _color9),
-                                                borderRadius: BorderRadius.circular(
-                                                    10.0)),
+                                            enabledBorder:
+                                                OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        width: 1,
+                                                        color: _color6),
+                                                    borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                                10.0)),
                                             border: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                    width: 1, color: _color9),
+                                                    width: 1,
+                                                    color: _color6),
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         10.0)),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: 1, color: _color9),
-                                                borderRadius: BorderRadius.circular(10.0))
+                                            focusedBorder:
+                                                OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        width: 1,
+                                                        color: _color6),
+                                                    borderRadius:
+                                                        BorderRadius
+                                                            .circular(
+                                                                10.0)),
+                                          ),
+                                          /*   validator: (value) {
+                                            if (value!.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Your Bussiness Mobile Number');
+                                            } else {
+                                              // setState(() {
+                                              _color2 =
+                                                  Colors.green.shade600;
+                                              //});
+                                            }
 
-                                            //errorText: _validusernm ? 'Name is not empty' : null),
-                                            ),
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            WidgetsBinding.instance
-                                                .focusManager.primaryFocus
-                                                ?.unfocus();
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Please Your About Bussiness');
-                                            setState(() {
-                                              _color9 = Colors.red;
-                                            });
-                                          } else if (value.isNotEmpty) {
-                                            setState(() {
-                                              _color9 = Colors.green.shade600;
-                                            });
-                                          }
-                                        },
+                                            return null;
+                                          },*/
+                                          onFieldSubmitted: (value) {
+                                            var numValue = value.length;
+                                            if (numValue >= 6 &&
+                                                numValue < 12) {
+                                              _color6 =
+                                                  Colors.green.shade600;
+                                            } else {
+                                              _color6 = Colors.red;
+                                              WidgetsBinding
+                                                  .instance
+                                                  .focusManager
+                                                  .primaryFocus
+                                                  ?.unfocus();
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Enter Correct Number');
+                                            }
+                                          },
+                                          onChanged: (value) {
+                                            if (value.isEmpty) {
+                                              WidgetsBinding
+                                                  .instance
+                                                  .focusManager
+                                                  .primaryFocus
+                                                  ?.unfocus();
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      'Please Add Correct Mobile Numbe');
+                                              setState(() {
+                                                _color6 = Colors.red;
+                                              });
+                                            } else {
+                                              setState(() {
+                                                _color6 =
+                                                    Colors.green.shade600;
+                                              });
+                                            }
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          1.2,
-                                      height: 60,
-                                      margin: EdgeInsets.all(20.0),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(50.0),
-                                          color:
-                                              Color.fromARGB(255, 0, 91, 148)),
-                                      child: TextButton(
-                                        onPressed: () {
-                                          vaild_data();
-
-                                          setState(() {});
-                                        },
-                                        child: Text('Update',
-                                            style: TextStyle(
-                                                fontSize: 19.0,
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.white,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf')),
-                                      ),
-                                    ),
+                                    )
                                   ],
                                 ),
-                              )
-                            ]))),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 0.0, 25.0, 5.0),
+                                  child: TextFormField(
+                                    controller: _bussemail,
+                                    keyboardType:
+                                        TextInputType.emailAddress,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textInputAction: TextInputAction.next,
+                                    decoration: InputDecoration(
+                                      // labelText: 'Your email *',
+                                      // labelStyle: TextStyle(color: Colors.red),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: "Business Email",
+                                      hintStyle: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color7),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color7),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color7),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                    ),
+                                    /*  validator: (value) {
+                                      // if (!EmailValidator.validate(value!)) {
+                                      //   return 'Please enter a valid email';
+                                      // }
+                                      if (value!.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Your Email');
+                                      } else {
+                                        // setState(() {
+                                        //_color3 = Colors.green.shade600;
+                                        //});
+                                      }
+                                      return null;
+                                    },*/
+                                    onFieldSubmitted: (value) {
+                                      if (!EmailValidator.validate(value)) {
+                                        _color7 = Colors.red;
+                                        WidgetsBinding.instance
+                                            .focusManager.primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please enter a valid email');
+                                        setState(() {});
+                                      } else if (value.isEmpty) {
+                                        WidgetsBinding.instance
+                                            .focusManager.primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg: 'Please Your Email');
+                                        setState(() {
+                                          _color7 = Colors.red;
+                                        });
+                                      } else if (value.isNotEmpty) {
+                                        setState(() {
+                                          _color7 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 5.0),
+                                  child: TextFormField(
+                                    controller: _bussweb,
+                                    keyboardType: TextInputType.text,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textInputAction: TextInputAction.next,
+                                    decoration: InputDecoration(
+                                      // labelText: 'Your email *',
+                                      // labelStyle: TextStyle(color: Colors.red),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: "Website",
+                                      hintStyle: const TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf')
+                                          .copyWith(color: Colors.black45),
+
+                                      enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color8),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color8),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 1, color: _color8),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0)),
+                                    ),
+                                    onFieldSubmitted: (value) {
+                                      if (value != '') {
+                                        setState(() {
+                                          _color8 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      25.0, 5.0, 25.0, 10.0),
+                                  child: TextFormField(
+                                    controller: _bussabout,
+                                    keyboardType: TextInputType.multiline,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    maxLength: 2000,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    maxLines: 4,
+                                    textInputAction: TextInputAction.done,
+                                    decoration: InputDecoration(
+                                        hintText: "About Bussiness",
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        hintStyle: const TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(
+                                                color: Colors.black45),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color9),
+                                            borderRadius: BorderRadius.circular(
+                                                10.0)),
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color9),
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                                    10.0)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 1, color: _color9),
+                                            borderRadius: BorderRadius.circular(10.0))
+
+                                        //errorText: _validusernm ? 'Name is not empty' : null),
+                                        ),
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        WidgetsBinding.instance
+                                            .focusManager.primaryFocus
+                                            ?.unfocus();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                'Please Your About Bussiness');
+                                        setState(() {
+                                          _color9 = Colors.red;
+                                        });
+                                      } else if (value.isNotEmpty) {
+                                        setState(() {
+                                          _color9 = Colors.green.shade600;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width *
+                                      1.2,
+                                  height: 60,
+                                  margin: const EdgeInsets.all(20.0),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 1),
+                                      borderRadius:
+                                          BorderRadius.circular(50.0),
+                                      color:
+                                          const Color.fromARGB(255, 0, 91, 148)),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      vaild_data();
+
+                                      setState(() {});
+                                    },
+                                    child: const Text('Update',
+                                        style: TextStyle(
+                                            fontSize: 19.0,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-Black.otf')),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ]))),
                   ],
-                )),
+                ),
               ],
             ))
           : Center(
               child: Platform.isAndroid
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                       value: null,
                       strokeWidth: 2.0,
                       color: Color.fromARGB(255, 0, 91, 148),
                     )
                   : Platform.isIOS
-                      ? CupertinoActivityIndicator(
+                      ? const CupertinoActivityIndicator(
                           color: Color.fromARGB(255, 0, 91, 148),
                           radius: 20,
                           animating: true,
@@ -1242,12 +1236,12 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   }
 
   getProfiless() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
 
     var res = await getbussinessprofile(
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
     );
 
     // print("GET PROFILE RESPONSE  === $res");
@@ -1286,11 +1280,11 @@ class _EditBussinessProfileState extends State<EditBussinessProfile> {
   }
 
   Future<bool> updateUserBusiness_Profile() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await updateUserBusinessProfile(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
         _userbussnm.text.toString(),
         constanst.select_Bussiness_nature.toString(),
         _userloc.text.toString(),

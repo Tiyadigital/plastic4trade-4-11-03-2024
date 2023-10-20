@@ -435,7 +435,7 @@ class _TypeState extends State<Type> {
     var res = await addtype(
         pref.getString('user_id').toString(),
         pref.getString('api_token').toString(),
-        Stringtype,
+        Stringtype.trim(),
         constanst.step.toString());
 
 

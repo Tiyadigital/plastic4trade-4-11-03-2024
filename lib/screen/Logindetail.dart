@@ -1,22 +1,18 @@
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:country_calling_code_picker/country_code_picker.dart';
+
+import 'package:country_calling_code_picker/picker.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:country_calling_code_picker/picker.dart';
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/country_code_picker.dart';
-import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../api/api_interface.dart';
-import '../model/common.dart';
-import '../model/getUserProfile.dart';
-import '../widget/MainScreen.dart';
-import 'Bussinessinfo.dart';
 
 class LoginDetail extends StatefulWidget {
   const LoginDetail({Key? key}) : super(key: key);
@@ -26,16 +22,14 @@ class LoginDetail extends StatefulWidget {
 }
 
 class _LoginDetailState extends State<LoginDetail> {
-  var _formKey = GlobalKey<FormState>();
-  TextEditingController _bussmbl = TextEditingController();
-  TextEditingController _bussemail = TextEditingController();
-  TextEditingController _currentpass = TextEditingController();
-  TextEditingController _newpass = TextEditingController();
-  TextEditingController _confirpass = TextEditingController();
-  TextEditingController _mblotp = TextEditingController();
-  TextEditingController _emailotp = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _bussmbl = TextEditingController();
+  final TextEditingController _bussemail = TextEditingController();
+  final TextEditingController _newpass = TextEditingController();
+  final TextEditingController _confirpass = TextEditingController();
+  final TextEditingController _mblotp = TextEditingController();
+  final TextEditingController _emailotp = TextEditingController();
   bool _isValid = false;
-  bool _passwordVisible = false;
   bool _cpasswordVisible = false;
   bool _cfrpasswordVisible = false;
   bool isloading1 = false;
@@ -43,14 +37,12 @@ class _LoginDetailState extends State<LoginDetail> {
   Color _color6 = Colors.black45;
   Color _color7 = Colors.black45;
   Color _color1 = Colors.black45;
-  Color _color4 = Colors.black45;
   Color _color5 = Colors.black45;
   Color _color3 = Colors.black45;
 
   int mbl_otp = 0;
   int email_otp = 0;
 
-  Country? _selected;
   bool? otp_sent;
   bool edit_mbl = false, edit_email = false, edit_pass = false;
   String defaultCountryCode = 'IN';
@@ -58,13 +50,13 @@ class _LoginDetailState extends State<LoginDetail> {
   //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry, defaultCountry;
   bool isloading = false;
+  bool isload = false;
   BuildContext? dialogContext;
   bool _isResendButtonEnabled = false;
   bool _isResendButtonEnabled1 = false;
 
   Timer? _timer;
   int _countdown = 30;
-
 
   int _countdown1 = 30;
 
@@ -131,162 +123,177 @@ class _LoginDetailState extends State<LoginDetail> {
   }
 
   getBussinessProfile() async {
-    getUserProfile getprofile = getUserProfile();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    print(_pref.getString('user_id').toString());
-    print(_pref.getString('api_token').toString());
-    var res = await getuser_Profile(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
-    print(res);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var res = await getuser_Profile(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
     if (res['status'] == 1) {
-      getprofile = getUserProfile.fromJson(res);
+      var jsonArray = res['user'];
 
-      var jsonarray = res['user'];
-
-      print(jsonarray['image_url']);
-      email = jsonarray['email'];
-      countrycode = jsonarray['countryCode'];
-      phoneno = jsonarray['phoneno'];
-      print(phoneno); // for (var data in jsonarray) {
+      email = jsonArray['email'];
+      countrycode = jsonArray['countryCode'];
+      phoneno = jsonArray['phoneno'];
       getCountryFromCallingCode(countrycode!);
-      //print();
       setState(() {});
       isloading = true;
-      // buss.add(record);
-      // }
     } else {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
     }
-
-    // setState(() {});
-    // print(constanst.btype_data);
   }
 
   Widget initwidget() {
     final country = _selectedCountry;
     final country1 = defaultCountry;
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: const Color.fromARGB(255, 218, 218, 218),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          elevation: 0,
-          title: const Text('Login Details',
-              softWrap: false,
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Metropolis',
-              )),
-          leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios,
+      resizeToAvoidBottomInset: true,
+      backgroundColor: const Color.fromARGB(255, 218, 218, 218),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
+        title: const Text('Login Details',
+            softWrap: false,
+            style: TextStyle(
+              fontSize: 20.0,
               color: Colors.black,
-            ),
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Metropolis',
+            )),
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
         ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Column(children: [
-            Form(
-                key: _formKey,
-                child: Container(
-                    // height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(bottom: 10.0, top: 20),
-                    child: Column(children: [
-                      SafeArea(
-                        top: true,
-                        left: true,
-                        right: true,
-                        maintainBottomViewPadding: true,
-                        child: isloading
-                            ? Column(
-                                children: [
-                                  Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          20.0, 0.0, 20.0, 10.0),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          5.0, 5.0, 5.0, 5.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border:
-                                            Border.all(color: Colors.black26),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15)),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Column(children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .fromLTRB(
-                                                          0.0, 5.0, 0.0, 0.0),
-                                                      child: Text(
-                                                        'Phone Number               ',
-                                                        style: const TextStyle(
-                                                                fontSize: 15.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets\fonst\Metropolis-Black.otf')
-                                                            ?.copyWith(
-                                                                color: Colors
-                                                                    .black45),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
+              children: [
+                Form(
+                    key: _formKey,
+                    child: Container(
+                        // height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(bottom: 10.0, top: 20),
+                        child: Column(children: [
+                          SafeArea(
+                            top: true,
+                            left: true,
+                            right: true,
+                            maintainBottomViewPadding: true,
+                            child: isloading
+                                ? Column(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20.0, 0.0, 20.0, 10.0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5.0, 5.0, 5.0, 5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border:
+                                              Border.all(color: Colors.black26),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Column(children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                0.0,
+                                                                5.0,
+                                                                0.0,
+                                                                0.0),
+                                                        child: Text(
+                                                          'Phone Number               ',
+                                                          style: const TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-Black.otf')
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black45),
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 3.0,
-                                                  ),
-                                                  Row(
-                                                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 5,
-                                                            ),
-                                                            Image.asset(
-                                                              country1!.flag,
-                                                              package:
-                                                                  countryCodePackageName,
-                                                              width: 30,
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 16,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 2,
-                                                            ),
-                                                            Text(
-                                                              '$countrycode',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                                    const SizedBox(
+                                                      height: 3.0,
+                                                    ),
+                                                    Row(
+                                                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              const SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Image.asset(
+                                                                country1!.flag,
+                                                                package:
+                                                                    countryCodePackageName,
+                                                                width: 30,
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 16,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 2,
+                                                              ),
+                                                              Text(
+                                                                '$countrycode',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                        fontSize:
+                                                                            15.0,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontFamily:
+                                                                            'assets/fonst/Metropolis-Black.otf')
+                                                                    .copyWith(
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 2,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Text(
+                                                              phoneno
+                                                                  .toString(),
                                                               style: const TextStyle(
                                                                       fontSize:
                                                                           15.0,
@@ -296,38 +303,772 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                       color: Colors
                                                                           .black,
                                                                       fontFamily:
-                                                                          'assets\fonst\Metropolis-Black.otf')
-                                                                  ?.copyWith(
+                                                                          'assets/fonst/Metropolis-Black.otf')
+                                                                  .copyWith(
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .w500),
+                                                                              .w500)),
+                                                        ]),
+                                                    const SizedBox(
+                                                      height: 3.0,
+                                                    ),
+                                                  ]),
+                                                  edit_mbl
+                                                      ? Center(
+                                                          child: Align(
+                                                            child: TextButton(
+                                                              child: Text(
+                                                                  'Cancel',
+                                                                  style: const TextStyle(
+                                                                          fontSize:
+                                                                              15.0,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontFamily:
+                                                                              'assets/fonst/Metropolis-Black.otf')
+                                                                      .copyWith(
+                                                                          color:
+                                                                              Colors.red)),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  edit_mbl =
+                                                                      false;
+                                                                });
+                                                              },
                                                             ),
-                                                            const SizedBox(
-                                                              width: 2,
+                                                          ),
+                                                        )
+                                                      : Center(
+                                                          child: Align(
+                                                            child: TextButton(
+                                                              child: const Text(
+                                                                  'Edit'),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  edit_mbl =
+                                                                      true;
+                                                                });
+                                                              },
                                                             ),
-                                                          ],
-                                                        ),
-                                                        Text(phoneno.toString(),
-                                                            style: const TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf')
-                                                                ?.copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500)),
-                                                      ]),
-                                                  const SizedBox(
-                                                    height: 3.0,
-                                                  ),
+                                                          ),
+                                                        )
                                                 ]),
-                                                edit_mbl
+                                            Visibility(
+                                                visible: edit_mbl,
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Container(
+                                                            height: 55,
+                                                            //width: 130,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .black45),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                            margin:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    5.0,
+                                                                    5.0,
+                                                                    5.0,
+                                                                    5.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              //mainAxisSize: MainAxisSize.min,
+                                                              children: [
+                                                                GestureDetector(
+                                                                  child: Row(
+                                                                    children: [
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            5,
+                                                                      ),
+                                                                      Image
+                                                                          .asset(
+                                                                        country!
+                                                                            .flag,
+                                                                        package:
+                                                                            countryCodePackageName,
+                                                                        width:
+                                                                            30,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            16,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            2,
+                                                                      ),
+                                                                      Text(
+                                                                        country
+                                                                            .callingCode,
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                15),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            10,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  onTap: () {
+                                                                    _onPressedShowBottomSheet();
+                                                                  },
+                                                                )
+                                                              ],
+                                                            )),
+                                                        Container(
+                                                          //padding: EdgeInsets.only(bottom: 3.0),
+                                                          height: 57,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width /
+                                                              1.68,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 0.0),
+                                                          child: TextFormField(
+                                                            // controller: _usernm,
+                                                            controller:
+                                                                _bussmbl,
+                                                            style: const TextStyle(
+                                                                fontSize: 15.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf'),
+                                                            inputFormatters: [
+                                                              LengthLimitingTextInputFormatter(
+                                                                  13),
+                                                            ],
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .phone,
+                                                            autovalidateMode:
+                                                                AutovalidateMode
+                                                                    .onUserInteraction,
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .next,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              // labelText: 'Your phone *',
+                                                              // labelStyle: TextStyle(color: Colors.red),
+                                                              filled: true,
+                                                              fillColor:
+                                                                  Colors.white,
+                                                              hintText:
+                                                                  "New Mobile Number",
+                                                              hintStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          15.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf')
+                                                                  .copyWith(
+                                                                      color: Colors
+                                                                          .black45),
+                                                              enabledBorder: OutlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          width:
+                                                                              1,
+                                                                          color:
+                                                                              _color6),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0)),
+                                                              border: OutlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          width:
+                                                                              1,
+                                                                          color:
+                                                                              _color6),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0)),
+                                                              focusedBorder: OutlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          width:
+                                                                              1,
+                                                                          color:
+                                                                              _color6),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0)),
+                                                            ),
+                                                            onFieldSubmitted:
+                                                                (value) {
+                                                              var numValue =
+                                                                  value.length;
+                                                              if (numValue >=
+                                                                      6 &&
+                                                                  numValue <
+                                                                      13) {
+                                                                _color6 = Colors
+                                                                    .green
+                                                                    .shade600;
+                                                              } else {
+                                                                _color6 =
+                                                                    Colors.red;
+                                                                WidgetsBinding
+                                                                    .instance
+                                                                    .focusManager
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Please Enter Correct Number');
+                                                              }
+                                                            },
+                                                            onChanged: (value) {
+                                                              if (value
+                                                                  .isEmpty) {
+                                                                WidgetsBinding
+                                                                    .instance
+                                                                    .focusManager
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            'Please Your Mobile Number');
+                                                                setState(() {
+                                                                  _color6 =
+                                                                      Colors
+                                                                          .red;
+                                                                });
+                                                              } else {
+                                                                setState(() {
+                                                                  _color6 = Colors
+                                                                      .green
+                                                                      .shade600;
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    mbl_otp == 1
+                                                        ? Column(
+                                                            children: [
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    1.2,
+                                                                height: 60,
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        20.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            1),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50.0),
+                                                                    color: const Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            91,
+                                                                            148)
+                                                                        .withOpacity(
+                                                                            0.8)),
+                                                                // Set the height of the container
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: _isResendButtonEnabled &&
+                                                                        _countdown !=
+                                                                            0
+                                                                    ? Text(
+                                                                        '0:$_countdown',
+                                                                        style:
+                                                                            const TextStyle(
+                                                                          fontSize:
+                                                                              15.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontFamily:
+                                                                              'assets/fonst/Metropolis-Black.otf',
+                                                                        ).copyWith(
+                                                                                fontWeight: FontWeight.w800,
+                                                                                fontSize: 17),
+                                                                      )
+                                                                    : TextButton(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          /*Navigator.push(
+                                                            context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
+
+                                                                          var numValue = _bussmbl
+                                                                              .text
+                                                                              .length;
+                                                                          WidgetsBinding
+                                                                              .instance
+                                                                              .focusManager
+                                                                              .primaryFocus
+                                                                              ?.unfocus();
+                                                                          if (_bussmbl
+                                                                              .text
+                                                                              .isEmpty) {
+                                                                            setState(() {
+                                                                              _color6 = Colors.red;
+                                                                              Fluttertoast.showToast(msg: 'Please Your Mobile Number');
+                                                                            });
+                                                                          } else if (numValue >= 6 &&
+                                                                              numValue < 13) {
+                                                                            _color6 =
+                                                                                Colors.green.shade600;
+                                                                            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+
+                                                                            _onLoading();
+                                                                            await update_phone().then((value) {
+                                                                              Navigator.of(dialogContext!).pop();
+                                                                              if (value) {
+                                                                                /* Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
+
+                                                                                _startTimer();
+                                                                              } else {
+                                                                                /*  Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
+                                                                              }
+                                                                            });
+                                                                            isloading1 =
+                                                                                false;
+                                                                          } else {
+                                                                            _color6 =
+                                                                                Colors.red;
+
+                                                                            Fluttertoast.showToast(msg: 'Please Enter Correct Number');
+                                                                          }
+                                                                          setState(
+                                                                              () {});
+                                                                        },
+                                                                        child: const Text(
+                                                                            'Resend OTP',
+                                                                            style: TextStyle(
+                                                                                fontSize: 19.0,
+                                                                                fontWeight: FontWeight.w800,
+                                                                                color: Colors.white,
+                                                                                fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+                                                                      ),
+                                                              ),
+                                                              Container(
+                                                                margin: const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    25.0,
+                                                                    0.0,
+                                                                    25.0,
+                                                                    0.0),
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller:
+                                                                      _mblotp,
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          15.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf'),
+                                                                  autovalidateMode:
+                                                                      AutovalidateMode
+                                                                          .onUserInteraction,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
+                                                                  textInputAction:
+                                                                      TextInputAction
+                                                                          .next,
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    hintText:
+                                                                        "Enter OTP",
+                                                                    hintStyle: const TextStyle(
+                                                                        fontSize:
+                                                                            15.0,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontFamily:
+                                                                            'assets/fonst/Metropolis-Black.otf'),
+                                                                    enabledBorder: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    border: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    //errorText: _validusernm ? 'Name is not empty' : null),
+                                                                  ),
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
+                                                                      _color1 =
+                                                                          Colors
+                                                                              .red;
+                                                                      //return 'Enter a otp!';
+                                                                    } else {
+                                                                      // setState(() {
+                                                                      _color1 = Colors
+                                                                          .green
+                                                                          .shade600;
+                                                                      // });
+                                                                    }
+                                                                    return null;
+                                                                  },
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    if (value
+                                                                        .isEmpty) {
+                                                                      WidgetsBinding
+                                                                          .instance
+                                                                          .focusManager
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                              msg: 'Please Enter otp');
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 =
+                                                                            Colors.red;
+                                                                      });
+                                                                    } else {
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 = Colors
+                                                                            .green
+                                                                            .shade600;
+                                                                      });
+                                                                    }
+                                                                  },
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    1.2,
+                                                                height: 60,
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        20.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            1),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50.0),
+                                                                    color: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        91,
+                                                                        148)),
+                                                                child:
+                                                                    TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    setState(
+                                                                        () async {
+                                                                      WidgetsBinding
+                                                                          .instance
+                                                                          .focusManager
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                      if (_mblotp
+                                                                          .text
+                                                                          .isEmpty) {
+                                                                        Fluttertoast.showToast(
+                                                                            msg:
+                                                                                "Please Enter OTP");
+                                                                        _color1 =
+                                                                            Colors.red;
+                                                                      } else {
+                                                                        // _onLoading();
+                                                                        await register_mo_verifyotp(
+                                                                                _mblotp.text.toString(),
+                                                                                _bussmbl.text.toString(),
+                                                                                "3")
+                                                                            .then((value) {
+                                                                          Navigator.of(dialogContext!)
+                                                                              .pop();
+                                                                          if (value) {}
+                                                                        });
+
+                                                                        isloading1 =
+                                                                            false;
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  child: const Text(
+                                                                      'Verify',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              19.0,
+                                                                          fontWeight: FontWeight
+                                                                              .w800,
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontFamily:
+                                                                              'assets/fonst/Metropolis-Black.otf')),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                1.2,
+                                                            height: 60,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(20.0),
+                                                            decoration: BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                        width:
+                                                                            1),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50.0),
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    91,
+                                                                    148)),
+                                                            child: TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                /*Navigator.push(
+                                                            context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
+
+                                                                var numValue =
+                                                                    _bussmbl
+                                                                        .text
+                                                                        .length;
+                                                                WidgetsBinding
+                                                                    .instance
+                                                                    .focusManager
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                                if (_bussmbl
+                                                                    .text
+                                                                    .isEmpty) {
+                                                                  setState(() {
+                                                                    _color6 =
+                                                                        Colors
+                                                                            .red;
+                                                                    Fluttertoast
+                                                                        .showToast(
+                                                                            msg:
+                                                                                'Please Your Mobile Number');
+                                                                  });
+                                                                } else if (numValue >=
+                                                                        6 &&
+                                                                    numValue <
+                                                                        13) {
+                                                                  _color6 = Colors
+                                                                      .green
+                                                                      .shade600;
+                                                                  WidgetsBinding
+                                                                      .instance
+                                                                      .focusManager
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+
+                                                                  _onLoading();
+                                                                  await update_phone()
+                                                                      .then(
+                                                                          (value) {
+                                                                    Navigator.of(
+                                                                            dialogContext!)
+                                                                        .pop();
+                                                                    if (value) {
+                                                                      /* Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
+
+                                                                      _startTimer();
+                                                                    } else {
+                                                                      /*  Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
+                                                                    }
+                                                                  });
+                                                                  isloading1 =
+                                                                      false;
+                                                                } else {
+                                                                  _color6 =
+                                                                      Colors
+                                                                          .red;
+
+                                                                  Fluttertoast
+                                                                      .showToast(
+                                                                          msg:
+                                                                              'Please Enter Correct Number');
+                                                                }
+                                                                setState(() {});
+                                                              },
+                                                              child: const Text(
+                                                                  'Send OTP',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          19.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf')),
+                                                            ),
+                                                          ),
+                                                  ],
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20.0, 0.0, 20.0, 10.0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5.0, 5.0, 5.0, 5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border:
+                                              Border.all(color: Colors.black26),
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: Column(children: [
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                IntrinsicWidth(
+                                                    child: Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                10.0,
+                                                                5.0,
+                                                                0.0,
+                                                                0.0),
+                                                        child: Text(
+                                                          'Email Address',
+                                                          style: const TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-Black.otf')
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .black45),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          10.0, 2.0, 0.0, 2.0),
+                                                      child: Text(
+                                                          email.toString(),
+                                                          style: const TextStyle(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-Black.otf')
+                                                              .copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500)),
+                                                    )
+                                                  ],
+                                                )),
+                                                edit_email
                                                     ? Center(
                                                         child: Align(
                                                           child: TextButton(
@@ -342,13 +1083,13 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         color: Colors
                                                                             .black,
                                                                         fontFamily:
-                                                                            'assets\fonst\Metropolis-Black.otf')
-                                                                    ?.copyWith(
+                                                                            'assets/fonst/Metropolis-Black.otf')
+                                                                    .copyWith(
                                                                         color: Colors
                                                                             .red)),
                                                             onPressed: () {
                                                               setState(() {
-                                                                edit_mbl =
+                                                                edit_email =
                                                                     false;
                                                               });
                                                             },
@@ -362,7 +1103,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 'Edit'),
                                                             onPressed: () {
                                                               setState(() {
-                                                                edit_mbl = true;
+                                                                edit_email =
+                                                                    true;
                                                               });
                                                             },
                                                           ),
@@ -370,94 +1112,607 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       )
                                               ]),
                                           Visibility(
-                                              visible: edit_mbl,
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          height: 55,
-                                                          //width: 130,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 1,
+                                              visible: edit_email,
+                                              child: Container(
+                                                margin:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 20, 20, 20),
+                                                child: Column(
+                                                  children: [
+                                                    TextFormField(
+                                                      // controller: _usernm,
+                                                      controller: _bussemail,
+                                                      style: const TextStyle(
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf'),
+
+                                                      keyboardType:
+                                                          TextInputType
+                                                              .emailAddress,
+                                                      autovalidateMode:
+                                                          AutovalidateMode
+                                                              .onUserInteraction,
+                                                      textInputAction:
+                                                          TextInputAction.done,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        // labelText: 'Your phone *',
+                                                        // labelStyle: TextStyle(color: Colors.red),
+                                                        filled: true,
+                                                        fillColor: Colors.white,
+                                                        hintText:
+                                                            "New Email Address",
+                                                        hintStyle: const TextStyle(
+                                                                fontSize: 15.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')
+                                                            .copyWith(
                                                                 color: Colors
                                                                     .black45),
+                                                        enabledBorder:
+                                                            OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color:
+                                                                            _color7),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0)),
+                                                        border: OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                                    width: 1,
+                                                                    color:
+                                                                        _color7),
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        10.0),
-                                                          ),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0,
-                                                                  5.0),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            //mainAxisSize: MainAxisSize.min,
+                                                                        12.0)),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color:
+                                                                            _color7),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0)),
+                                                      ),
+                                                      validator: (value) {
+                                                        if (value!.isEmpty) {
+                                                          //return 'Enter a Email!';
+                                                          _color7 = Colors.red;
+                                                        } else {
+                                                          // setState(() {
+                                                          _color7 = Colors
+                                                              .green.shade600;
+                                                          //});
+                                                        }
+
+                                                        return null;
+                                                      },
+                                                      onFieldSubmitted:
+                                                          (value) {},
+                                                      onChanged: (value) {
+                                                        if (value.isEmpty) {
+                                                          WidgetsBinding
+                                                              .instance
+                                                              .focusManager
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  'Please Your Email');
+                                                          setState(() {
+                                                            _color7 =
+                                                                Colors.red;
+                                                          });
+                                                        } else {
+                                                          setState(() {
+                                                            _color7 = Colors
+                                                                .green.shade600;
+                                                          });
+                                                        }
+                                                      },
+                                                    ),
+                                                    (email_otp == 1)
+                                                        ? Column(
                                                             children: [
-                                                              GestureDetector(
-                                                                child: Row(
-                                                                  children: [
-                                                                    const SizedBox(
-                                                                      width: 5,
-                                                                    ),
-                                                                    Image.asset(
-                                                                      country!
-                                                                          .flag,
-                                                                      package:
-                                                                          countryCodePackageName,
-                                                                      width: 30,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          16,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 2,
-                                                                    ),
-                                                                    Text(
-                                                                      country
-                                                                          .callingCode,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .center,
-                                                                      style: const TextStyle(
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    1.2,
+                                                                height: 60,
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        20.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            1),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50.0),
+                                                                    color: const Color.fromARGB(
+                                                                            255,
+                                                                            0,
+                                                                            91,
+                                                                            148)
+                                                                        .withOpacity(
+                                                                            0.8)),
+                                                                // Set the height of the container
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: (_isResendButtonEnabled1 &&
+                                                                        _countdown1 !=
+                                                                            0)
+                                                                    ? Text(
+                                                                        '0:$_countdown1',
+                                                                        style:
+                                                                            const TextStyle(
                                                                           fontSize:
-                                                                              15),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 10,
-                                                                    ),
-                                                                  ],
+                                                                              15.0,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontFamily:
+                                                                              'assets/fonst/Metropolis-Black.otf',
+                                                                        ).copyWith(
+                                                                                fontWeight: FontWeight.w800,
+                                                                                fontSize: 17),
+                                                                      )
+                                                                    : TextButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          log("_isResendButtonEnabled1 = $_isResendButtonEnabled1");
+                                                                          setState(
+                                                                              () {
+                                                                            _isValid =
+                                                                                EmailValidator.validate(_bussemail.text);
+                                                                            if (!_isValid) {
+                                                                              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                                              Fluttertoast.showToast(msg: 'Enter Proper Email');
+                                                                              _color7 = Colors.red;
+                                                                            } else {
+                                                                              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                                              _onLoading();
+                                                                              update_email().then((value) {
+                                                                                // isloading1=false;
+                                                                                Navigator.of(dialogContext!).pop();
+                                                                                _email_startTimer();
+                                                                              });
+                                                                            }
+                                                                            isloading1 =
+                                                                                false;
+                                                                            Navigator.of(dialogContext!).pop();
+                                                                          });
+                                                                        },
+                                                                        child: const Text(
+                                                                            'Resend OTP',
+                                                                            style: TextStyle(
+                                                                                fontSize: 19.0,
+                                                                                fontWeight: FontWeight.w800,
+                                                                                color: Colors.white,
+                                                                                fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+                                                                      ),
+                                                              ),
+                                                              Container(
+                                                                margin: const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    25.0,
+                                                                    0.0,
+                                                                    25.0,
+                                                                    0.0),
+                                                                child:
+                                                                    TextFormField(
+                                                                  controller:
+                                                                      _emailotp,
+                                                                  style: const TextStyle(
+                                                                      fontSize:
+                                                                          15.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf'),
+                                                                  autovalidateMode:
+                                                                      AutovalidateMode
+                                                                          .onUserInteraction,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
+                                                                  textInputAction:
+                                                                      TextInputAction
+                                                                          .next,
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    hintText:
+                                                                        "Enter OTP",
+                                                                    hintStyle: const TextStyle(
+                                                                        fontSize:
+                                                                            15.0,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontFamily:
+                                                                            'assets/fonst/Metropolis-Black.otf'),
+                                                                    enabledBorder: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    border: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    focusedBorder: OutlineInputBorder(
+                                                                        borderSide: BorderSide(
+                                                                            width:
+                                                                                1,
+                                                                            color:
+                                                                                _color1),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(15.0)),
+                                                                    //errorText: _validusernm ? 'Name is not empty' : null),
+                                                                  ),
+                                                                  validator:
+                                                                      (value) {
+                                                                    if (value!
+                                                                        .isEmpty) {
+                                                                      _color7 =
+                                                                          Colors
+                                                                              .red;
+                                                                      //return 'Enter a otp!';
+                                                                    } else {
+                                                                      // setState(() {
+                                                                      _color1 = Colors
+                                                                          .green
+                                                                          .shade600;
+                                                                      // });
+                                                                    }
+                                                                    return null;
+                                                                  },
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    if (value
+                                                                        .isEmpty) {
+                                                                      WidgetsBinding
+                                                                          .instance
+                                                                          .focusManager
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                              msg: 'Please otp');
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 =
+                                                                            Colors.red;
+                                                                      });
+                                                                    } else {
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 = Colors
+                                                                            .green
+                                                                            .shade600;
+                                                                      });
+                                                                    }
+                                                                  },
+                                                                  onFieldSubmitted:
+                                                                      (value) {
+                                                                    if (value
+                                                                        .isEmpty) {
+                                                                      WidgetsBinding
+                                                                          .instance
+                                                                          .focusManager
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                              msg: 'Please Enter otp');
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 =
+                                                                            Colors.red;
+                                                                      });
+                                                                    } else {
+                                                                      setState(
+                                                                          () {
+                                                                        _color1 = Colors
+                                                                            .green
+                                                                            .shade600;
+                                                                      });
+                                                                    }
+                                                                  },
                                                                 ),
-                                                                onTap: () {
-                                                                  _onPressedShowBottomSheet();
-                                                                },
-                                                              )
+                                                              ),
+                                                              Container(
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    1.2,
+                                                                height: 60,
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        20.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: Border.all(
+                                                                        width:
+                                                                            1),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            50.0),
+                                                                    color: const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        91,
+                                                                        148)),
+                                                                child:
+                                                                    TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    WidgetsBinding
+                                                                        .instance
+                                                                        .focusManager
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                    if (_emailotp
+                                                                        .text
+                                                                        .isEmpty) {
+                                                                      _color1 =
+                                                                          Colors
+                                                                              .red;
+                                                                      Fluttertoast
+                                                                          .showToast(
+                                                                              msg: "Please Enter OTP");
+                                                                    } else {
+                                                                      update_email_verifyotp(
+                                                                              _emailotp.text.toString(),
+                                                                              _bussemail.text.toString(),
+                                                                              "2")
+                                                                          .then((value) {
+                                                                        Navigator.of(dialogContext!)
+                                                                            .pop();
+                                                                      });
+                                                                    }
+                                                                    isloading1 =
+                                                                        false;
+                                                                  },
+                                                                  child: const Text(
+                                                                      'Verify',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              19.0,
+                                                                          fontWeight: FontWeight
+                                                                              .w800,
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontFamily:
+                                                                              'assets/fonst/Metropolis-Black.otf')),
+                                                                ),
+                                                              ),
                                                             ],
-                                                          )),
+                                                          )
+                                                        : Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                1.2,
+                                                            height: 60,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(20.0),
+                                                            decoration: BoxDecoration(
+                                                                border:
+                                                                    Border.all(
+                                                                        width:
+                                                                            1),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50.0),
+                                                                color: const Color
+                                                                        .fromARGB(
+                                                                    255,
+                                                                    0,
+                                                                    91,
+                                                                    148)),
+                                                            child: TextButton(
+                                                              onPressed: () {
+                                                                /*Navigator.push(
+                                                              context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
 
-
-                                                      Container(
-                                                        //padding: EdgeInsets.only(bottom: 3.0),
-                                                        height: 57,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            1.68,
-                                                        margin: const EdgeInsets.only(
-                                                            bottom: 0.0),
+                                                                setState(() {
+                                                                  _isValid = EmailValidator
+                                                                      .validate(
+                                                                          _bussemail
+                                                                              .text);
+                                                                  if (!_isValid) {
+                                                                    WidgetsBinding
+                                                                        .instance
+                                                                        .focusManager
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                    Fluttertoast
+                                                                        .showToast(
+                                                                            msg:
+                                                                                'Enter Proper Email');
+                                                                    _color7 =
+                                                                        Colors
+                                                                            .red;
+                                                                  } else {
+                                                                    WidgetsBinding
+                                                                        .instance
+                                                                        .focusManager
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                    _onLoading();
+                                                                    update_email()
+                                                                        .then(
+                                                                            (value) {
+                                                                      // isloading1=false;
+                                                                      Navigator.of(
+                                                                              dialogContext!)
+                                                                          .pop();
+                                                                      _email_startTimer();
+                                                                      /* if (value) {
+                                                      */ /*Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/ /*
+                                                    } else {
+                                                     */ /* Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/ /*
+                                                    }*/
+                                                                    });
+                                                                  }
+                                                                  isloading1 =
+                                                                      false;
+                                                                  Navigator.of(
+                                                                          dialogContext!)
+                                                                      .pop();
+                                                                });
+                                                              },
+                                                              child: const Text(
+                                                                  'Send OTP',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          19.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf')),
+                                                            ),
+                                                          ),
+                                                  ],
+                                                ),
+                                              )),
+                                        ]),
+                                      ),
+                                      Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              20.0, 0.0, 20.0, 20.0),
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5.0, 5.0, 5.0, 5.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.black26),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(15)),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Column(children: [
+                                                      Image.asset(
+                                                        'assets/password.png',
+                                                        width: 120,
+                                                        height: 40,
+                                                      )
+                                                    ]),
+                                                    edit_pass
+                                                        ? Center(
+                                                            child: Align(
+                                                              child: TextButton(
+                                                                child: Text(
+                                                                    'Cancel',
+                                                                    style: const TextStyle(
+                                                                            fontSize:
+                                                                                15.0,
+                                                                            fontWeight: FontWeight
+                                                                                .w400,
+                                                                            color: Colors
+                                                                                .black,
+                                                                            fontFamily:
+                                                                                'assets/fonst/Metropolis-Black.otf')
+                                                                        .copyWith(
+                                                                            color:
+                                                                                Colors.red)),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    edit_pass =
+                                                                        false;
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : Center(
+                                                            child: Align(
+                                                              child: TextButton(
+                                                                child:
+                                                                    const Text(
+                                                                        'Edit'),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    edit_pass =
+                                                                        true;
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ),
+                                                          )
+                                                  ]),
+                                              Visibility(
+                                                  visible: edit_pass,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                25.0,
+                                                                5.0,
+                                                                25.0,
+                                                                10.0),
                                                         child: TextFormField(
-                                                          // controller: _usernm,
-                                                          controller: _bussmbl,
+                                                          controller: _newpass,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .text,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
                                                           style: const TextStyle(
                                                               fontSize: 15.0,
                                                               fontWeight:
@@ -466,49 +1721,59 @@ class _LoginDetailState extends State<LoginDetail> {
                                                               color:
                                                                   Colors.black,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf'),
-                                                          inputFormatters: [
-                                                            LengthLimitingTextInputFormatter(
-                                                                13),
-                                                          ],
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .phone,
-                                                          autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
+                                                                  'assets/fonst/Metropolis-Black.otf'),
+                                                          obscureText:
+                                                              !_cpasswordVisible,
                                                           textInputAction:
                                                               TextInputAction
                                                                   .next,
                                                           decoration:
                                                               InputDecoration(
-                                                            // labelText: 'Your phone *',
+                                                            // labelText: 'Your Confirm Password',
                                                             // labelStyle: TextStyle(color: Colors.red),
-                                                            filled: true,
-                                                            fillColor:
-                                                                Colors.white,
                                                             hintText:
-                                                                "New Mobile Number",
+                                                                "New Password",
                                                             hintStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf')
-                                                                ?.copyWith(
-                                                                    color: Colors
-                                                                        .black45),
+                                                                fontSize: 15.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf'),
+                                                            suffixIcon:
+                                                                IconButton(
+                                                              icon:
+                                                                  // Based on passwordVisible state choose the icon
+                                                                  _cpasswordVisible
+                                                                      ? Image.asset(
+                                                                          'assets/hidepassword.png')
+                                                                      : Image
+                                                                          .asset(
+                                                                          'assets/Vector.png',
+                                                                          width:
+                                                                              20.0,
+                                                                          height:
+                                                                              20.0,
+                                                                        ),
+                                                              color:
+                                                                  Colors.white,
+                                                              onPressed: () {
+                                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                                setState(() {
+                                                                  _cpasswordVisible =
+                                                                      !_cpasswordVisible;
+                                                                });
+                                                              },
+                                                            ),
                                                             enabledBorder: OutlineInputBorder(
                                                                 borderSide:
                                                                     BorderSide(
                                                                         width:
                                                                             1,
                                                                         color:
-                                                                            _color6),
+                                                                            _color3),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -519,7 +1784,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         width:
                                                                             1,
                                                                         color:
-                                                                            _color6),
+                                                                            _color3),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
@@ -530,1033 +1795,196 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         width:
                                                                             1,
                                                                         color:
-                                                                            _color6),
+                                                                            _color3),
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
                                                                             10.0)),
+                                                            //errorText: _validusernm ? 'Name is not empty' : null),
                                                           ),
-                                                          onFieldSubmitted:
-                                                              (value) {
-                                                            var numValue =
-                                                                value.length;
-                                                            if (numValue >= 6 &&
-                                                                numValue < 13) {
-                                                              _color6 = Colors
+                                                          validator: (value) {
+                                                            if (value!
+                                                                .isEmpty) {
+                                                              _color3 =
+                                                                  Colors.red;
+                                                            } else {
+                                                              _color3 = Colors
                                                                   .green
                                                                   .shade600;
-                                                            } else {
-                                                              _color6 =
-                                                                  Colors.red;
-                                                              WidgetsBinding
-                                                                  .instance
-                                                                  ?.focusManager
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          'Please Enter Correct Number');
                                                             }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
                                                             if (value.isEmpty) {
                                                               WidgetsBinding
                                                                   .instance
-                                                                  ?.focusManager
+                                                                  .focusManager
                                                                   .primaryFocus
                                                                   ?.unfocus();
                                                               Fluttertoast
                                                                   .showToast(
                                                                       msg:
-                                                                          'Please Your Mobile Number');
+                                                                          'Please Enter New Password');
                                                               setState(() {
-                                                                _color6 =
+                                                                _color3 =
                                                                     Colors.red;
                                                               });
                                                             } else {
                                                               setState(() {
-                                                                _color6 = Colors
+                                                                _color3 = Colors
                                                                     .green
                                                                     .shade600;
                                                               });
                                                             }
                                                           },
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  mbl_otp == 1
-                                                      ? Column(
-                                                          children: [
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  1.2,
-                                                              height: 60,
-                                                              margin:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      20.0),
-                                                              decoration: BoxDecoration(
-                                                                  border: Border
-                                                                      .all(
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                25.0,
+                                                                5.0,
+                                                                25.0,
+                                                                10.0),
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _confirpass,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .text,
+                                                          autovalidateMode:
+                                                              AutovalidateMode
+                                                                  .onUserInteraction,
+                                                          style: const TextStyle(
+                                                              fontSize: 15.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontFamily:
+                                                                  'assets/fonst/Metropolis-Black.otf'),
+                                                          obscureText:
+                                                              !_cfrpasswordVisible,
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            // labelText: 'Your Confirm Password',
+                                                            // labelStyle: TextStyle(color: Colors.red),
+                                                            hintText:
+                                                                "Confirm New Password",
+                                                            hintStyle: const TextStyle(
+                                                                fontSize: 15.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf'),
+                                                            suffixIcon:
+                                                                IconButton(
+                                                              icon:
+                                                                  // Based on passwordVisible state choose the icon
+                                                                  _cfrpasswordVisible
+                                                                      ? Image.asset(
+                                                                          'assets/hidepassword.png')
+                                                                      : Image
+                                                                          .asset(
+                                                                          'assets/Vector.png',
                                                                           width:
-                                                                              1),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0),
-                                                                  color: const Color
-                                                                              .fromARGB(
-                                                                          255,
-                                                                          0,
-                                                                          91,
-                                                                          148)
-                                                                      .withOpacity(
-                                                                          0.8)),
-                                                              // Set the height of the container
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: _isResendButtonEnabled &&
-                                                                      _countdown !=
-                                                                          0
-                                                                  ? Text(
-                                                                      '0:$_countdown',
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontFamily:
-                                                                            'assets\fonst\Metropolis-Black.otf',
-                                                                      )?.copyWith(
-                                                                              fontWeight: FontWeight.w800,
-                                                                              fontSize: 17),
-                                                                    )
-                                                                  : TextButton(
-                                                                      onPressed:
-                                                                          () async {
-                                                                        /*Navigator.push(
-                                                            context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
-
-                                                                        var numValue = _bussmbl
-                                                                            .text
-                                                                            .length;
-                                                                        WidgetsBinding
-                                                                            .instance
-                                                                            ?.focusManager
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                        if (_bussmbl
-                                                                            .text
-                                                                            .isEmpty) {
-                                                                          setState(
-                                                                              () {
-                                                                            _color6 =
-                                                                                Colors.red;
-                                                                            Fluttertoast.showToast(msg: 'Please Your Mobile Number');
-                                                                          });
-                                                                        } else if (numValue >=
-                                                                                6 &&
-                                                                            numValue <
-                                                                                13) {
-                                                                          _color6 = Colors
-                                                                              .green
-                                                                              .shade600;
-                                                                          WidgetsBinding
-                                                                              .instance
-                                                                              ?.focusManager
-                                                                              .primaryFocus
-                                                                              ?.unfocus();
-
-                                                                          _onLoading();
-                                                                          await update_phone()
-                                                                              .then((value) {
-                                                                            print('dsefef $value');
-                                                                            Navigator.of(dialogContext!).pop();
-                                                                            if (value) {
-                                                                              /* Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-
-                                                                              _startTimer();
-                                                                            } else {
-                                                                              /*  Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                                            }
-                                                                          });
-                                                                          isloading1 =
-                                                                              false;
-                                                                        } else {
-                                                                          _color6 =
-                                                                              Colors.red;
-
-                                                                          Fluttertoast.showToast(
-                                                                              msg: 'Please Enter Correct Number');
-                                                                        }
-                                                                        setState(
-                                                                            () {});
-                                                                      },
-                                                                      child: const Text(
-                                                                          'Resend OTP',
-                                                                          style: TextStyle(
-                                                                              fontSize: 19.0,
-                                                                              fontWeight: FontWeight.w800,
-                                                                              color: Colors.white,
-                                                                              fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-                                                                    ),
+                                                                              20.0,
+                                                                          height:
+                                                                              20.0,
+                                                                        ),
+                                                              color:
+                                                                  Colors.white,
+                                                              onPressed: () {
+                                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                                setState(() {
+                                                                  _cfrpasswordVisible =
+                                                                      !_cfrpasswordVisible;
+                                                                });
+                                                              },
                                                             ),
-                                                            Container(
-                                                              margin: const EdgeInsets
-                                                                  .fromLTRB(
-                                                                      25.0,
-                                                                      0.0,
-                                                                      25.0,
-                                                                      0.0),
-                                                              child:
-                                                                  TextFormField(
-                                                                controller:
-                                                                    _mblotp,
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf'),
-                                                                autovalidateMode:
-                                                                    AutovalidateMode
-                                                                        .onUserInteraction,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .number,
-                                                                textInputAction:
-                                                                    TextInputAction
-                                                                        .next,
-                                                                decoration:
-                                                                    InputDecoration(
-                                                                  hintText:
-                                                                      "Enter OTP",
-                                                                  hintStyle: const TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontFamily:
-                                                                          'assets\fonst\Metropolis-Black.otf'),
-                                                                  enabledBorder: OutlineInputBorder(
-                                                                      borderSide: BorderSide(
-                                                                          width:
-                                                                              1,
-                                                                          color:
-                                                                              _color1),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              15.0)),
-                                                                  border: OutlineInputBorder(
-                                                                      borderSide: BorderSide(
-                                                                          width:
-                                                                              1,
-                                                                          color:
-                                                                              _color1),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              15.0)),
-                                                                  focusedBorder: OutlineInputBorder(
-                                                                      borderSide: BorderSide(
-                                                                          width:
-                                                                              1,
-                                                                          color:
-                                                                              _color1),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              15.0)),
-                                                                  //errorText: _validusernm ? 'Name is not empty' : null),
-                                                                ),
-                                                                validator:
-                                                                    (value) {
-                                                                  if (value!
-                                                                      .isEmpty) {
-                                                                    _color1 =
-                                                                        Colors
-                                                                            .red;
-                                                                    //return 'Enter a otp!';
-                                                                  } else {
-                                                                    // setState(() {
-                                                                    _color1 = Colors
-                                                                        .green
-                                                                        .shade600;
-                                                                    // });
-                                                                  }
-                                                                  return null;
-                                                                },
-                                                                onChanged:
-                                                                    (value) {
-                                                                  if (value
-                                                                      .isEmpty) {
-                                                                    WidgetsBinding
-                                                                        .instance
-                                                                        ?.focusManager
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                    Fluttertoast
-                                                                        .showToast(
-                                                                            msg:
-                                                                                'Please Enter otp');
-                                                                    setState(
-                                                                        () {
-                                                                      _color1 =
-                                                                          Colors
-                                                                              .red;
-                                                                    });
-                                                                  } else {
-                                                                    setState(
-                                                                        () {
-                                                                      _color1 = Colors
-                                                                          .green
-                                                                          .shade600;
-                                                                    });
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  1.2,
-                                                              height: 60,
-                                                              margin: const EdgeInsets
-                                                                  .all(20.0),
-                                                              decoration: BoxDecoration(
-                                                                  border: Border
-                                                                      .all(
-                                                                          width:
-                                                                              1),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0),
-                                                                  color: const Color
-                                                                      .fromARGB(
-                                                                          255,
-                                                                          0,
-                                                                          91,
-                                                                          148)),
-                                                              child: TextButton(
-                                                                onPressed: () {
-                                                                  setState(
-                                                                      () async {
-
-                                                                    WidgetsBinding
-                                                                        .instance
-                                                                        ?.focusManager
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                   if(_mblotp.text.isEmpty){
-                                                                     Fluttertoast.showToast(msg: "Please Enter OTP");
-                                                                     _color1 = Colors.red;
-
-                                                                   }else{
-
-
-
-                                                                     // _onLoading();
-                                                                     await register_mo_verifyotp(
-                                                                         _mblotp.text
-                                                                             .toString(),
-                                                                         _bussmbl.text
-                                                                             .toString(),
-                                                                         "3")
-                                                                         .then(
-                                                                             (value) {
-                                                                           print(
-                                                                               'dsefef $value');
-                                                                           Navigator.of(
-                                                                               dialogContext!)
-                                                                               .pop();
-                                                                           if (value) {}
-                                                                         });
-
-                                                                     isloading1 = false;
-                                                                   }
-
-                                                                  });
-                                                                },
-                                                                child: const Text(
-                                                                    'Verify',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            19.0,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w800,
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontFamily:
-                                                                            'assets\fonst\Metropolis-Black.otf')),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : Container(
-                                                          width: MediaQuery.of(context).size.width * 1.2,
-                                                          height: 60,
-                                                          margin:
-                                                              const EdgeInsets.all(
-                                                                  20.0),
-                                                          decoration: BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                                      width: 1),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          50.0),
-                                                              color: const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  0,
-                                                                  91,
-                                                                  148)),
-                                                          child: TextButton(
-                                                            onPressed:
-                                                                () async {
-                                                              /*Navigator.push(
-                                                            context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
-
-                                                              var numValue =
-                                                                  _bussmbl.text
-                                                                      .length;
+                                                            enabledBorder: OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color:
+                                                                            _color5),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0)),
+                                                            border: OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color:
+                                                                            _color5),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0)),
+                                                            focusedBorder: OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                        width:
+                                                                            1,
+                                                                        color:
+                                                                            _color5),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10.0)),
+                                                          ),
+                                                          validator: (value) {
+                                                            if (value!
+                                                                .isEmpty) {
+                                                              return 'Enter a Confirm New Password!';
+                                                            }
+                                                            return null;
+                                                          },
+                                                          onChanged: (value) {
+                                                            if (value.isEmpty) {
                                                               WidgetsBinding
                                                                   .instance
-                                                                  ?.focusManager
+                                                                  .focusManager
                                                                   .primaryFocus
                                                                   ?.unfocus();
-                                                              if (_bussmbl.text
-                                                                  .isEmpty) {
-                                                                setState(() {
-                                                                  _color6 =
-                                                                      Colors
-                                                                          .red;
-                                                                  Fluttertoast
-                                                                      .showToast(
-                                                                          msg:
-                                                                              'Please Your Mobile Number');
-                                                                });
-                                                              } else if (numValue >=
-                                                                      6 &&
-                                                                  numValue <
-                                                                      13) {
-                                                                _color6 = Colors
+                                                              Fluttertoast
+                                                                  .showToast(
+                                                                      msg:
+                                                                          'Please Enter Confirm New Password');
+                                                              setState(() {
+                                                                _color5 =
+                                                                    Colors.red;
+                                                              });
+                                                            } else {
+                                                              setState(() {
+                                                                _color5 = Colors
                                                                     .green
                                                                     .shade600;
-                                                                WidgetsBinding
-                                                                    .instance
-                                                                    ?.focusManager
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-
-                                                                _onLoading();
-                                                                await update_phone()
-                                                                    .then(
-                                                                        (value) {
-                                                                  print(
-                                                                      'dsefef $value');
-                                                                  Navigator.of(
-                                                                          dialogContext!)
-                                                                      .pop();
-                                                                  if (value) {
-                                                                    /* Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-
-                                                                    _startTimer();
-                                                                  } else {
-                                                                    /*  Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-                                                                  }
-                                                                });
-                                                                isloading1 =
-                                                                    false;
-                                                              } else {
-                                                                _color6 =
-                                                                    Colors.red;
-
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            'Please Enter Correct Number');
-                                                              }
-                                                              setState(() {});
-                                                            },
-                                                            child: const Text(
-                                                                'Send OTP',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        19.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf')),
-                                                          ),
+                                                              });
+                                                            }
+                                                          },
                                                         ),
-                                                ],
-                                              ))
-                                        ],
-                                      ),),
-
-
-                                  Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        20.0, 0.0, 20.0, 10.0),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        5.0, 5.0, 5.0, 5.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.black26),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(15)),
-                                    ),
-                                    child: Column(children: [
-                                      Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            IntrinsicWidth(
-                                                child: Column(
-                                              children: [
-                                                Align(
-                                                  alignment: Alignment.topLeft,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .fromLTRB(
-                                                        10.0, 5.0, 0.0, 0.0),
-                                                    child: Text(
-                                                      'Email Address',
-                                                      style: const TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
-                                                          ?.copyWith(
-                                                              color: Colors
-                                                                  .black45),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          10.0, 2.0, 0.0, 2.0),
-                                                  child: Text(email.toString(),
-                                                      style: const TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
-                                                          ?.copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500)),
-                                                )
-                                              ],
-                                            )),
-                                            edit_email
-                                                ? Center(
-                                                    child: Align(
-                                                      child: TextButton(
-                                                        child: Text('Cancel',
-                                                            style: const TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf')
-                                                                ?.copyWith(
-                                                                    color: Colors
-                                                                        .red)),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            edit_email = false;
-                                                          });
-                                                        },
                                                       ),
-                                                    ),
-                                                  )
-                                                : Center(
-                                                    child: Align(
-                                                      child: TextButton(
-                                                        child:
-                                                            const Text('Edit'),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            edit_email = true;
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  )
-                                          ]),
-                                      Visibility(
-                                          visible: edit_email,
-                                          child: Container(
-                                            margin: const EdgeInsets.fromLTRB(
-                                                20, 20, 20, 20),
-                                            child: Column(
-                                              children: [
-                                                TextFormField(
-                                                  // controller: _usernm,
-                                                  controller: _bussemail,
-                                                  style: const TextStyle(
-                                                      fontSize: 15.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'assets\fonst\Metropolis-Black.otf'),
-
-                                                  keyboardType: TextInputType
-                                                      .emailAddress,
-                                                  autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
-                                                  textInputAction:
-                                                      TextInputAction.done,
-                                                  decoration: InputDecoration(
-                                                    // labelText: 'Your phone *',
-                                                    // labelStyle: TextStyle(color: Colors.red),
-                                                    filled: true,
-                                                    fillColor: Colors.white,
-                                                    hintText:
-                                                        "New Email Address",
-                                                    hintStyle: const TextStyle(
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf')
-                                                        ?.copyWith(
-                                                            color:
-                                                                Colors.black45),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    width: 1,
-                                                                    color:
-                                                                        _color7),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12.0)),
-                                                    border: OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            width: 1,
-                                                            color: _color7),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    12.0)),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    width: 1,
-                                                                    color:
-                                                                        _color7),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        12.0)),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value!.isEmpty) {
-                                                      //return 'Enter a Email!';
-                                                      _color7 = Colors.red;
-                                                    } else {
-                                                      // setState(() {
-                                                      _color7 =
-                                                          Colors.green.shade600;
-                                                      //});
-                                                    }
-
-                                                    return null;
-                                                  },
-                                                  onFieldSubmitted: (value) {},
-                                                  onChanged: (value) {
-                                                    if (value.isEmpty) {
-                                                      WidgetsBinding
-                                                          .instance
-                                                          ?.focusManager
-                                                          .primaryFocus
-                                                          ?.unfocus();
-                                                      Fluttertoast.showToast(
-                                                          msg:
-                                                              'Please Your Email');
-                                                      setState(() {
-                                                        _color7 = Colors.red;
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        _color7 = Colors
-                                                            .green.shade600;
-                                                      });
-                                                    }
-                                                  },
-                                                ),
-
-                                                (email_otp == 1)
-                                                    ? Column(
-                                                        children: [
-                                                          Container(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1.2,
-                                                            height: 60,
-                                                            margin:
-                                                                const EdgeInsets.all(
-                                                                    20.0),
-                                                            decoration: BoxDecoration(
-                                                                border:
-                                                                    Border.all(
-                                                                        width:
-                                                                            1),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50.0),
-                                                                color: const Color
-                                                                            .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        91,
-                                                                        148)
-                                                                    .withOpacity(
-                                                                        0.8)),
-                                                            // Set the height of the container
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: (_isResendButtonEnabled1 &&
-                                                                    _countdown1 !=
-                                                                        0)
-                                                                ? Text(
-                                                                    '0:$_countdown1',
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontFamily:
-                                                                          'assets\fonst\Metropolis-Black.otf',
-                                                                    )?.copyWith(
-                                                                            fontWeight:
-                                                                                FontWeight.w800,
-                                                                            fontSize: 17),
-                                                                  )
-                                                                : TextButton(
-                                                                    onPressed: () {
-
-                                                                      log("_isResendButtonEnabled1 = $_isResendButtonEnabled1");
-                                                                      setState(
-                                                                          () {
-                                                                        _isValid =
-                                                                            EmailValidator.validate(_bussemail.text);
-                                                                        if (!_isValid) {
-                                                                          WidgetsBinding
-                                                                              .instance
-                                                                              ?.focusManager
-                                                                              .primaryFocus
-                                                                              ?.unfocus();
-                                                                          Fluttertoast.showToast(
-                                                                              msg: 'Enter Proper Email');
-                                                                          _color7 =
-                                                                              Colors.red;
-                                                                        } else {
-                                                                          WidgetsBinding
-                                                                              .instance
-                                                                              ?.focusManager
-                                                                              .primaryFocus
-                                                                              ?.unfocus();
-                                                                          _onLoading();
-                                                                          update_email()
-                                                                              .then((value) {
-                                                                            // isloading1=false;
-                                                                            print('rgdrr$value');
-                                                                            Navigator.of(dialogContext!).pop();
-                                                                            _email_startTimer();
-                                                                          });
-                                                                        }
-                                                                        isloading1 =
-                                                                            false;
-                                                                        Navigator.of(dialogContext!)
-                                                                            .pop();
-                                                                      });
-                                                                    },
-                                                                    child: const Text(
-                                                                        'Resend OTP',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                19.0,
-                                                                            fontWeight:
-                                                                                FontWeight.w800,
-                                                                            color: Colors.white,
-                                                                            fontFamily: 'assets\fonst\Metropolis-Black.otf')),
-                                                                  ),
-                                                          ),
-                                                          Container(
-                                                            margin: const EdgeInsets
-                                                                .fromLTRB(
-                                                                    25.0,
-                                                                    0.0,
-                                                                    25.0,
-                                                                    0.0),
-                                                            child:
-                                                                TextFormField(
-                                                              controller:
-                                                                  _emailotp,
-                                                              style: const TextStyle(
-                                                                  fontSize:
-                                                                      15.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontFamily:
-                                                                      'assets\fonst\Metropolis-Black.otf'),
-                                                              autovalidateMode:
-                                                                  AutovalidateMode
-                                                                      .onUserInteraction,
-                                                              keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                              textInputAction:
-                                                                  TextInputAction
-                                                                      .next,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                hintText:
-                                                                    "Enter OTP",
-                                                                hintStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontFamily:
-                                                                        'assets\fonst\Metropolis-Black.otf'),
-                                                                enabledBorder: OutlineInputBorder(
-                                                                    borderSide: BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color1),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15.0)),
-                                                                border: OutlineInputBorder(
-                                                                    borderSide: BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color1),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15.0)),
-                                                                focusedBorder: OutlineInputBorder(
-                                                                    borderSide: BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color1),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15.0)),
-                                                                //errorText: _validusernm ? 'Name is not empty' : null),
-                                                              ),
-                                                              validator:
-                                                                  (value) {
-                                                                if (value!
-                                                                    .isEmpty) {
-                                                                  _color7 =
-                                                                      Colors
-                                                                          .red;
-                                                                  //return 'Enter a otp!';
-                                                                } else {
-                                                                  // setState(() {
-                                                                  _color1 = Colors
-                                                                      .green
-                                                                      .shade600;
-                                                                  // });
-                                                                }
-                                                                return null;
-                                                              },
-                                                              onChanged:
-                                                                  (value) {
-                                                                if (value
-                                                                    .isEmpty) {
-                                                                  WidgetsBinding
-                                                                      .instance
-                                                                      ?.focusManager
-                                                                      .primaryFocus
-                                                                      ?.unfocus();
-                                                                  Fluttertoast
-                                                                      .showToast(
-                                                                          msg:
-                                                                              'Please otp');
-                                                                  setState(() {
-                                                                    _color1 =
-                                                                        Colors
-                                                                            .red;
-                                                                  });
-                                                                } else {
-                                                                  setState(() {
-                                                                    _color1 = Colors
-                                                                        .green
-                                                                        .shade600;
-                                                                  });
-                                                                }
-                                                              },
-                                                              onFieldSubmitted:
-                                                                  (value) {
-                                                                if (value
-                                                                    .isEmpty) {
-                                                                  WidgetsBinding
-                                                                      .instance
-                                                                      ?.focusManager
-                                                                      .primaryFocus
-                                                                      ?.unfocus();
-                                                                  Fluttertoast
-                                                                      .showToast(
-                                                                          msg:
-                                                                              'Please Enter otp');
-                                                                  setState(() {
-                                                                    _color1 =
-                                                                        Colors
-                                                                            .red;
-                                                                  });
-                                                                } else {
-                                                                  setState(() {
-                                                                    _color1 = Colors
-                                                                        .green
-                                                                        .shade600;
-                                                                  });
-                                                                }
-                                                              },
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                1.2,
-                                                            height: 60,
-                                                            margin:
-                                                                const EdgeInsets.all(
-                                                                    20.0),
-                                                            decoration: BoxDecoration(
-                                                                border:
-                                                                    Border.all(
-                                                                        width:
-                                                                            1),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            50.0),
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        91,
-                                                                        148)),
-                                                            child: TextButton(
-                                                              onPressed: () {
-
-                                                                WidgetsBinding
-                                                                    .instance
-                                                                    ?.focusManager
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                                if(_emailotp.text.isEmpty){
-                                                                  _color1 = Colors.red;
-                                                                  Fluttertoast.showToast(msg: "Please Enter OTP");
-                                                                }else{
-                                                                  update_email_verifyotp(
-                                                                      _emailotp
-                                                                          .text
-                                                                          .toString(),
-                                                                      _bussemail
-                                                                          .text
-                                                                          .toString(),
-                                                                      "2")
-                                                                      .then(
-                                                                          (value) {
-                                                                        Navigator.of(
-                                                                            dialogContext!)
-                                                                            .pop();
-                                                                      });
-                                                                }
-                                                                isloading1 =
-                                                                    false;
-                                                              },
-                                                              child: const Text(
-                                                                  'Verify',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          19.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w800,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontFamily:
-                                                                          'assets\fonst\Metropolis-Black.otf')),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : Container(
+                                                      Container(
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
                                                                 .width *
                                                             1.2,
                                                         height: 60,
-                                                        margin: const EdgeInsets.all(
-                                                            20.0),
+                                                        margin: const EdgeInsets
+                                                            .all(20.0),
                                                         decoration: BoxDecoration(
                                                             border: Border.all(
                                                                 width: 1),
@@ -1564,69 +1992,82 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 BorderRadius
                                                                     .circular(
                                                                         50.0),
-                                                            color:
-                                                                const Color.fromARGB(
-                                                                    255,
-                                                                    0,
-                                                                    91,
-                                                                    148)),
+                                                            color: const Color
+                                                                    .fromARGB(
+                                                                255,
+                                                                0,
+                                                                91,
+                                                                148)),
                                                         child: TextButton(
                                                           onPressed: () {
-                                                            /*Navigator.push(
-                                                              context, MaterialPageRoute(builder: (context) => bussinessprofile()));*/
+                                                            WidgetsBinding
+                                                                .instance
+                                                                .focusManager
+                                                                .primaryFocus
+                                                                ?.unfocus();
 
                                                             setState(() {
-                                                              _isValid = EmailValidator
-                                                                  .validate(
-                                                                      _bussemail
-                                                                          .text);
-                                                              if (!_isValid) {
-                                                                WidgetsBinding
-                                                                    .instance
-                                                                    ?.focusManager
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
+                                                              if (_newpass.text
+                                                                  .isEmpty) {
+                                                                _color3 =
+                                                                    Colors.red;
                                                                 Fluttertoast
                                                                     .showToast(
                                                                         msg:
-                                                                            'Enter Proper Email');
-                                                                _color7 =
+                                                                            "Please Enter Password...");
+                                                              } else if (_newpass
+                                                                      .text
+                                                                      .length <
+                                                                  6) {
+                                                                _color3 =
                                                                     Colors.red;
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Password must have 6 digit...");
+                                                              } else if (_confirpass
+                                                                  .text
+                                                                  .isEmpty) {
+                                                                _color5 =
+                                                                    Colors.red;
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Please Enter Confirm Password");
+                                                              } else if (_confirpass
+                                                                      .text !=
+                                                                  _newpass
+                                                                      .text) {
+                                                                _color3 =
+                                                                    Colors.red;
+                                                                _color5 =
+                                                                    Colors.red;
+                                                                Fluttertoast
+                                                                    .showToast(
+                                                                        msg:
+                                                                            "Password Doesn't Match");
                                                               } else {
+                                                                isloading1 =
+                                                                    true;
                                                                 WidgetsBinding
                                                                     .instance
-                                                                    ?.focusManager
+                                                                    .focusManager
                                                                     .primaryFocus
                                                                     ?.unfocus();
-                                                                _onLoading();
-                                                                update_email()
+                                                                change_password()
                                                                     .then(
                                                                         (value) {
-                                                                  // isloading1=false;
-                                                                  print(
-                                                                      'rgdrr$value');
                                                                   Navigator.of(
                                                                           dialogContext!)
                                                                       .pop();
-                                                                  _email_startTimer();
-                                                                  /* if (value) {
-                                                      */ /*Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/ /*
-                                                    } else {
-                                                     */ /* Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/ /*
-                                                    }*/
                                                                 });
+                                                                isloading1 =
+                                                                    false;
                                                               }
-                                                              isloading1 =
-                                                                  false;
-                                                              Navigator.of(
-                                                                      dialogContext!)
-                                                                  .pop();
                                                             });
                                                           },
-                                                          child: Text(
-                                                              'Send OTP',
+                                                          child: const Text(
+                                                              'Change Password',
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       19.0,
@@ -1636,453 +2077,93 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                   color: Colors
                                                                       .white,
                                                                   fontFamily:
-                                                                      'assets\fonst\Metropolis-Black.otf')),
+                                                                      'assets/fonst/Metropolis-Black.otf')),
                                                         ),
                                                       ),
-                                              ],
-                                            ),
+                                                    ],
+                                                  ))
+                                            ],
                                           )),
-                                    ]),
-                                  ),
-
-
-                                  Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          20.0, 0.0, 20.0, 20.0),
-                                      padding: EdgeInsets.fromLTRB(
-                                          5.0, 5.0, 5.0, 5.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border:
-                                            Border.all(color: Colors.black26),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15)),
+                                      const SizedBox(
+                                        height: 20,
                                       ),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(children: [
-                                                  Image.asset(
-                                                    'assets/password.png',
-                                                    width: 120,
-                                                    height: 40,
-                                                  )
-                                                ]),
-                                                edit_pass
-                                                    ? Center(
-                                                        child: Align(
-                                                          child: TextButton(
-                                                            child: Text(
-                                                                'Cancel',
-                                                                style: TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontFamily:
-                                                                            'assets\fonst\Metropolis-Black.otf')
-                                                                    ?.copyWith(
-                                                                        color: Colors
-                                                                            .red)),
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                edit_pass =
-                                                                    false;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : Center(
-                                                        child: Align(
-                                                          child: TextButton(
-                                                            child: Text('Edit'),
-                                                            onPressed: () {
-                                                              setState(() {
-                                                                edit_pass =
-                                                                    true;
-                                                              });
-                                                            },
-                                                          ),
-                                                        ),
-                                                      )
-                                              ]),
-
-
-                                          Visibility(
-                                              visible: edit_pass,
-                                              child: Column(
-                                                children: [
-
-
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.fromLTRB(
-                                                            25.0,
-                                                            5.0,
-                                                            25.0,
-                                                            10.0),
-                                                    child: TextFormField(
-                                                      controller: _newpass,
-                                                      keyboardType:
-                                                          TextInputType.text,
-                                                      autovalidateMode:
-                                                          AutovalidateMode
-                                                              .onUserInteraction,
-                                                      style: const TextStyle(
-                                                          fontSize: 15.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf'),
-                                                      obscureText:
-                                                          !_cpasswordVisible,
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        // labelText: 'Your Confirm Password',
-                                                        // labelStyle: TextStyle(color: Colors.red),
-                                                        hintText:
-                                                            "New Password",
-                                                        hintStyle: const TextStyle(
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf'),
-                                                        suffixIcon: IconButton(
-                                                          icon:
-                                                              // Based on passwordVisible state choose the icon
-                                                              _cpasswordVisible
-                                                                  ? Image.asset(
-                                                                      'assets/hidepassword.png')
-                                                                  : Image.asset(
-                                                                      'assets/Vector.png',
-                                                                      width:
-                                                                          20.0,
-                                                                      height:
-                                                                          20.0,
-                                                                    ),
-                                                          color: Colors.white,
-                                                          onPressed: () {
-                                                            // Update the state i.e. toogle the state of passwordVisible variable
-                                                            setState(() {
-                                                              _cpasswordVisible =
-                                                                  !_cpasswordVisible;
-                                                            });
-                                                          },
-                                                        ),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
-                                                        border: OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    width: 1,
-                                                                    color:
-                                                                        _color3),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0)),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
-                                                        //errorText: _validusernm ? 'Name is not empty' : null),
-                                                      ),
-                                                      validator: (value) {
-                                                        if (value!.isEmpty) {
-                                                          _color3 = Colors.red;
-                                                        } else {
-                                                          _color3 = Colors
-                                                              .green.shade600;
-                                                        }
-                                                      },
-                                                      onChanged: (value) {
-                                                        if (value.isEmpty) {
-                                                          WidgetsBinding
-                                                              .instance
-                                                              ?.focusManager
-                                                              .primaryFocus
-                                                              ?.unfocus();
-                                                          Fluttertoast.showToast(
-                                                              msg:
-                                                                  'Please Enter New Password');
-                                                          setState(() {
-                                                            _color3 =
-                                                                Colors.red;
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            _color3 = Colors
-                                                                .green.shade600;
-                                                          });
-                                                        }
-                                                      },
-                                                    ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    "Are you sure ?"),
+                                                content: const Text(
+                                                  "Are you sure you want to delete your account?"
+                                                  "\n"
+                                                  "After delete account you can't access the app and all of your data will erased",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 15,
+                                                    letterSpacing: 0.5
                                                   ),
-
-
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.fromLTRB(
-                                                            25.0,
-                                                            5.0,
-                                                            25.0,
-                                                            10.0),
-                                                    child: TextFormField(
-                                                      controller: _confirpass,
-                                                      keyboardType:
-                                                          TextInputType.text,
-                                                      autovalidateMode:
-                                                          AutovalidateMode
-                                                              .onUserInteraction,
-                                                      style: const TextStyle(
-                                                          fontSize: 15.0,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf'),
-                                                      obscureText:
-                                                          !_cfrpasswordVisible,
-                                                      textInputAction:
-                                                          TextInputAction.next,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        // labelText: 'Your Confirm Password',
-                                                        // labelStyle: TextStyle(color: Colors.red),
-                                                        hintText:
-                                                            "Confirm New Password",
-                                                        hintStyle: TextStyle(
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf'),
-                                                        suffixIcon: IconButton(
-                                                          icon:
-                                                              // Based on passwordVisible state choose the icon
-                                                              _cfrpasswordVisible
-                                                                  ? Image.asset(
-                                                                      'assets/hidepassword.png')
-                                                                  : Image.asset(
-                                                                      'assets/Vector.png',
-                                                                      width:
-                                                                          20.0,
-                                                                      height:
-                                                                          20.0,
-                                                                    ),
-                                                          color: Colors.white,
-                                                          onPressed: () {
-                                                            // Update the state i.e. toogle the state of passwordVisible variable
-                                                            setState(() {
-                                                              _cfrpasswordVisible =
-                                                                  !_cfrpasswordVisible;
-                                                            });
-                                                          },
-                                                        ),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color5),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
-                                                        border: OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    width: 1,
-                                                                    color:
-                                                                        _color5),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0)),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color5),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
-                                                        //errorText: _validusernm ? 'Name is not empty' : null),
-                                                      ),
-                                                      validator: (value) {
-                                                        if (value!.isEmpty) {
-                                                          return 'Enter a Confirm New Password!';
-                                                        }
-                                                      },
-                                                      onChanged: (value) {
-                                                        if (value.isEmpty) {
-                                                          WidgetsBinding
-                                                              .instance
-                                                              ?.focusManager
-                                                              .primaryFocus
-                                                              ?.unfocus();
-                                                          Fluttertoast.showToast(
-                                                              msg:
-                                                                  'Please Enter Confirm New Password');
-                                                          setState(() {
-                                                            _color5 =
-                                                                Colors.red;
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            _color5 = Colors
-                                                                .green.shade600;
-                                                          });
-                                                        }
-                                                      },
-                                                    ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the dialog
+                                                    },
+                                                    child: const Text("No"),
                                                   ),
-
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            1.2,
-                                                    height: 60,
-                                                    margin:
-                                                        const EdgeInsets.all(20.0),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            width: 1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50.0),
-                                                        color: const Color.fromARGB(
-                                                            255, 0, 91, 148)),
-                                                    child: TextButton(
-                                                      onPressed: () {
-                                                         WidgetsBinding
-                                                            .instance
-                                                            ?.focusManager
-                                                            .primaryFocus
-                                                            ?.unfocus();
-
-                                                        setState(() {
-
-                                                          if(_newpass.text.isEmpty){
-                                                            _color3 = Colors.red;
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                "Please Enter Password...");
-                                                          }else if(_newpass.text.length < 6){
-                                                            _color3 = Colors.red;
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                "Password must have 6 digit...");
-                                                          }else if(_confirpass.text.isEmpty){
-                                                            _color5 = Colors.red;
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                "Please Enter Confirm Password");
-                                                          }else if (_confirpass
-                                                                  .text !=
-                                                              _newpass.text) {
-                                                            _color3 = Colors.red;
-                                                            _color5 = Colors.red;
-                                                            Fluttertoast.showToast(
-                                                                msg:
-                                                                    "Password Doesn't Match");
-                                                          } else {
-                                                            isloading1 = true;
-                                                            WidgetsBinding
-                                                                .instance
-                                                                ?.focusManager
-                                                                .primaryFocus
-                                                                ?.unfocus();
-                                                            change_password()
-                                                                .then((value) {
-                                                              Navigator.of(
-                                                                      dialogContext!)
-                                                                  .pop();
-                                                            });
-                                                            isloading1 = false;
-                                                          }
-                                                        });
-                                                      },
-                                                      child: const Text(
-                                                          'Change Password',
-                                                          style: TextStyle(
-                                                              fontSize: 19.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                              color:
-                                                                  Colors.white,
-                                                              fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')),
-                                                    ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      deleteMyAccount();
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the dialog
+                                                    },
+                                                    child: const Text("Yes"),
                                                   ),
                                                 ],
-                                              ))
-                                        ],
-                                      )),
-                                  
-
-                                ],
-                              )
-                            : Center(
-                                child: Platform.isAndroid
-                                    ? const CircularProgressIndicator(
-                                        value: null,
-                                        strokeWidth: 2.0,
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                      )
-                                    : Platform.isIOS
-                                        ? const CupertinoActivityIndicator(
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Text('Delete Account',
+                                            style: const TextStyle(
+                                                    fontSize: 17.0,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(
+                                                    color: Colors.red
+                                                        .withOpacity(0.8))),
+                                      ),
+                                      (isload == true) ? CircularProgressIndicator() : Container()
+                                    ],
+                                  )
+                                : Center(
+                                    child: Platform.isAndroid
+                                        ? const CircularProgressIndicator(
+                                            value: null,
+                                            strokeWidth: 2.0,
                                             color:
                                                 Color.fromARGB(255, 0, 91, 148),
-                                            radius: 20,
-                                            animating: true,
                                           )
-                                        : Container()),
-                      )
-                    ])))
-          ])
-        ])));
+                                        : Platform.isIOS
+                                            ? const CupertinoActivityIndicator(
+                                                color: Color.fromARGB(
+                                                    255, 0, 91, 148),
+                                                radius: 20,
+                                                animating: true,
+                                              )
+                                            : Container()),
+                          )
+                        ])))
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   // kkrk0514@gmail.com
@@ -2124,72 +2205,57 @@ class _LoginDetailState extends State<LoginDetail> {
             ));
       },
     );
-
-    /*Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext!).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
-    });*/
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_countdown > 0) {
         setState(() {
           _countdown--;
         });
       } else {
         _timer?.cancel();
-        setState(() {
-          print('grrgt $_countdown');
-        });
+        setState(() {});
       }
     });
   }
 
   void _email_startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_countdown1 > 0) {
         setState(() {
           _countdown1--;
         });
       } else {
         _timer?.cancel();
-        setState(() {
-          print('grrgt $_countdown1');
-        });
+        setState(() {});
       }
     });
   }
 
   Future<bool> update_phone() async {
-
     log("Button Pressed");
 
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     // _isResendButtonEnabled = ;
     _countdown = 30;
     countrycode1 ??= countrycode;
-    print(_pref.getString('user_id').toString());
 
     var res = await updateUserPhoneno(
       _bussmbl.text.toString(),
       countrycode1!,
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
     );
 
-    print(res);
     if (res['status'] == 1) {
       isloading1 = true;
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
       otp_sent = res['otp_sent'];
       mbl_otp = 1;
       edit_mbl = true;
       if (otp_sent == false) {
-        print(_bussmbl.text.toString());
         await register_mo_verifyotp("1234", _bussmbl.text.toString(), "3");
         Navigator.of(dialogContext!).pop();
         edit_mbl = false;
@@ -2204,12 +2270,11 @@ class _LoginDetailState extends State<LoginDetail> {
       /*Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
-      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       Fluttertoast.showToast(msg: res['message']);
       setState(() {
         _isResendButtonEnabled = false;
       });
-      // Fluttertoast.showToast(msg: res['message']);
     }
     isloading1 = true;
     setState(() {});
@@ -2217,17 +2282,13 @@ class _LoginDetailState extends State<LoginDetail> {
   }
 
   Future<bool> update_email() async {
-
-
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     _countdown1 = 30;
-    print(_pref.getString('user_id').toString());
     _onLoading();
     var res = await updateUseremail(
       _bussemail.text.toString(),
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
     );
 
     log("RESPONSE ==  $res");
@@ -2239,17 +2300,11 @@ class _LoginDetailState extends State<LoginDetail> {
       });
 
       email_otp = 1;
-
-      // isloading1=true;
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
     } else {
-      //isloading1=false;
       Fluttertoast.showToast(msg: res['message']);
       setState(() {
         _isResendButtonEnabled1 = true;
       });
-      // Fluttertoast.showToast(msg: res['message']);
     }
     isloading1 = true;
     setState(() {});
@@ -2261,23 +2316,18 @@ class _LoginDetailState extends State<LoginDetail> {
     String phoneno,
     String step,
   ) async {
-
     log("VERIFY Button Pressed");
 
-    common_par common = common_par();
     _onLoading();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     var res = await reg_mo_updateverifyotp(
         otp,
-        _pref.getString('user_id').toString(),
+        pref.getString('user_id').toString(),
         phoneno,
-        _pref.getString('api_token').toString(),
+        pref.getString('api_token').toString(),
         step);
 
-    String? msg = res['message'];
-
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       _bussmbl.clear();
       _mblotp.clear();
@@ -2288,7 +2338,6 @@ class _LoginDetailState extends State<LoginDetail> {
       Fluttertoast.showToast(msg: res['message']);
       log("VALIDATION FAILED");
       isloading1 = true;
-
     }
     getBussinessProfile();
     setState(() {});
@@ -2300,15 +2349,13 @@ class _LoginDetailState extends State<LoginDetail> {
     String email,
     String step,
   ) async {
-
     _onLoading();
 
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     var res = await reg_email_verifyotp(
       otp,
-      _pref.getString('user_id').toString(),
-      _pref.getString('api_token').toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
       email,
       "2",
     );
@@ -2316,7 +2363,6 @@ class _LoginDetailState extends State<LoginDetail> {
     log("OTP RESPONSE == $res");
 
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       _bussemail.clear();
       _emailotp.clear();
@@ -2334,15 +2380,13 @@ class _LoginDetailState extends State<LoginDetail> {
   }
 
   Future<bool> change_password() async {
-    common_par common = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     _onLoading();
 
-    var res = await changePassword(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(), _newpass.text.toString());
+    var res = await changePassword(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(), _newpass.text.toString());
 
     if (res['status'] == 1) {
-      common = common_par.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
       _newpass.clear();
       _confirpass.clear();
@@ -2355,5 +2399,23 @@ class _LoginDetailState extends State<LoginDetail> {
     getBussinessProfile();
     setState(() {});
     return isloading1;
+  }
+
+  void deleteMyAccount() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    isload = true;
+    setState(() {});
+
+    Future.delayed(const Duration(seconds: 5),(){
+      isload = false;
+      setState(() {});
+    });
+
+    var response = await deleteAccount(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
+
+
   }
 }

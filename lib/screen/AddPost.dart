@@ -2752,52 +2752,6 @@ class _selectGradeState extends State<selectGrade> {
                       });
                     },
 
-                    // onTap: () {
-                    //   setState(() {
-                    //     if (constanst.select_gradeId.length < 3) {
-                    //       constanst.select_grade_idx = index;
-                    //       gender = true;
-                    //
-                    //       if (constanst.Grade_itemsCheck[index] ==
-                    //           Icons.circle_outlined) {
-                    //         constanst.Grade_itemsCheck[index] =
-                    //             Icons.check_circle_outline;
-                    //
-                    //         constanst.select_grade_id =
-                    //             record.productgradeId.toString();
-                    //         constanst.select_gradeId
-                    //             .add(constanst.select_grade_id);
-                    //         constanst.select_grade_name
-                    //             .add(record.productGrade.toString());
-                    //       } else {
-                    //         constanst.Grade_itemsCheck[index] =
-                    //             Icons.circle_outlined;
-                    //         constanst.select_grade_id =
-                    //             record.productgradeId.toString();
-                    //         constanst.select_gradeId
-                    //             .remove(constanst.select_grade_id);
-                    //         constanst.select_grade_name
-                    //             .remove(record.productGrade.toString());
-                    //       }
-                    //     } else {
-                    //       if (constanst.Grade_itemsCheck[index] ==
-                    //           Icons.check_circle_outline) {
-                    //         constanst.Grade_itemsCheck[index] =
-                    //             Icons.circle_outlined;
-                    //         constanst.select_grade_id =
-                    //             record.productgradeId.toString();
-                    //         constanst.select_gradeId
-                    //             .remove(constanst.select_grade_id);
-                    //         constanst.select_grade_name
-                    //             .remove(record.productGrade.toString());
-                    //       } else {
-                    //         Fluttertoast.showToast(
-                    //
-                    //             msg: 'You Can Select Maximum 3 Grade');
-                    //       }
-                    //     }
-                    //   });
-                    // },
                     child: ListTile(
                       title: Text(record.productGrade.toString(),
                           style: const TextStyle(
