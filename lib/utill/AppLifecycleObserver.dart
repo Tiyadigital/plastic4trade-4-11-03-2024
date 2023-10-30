@@ -16,7 +16,7 @@ class AppLifecycleObserver extends WidgetsBindingObserver {
   Future<int> getAppOpenCount() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    constanst.appopencount=prefs.getInt('appOpenCount') ?? 1;
+    constanst.appopencount = prefs.getInt('appOpenCount') ?? 1;
     Fluttertoast.showToast(msg: 'rtt ${constanst.appopencount}');
     return prefs.getInt('appOpenCount') ?? 1;
   }

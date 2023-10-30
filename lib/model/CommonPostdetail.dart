@@ -124,10 +124,10 @@ class Result {
     productGradeId = json['ProductGradeId'];
     productGrade = json['ProductGrade'];
     currency = json['Currency'];
-    productPrice = json['ProductPrice'];
     unit = json['Unit'];
     postQuntity = json['PostQuntity'];
     if (json['PostHaxCodeColor'] != null) {
+      productPrice = json['ProductPrice'];
       postHaxCodeColor = <PostHaxCodeColor>[];
       json['PostHaxCodeColor'].forEach((v) {
         postHaxCodeColor!.add(PostHaxCodeColor.fromJson(v));

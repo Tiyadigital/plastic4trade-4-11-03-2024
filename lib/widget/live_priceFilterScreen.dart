@@ -267,7 +267,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
                _color5 = Colors.black;
 
               setState(() {});
-            }, child: Text('Category',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color1),))),
+            }, child: Text('Category',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color1),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -282,7 +282,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
           _color5 = Colors.black;
 
           setState(() {});
-        }, child: Text('Company',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color2),))),
+        }, child: Text('Company',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color2),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -297,7 +297,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
           _color5 = Colors.black;
 
           setState(() {});
-        }, child: Text('Country',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color3),))),
+        }, child: Text('Country',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color3),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -312,7 +312,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
           _color5 = Colors.black;
 
           setState(() {});
-        }, child: Text('State',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color4),))),
+        }, child: Text('State',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color4),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -347,7 +347,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
                 });
               }
             },
-            child: Text('Date',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color5),)))),
+            child: Text('Date',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color5),)))),
       ),
       Divider(color: Colors.grey),
 

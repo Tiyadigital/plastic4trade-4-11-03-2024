@@ -170,7 +170,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                 Image.asset(
                                   'assets/view1.png', height: 25, width: 40,),
                                 Text('Views ('+view_counter.toString()+')', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                    ?.copyWith(fontSize: 13, color: Theme
+                                    .copyWith(fontSize: 13, color: Theme
                                     .of(context)
                                     .accentColor))
                               ],
@@ -184,7 +184,7 @@ class _NewsDetailState extends State<NewsDetail> {
                                   Image.asset(
                                     'assets/send2.png', height: 25, width: 40,),
                                   Text('Send', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                      ?.copyWith(fontSize: 13, color: Theme
+                                      .copyWith(fontSize: 13, color: Theme
                                       .of(context)
                                       .accentColor))
                                 ],
@@ -215,7 +215,7 @@ class _NewsDetailState extends State<NewsDetail> {
 
                               child: Text(news_title.toString(),
                                   style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                      ?.copyWith(fontSize: 16)),
+                                      .copyWith(fontSize: 16)),
                               alignment: Alignment.topLeft,
                             )),
                         Padding(

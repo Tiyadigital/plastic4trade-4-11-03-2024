@@ -1,37 +1,31 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/model/GetCategory.dart';
 
 import '../api/api_interface.dart';
 import 'package:Plastic4trade/model/getUserProfile.dart' as user;
 
-import '../model/getUserProfile.dart';
 
 class GetUserProfileController {
- // List<user.User> buss = <user.User>[];
   user.User? record;
 
-  Future<user.User?> getUser_profile( String user_id,String user_token) async {
-     getUserProfile getprofile = getUserProfile();
+  Future<user.User?> getUser_profile( String userId,String userToken) async {
 
-    var res = await getuser_Profile(user_id,user_token);
+    var res = await getuser_Profile(userId,userToken);
 
-    print(res);
     if (res['status'] == 1) {
-      getprofile = getUserProfile.fromJson(res);
 
-      var jsonarray = res['user'];
+      var  jsonArray = res['user'];
 
 
-      print(jsonarray);
-     // for (var data in jsonarray) {
+     // for (var data in  jsonArray) {
 
         user.User record = user.User(
-         countryCode: jsonarray['countryCode'],
-          phoneno: jsonarray['phoneno'],
-          email: jsonarray['email'],
-          password:jsonarray['password'],
-          imageUrl: jsonarray['image_url']
+         countryCode:  jsonArray['countryCode'],
+          phoneno:  jsonArray['phoneno'],
+          email:  jsonArray['email'],
+          password: jsonArray['password'],
+          imageUrl:  jsonArray['image_url']
 
 
         );

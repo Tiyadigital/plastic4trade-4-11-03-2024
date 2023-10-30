@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, import_of_legacy_library_into_null_safe, depend_on_referenced_packages, non_constant_identifier_names, unnecessary_null_comparison, prefer_interpolation_to_compose_strings
 
 import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'dart:ui';
 import 'package:Plastic4trade/model/getNews.dart' as getnews;
 import 'package:Plastic4trade/model/QuickNews.dart' as getquicknews;
 import 'package:path_provider/path_provider.dart';
@@ -19,8 +18,6 @@ import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
-import '../model/QuickNews.dart';
-import '../model/getNews.dart';
 
 class News extends StatefulWidget {
   const News({Key? key}) : super(key: key);
@@ -51,12 +48,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
-    print(
-        "App Name : ${appName}, App Package Name: ${packageName},App Version: ${version}, App build Number: ${buildNumber}");
   }
 
   @override
@@ -64,17 +56,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     return init();
   }
   Future<bool> _onbackpress(BuildContext context) async {
-   /* DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      // Show a toast or snackbar message to inform the user to tap again to exit
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tap again to exit')),
-      );
-      return Future.value(false);
-    }
-    SystemNavigator.pop();*/ // Close the app
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -85,13 +67,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     return WillPopScope(
         onWillPop: () => _onbackpress(context),
     child: Scaffold(
-      backgroundColor: Color(0xFFDADADA),
+      backgroundColor: const Color(0xFFDADADA),
       body:  isload==true?Padding(
         padding: const EdgeInsets.fromLTRB(25, 8, 25, 8),
         child: Column(
           children: [
-            // give the tab bar a height [can change hheight to preferred height]
-            SizedBox(
+            // give the tab bar a height [can change height to preferred height]
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -109,11 +91,11 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                   borderRadius: BorderRadius.circular(
                     25.0,
                   ),
-                  color: Color.fromARGB(255, 0, 91, 148),
+                  color: const Color.fromARGB(255, 0, 91, 148),
                 ),
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black,
-                tabs: [
+                tabs: const [
                   // first tab [you can add an icon using the icon property]
                   Tab(
                     //text: 'Quick News',
@@ -145,7 +127,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
             isload
                 ? Expanded(
                     child: TabBarView(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         controller: _tabController,
                         // first tab bar view widget
                         children: [
@@ -161,13 +143,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         ),
       ): Center(
           child: Platform.isAndroid
-              ? CircularProgressIndicator(
+              ? const CircularProgressIndicator(
             value: null,
             strokeWidth: 2.0,
             color: Color.fromARGB(255, 0, 91, 148),
           )
               : Platform.isIOS
-              ? CupertinoActivityIndicator(
+              ? const CupertinoActivityIndicator(
             color: Color.fromARGB(255, 0, 91, 148),
             radius: 20,
             animating: true,
@@ -216,13 +198,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                 width: 50.0,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
+                        ? const CircularProgressIndicator(
                       value: null,
                       strokeWidth: 2.0,
                       color: Color.fromARGB(255, 0, 91, 148),
                     )
                         : Platform.isIOS
-                        ? CupertinoActivityIndicator(
+                        ? const CupertinoActivityIndicator(
                       color: Color.fromARGB(255, 0, 91, 148),
                       radius: 20,
                       animating: true,
@@ -275,16 +257,15 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     );
 
     Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
+      // Dialog closed
     });
   }
 
   Widget news() {
     return Container(
-        padding: EdgeInsets.fromLTRB(2.0, 12.0, 3.0, 0),
+        padding: const EdgeInsets.fromLTRB(2.0, 12.0, 3.0, 0),
         width: MediaQuery.of(context).size.width,
         child:
             /*  FutureBuilder(
@@ -305,7 +286,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           // mainAxisSpacing: 12.0,
           // crossAxisCount: 1,
 
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: getnewsdata.length,
           shrinkWrap: true,
           controller: scrollercontroller,
@@ -337,7 +318,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(20)),
                 child: Column(children: [
                   Container(
-                    margin: EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(10.0),
                     height: 150,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
@@ -346,7 +327,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                       child: Image(
                         errorBuilder: (context, object, trace) {
                           return Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Color.fromARGB(255, 223, 220, 220),
                             ),
@@ -364,12 +345,12 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           // child: Flexible(
                           child: Text(result.newsTitle.toString(),
                               maxLines: 2,
                               softWrap: true,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Metropolis',
                                 fontWeight: FontWeight.w600,
@@ -399,7 +380,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                               get_News();*/
                                           setState(() {});
                                         },
-                                        icon: ImageIcon(
+                                        icon: const ImageIcon(
                                           AssetImage('assets/like.png'),
                                         ))
                                     : GestureDetector(
@@ -420,10 +401,8 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                           height: 28,
                                         )),
                                 Text(
-                                    'Like (' +
-                                        result.likeCount.toString() +
-                                        ')',
-                                    style: TextStyle(
+                                    'Like (${result.likeCount})',
+                                    style: const TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w500,
@@ -438,8 +417,8 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                               children: [
                                 IconButton(
                                     onPressed: () {},
-                                    icon: Icon(Icons.remove_red_eye_outlined)),
-                                Text('View (0)',
+                                    icon: const Icon(Icons.remove_red_eye_outlined)),
+                                const Text('View (0)',
                                     style: TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: 'Metropolis',
@@ -459,11 +438,11 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                                         url: result.newsImage.toString(),
                                         title: result.newsTitle.toString());
                                   },
-                                  icon: ImageIcon(
+                                  icon: const ImageIcon(
                                     AssetImage('assets/Send.png'),
                                     size: 20,
                                   )),
-                              Text('Share',
+                              const Text('Share',
                                   style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: 'Metropolis',
@@ -485,7 +464,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
 
   Widget Quicknews() {
     return Container(
-      padding: EdgeInsets.fromLTRB(2.0, 8.0, 3.0, 0),
+      padding: const EdgeInsets.fromLTRB(2.0, 8.0, 3.0, 0),
       width: MediaQuery.of(context).size.width,
       child: FutureBuilder(
           //future: load_category(),
@@ -506,13 +485,13 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                     crossAxisCount: 1,*/
             // ),
             controller: scrollercontroller,
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(),
             itemCount: getQuicknewsdata.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               getquicknews.Result record = getQuicknewsdata[index];
 
-              DateFormat format = new DateFormat("yyyy-MM-dd");
+              DateFormat format = DateFormat("yyyy-MM-dd");
               create_date = record.newsDate.toString();
               var updatDate = format.parse(create_date);
 
@@ -547,139 +526,137 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                   }),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Align(
                           alignment: Alignment.topLeft,
                           child: Text(displayDate.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: 'Metropolis',
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                               ))),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Card(
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      record.newsImage != null
-                                          ? Stack(
-                                              fit: StackFit.passthrough,
-                                              children: <Widget>[
-                                                  Container(
-                                                    height: 165,
-                                                    width: 175,
-                                                    margin:
-                                                        EdgeInsets.all(5.0),
-                                                    decoration: BoxDecoration(
-                                                        //color: Colors.black26,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    30.0))),
-                                                    child: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    20.0),
-                                                        /*shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(10.0)),*/
-                                                        /* child: record.newsImage!=null? Image.network(
-                                                        record.newsImage.toString(),
+                          child: Column(
+                            children: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    record.newsImage != null
+                                        ? Stack(
+                                            fit: StackFit.passthrough,
+                                            children: <Widget>[
+                                                Container(
+                                                  height: 165,
+                                                  width: 175,
+                                                  margin:
+                                                      const EdgeInsets.all(5.0),
+                                                  decoration: const BoxDecoration(
+                                                      //color: Colors.black26,
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  30.0))),
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                                  20.0),
+                                                      /*shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(10.0)),*/
+                                                      /* child: record.newsImage!=null? Image.network(
+                                                      record.newsImage.toString(),
 
-                                                    fit: BoxFit.cover,
-                                                    height: 100,
-                                                    width: 100,
-                                                  ):Image.asset("assets/plastic4trade logo final 1 (4).png") as ImageProvider,*/
-                                                        child: Image.network(
-                                                          record.imageUrl
-                                                              .toString(),
-                                                          fit: BoxFit.cover,
-                                                          height: 50,
-                                                          width: 50,
-                                                        )),
-                                                  ),
-                                                ])
-                                          : Align(
-                                              child: Container(
-                                                height: 80,
-                                                width: 80,
-                                                margin: EdgeInsets.all(5.0),
-                                                /* decoration: BoxDecoration(
-                                          //color: Colors.black26,
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(30.0))),*/
-                                                child: Image.asset(
-                                                  "assets/plastic4trade logo final 1 (2).png",
-
-                                                  //fit: BoxFit.fitHeight,
-                                                  // height: 100,
-                                                  width: 50,
+                                                  fit: BoxFit.cover,
+                                                  height: 100,
+                                                  width: 100,
+                                                ):Image.asset("assets/plastic4trade logo final 1 (4).png") as ImageProvider,*/
+                                                      child: Image.network(
+                                                        record.imageUrl
+                                                            .toString(),
+                                                        fit: BoxFit.cover,
+                                                        height: 50,
+                                                        width: 50,
+                                                      )),
                                                 ),
-                                              ),
-                                              alignment: Alignment.topCenter,
-                                            ),
+                                              ])
+                                        : Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Container(
+                                              height: 80,
+                                              width: 80,
+                                              margin: const EdgeInsets.all(5.0),
+                                              /* decoration: BoxDecoration(
+                                        //color: Colors.black26,
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(30.0))),*/
+                                              child: Image.asset(
+                                                "assets/plastic4trade logo final 1 (2).png",
 
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 15.0, 0, 8.0),
-                                              child: Text(
-                                                  '${record.newsTitle}',
-                                                  style: TextStyle(
-                                                    fontSize: 10.0,
-                                                    fontFamily: 'Metropolis',
-                                                    fontWeight:
-                                                        FontWeight.w600,
-                                                    color: Colors.black,
-                                                  )),
+                                                //fit: BoxFit.fitHeight,
+                                                // height: 100,
+                                                width: 50,
+                                              ),
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 5.0, 0, 5.0),
-                                              child: Text(
-                                                  update_formattedDate,
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontFamily: 'Metropolis',
-                                                    fontWeight:
-                                                        FontWeight.w400,
-                                                    color: Colors.black,
-                                                  )),
-                                            ),
-                                            Html(data: descr)
-                                            /*Text(
-                                                      'HPL, IOCL. HDPE PRICES NO CHANGES',
-                                                      style: TextStyle(
-                                                        fontSize: 12.0,
-                                                        fontFamily: 'Metropolis',
-                                                        fontWeight: FontWeight.w600,
-                                                        color: Colors.black,
-                                                      )),*/
-                                          ],
-                                        ),
+                                          ),
+
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 15.0, 0, 8.0),
+                                            child: Text(
+                                                '${record.newsTitle}',
+                                                style: const TextStyle(
+                                                  fontSize: 10.0,
+                                                  fontFamily: 'Metropolis',
+                                                  fontWeight:
+                                                      FontWeight.w600,
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 5.0, 0, 5.0),
+                                            child: Text(
+                                                update_formattedDate,
+                                                style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'Metropolis',
+                                                  fontWeight:
+                                                      FontWeight.w400,
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                          Html(data: descr)
+                                          /*Text(
+                                                    'HPL, IOCL. HDPE PRICES NO CHANGES',
+                                                    style: TextStyle(
+                                                      fontSize: 12.0,
+                                                      fontFamily: 'Metropolis',
+                                                      fontWeight: FontWeight.w600,
+                                                      color: Colors.black,
+                                                    )),*/
+                                        ],
                                       ),
-                                      //cartwidget(),
-                                    ]),
-                              ],
-                            ),
+                                    ),
+                                    //cartwidget(),
+                                  ]),
+                            ],
                           )),
                     ],
                   ));
@@ -687,7 +664,6 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           );
         }
 
-        return CircularProgressIndicator();
       }),
     );
   }
@@ -707,21 +683,18 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   }
 
   Future<void> get_News() async {
-    GetNews getsimmilar = GetNews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getnewss(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+    var res = await getnewss(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetNews.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
         //
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           getnews.Result record = getnews.Result(
             newsId: data['newsId'],
             newsTitle: data['newsTitle'],
@@ -734,7 +707,6 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           //loadmore = true;
         }
 
-        print(getnewsdata);
         if (mounted) {
           setState(() {});
         }
@@ -742,26 +714,22 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     } else {
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 
   Future<void> get_QuickNews() async {
-    QuickNews getsimmilar = QuickNews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getQuicknews(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(), offset.toString());
+    var res = await getQuicknews(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(), offset.toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = QuickNews.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
         //
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           getquicknews.Result record = getquicknews.Result(
             id: data['id'],
             longDescription: data['long_description'],
@@ -774,7 +742,6 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           //loadmore = true;
         }
         isload = true;
-        print(getnewsdata);
         if (mounted) {
           setState(() {});
         }
@@ -783,25 +750,21 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
 
-    return jsonarray;
+    return jsonArray;
   }
 
   Future<void> Newslike(String newsId) async {
-    GetNews getsimmilar = GetNews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    print(newsId);
     var res = await news_like(
         newsId.toString(),
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetNews.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
         isload = true;
 
@@ -814,7 +777,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   String dateConverter(String myDate) {

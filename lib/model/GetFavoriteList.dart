@@ -11,17 +11,17 @@ class GetFavoriteList {
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+        result!.add(Result.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    if (result != null) {
+      data['result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -89,25 +89,25 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['FavoriteId'] = this.favoriteId;
-    data['productId'] = this.productId;
-    data['PostType'] = this.postType;
-    data['UserId'] = this.userId;
-    data['UserName'] = this.userName;
-    data['ProductName'] = this.productName;
-    data['CategoryId'] = this.categoryId;
-    data['CategoryName'] = this.categoryName;
-    data['ProductTypeId'] = this.productTypeId;
-    data['ProductType'] = this.productType;
-    data['ProductGradeId'] = this.productGradeId;
-    data['ProductGrade'] = this.productGrade;
-    data['Currency'] = this.currency;
-    data['ProductPrice'] = this.productPrice;
-    data['mainproductImage'] = this.mainproductImage;
-    data['City'] = this.city;
-    data['State'] = this.state;
-    data['Country'] = this.country;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['FavoriteId'] = favoriteId;
+    data['productId'] = productId;
+    data['PostType'] = postType;
+    data['UserId'] = userId;
+    data['UserName'] = userName;
+    data['ProductName'] = productName;
+    data['CategoryId'] = categoryId;
+    data['CategoryName'] = categoryName;
+    data['ProductTypeId'] = productTypeId;
+    data['ProductType'] = productType;
+    data['ProductGradeId'] = productGradeId;
+    data['ProductGrade'] = productGrade;
+    data['Currency'] = currency;
+    data['ProductPrice'] = productPrice;
+    data['mainproductImage'] = mainproductImage;
+    data['City'] = city;
+    data['State'] = state;
+    data['Country'] = country;
     return data;
   }
 }

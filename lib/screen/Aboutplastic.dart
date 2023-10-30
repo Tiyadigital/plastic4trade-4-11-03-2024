@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, import_of_legacy_library_into_null_safe, prefer_typing_uninitialized_variables
+// ignore_for_file: unused_local_variable, import_of_legacy_library_into_null_safe, prefer_typing_uninitialized_variables, non_constant_identifier_names, camel_case_types
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,10 +27,8 @@ class _aboutplasticState extends State<aboutplastic> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
-      //isprofile=true;
     } else {
       get_aboutus();
-      // get_data();
     }
   }
 
@@ -65,7 +63,7 @@ class _aboutplasticState extends State<aboutplastic> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
@@ -123,7 +121,6 @@ class _aboutplasticState extends State<aboutplastic> {
   Future<void> get_aboutus() async {
 
     var res = await getStaticPage();
-
     var jsonArray;
     if (res['status'] == 1) {
       if (res['result'] != null) {

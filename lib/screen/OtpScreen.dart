@@ -114,7 +114,7 @@ class _otpState extends State<otp> {
                                                     color: Colors.black,
                                                     fontFamily:
                                                         'assets/fonst/Metropolis-Black.otf')
-                                                ?.copyWith(
+                                                .copyWith(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 17)),
                                       )
@@ -133,7 +133,7 @@ class _otpState extends State<otp> {
                                                     color: Colors.black,
                                                     fontFamily:
                                                         'assets/fonst/Metropolis-Black.otf')
-                                                ?.copyWith(
+                                                .copyWith(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 17,
                                               overflow: TextOverflow.ellipsis,
@@ -222,7 +222,7 @@ class _otpState extends State<otp> {
                                       });
                                     } else {
                                       WidgetsBinding
-                                          .instance?.focusManager.primaryFocus
+                                          .instance.focusManager.primaryFocus
                                           ?.unfocus();
                                       _onLoading();
                                       verify_otp(

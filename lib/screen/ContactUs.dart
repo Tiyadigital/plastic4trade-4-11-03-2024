@@ -72,7 +72,7 @@ class _ContactUsState extends State<ContactUs> {
   Widget initwidget() {
     final country = _selectedCountry;
     return Scaffold(
-        backgroundColor: Color.fromARGB(240, 218, 218, 218),
+        backgroundColor: const Color.fromARGB(240, 218, 218, 218),
         resizeToAvoidBottomInset: true,
 
         appBar: CustomeApp('ContactUs'),
@@ -93,13 +93,13 @@ class _ContactUsState extends State<ContactUs> {
                             select_sub_dropdown(listitem2,'Select Subject'),
                             Padding(
                               padding:
-                              EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                              const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
                               child: TextFormField(
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                                 controller: _usernm,
                                 keyboardType: TextInputType.name,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                 textCapitalization:
                                 TextCapitalization.sentences,
                                 textInputAction: TextInputAction.next,
@@ -116,7 +116,7 @@ class _ContactUsState extends State<ContactUs> {
                                   fillColor: Colors.white,
                                   hintText: 'Your Name *',
                                   hintStyle:
-                                  TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')?.copyWith(color: Colors.black45),
+                                  const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.black45),
 
                                   enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -184,13 +184,13 @@ class _ContactUsState extends State<ContactUs> {
                             ),
                             Padding(
                               padding:
-                              EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
+                              const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 0.0),
                               child: TextFormField(
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                                 controller: _bussnm,
                                 keyboardType: TextInputType.name,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                 textCapitalization:
                                 TextCapitalization.words,
                                 textInputAction: TextInputAction.next,
@@ -207,7 +207,7 @@ class _ContactUsState extends State<ContactUs> {
                                   fillColor: Colors.white,
                                   hintText: 'Business Name*',
                                   hintStyle:
-                                  TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(color: Colors.black45),
+                                  const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(color: Colors.black45),
 
                                   enabledBorder: OutlineInputBorder(
                                       borderSide:
@@ -275,13 +275,13 @@ class _ContactUsState extends State<ContactUs> {
                             ),
                             Padding(
                               padding:
-                              EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 0),
+                              const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 0),
                               child: TextFormField(
                                 controller: _bussemail,
                                 keyboardType: TextInputType.emailAddress,
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                 textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
                                   // labelText: 'Your email *',
@@ -289,7 +289,7 @@ class _ContactUsState extends State<ContactUs> {
                                   filled: true,
                                   fillColor: Colors.white,
                                   hintText: "Email*",
-                                  hintStyle:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(color: Colors.black45),
+                                  hintStyle:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(color: Colors.black45),
                                   enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           width: 1, color: _color7),
@@ -347,7 +347,7 @@ class _ContactUsState extends State<ContactUs> {
                               child: Row(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(
+                                    padding: const EdgeInsets.fromLTRB(
                                         25.0, 0.0, 5.0, 0),
                                     child: Container(
                                         height: 58,
@@ -367,7 +367,7 @@ class _ContactUsState extends State<ContactUs> {
                                           children: [
                                             Container(
                                               height: 58,
-                                              padding: EdgeInsets.only(left: 2),
+                                              padding: const EdgeInsets.only(left: 2),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     width: 1, color: Colors.black26),
@@ -379,7 +379,7 @@ class _ContactUsState extends State<ContactUs> {
                                                 },
                                                 child: Row(
                                                   children: [
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
                                                     Image.asset(
@@ -387,18 +387,18 @@ class _ContactUsState extends State<ContactUs> {
                                                       package: countryCodePackageName,
                                                       width: 30,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 16,
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 2,
                                                     ),
                                                     Text(
                                                       '${country.callingCode}',
                                                       textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 15),
+                                                      style: const TextStyle(fontSize: 15),
                                                     ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 10,
                                                     ),
                                                   ],
@@ -470,7 +470,7 @@ class _ContactUsState extends State<ContactUs> {
                           flex: 2,
                                   child: Container(
                                     margin:
-                                    EdgeInsets.only(left: 0.0, right: 25),
+                                    const EdgeInsets.only(left: 0.0, right: 25),
                                     //padding: EdgeInsets.only(bottom: 3.0),
                                     //height: 58,
                                    /* width: MediaQuery.of(context).size.width /
@@ -478,7 +478,7 @@ class _ContactUsState extends State<ContactUs> {
                                     child: TextFormField(
                                       // controller: _usernm,
                                       controller: _usermbl,
-                                      style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color:  Color.fromARGB(255, 0, 91, 148),fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                      style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w700, color:  Color.fromARGB(255, 0, 91, 148),fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                       inputFormatters: [
                                         LengthLimitingTextInputFormatter(11),
                                       ],
@@ -492,7 +492,7 @@ class _ContactUsState extends State<ContactUs> {
                                         filled: true,
                                         fillColor: Colors.white,
                                         hintText: "Bussiness Mobile",
-                                        hintStyle:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(color: Colors.black45),
+                                        hintStyle:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(color: Colors.black45),
                                         enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 width: 1, color: _color6),
@@ -555,21 +555,21 @@ class _ContactUsState extends State<ContactUs> {
 
                             Padding(
                               padding:
-                              EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 15.0),
+                              const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 15.0),
                               child: TextFormField(
                                 controller: _bussabout,
                                 keyboardType: TextInputType.multiline,
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                                style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
                                 maxLines: 4,
                                 textInputAction: TextInputAction.done,
                                 decoration: InputDecoration(
                                     hintText: "Message*",
                                     filled: true,
                                     fillColor: Colors.white,
-                                    hintStyle:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                        ?.copyWith(color: Colors.black45),
+                                    hintStyle:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                                        .copyWith(color: Colors.black45),
                                     enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             width: 1, color: _color9),
@@ -624,7 +624,7 @@ class _ContactUsState extends State<ContactUs> {
                               decoration: BoxDecoration(
                                   border: Border.all(width: 1),
                                   borderRadius: BorderRadius.circular(50.0),
-                                  color: Color.fromARGB(255, 0, 91, 148)
+                                  color: const Color.fromARGB(255, 0, 91, 148)
                               ),
                               child: TextButton(
                                 onPressed: () {
@@ -636,15 +636,15 @@ class _ContactUsState extends State<ContactUs> {
                                     vaild_data();
                                   });
                                 },
-                                child:  Text('Submit', style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                                child:  const Text('Submit', style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets\fonst\Metropolis-Black.otf')),
                               ),
                             ),
 
                             load==true?Container(
-                         margin:  EdgeInsets.fromLTRB(0, 10.0, 0, 0),
+                         margin:  const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
                           height: 210,
                           width: MediaQuery.of(context).size.width * 0.85,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                             image: DecorationImage(
                               image: AssetImage("assets/contactus_back.png"),
@@ -658,8 +658,8 @@ class _ContactUsState extends State<ContactUs> {
                                 left: 20,
                                 child: Container(
 
-                                  color: Color.fromARGB(0,255, 255, 255),
-                                  child: Text('Our Location', style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontSize: 16)),
+                                  color: const Color.fromARGB(0,255, 255, 255),
+                                  child: Text('Our Location', style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.w700, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontSize: 16)),
 
 
 
@@ -672,7 +672,7 @@ class _ContactUsState extends State<ContactUs> {
                                 left: 20,
                                 child: Container(
 
-                                  color: Color.fromARGB(0,255, 255, 255),
+                                  color: const Color.fromARGB(0,255, 255, 255),
                                   child:  SizedBox(
                                     height: 85,
                                     width: 150,
@@ -688,7 +688,7 @@ class _ContactUsState extends State<ContactUs> {
                                 right: 10,
                                 child: Container(
 
-                                  color: Color.fromARGB(0,255, 255, 255),
+                                  color: const Color.fromARGB(0,255, 255, 255),
                                   child: Center(
                                       child: Image.asset('assets/plastic4trade logo final.png',width: 100,height: 30,)
                                   ),
@@ -699,7 +699,7 @@ class _ContactUsState extends State<ContactUs> {
                                 left: 10,
                                 child: Container(
 
-                                  color: Color.fromARGB(0,255, 255, 255),
+                                  color: const Color.fromARGB(0,255, 255, 255),
                                   child: Center(
                                       child: Image.asset('assets/contactus_loc.png',width: 200,height: 30,)
                                   ),
@@ -709,13 +709,13 @@ class _ContactUsState extends State<ContactUs> {
                           )
                          ):  Center(
                                 child: Platform.isAndroid
-                                    ? CircularProgressIndicator(
+                                    ? const CircularProgressIndicator(
                                   value: null,
                                   strokeWidth: 2.0,
                                   color: Color.fromARGB(255, 0, 91, 148),
                                 )
                                     : Platform.isIOS
-                                    ? CupertinoActivityIndicator(
+                                    ? const CupertinoActivityIndicator(
                                   color: Color.fromARGB(255, 0, 91, 148),
                                   radius: 20,
                                   animating: true,
@@ -724,9 +724,9 @@ class _ContactUsState extends State<ContactUs> {
                             Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin:
-                                EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
+                                const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 0.0),
 
-                                padding: EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                                padding: const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
                                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                                   Card(
                                       elevation: 2,
@@ -748,9 +748,9 @@ class _ContactUsState extends State<ContactUs> {
                                                           Align(
                                                             child: Padding(
                                                               padding:
-                                                              EdgeInsets.only(left: 20.0),
+                                                              const EdgeInsets.only(left: 20.0),
                                                               child: Text(countryCode.toString()+phone.toString(),
-                                                                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf')),
+                                                                  style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf')),
                                                             ),
                                                           ),
 
@@ -766,8 +766,8 @@ class _ContactUsState extends State<ContactUs> {
                             Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin:
-                                EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                                padding: EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                                const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+                                padding: const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
                                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                                   Card(
                                       elevation: 2,
@@ -789,9 +789,9 @@ class _ContactUsState extends State<ContactUs> {
                                                           Align(
                                                             child: Padding(
                                                               padding:
-                                                              EdgeInsets.only(left: 20.0),
+                                                              const EdgeInsets.only(left: 20.0),
                                                               child: Text(email.toString(),
-                                                                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf')),
+                                                                  style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-SemiBold.otf')),
                                                             ),
                                                           ),
 
@@ -806,21 +806,21 @@ class _ContactUsState extends State<ContactUs> {
                             ),
                             Container(
                                 margin:
-                                EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 15.0),
+                                const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 15.0),
                                 width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.all(Radius.circular(12)),
                                     color: Colors.white),
                                 child: Column(
                                   children: [
-                                    Center(
+                                    const Center(
                                       child: Text('Follow Plastic4trade',
                                         style: TextStyle(fontWeight:FontWeight.w400,fontStyle: FontStyle.italic, fontFamily: 'assets\fonst\Metropolis-Black.otf' ,color: Colors.black),),
                                     ),
                                     Container(
                                         width: MediaQuery.of(context).size.width,
                                         height: 70,
-                                        padding: EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                                        padding: const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
@@ -860,10 +860,10 @@ class _ContactUsState extends State<ContactUs> {
   Widget select_sub_dropdown(List listitem, String hint) {
     return Center(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 0.0),
           child: Container(
 
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Colors.grey),
                   borderRadius: BorderRadius.circular(15.0),
@@ -871,18 +871,18 @@ class _ContactUsState extends State<ContactUs> {
               child: DropdownButton(
                 value: _selectitem,
                 hint: Text(hint,
-                    style:TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                        ?.copyWith(color: Colors.black45)),
+                    style:const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
+                        .copyWith(color: Colors.black45)),
                 dropdownColor: Colors.white,
-                icon: Icon(Icons.arrow_drop_down),
+                icon: const Icon(Icons.arrow_drop_down),
                 iconSize: 30,
                 isExpanded: true,
-                underline: SizedBox(),
+                underline: const SizedBox(),
                 items: listitem.map((valueItem) {
                   return DropdownMenuItem(
                       value: valueItem,
                       child: Text(valueItem,
-                          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')));
+                          style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')));
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
@@ -893,30 +893,6 @@ class _ContactUsState extends State<ContactUs> {
         ));
   }
 
-/*  Widget _buildDropdownItem(Country country) => Container(
-    width: MediaQuery.of(context).size.width / 3.5,
-    height: 120,
-    child: Row(
-      //mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: CountryPickerUtils.getDefaultFlagImage(country),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Text(
-            "+${country.phoneCode}",
-            style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-                fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-          ),
-        ),
-      ],
-    ),
-  );*/
 
   vaild_data() {
     _isValid = EmailValidator.validate(_bussemail.text);

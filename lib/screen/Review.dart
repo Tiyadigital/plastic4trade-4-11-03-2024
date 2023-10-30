@@ -30,7 +30,7 @@ class review extends StatefulWidget {
 class _reviewState extends State<review> {
   //final items = List<String>.generate(20, (i) => "Item ${i + 1}");
 
-  int? comment_count;
+  int comment_count = 0;
   String? avg;
   String? av;
   int offset = 0;
@@ -94,7 +94,7 @@ class _reviewState extends State<review> {
                             width: 230,
                             child: RatingBar.builder(
                               ignoreGestures: true,
-                              initialRating: double.parse(avg!),
+                              initialRating: double.parse(avg ?? ""),
                               minRating: 1,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
@@ -121,6 +121,8 @@ class _reviewState extends State<review> {
                           )
                         ],
                       ),
+
+                      // 141400059150
                       SizedBox(
                           width: 350,
                           child: Text(
@@ -168,7 +170,8 @@ class _reviewState extends State<review> {
                 fontSize: 15.0,
                 color: Colors.white,
                 fontFamily: 'assets/fonst/Metropolis-Black.otf',
-              )),
+              ),
+          ),
         ),
       ),
     );
@@ -248,24 +251,32 @@ class _reviewState extends State<review> {
                                         color: const Color.fromARGB(
                                             255, 0, 91, 148),
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: [
                                             Expanded(
                                               child: InkWell(
                                                 child: SizedBox(
                                                   width: double.infinity,
                                                   child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       IconButton(
                                                         onPressed: () {
                                                           Edit_Review(
                                                               context,
                                                               widget.profileid,
-                                                              record.id.toString(),
-                                                              record.rating.toString(),
-                                                              record.comment.toString(),
-                                                              record.commentImageUrl.toString());
+                                                              record.id
+                                                                  .toString(),
+                                                              record.rating
+                                                                  .toString(),
+                                                              record.comment
+                                                                  .toString(),
+                                                              record
+                                                                  .commentImageUrl
+                                                                  .toString());
                                                         },
                                                         icon: Image.asset(
                                                             'assets/edit.png',
@@ -292,8 +303,10 @@ class _reviewState extends State<review> {
                                                     children: [
                                                       IconButton(
                                                         onPressed: () {
-                                                          revove_Reply(record.id.toString());
-                                                          commentlist_data.clear();
+                                                          revove_Reply(record.id
+                                                              .toString());
+                                                          commentlist_data
+                                                              .clear();
                                                           isload = false;
                                                           get_reviewlist();
                                                           setState(() {});
@@ -1030,7 +1043,6 @@ class _reviewState extends State<review> {
       isload = false;
       get_reviewlist();
     });
-
   }
 
   Future<void> checknetowork() async {
@@ -1061,19 +1073,20 @@ class _reviewState extends State<review> {
     getcomment = Get_comment();
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await Getcomment(
-        pref.getString('user_id').toString(), offset.toString(), '20');
+    var res = await Getcomment(widget.profileid, offset.toString(), '10');
+    print("RESPONSE == $res");
 
-    print(res);
     if (res['status'] == 1) {
       getcomment = Get_comment.fromJson(res);
-      print('hellooooo');
       resultList = getcomment.data;
       comment_count = res['comment_count'];
       avg = res['comment_avg'] ?? "";
 
-      print(avg);
+      print("COMMENT COUNT == $comment_count");
 
+      setState(() {});
+
+      print(avg);
       print(av);
 
       if (res['data'] != null) {
@@ -1134,7 +1147,7 @@ class _YourWidgetState extends State<YourWidget> {
             duration: const Duration(milliseconds: 100),
             curve: Curves.decelerate,
             child: Column(
-              children: <Widget>[
+              children: [
                 const SizedBox(height: 5),
                 Image.asset(
                   'assets/hori_line.png',
@@ -1326,7 +1339,9 @@ class _YourWidgetState extends State<YourWidget> {
         rate.toString(),
         _comment.text.toString(),
         file1);
+
     print(res);
+
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
 

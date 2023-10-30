@@ -989,6 +989,10 @@ class _HomePageState extends State<HomePage> {
   getBussinessProfile() async {
     GetmybusinessprofileController bt = GetmybusinessprofileController();
     SharedPreferences pref = await SharedPreferences.getInstance();
+
+    print("ID === ${pref.getString('user_id').toString()}");
+    print("Token === ${pref.getString('api_token').toString()}");
+
     constanst.getmyprofile = bt.Getmybusiness_profile(
         pref.getString('user_id').toString(),
         pref.getString('api_token').toString());
@@ -1285,7 +1289,7 @@ class _HomePageState extends State<HomePage> {
         onSelectNotification: (String? payload) async {
       if (payload != null) {
         // ignore: unnecessary_non_null_assertion
-        final message = RemoteMessage.fromMap(jsonDecode(payload!));
+        final message = RemoteMessage.fromMap(jsonDecode(payload));
         String notificationType = message.data['type'];
         String userId = message.data['user_id'];
 

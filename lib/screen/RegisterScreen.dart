@@ -1869,6 +1869,10 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  Future<void> init(BuildContext context) async {
+    await FirebaseApi().initNOtification(context);
+  }
+
   vaild_data() {
     _isValid = EmailValidator.validate(_useremail.text);
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
@@ -1935,6 +1939,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool?> setRegisterUserPhoneno() async {
+    print("METTHOD 1 CALLED...");
     RegisterUserPhoneno register = RegisterUserPhoneno();
 
     var res = await registerUserPhoneno(
@@ -1982,7 +1987,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future<bool> setRegisterUserEmail() async {
-    log("setRegisterUserEmail Method Called");
+    print("METHOD 2 CALLED...");
 
     var res = await registerUserEmail(
         _usernm.text.toString(),
@@ -2013,10 +2018,6 @@ class _RegisterState extends State<Register> {
     return _isloading;
   }
 
-  Future<void> init(BuildContext context) async {
-    await FirebaseApi().initNOtification(context);
-  }
-
   Future<bool> register_mo_verifyotp(
     String otp,
     String userId,
@@ -2025,7 +2026,7 @@ class _RegisterState extends State<Register> {
     String step,
   ) async {
     var res = await reg_mo_verifyotp(otp, userId, phoneno, apiToken, step);
-
+    print("METHOD 3 CALLED...");
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       verify_phone = 1;
@@ -2049,7 +2050,7 @@ class _RegisterState extends State<Register> {
     countryCode,
   ) async {
     var res = await reg_mo_resendotp(userId, phoneno, apiToken, countryCode);
-
+    print("METHOD 4 CALLED...");
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       otp_sent = res['otp_sent'];
@@ -2077,7 +2078,7 @@ class _RegisterState extends State<Register> {
   Future<bool> register_email_resendotp(
       String userId, String apiToken, String email) async {
     var res = await reg_email_resendotp(userId, apiToken, email);
-
+    print("METHOD 5 CALLED...");
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       _isloading = true;
@@ -2105,7 +2106,7 @@ class _RegisterState extends State<Register> {
     String step,
   ) async {
     var res = await reg_email_verifyotp(otp, userId, apiToken, email, step);
-
+    print("METHOD 6 CALLED...");
     if (res['status'] == 1) {
       // Fluttertoast.showToast(msg: res['message']);
       Fluttertoast.showToast(msg: "Your Email is Verified");
@@ -2128,7 +2129,6 @@ class _RegisterState extends State<Register> {
       String device,
       String username,
       String stepCounter) async {
-    //FinalRegister register = FinalRegister();
 
     var res = await final_register(
         email,
@@ -2140,6 +2140,7 @@ class _RegisterState extends State<Register> {
         stepCounter,
         _pref.getString('user_id').toString(),
         _pref.getString('api_token').toString());
+    print("METHOD 7 CALLED...");
 
     if (res['status'] == 1) {
       register = FinalRegister.fromJson(res);

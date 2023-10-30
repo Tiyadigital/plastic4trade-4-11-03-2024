@@ -1,18 +1,17 @@
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:Plastic4trade/model/getBlog.dart' as getblog;
-import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:Plastic4trade/screen/BlogDetail.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io' show Platform;
 
 import '../api/api_interface.dart';
 import '../model/getNews.dart';
@@ -39,12 +38,7 @@ class _BlogState extends State<Blog> {
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
-    print(
-        "App Name : ${appName}, App Package Name: ${packageName},App Version: ${version}, App build Number: ${buildNumber}");
   }
 
   @override
@@ -54,11 +48,11 @@ class _BlogState extends State<Blog> {
 
   Widget init() {
     return Scaffold(
-      backgroundColor: Color(0xFFDADADA),
+      backgroundColor: const Color(0xFFDADADA),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
-        title: Text('Blog',
+        title: const Text('Blog',
             softWrap: false,
             style: TextStyle(
               fontSize: 20.0,
@@ -70,7 +64,7 @@ class _BlogState extends State<Blog> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(
+          child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
           ),
@@ -82,13 +76,13 @@ class _BlogState extends State<Blog> {
               ? Blog()
               : Center(
                   child: Platform.isAndroid
-                      ? CircularProgressIndicator(
+                      ? const CircularProgressIndicator(
                           value: null,
                           strokeWidth: 2.0,
                           color: Color.fromARGB(255, 0, 91, 148),
                         )
                       : Platform.isIOS
-                          ? CupertinoActivityIndicator(
+                          ? const CupertinoActivityIndicator(
                               color: Color.fromARGB(255, 0, 91, 148),
                               radius: 20,
                               animating: true,
@@ -102,45 +96,20 @@ class _BlogState extends State<Blog> {
 
   Widget Blog() {
     return Container(
-        padding: EdgeInsets.fromLTRB(2.0, 12.0, 3.0, 0),
+        padding: const EdgeInsets.fromLTRB(2.0, 12.0, 3.0, 0),
         width: MediaQuery.of(context).size.width,
         child:
-            /*  FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } if(snapshot.hasData) {
-                //List<dynamic> users = snapshot.data as List<dynamic>;*/
-            ListView.builder(
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          // crossAxisCount: 2,
-          // mainAxisSpacing: 5,
-          // crossAxisSpacing: 5,
-          // childAspectRatio: .90,
-          //  childAspectRatio:MediaQuery.of(context).size.height/700,
-          // MediaQuery.of(context).size.aspectRatio * 2.55,
-          // mainAxisSpacing: 12.0,
-          // crossAxisCount: 1,
 
-          physics: AlwaysScrollableScrollPhysics(),
+            ListView.builder(
+
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: getblogsdata.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             getblog.Result result = getblogsdata[index];
 
-            //Fluttertoast.showToast(msg: result.isLike.toString());
             return GestureDetector(
               onTap: (() {
-                // cate_name = record.name.toString();
-                // cate_id = record.id.toString();
-                // Fluttertoast.showToast(
-                //     msg: cate_id.toString());
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) =>
-                //             Subcategory(cate_id, cate_name)));
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -154,12 +123,12 @@ class _BlogState extends State<Blog> {
                     borderRadius: BorderRadius.circular(20)),
                 child: Column(children: [
                   Container(
-                    margin: EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(10.0),
                     height: 150,
                     child: Image(
                       errorBuilder: (context, object, trace) {
                         return Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Color.fromARGB(255, 223, 220, 220),
                           ),
@@ -176,12 +145,12 @@ class _BlogState extends State<Blog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           // child: Flexible(
                           child: Text(result.blogTitle.toString(),
                               maxLines: 2,
                               softWrap: true,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Metropolis',
                                 fontWeight: FontWeight.w600,
@@ -211,7 +180,7 @@ class _BlogState extends State<Blog> {
                                               get_News();*/
                                           setState(() {});
                                         },
-                                        icon: ImageIcon(
+                                        icon: const ImageIcon(
                                           AssetImage('assets/like.png'),
                                         ))
                                     : GestureDetector(
@@ -232,10 +201,8 @@ class _BlogState extends State<Blog> {
                                           height: 28,
                                         )),
                                 Text(
-                                    'Like (' +
-                                        result.likeCount.toString() +
-                                        ')',
-                                    style: TextStyle(
+                                    'Like (${result.likeCount})',
+                                    style: const TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w500,
@@ -250,12 +217,10 @@ class _BlogState extends State<Blog> {
                               children: [
                                 IconButton(
                                     onPressed: () {},
-                                    icon: Icon(Icons.remove_red_eye_outlined)),
+                                    icon: const Icon(Icons.remove_red_eye_outlined)),
                                 Text(
-                                    'View (' +
-                                        result.viewCounter.toString() +
-                                        ')',
-                                    style: TextStyle(
+                                    'View (${result.viewCounter})',
+                                    style: const TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: 'Metropolis',
                                       fontWeight: FontWeight.w500,
@@ -274,11 +239,11 @@ class _BlogState extends State<Blog> {
                                         url: result.blogImage.toString(),
                                         title: result.blogTitle.toString());
                                   },
-                                  icon: ImageIcon(
+                                  icon: const ImageIcon(
                                     AssetImage('assets/Send.png'),
                                     size: 20,
                                   )),
-                              Text('Share',
+                              const Text('Share',
                                   style: TextStyle(
                                     fontSize: 12.0,
                                     fontFamily: 'Metropolis',
@@ -303,29 +268,24 @@ class _BlogState extends State<Blog> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
-      //isprofile=true;
     } else {
       getPackage();
       get_Blog();
-      // get_data();
     }
   }
 
   Future<void> get_Blog() async {
-    GetNews getsimmilar = GetNews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getblogs(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+    var res = await getblogs(pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetNews.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
+        jsonArray = res['result'];
 
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           getblog.Result record = getblog.Result(
               blogId: data['blogId'],
               blogTitle: data['BlogTitle'],
@@ -333,12 +293,10 @@ class _BlogState extends State<Blog> {
               isLike: data['isLike'],
               likeCount: data['likeCount'],
               viewCounter: data['view_counter']);
-
           getblogsdata.add(record);
-          //loadmore = true;
+
         }
         isload = true;
-        print(getblogsdata);
         if (mounted) {
           setState(() {});
         }
@@ -346,30 +304,22 @@ class _BlogState extends State<Blog> {
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
-    setState(() {});
+    return jsonArray;
   }
 
   Future<void> bloglike(String blogid) async {
-    GetNews getsimmilar = GetNews();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    print(blogid);
     var res = await blog_like(
         blogid.toString(),
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetNews.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
-
+        jsonArray = res['result'];
         isload = true;
-
-        // setState(() {});
         if (mounted) {
           setState(() {});
         }
@@ -378,7 +328,7 @@ class _BlogState extends State<Blog> {
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   void shareImage({required String url, required String title}) async {

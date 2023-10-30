@@ -11,17 +11,17 @@ class GetSalePostList {
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+        result!.add(Result.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    if (result != null) {
+      data['result'] = result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -107,7 +107,7 @@ class Result {
     if (json['PostColor'] != null) {
       postColor = <PostColor>[];
       json['PostColor'].forEach((v) {
-        postColor!.add(new PostColor.fromJson(v));
+        postColor!.add(PostColor.fromJson(v));
       });
     }
     location = json['Location'];
@@ -121,7 +121,7 @@ class Result {
     if (json['subproductImage'] != null) {
       subproductImage = <SubproductImage>[];
       json['subproductImage'].forEach((v) {
-        subproductImage!.add(new SubproductImage.fromJson(v));
+        subproductImage!.add(SubproductImage.fromJson(v));
       });
     }
     isPaidPost = json['is_paid_post'];
@@ -129,40 +129,40 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productId'] = this.productId;
-    data['UserId'] = this.userId;
-    data['UserName'] = this.userName;
-    data['UserEmail'] = this.userEmail;
-    data['PostType'] = this.postType;
-    data['CategoryId'] = this.categoryId;
-    data['CategoryName'] = this.categoryName;
-    data['PostName'] = this.postName;
-    data['ProductTypeId'] = this.productTypeId;
-    data['ProductType'] = this.productType;
-    data['ProductGradeId'] = this.productGradeId;
-    data['ProductGrade'] = this.productGrade;
-    data['Currency'] = this.currency;
-    data['ProductPrice'] = this.productPrice;
-    data['Unit'] = this.unit;
-    data['PostQuntity'] = this.postQuntity;
-    if (this.postColor != null) {
-      data['PostColor'] = this.postColor!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productId'] = productId;
+    data['UserId'] = userId;
+    data['UserName'] = userName;
+    data['UserEmail'] = userEmail;
+    data['PostType'] = postType;
+    data['CategoryId'] = categoryId;
+    data['CategoryName'] = categoryName;
+    data['PostName'] = postName;
+    data['ProductTypeId'] = productTypeId;
+    data['ProductType'] = productType;
+    data['ProductGradeId'] = productGradeId;
+    data['ProductGrade'] = productGrade;
+    data['Currency'] = currency;
+    data['ProductPrice'] = productPrice;
+    data['Unit'] = unit;
+    data['PostQuntity'] = postQuntity;
+    if (postColor != null) {
+      data['PostColor'] = postColor!.map((v) => v.toJson()).toList();
     }
-    data['Location'] = this.location;
-    data['Latitude'] = this.latitude;
-    data['City'] = this.city;
-    data['State'] = this.state;
-    data['Country'] = this.country;
-    data['Longitude'] = this.longitude;
-    data['Description'] = this.description;
-    data['mainproductImage'] = this.mainproductImage;
-    if (this.subproductImage != null) {
+    data['Location'] = location;
+    data['Latitude'] = latitude;
+    data['City'] = city;
+    data['State'] = state;
+    data['Country'] = country;
+    data['Longitude'] = longitude;
+    data['Description'] = description;
+    data['mainproductImage'] = mainproductImage;
+    if (subproductImage != null) {
       data['subproductImage'] =
-          this.subproductImage!.map((v) => v.toJson()).toList();
+          subproductImage!.map((v) => v.toJson()).toList();
     }
-    data['is_paid_post'] = this.isPaidPost;
-    data['product_status'] = this.productStatus;
+    data['is_paid_post'] = isPaidPost;
+    data['product_status'] = productStatus;
     return data;
   }
 }
@@ -181,10 +181,10 @@ class PostColor {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['colorId'] = this.colorId;
-    data['colorName'] = this.colorName;
-    data['HaxCode'] = this.haxCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['colorId'] = colorId;
+    data['colorName'] = colorName;
+    data['HaxCode'] = haxCode;
     return data;
   }
 }
@@ -201,9 +201,9 @@ class SubproductImage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productImgeId'] = this.productImgeId;
-    data['sub_image_url'] = this.subImageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productImgeId'] = productImgeId;
+    data['sub_image_url'] = subImageUrl;
     return data;
   }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names
 
+import 'dart:developer';
 import 'dart:io' show Platform;
 import 'dart:io';
 
@@ -77,6 +78,7 @@ class _moreState extends State<more> {
   PackageInfo? packageInfo;
   String? version;
   String? username, business_name, image_url;
+  String? whatsappUrl, facebookUrl,instagramUrl,linkedinUrl,youtubeUrl,telegramUrl,twitterUrl;
   bool? isload;
   final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
@@ -85,6 +87,7 @@ class _moreState extends State<more> {
     // TODO: implement initState
     getPackage();
     getProfiless();
+    getSocialMedia();
     super.initState();
   }
 
@@ -652,31 +655,52 @@ class _moreState extends State<more> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(whatsappUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/whatsapp.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(facebookUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/facebook.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: ()=> launchUrl(
+                                      Uri.parse(instagramUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/instagram.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(linkedinUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/linkdin.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(youtubeUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/youtube.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(telegramUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/Telegram.png'),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () => launchUrl(
+                                      Uri.parse(twitterUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
                                     icon: Image.asset('assets/Twitter.png'),
                                   ),
                                 ],
@@ -1379,6 +1403,24 @@ class _moreState extends State<more> {
     setState(() {});
   }
 
+  getSocialMedia() async{
+    var res = await getSocialLinks();
+
+
+
+    if(res['status'] == 1){
+      whatsappUrl = res['result']['site_whatsapp_url'];
+      facebookUrl = res['result']['site_facebook_url'];
+      instagramUrl = res['result']['site_instagram_url'];
+      linkedinUrl = res['result']['site_linkedin_url'];
+      youtubeUrl = res['result']['site_youtube_url'];
+      telegramUrl = res['result']['site_telegram_url'];
+      twitterUrl = res['result']['site_twitter_url'];
+setState(() {});
+    }else{}
+
+  }
+
   void clear() {
     constanst.usernm = "";
     constanst.Bussiness_nature = "";
@@ -1479,4 +1521,5 @@ class _moreState extends State<more> {
     constanst.date = "";
     constanst.image_url = "";
   }
+
 }

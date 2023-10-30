@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 import 'Videos.dart';
@@ -19,12 +20,12 @@ class Choice {
   final String icon;
 }
 
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Homepage Banner Advertisement', type: 'Image or Video',price: '₹5000/- Per Month',size: '350*12',icon: 'assets/homegrid.png'),
-  const Choice(title: 'Pop-up Banner Advertisement',type: 'Image',price: '₹500/- Per Month',size: '350*12', icon: 'assets/homegrid.png'),
-  const Choice(title: 'Paid Post', type: 'Image',price: '2500',size: '350*12',icon: 'assets/homegrid.png'),
-  const Choice(title: 'Notification Ads', type: 'Image',price: '₹5000/- Per Month',size: '350*12',icon: 'assets/homegrid.png'),
-  const Choice(title: 'Email, WhatsApp, SMS Marketing to Users',type: 'Video', price: '2500',size: '350*12',icon: 'assets/homegrid.png'),
+const List<Choice> choices = <Choice>[
+  Choice(title: 'Homepage Banner Advertisement', type: 'Image or Video',price: '₹5000/- Per Month',size: '350*12',icon: 'assets/homegrid.png'),
+  Choice(title: 'Pop-up Banner Advertisement',type: 'Image',price: '₹500/- Per Month',size: '350*12', icon: 'assets/homegrid.png'),
+  Choice(title: 'Paid Post', type: 'Image',price: '2500',size: '350*12',icon: 'assets/homegrid.png'),
+  Choice(title: 'Notification Ads', type: 'Image',price: '₹5000/- Per Month',size: '350*12',icon: 'assets/homegrid.png'),
+  Choice(title: 'Email, WhatsApp, SMS Marketing to Users',type: 'Video', price: '2500',size: '350*12',icon: 'assets/homegrid.png'),
 ];
 
 class _AdwithusState extends State<Adwithus> {
@@ -35,12 +36,12 @@ class _AdwithusState extends State<Adwithus> {
 
   Widget initwidget() {
     return Scaffold(
-        backgroundColor: Color(0xFFDADADA),
+        backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           centerTitle: true,
           elevation: 0,
-          title: Text('Advertise With Us',
+          title: const Text('Advertise With Us',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -52,7 +53,7 @@ class _AdwithusState extends State<Adwithus> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
@@ -63,7 +64,7 @@ class _AdwithusState extends State<Adwithus> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => YoutubeViewer('i9t8rSVLUxg')));
+                          builder: (context) => const YoutubeViewer('i9t8rSVLUxg')));
                 },
                 child: SizedBox(
                     width: 40,
@@ -77,14 +78,14 @@ class _AdwithusState extends State<Adwithus> {
 
   Widget category() {
     return Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0),
+        padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 0),
         child: FutureBuilder(
 
             //future: load_subcategory(),
             builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               snapshot.hasData == null) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -104,8 +105,8 @@ class _AdwithusState extends State<Adwithus> {
                       child:
 
                          Container(
-                           margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                  decoration: BoxDecoration(
+                           margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                  decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   color: Colors.white),
                           child: Column(
@@ -120,20 +121,20 @@ class _AdwithusState extends State<Adwithus> {
                                       Container(
                                         height: 218,
                                         width: 101,
-                                        margin: EdgeInsets.all(15.0),
+                                        margin: const EdgeInsets.all(15.0),
                                         child: Image(
                                           errorBuilder:
                                               (context, object, trace) {
                                             return Container(
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Color.fromARGB(
                                                     255, 223, 220, 220),
                                               ),
                                             );
                                           },
-                                          image: AssetImage(record.icon ?? ''
-                                              //data[index]['member_image'] ?? '',
+                                          image: AssetImage(record.icon
+
                                               ),
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -141,46 +142,46 @@ class _AdwithusState extends State<Adwithus> {
                                         ),
                                       ),
                                     ]),
-                                    SizedBox(width: 15,),
+                                    const SizedBox(width: 15,),
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('${record.title}',
-                                                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                      ?.copyWith(
+                                          Text(record.title,
+                                                  style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                                                      .copyWith(
                                                           fontSize: 15),
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,),
-                                          SizedBox(height: 10,),
-                                          SizedBox(
+                                          const SizedBox(height: 10,),
+                                          const SizedBox(
                                               height: 15,
                                               child: Text('Type',
-                                                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                                  style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                                   maxLines: 2,
                                                   softWrap: false)),
-                                          Text('${record.type}',
-                                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(
+                                          Text(record.type,
+                                            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(
                                                 fontSize: 15),),
-                                          SizedBox(height: 5,),
-                                          Text(
+                                          const SizedBox(height: 5,),
+                                          const Text(
                                             'Size:',
-                                            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                           ),
-                                          Text('${record.size}',
-                                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(
+                                          Text(record.size,
+                                            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(
                                                 fontSize: 15),),
-                                          SizedBox(height: 5,),
-                                          Text(
+                                          const SizedBox(height: 5,),
+                                          const Text(
                                             'Price:',
-                                            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                                            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                                           ),
-                                          Text('${record.price}',
-                                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(
+                                          Text(record.price,
+                                            style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(
                                                 fontSize: 15),),
 
                                         ],
@@ -189,18 +190,18 @@ class _AdwithusState extends State<Adwithus> {
                                   ]),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
-                                margin: EdgeInsets.all(10.0),
+                                margin: const EdgeInsets.all(10.0),
                                 decoration: BoxDecoration(
                                     border: Border.all(width: 1),
                                     borderRadius: BorderRadius.circular(50.0),
-                                    color: Color.fromARGB(255, 0, 91, 148)),
+                                    color: const Color.fromARGB(255, 0, 91, 148)),
                                 child: TextButton(
                                   onPressed: () {
 
                                   },
-                                  child: Text('Contact us',
+                                  child: const Text('Contact us',
 
-                                      style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                                      style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                                 ),
                               ),
                             ],
@@ -209,7 +210,6 @@ class _AdwithusState extends State<Adwithus> {
                       );
                 });
 
-            return CircularProgressIndicator();
           }
         }));
   }

@@ -84,7 +84,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                       fontWeight: FontWeight.w500,
                       fontFamily: 'assets/fonst/Metropolis-Black.otf',
                       color: Color.fromARGB(255, 0, 91, 148))
-                  ?.copyWith(fontSize: 14)),
+                  .copyWith(fontSize: 14)),
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

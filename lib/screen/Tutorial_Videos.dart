@@ -81,7 +81,7 @@ class _YourWidgetState extends State<Tutorial_Videos> {
                             Text(
                               videocontent[index].toString(),
                               style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                  ?.copyWith(fontSize: 15),
+                                  .copyWith(fontSize: 15),
                             )
                           ])));
                 });

@@ -240,8 +240,8 @@ class _TypeState extends State<Type> {
                                                               index] =
                                                           Icons
                                                               .check_circle_outline;
-                                                      type_id = record
-                                                          .producttypeId
+                                                       type_id = record
+                                                           .producttypeId
                                                           .toString();
                                                       constanst.select_typeId
                                                           .add(type_id);

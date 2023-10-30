@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:developer';
@@ -13,6 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
+import '../main.dart';
 
 class LoginDetail extends StatefulWidget {
   const LoginDetail({Key? key}) : super(key: key);
@@ -50,7 +51,6 @@ class _LoginDetailState extends State<LoginDetail> {
   //PhoneNumber number = PhoneNumber(isoCode: 'IN');
   Country? _selectedCountry, defaultCountry;
   bool isloading = false;
-  bool isload = false;
   BuildContext? dialogContext;
   bool _isResendButtonEnabled = false;
   bool _isResendButtonEnabled1 = false;
@@ -67,6 +67,7 @@ class _LoginDetailState extends State<LoginDetail> {
     initCountry();
     getBussinessProfile();
   }
+
 
   void _onPressedShowBottomSheet() async {
     final country = await showCountryPickerSheet(
@@ -661,13 +662,9 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                             await update_phone().then((value) {
                                                                               Navigator.of(dialogContext!).pop();
                                                                               if (value) {
-                                                                                /* Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
-
                                                                                 _startTimer();
                                                                               } else {
-                                                                                /*  Navigator.push(
-                                                          context, MaterialPageRoute(builder: (context) => Bussinessinfo()));*/
+
                                                                               }
                                                                             });
                                                                             isloading1 =
@@ -1583,7 +1580,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                     update_email()
                                                                         .then(
                                                                             (value) {
-                                                                      // isloading1=false;
+
                                                                       Navigator.of(
                                                                               dialogContext!)
                                                                           .pop();
@@ -2100,10 +2097,10 @@ class _LoginDetailState extends State<LoginDetail> {
                                                   "\n"
                                                   "After delete account you can't access the app and all of your data will erased",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    letterSpacing: 0.5
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 15,
+                                                      letterSpacing: 0.5),
                                                 ),
                                                 actions: [
                                                   TextButton(
@@ -2114,10 +2111,24 @@ class _LoginDetailState extends State<LoginDetail> {
                                                     child: const Text("No"),
                                                   ),
                                                   TextButton(
-                                                    onPressed: () {
-                                                      deleteMyAccount();
-                                                      Navigator.of(context)
-                                                          .pop(); // Close the dialog
+                                                    // onPressed: () async{
+                                                    //   Navigator.of(context).pop();
+                                                    //   _onLoading();
+                                                    //   await deleteMyAccount().then((value) {
+                                                    //     Navigator.of(dialogContext!).pop();
+                                                    //     if(value){
+                                                    //
+                                                    //       Navigator.push(
+                                                    //           context,
+                                                    //           MaterialPageRoute(
+                                                    //               builder: (_) => const MyHomePage()));
+                                                    //     }else{}
+                                                    //
+                                                    //   });
+                                                    // },
+                                                    onPressed: () async {
+                                                      Navigator.of(context).pop(); // Close the dialog
+                                                     deleteMyAccount();
                                                     },
                                                     child: const Text("Yes"),
                                                   ),
@@ -2137,7 +2148,6 @@ class _LoginDetailState extends State<LoginDetail> {
                                                     color: Colors.red
                                                         .withOpacity(0.8))),
                                       ),
-                                      (isload == true) ? CircularProgressIndicator() : Container()
                                     ],
                                   )
                                 : Center(
@@ -2165,8 +2175,6 @@ class _LoginDetailState extends State<LoginDetail> {
       ),
     );
   }
-
-  // kkrk0514@gmail.com
 
   void _onLoading() {
     dialogContext = context;
@@ -2352,6 +2360,7 @@ class _LoginDetailState extends State<LoginDetail> {
     _onLoading();
 
     SharedPreferences pref = await SharedPreferences.getInstance();
+
     var res = await reg_email_verifyotp(
       otp,
       pref.getString('user_id').toString(),
@@ -2401,21 +2410,29 @@ class _LoginDetailState extends State<LoginDetail> {
     return isloading1;
   }
 
-  void deleteMyAccount() async{
+  Future<void> deleteMyAccount() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    isload = true;
-    setState(() {});
-
-    Future.delayed(const Duration(seconds: 5),(){
-      isload = false;
-      setState(() {});
-    });
 
     var response = await deleteAccount(
       pref.getString('user_id').toString(),
       pref.getString('api_token').toString(),
     );
 
+    if (response['status'] == 1) {
+      final pref = await SharedPreferences.getInstance();
+      await pref.clear();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const MyHomePage(),
+        ),
+      );
+
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong..!");
+
+    }
+    setState(() {});
 
   }
 }

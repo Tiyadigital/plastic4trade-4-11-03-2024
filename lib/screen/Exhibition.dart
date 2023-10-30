@@ -1,15 +1,14 @@
+// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, prefer_interpolation_to_compose_strings, depend_on_referenced_packages
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:Plastic4trade/model/GetUpcomingExhibition.dart';
-import 'package:Plastic4trade/model/common.dart';
 import 'package:Plastic4trade/screen/ExhitionDetail.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:ui';
 import 'package:Plastic4trade/model/GetUpcomingExhibition.dart' as getnews;
 import 'package:http/http.dart' as http;
 import '../api/api_interface.dart';
@@ -28,26 +27,21 @@ class Exhibition extends StatefulWidget {
   State<Exhibition> createState() => _ExhibitionState();
 }
 
-
-
-
-
 class _ExhibitionState extends State<Exhibition>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool unread = false,
-      isload = false,
-      alldata = true;
+  bool unread = false, isload = false, alldata = true;
   List<getnews.Data> getupexbitiondata = [];
   List<getnews.Data> getpastexbitiondata = [];
   String? packageName, create_formattedDate, end_formattedDate;
   PackageInfo? packageInfo;
   String limit = "20";
   int selectedIndex = 0, _defaultChoiceIndex = -1;
-  String category_filter_id="";
+  String category_filter_id = "";
   final scrollercontroller = ScrollController();
   int count = 0;
   int offset = 0;
+
   @override
   void initState() {
     checknetowork();
@@ -66,167 +60,141 @@ class _ExhibitionState extends State<Exhibition>
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
-      //isprofile=true;
     } else {
       getPackage();
       get_UpcomingExhibition(offset.toString());
       get_pastExhibition(offset.toString());
       get_categorylist();
-      // get_data();
     }
   }
 
   Widget init() {
     return Scaffold(
-        backgroundColor: Color(0xFFDADADA),
-        appBar: CustomeApp('Exhibition'),
-        body: isload == true
-            ? Column(children: [
-                // give the tab bar a height [can change hheight to preferred height]
-                horiztallist(),
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 15, 15, 8),
-                    child: Container(
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(
-                          25.0,
+      backgroundColor: const Color(0xFFDADADA),
+      appBar: CustomeApp('Exhibition'),
+      body: isload == true
+          ? Column(children: [
+              horiztallist(),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 15, 15, 8),
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(
+                      25.0,
+                    ),
+                  ),
+                  child: TabBar(
+                    controller: _tabController,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        25.0,
+                      ),
+                      color: const Color.fromARGB(255, 0, 91, 148),
+                    ),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    tabs: const [
+                      Tab(
+                        child: Text(
+                          'Upcoming Exhibition',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Metropolis',
+                          ),
                         ),
                       ),
-                      child: TabBar(
-                        controller: _tabController,
-                        // give the indicator a decoration (color and border radius)
-                        indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            25.0,
+                      Tab(
+                        child: Text(
+                          'Past Exhibition',
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Metropolis',
                           ),
-                          color: Color.fromARGB(255, 0, 91, 148),
                         ),
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.black,
-                        tabs: [
-                          // first tab [you can add an icon using the icon property]
-                          Tab(
-                            //text: 'Quick News',
-                            child: Text(
-                              'Upcoming Exhibition',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Metropolis',
-                              ),
-                            ),
-                          ),
-
-                          // second tab [you can add an icon using the icon property]
-                          Tab(
-                            child: Text(
-                              'Past Exhibition',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Metropolis',
-                              ),
-                            ),
-                          ),
-                        ],
-                        onTap: (value) {
-                          if (value == 0) {
-
-                            unread = true;
-                            alldata = false;
-                          } else if (value == 1) {
-                            alldata = true;
-                            unread = false;
-                          }
-                        },
                       ),
-                    )),
-                // tab bar view here
-                Expanded(
-                  child: TabBarView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      controller: _tabController,
-                      // first tab bar view widget
-                      children: [
-                        upcoming_exhibition(),
-                        past_exhibition()
-                        /*news()*/
-                      ]),
-
-                  // second tab bar view widget
+                    ],
+                    onTap: (value) {
+                      if (value == 0) {
+                        unread = true;
+                        alldata = false;
+                      } else if (value == 1) {
+                        alldata = true;
+                        unread = false;
+                      }
+                    },
+                  ),
                 ),
-              ])
-            : Center(
-            child: Platform.isAndroid
-                ? CircularProgressIndicator(
-              value: null,
-              strokeWidth: 2.0,
-              color: Color.fromARGB(255, 0, 91, 148),
-            )
-                : Platform.isIOS
-                ? CupertinoActivityIndicator(
-              color: Color.fromARGB(255, 0, 91, 148),
-              radius: 20,
-              animating: true,
-            )
-                : Container()),
+              ),
+              // tab bar view here
+              Expanded(
+                child: TabBarView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: _tabController,
+                    // first tab bar view widget
+                    children: [
+                      upcoming_exhibition(),
+                      past_exhibition()
+                      /*news()*/
+                    ]),
+
+                // second tab bar view widget
+              ),
+            ])
+          : Center(
+              child: Platform.isAndroid
+                  ? const CircularProgressIndicator(
+                      value: null,
+                      strokeWidth: 2.0,
+                      color: Color.fromARGB(255, 0, 91, 148),
+                    )
+                  : Platform.isIOS
+                      ? const CupertinoActivityIndicator(
+                          color: Color.fromARGB(255, 0, 91, 148),
+                          radius: 20,
+                          animating: true,
+                        )
+                      : Container()),
     );
   }
 
   Widget upcoming_exhibition() {
     return Container(
-        padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
-        //margin: EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
         width: MediaQuery.of(context).size.width,
-        child: FutureBuilder(
-            //future: load_category(),
-            builder: (context, snapshot) {
+        child: FutureBuilder(builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
-              //  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              // crossAxisCount: 2,
-              // mainAxisSpacing: 5,
-              // crossAxisSpacing: 5,
-              // childAspectRatio: .90,
-              /* childAspectRatio:MediaQuery.of(context).size.height/750,
-                    mainAxisSpacing: 12.0,
-                    crossAxisCount: 1,
-                  ),*/
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: getupexbitiondata.length,
               shrinkWrap: true,
               controller: scrollercontroller,
               itemBuilder: (context, index) {
                 getnews.Data result = getupexbitiondata[index];
-                DateFormat format = new DateFormat("yyyy-MM-dd");
+                DateFormat format = DateFormat("yyyy-MM-dd");
 
-                var curret_date = format.parse(result.startDate.toString());
+                var currentDate = format.parse(result.startDate.toString());
 
-                DateTime? dt1 = DateTime.parse(curret_date.toString());
+                DateTime? dt1 = DateTime.parse(currentDate.toString());
 
-                // print(dt1);
                 create_formattedDate =
                     dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
-                var end_date = format.parse(result.endDate.toString());
 
-                DateTime? dt2 = DateTime.parse(end_date.toString());
-
-                // print(dt1);
                 end_formattedDate =
                     dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
-                print('islike123');
-                print(result.isLike);
                 return GestureDetector(
                     onTap: (() {
+print("EX ID = ${result.id.toString()}");
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ExhitionDetail(blog_id: result.id.toString()),
+                            builder: (context) =>
+                                ExhitionDetail(blog_id: result.id.toString()),
                           ));
                     }),
                     child: Card(
@@ -235,24 +203,20 @@ class _ExhibitionState extends State<Exhibition>
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(children: [
                         Container(
-                          margin: EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.all(10.0),
                           height: 150,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
-                            /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
                             child: Image(
                               errorBuilder: (context, object, trace) {
                                 return Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Color.fromARGB(255, 223, 220, 220),
                                   ),
                                 );
                               },
-                              image: NetworkImage(result.imageUrl ?? ''
-                                  //data[index]['member_image'] ?? '',
-                                  ),
+                              image: NetworkImage(result.imageUrl ?? ''),
                               width: MediaQuery.of(context).size.width,
                               fit: BoxFit.fill,
                             ),
@@ -261,64 +225,72 @@ class _ExhibitionState extends State<Exhibition>
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  // child: Flexible(
-                                  child: Text(result.title.toString(),
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ))
-                                  // )
-
+                                padding: const EdgeInsets.all(8.0),
+                                // child: Flexible(
+                                child: Text(
+                                  result.title.toString(),
+                                  maxLines: 2,
+                                  softWrap: true,
+                                  style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
                                   ),
+                                ),
+                              ),
                               Row(
                                 children: [
                                   Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: const EdgeInsets.only(left: 5.0),
                                       child: Row(
                                         children: [
-                                          Icon(Icons.calendar_month_outlined,
+                                          const Icon(
+                                              Icons.calendar_month_outlined,
                                               size: 20),
-                                          SizedBox(width: 2),
+                                          const SizedBox(width: 2),
                                           Text(
-                                            create_formattedDate! +
-                                                " - " +
-                                                end_formattedDate!,
-                                            style:TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(fontSize: 11),
+                                            "${create_formattedDate!} - ${end_formattedDate!}",
+                                            style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(fontSize: 11),
                                           )
                                         ],
                                       )),
                                   Padding(
-                                      padding: EdgeInsets.only(left: 15.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
                                       child: Row(
                                         children: [
-                                          ImageIcon(
+                                          const ImageIcon(
                                               AssetImage('assets/location.png'),
                                               size: 15),
-                                          SizedBox(width: 2),
+                                          const SizedBox(width: 2),
                                           Text(
                                             result.location.toString(),
-                                            style:TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(fontSize: 11),
+                                            style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(fontSize: 11),
                                           )
                                         ],
                                       ))
                                 ],
                               ),
                               Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   // child: Flexible(
                                   child: Text(result.metaDescription.toString(),
                                       maxLines: 2,
                                       softWrap: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: 'Metropolis',
                                         fontWeight: FontWeight.w400,
@@ -327,62 +299,76 @@ class _ExhibitionState extends State<Exhibition>
                                   // )
 
                                   ),
-                              Divider(height: 2.0, thickness: 2),
-                              SizedBox(
+                              const Divider(height: 2.0, thickness: 2),
+                              const SizedBox(
                                 height: 15,
                               ),
                               Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           2.6,
                                       height: 18,
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          //mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            result.isLike=="0"?
-                                            GestureDetector(
-                                                onTap: () {
-                                                  Exhibitionlike(result.id.toString());
-                                                  result.isLike='1';
-                                                  int like=int.parse(result.likeCounter.toString());
-                                                  like=like+1;
-                                                  result.likeCounter=like.toString();
-                                                  /*getnewsdata.clear();
-                                              get_News();*/
-                                                  setState(() {});
-                                                },
-                                        child : Image.asset('assets/like.png',width: 30,height: 28,),)
-                                                :GestureDetector(
-                                                onTap: () {
-                                                  Exhibitionlike(result.id.toString());
-                                                  result.isLike='0';
-                                                  int like=int.parse(result.likeCounter.toString());
-                                                  like=like-1;
-                                                  result.likeCounter=like.toString();
-                                                  //getnewsdata.clear();
-                                                  // get_News();
-                                                  setState(() {});
-                                                },
-                                                child : Image.asset('assets/like1.png',width: 50,height: 28,)),
-                                            Text('Interested ('+ result.likeCounter.toString()+')',
-                                                style: TextStyle(
-                                                  fontSize: 12.0,
-                                                  fontFamily: 'Metropolis',
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
-                                                ))
-                                          ],
-                                        ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        //mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          result.isLike == "0"
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    Exhibitionlike(
+                                                        result.id.toString());
+                                                    result.isLike = '1';
+                                                    int like = int.parse(result
+                                                        .likeCounter
+                                                        .toString());
+                                                    like = like + 1;
+                                                    result.likeCounter =
+                                                        like.toString();
+                                                    setState(() {});
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/like.png',
+                                                    width: 30,
+                                                    height: 28,
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    Exhibitionlike(
+                                                        result.id.toString());
+                                                    result.isLike = '0';
+                                                    int like = int.parse(result
+                                                        .likeCounter
+                                                        .toString());
+                                                    like = like - 1;
+                                                    result.likeCounter =
+                                                        like.toString();
+                                                    //getnewsdata.clear();
+                                                    // get_News();
+                                                    setState(() {});
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/like1.png',
+                                                    width: 30,
+                                                    height: 28,
+                                                  )),
+                                          Text(
+                                              'Interested (${result.likeCounter})',
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                fontFamily: 'Metropolis',
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                              ))
+                                        ],
                                       )),
-                                  Container(
+                                  SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 3.5,
                                     height: 18,
@@ -391,14 +377,14 @@ class _ExhibitionState extends State<Exhibition>
                                       children: [
                                         GestureDetector(
                                             onTap: () {},
-                                            child: ImageIcon(
+                                            child: const ImageIcon(
                                               AssetImage('assets/show.png'),
                                               color: Colors.black,
                                               size: 20,
                                             )),
-                                        SizedBox(width: 2),
+                                        const SizedBox(width: 2),
                                         Text(result.viewCounter.toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 12.0,
                                               fontFamily: 'Metropolis',
                                               fontWeight: FontWeight.w500,
@@ -407,7 +393,7 @@ class _ExhibitionState extends State<Exhibition>
                                       ],
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           5.0,
                                       height: 18,
@@ -416,12 +402,16 @@ class _ExhibitionState extends State<Exhibition>
                                         children: [
                                           GestureDetector(
                                               onTap: () {
-                                                shareImage(url: result.imageUrl.toString(), title: result.title.toString());
+                                                shareImage(
+                                                    url: result.imageUrl
+                                                        .toString(),
+                                                    title: result.title
+                                                        .toString());
                                               },
-                                              child: ImageIcon(AssetImage(
+                                              child: const ImageIcon(AssetImage(
                                                   'assets/Send.png'))),
-                                          SizedBox(width: 2),
-                                          Text('Share',
+                                          const SizedBox(width: 2),
+                                          const Text('Share',
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 fontFamily: 'Metropolis',
@@ -444,14 +434,12 @@ class _ExhibitionState extends State<Exhibition>
               },
             );
           }
-
-          return CircularProgressIndicator();
         }));
   }
 
   Widget past_exhibition() {
     return Container(
-        padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
+        padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
         //margin: EdgeInsets.only(bottom: 10),
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
@@ -460,37 +448,22 @@ class _ExhibitionState extends State<Exhibition>
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
-              //  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              // crossAxisCount: 2,
-              // mainAxisSpacing: 5,
-              // crossAxisSpacing: 5,
-              // childAspectRatio: .90,
-              /* childAspectRatio:MediaQuery.of(context).size.height/750,
-                    mainAxisSpacing: 12.0,
-                    crossAxisCount: 1,
-                  ),*/
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: getpastexbitiondata.length,
               shrinkWrap: true,
               controller: scrollercontroller,
               itemBuilder: (context, index) {
                 getnews.Data result = getpastexbitiondata[index];
-                DateFormat format = new DateFormat("yyyy-MM-dd");
+                DateFormat format = DateFormat("yyyy-MM-dd");
 
-                var curret_date = format.parse(result.startDate.toString());
+                var curretDate = format.parse(result.startDate.toString());
 
-                DateTime? dt1 = DateTime.parse(curret_date.toString());
+                DateTime? dt1 = DateTime.parse(curretDate.toString());
 
-                // print(dt1);
                 create_formattedDate =
                     dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
-                var end_date = format.parse(result.endDate.toString());
 
-                DateTime? dt2 = DateTime.parse(end_date.toString());
-
-                // print(dt1);
                 end_formattedDate =
                     dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
                 return GestureDetector(
@@ -498,7 +471,8 @@ class _ExhibitionState extends State<Exhibition>
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ExhitionDetail(blog_id: result.id.toString()),
+                            builder: (context) =>
+                                ExhitionDetail(blog_id: result.id.toString()),
                           ));
                     }),
                     child: Card(
@@ -507,7 +481,7 @@ class _ExhibitionState extends State<Exhibition>
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(children: [
                         Container(
-                          margin: EdgeInsets.all(10.0),
+                          margin: const EdgeInsets.all(10.0),
                           height: 150,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
@@ -516,7 +490,7 @@ class _ExhibitionState extends State<Exhibition>
                             child: Image(
                               errorBuilder: (context, object, trace) {
                                 return Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: Color.fromARGB(255, 223, 220, 220),
                                   ),
@@ -533,14 +507,14 @@ class _ExhibitionState extends State<Exhibition>
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   // child: Flexible(
                                   child: Text(result.title.toString(),
                                       maxLines: 2,
                                       softWrap: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14.0,
                                         fontFamily: 'Metropolis',
                                         fontWeight: FontWeight.w600,
@@ -552,45 +526,53 @@ class _ExhibitionState extends State<Exhibition>
                               Row(
                                 children: [
                                   Padding(
-                                      padding: EdgeInsets.only(left: 5.0),
+                                      padding: const EdgeInsets.only(left: 5.0),
                                       child: Row(
                                         children: [
-                                          Icon(Icons.calendar_month_outlined,
+                                          const Icon(
+                                              Icons.calendar_month_outlined,
                                               size: 20),
-                                          SizedBox(width: 2),
+                                          const SizedBox(width: 2),
                                           Text(
-                                            create_formattedDate! +
-                                                " - " +
-                                                end_formattedDate!,
-                                            style:TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(fontSize: 11),
+                                            "${create_formattedDate!} - ${end_formattedDate!}",
+                                            style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(fontSize: 11),
                                           )
                                         ],
                                       )),
                                   Padding(
-                                      padding: EdgeInsets.only(left: 15.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
                                       child: Row(
                                         children: [
-                                          ImageIcon(
+                                          const ImageIcon(
                                               AssetImage('assets/location.png'),
                                               size: 15),
-                                          SizedBox(width: 2),
+                                          const SizedBox(width: 2),
                                           Text(
                                             result.location.toString(),
-                                            style:TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                                ?.copyWith(fontSize: 11),
+                                            style: const TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily:
+                                                        'assets/fonst/Metropolis-Black.otf')
+                                                .copyWith(fontSize: 11),
                                           )
                                         ],
                                       ))
                                 ],
                               ),
                               Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   // child: Flexible(
                                   child: Text(result.metaDescription.toString(),
                                       maxLines: 2,
                                       softWrap: true,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: 'Metropolis',
                                         fontWeight: FontWeight.w400,
@@ -599,62 +581,78 @@ class _ExhibitionState extends State<Exhibition>
                                   // )
 
                                   ),
-                              Divider(height: 2.0, thickness: 2),
-                              SizedBox(
+                              const Divider(height: 2.0, thickness: 2),
+                              const SizedBox(
                                 height: 15,
                               ),
                               Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 15,
                                   ),
                                   SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           2.7,
                                       height: 18,
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          //mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            result.isLike=="0"?
-                                            GestureDetector(
-                                              onTap: () {
-                                                Exhibitionlike(result.id.toString());
-                                                result.isLike='1';
-                                                int like=int.parse(result.likeCounter.toString());
-                                                like=like+1;
-                                                result.likeCounter=like.toString();
-                                                /*getnewsdata.clear();
-                                              get_News();*/
-                                                setState(() {});
-                                              },
-                                              child : Image.asset('assets/like.png',width: 30,height: 28,),)
-                                                :GestureDetector(
-                                                onTap: () {
-                                                  Exhibitionlike(result.id.toString());
-                                                  result.isLike='0';
-                                                  int like=int.parse(result.likeCounter.toString());
-                                                  like=like-1;
-                                                  result.likeCounter=like.toString();
-                                                  //getnewsdata.clear();
-                                                  // get_News();
-                                                  setState(() {});
-                                                },
-                                                child : Image.asset('assets/like1.png',width: 30,height: 28,)),
-                                            Text('Interested ('+ result.likeCounter.toString()+')',
-                                                style: TextStyle(
-                                                  fontSize: 12.0,
-                                                  fontFamily: 'Metropolis',
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black,
-                                                ))
-                                          ],
-                                        ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        //mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          result.isLike == "0"
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    Exhibitionlike(
+                                                        result.id.toString());
+                                                    result.isLike = '1';
+                                                    int like = int.parse(result
+                                                        .likeCounter
+                                                        .toString());
+                                                    like = like + 1;
+                                                    result.likeCounter =
+                                                        like.toString();
+                                                    /*getnewsdata.clear();
+                                            get_News();*/
+                                                    setState(() {});
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/like.png',
+                                                    width: 30,
+                                                    height: 28,
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    Exhibitionlike(
+                                                        result.id.toString());
+                                                    result.isLike = '0';
+                                                    int like = int.parse(result
+                                                        .likeCounter
+                                                        .toString());
+                                                    like = like - 1;
+                                                    result.likeCounter =
+                                                        like.toString();
+                                                    //getnewsdata.clear();
+                                                    // get_News();
+                                                    setState(() {});
+                                                  },
+                                                  child: Image.asset(
+                                                    'assets/like1.png',
+                                                    width: 30,
+                                                    height: 28,
+                                                  )),
+                                          Text(
+                                              'Interested (${result.likeCounter})',
+                                              style: const TextStyle(
+                                                fontSize: 12.0,
+                                                fontFamily: 'Metropolis',
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                              ))
+                                        ],
                                       )),
-                                  Container(
+                                  SizedBox(
                                     width:
                                         MediaQuery.of(context).size.width / 3.5,
                                     height: 18,
@@ -663,14 +661,14 @@ class _ExhibitionState extends State<Exhibition>
                                       children: [
                                         GestureDetector(
                                             onTap: () {},
-                                            child: ImageIcon(
+                                            child: const ImageIcon(
                                               AssetImage('assets/show.png'),
                                               color: Colors.black,
                                               size: 20,
                                             )),
-                                        SizedBox(width: 2),
+                                        const SizedBox(width: 2),
                                         Text(result.viewCounter.toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 12.0,
                                               fontFamily: 'Metropolis',
                                               fontWeight: FontWeight.w500,
@@ -679,7 +677,7 @@ class _ExhibitionState extends State<Exhibition>
                                       ],
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                       width: MediaQuery.of(context).size.width /
                                           5.0,
                                       height: 18,
@@ -688,12 +686,16 @@ class _ExhibitionState extends State<Exhibition>
                                         children: [
                                           GestureDetector(
                                               onTap: () {
-                                                shareImage(url: result.imageUrl.toString(), title: result.title.toString());
+                                                shareImage(
+                                                    url: result.imageUrl
+                                                        .toString(),
+                                                    title: result.title
+                                                        .toString());
                                               },
-                                              child: ImageIcon(AssetImage(
+                                              child: const ImageIcon(AssetImage(
                                                   'assets/Send.png'))),
-                                          SizedBox(width: 2),
-                                          Text('Share',
+                                          const SizedBox(width: 2),
+                                          const Text('Share',
                                               style: TextStyle(
                                                 fontSize: 12.0,
                                                 fontFamily: 'Metropolis',
@@ -716,8 +718,6 @@ class _ExhibitionState extends State<Exhibition>
               },
             );
           }
-
-          return CircularProgressIndicator();
         }));
   }
 
@@ -729,97 +729,107 @@ class _ExhibitionState extends State<Exhibition>
         //margin: EdgeInsets.fromLTRB(10, 2.0, 0.0, 0),
         child: FutureBuilder(
 
-          //future: load_subcategory(),
+            //future: load_subcategory(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return ListView.builder(
-                    shrinkWrap: false,
-                    physics: ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: constanst.catdata.length,
-                    itemBuilder: (context, index) {
-                      cat.Result result =constanst.catdata[index];
-                      return Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Wrap(spacing: 6.0, runSpacing: 6.0, children: <
-                              Widget>[
-                            ChoiceChip(
-                              label: Text(
-                                  constanst.catdata[index].categoryName.toString()),
-                              selected: _defaultChoiceIndex == index,
-                              selectedColor:  Color.fromARGB(255, 0, 91, 148),
-                              onSelected: (bool selected) {
-                                setState(() {
-                                  _defaultChoiceIndex = selected ? index : -1;
+          if (snapshot.connectionState == ConnectionState.none &&
+              snapshot.hasData == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            //List<dynamic> users = snapshot.data as List<dynamic>;
+            return ListView.builder(
+                shrinkWrap: false,
+                physics: const ClampingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: constanst.catdata.length,
+                itemBuilder: (context, index) {
+                  cat.Result result = constanst.catdata[index];
+                  return Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: Wrap(spacing: 6.0, runSpacing: 6.0, children: <
+                          Widget>[
+                        ChoiceChip(
+                          label: Text(
+                              constanst.catdata[index].categoryName.toString()),
+                          selected: _defaultChoiceIndex == index,
+                          selectedColor: const Color.fromARGB(255, 0, 91, 148),
+                          onSelected: (bool selected) {
+                            setState(() {
+                              _defaultChoiceIndex = selected ? index : -1;
 
-                                  if (_tabController.index==0) {
-                                    if (_defaultChoiceIndex == -1) {
-                                      category_filter_id = "";
-                                      getupexbitiondata.clear();
-                                      _onLoading();
-                                      get_UpcomingExhibition(offset.toString());
-                                    } else {
-                                      category_filter_id =
-                                          result.categoryId.toString();
-                                      getupexbitiondata.clear();
-                                      _onLoading();
-                                      get_UpcomingExhibition(offset.toString());
-                                    }
-                                  }else if (_tabController.index==1) {
-
-                                    if (_defaultChoiceIndex == -1) {
-                                      category_filter_id = "";
-                                      getupexbitiondata.clear();
-                                      _onLoading();
-                                      get_UpcomingExhibition(offset.toString());
-                                    } else {
-                                      category_filter_id =
-                                          result.categoryId.toString();
-                                      getupexbitiondata.clear();
-                                      _onLoading();
-                                      get_UpcomingExhibition(offset.toString());
-                                    }
-                                    }
-
-                                });
-                              },
-                              // padding: EdgeInsets.all(5),
-                              backgroundColor: Color.fromARGB(255, 236, 232, 232),
-                              labelStyle: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(color: _defaultChoiceIndex==index? Colors.white:Colors.black ),
-                              labelPadding: EdgeInsets.symmetric(horizontal: 14.0),
-                              /*shape: RoundedRectangleBorder(
+                              if (_tabController.index == 0) {
+                                if (_defaultChoiceIndex == -1) {
+                                  category_filter_id = "";
+                                  getupexbitiondata.clear();
+                                  _onLoading();
+                                  get_UpcomingExhibition(offset.toString());
+                                } else {
+                                  category_filter_id =
+                                      result.categoryId.toString();
+                                  getupexbitiondata.clear();
+                                  _onLoading();
+                                  get_UpcomingExhibition(offset.toString());
+                                }
+                              } else if (_tabController.index == 1) {
+                                if (_defaultChoiceIndex == -1) {
+                                  category_filter_id = "";
+                                  getupexbitiondata.clear();
+                                  _onLoading();
+                                  get_UpcomingExhibition(offset.toString());
+                                } else {
+                                  category_filter_id =
+                                      result.categoryId.toString();
+                                  getupexbitiondata.clear();
+                                  _onLoading();
+                                  get_UpcomingExhibition(offset.toString());
+                                }
+                              }
+                            });
+                          },
+                          // padding: EdgeInsets.all(5),
+                          backgroundColor:
+                              const Color.fromARGB(255, 236, 232, 232),
+                          labelStyle: const TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf')
+                              .copyWith(
+                                  color: _defaultChoiceIndex == index
+                                      ? Colors.white
+                                      : Colors.black),
+                          labelPadding:
+                              const EdgeInsets.symmetric(horizontal: 14.0),
+                          /*shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(10.0))
                               ),*/
-                            )
-                          ]));
-                    });
-              }
-            }));
+                        )
+                      ]));
+                });
+          }
+        }));
   }
 
   Future<void> get_UpcomingExhibition(String offset) async {
-    GetUpcomingExhibition getsimmilar = GetUpcomingExhibition();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getupcoming_exbition(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),offset.toString(),limit,category_filter_id);
+    var res = await getupcoming_exbition(
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        offset.toString(),
+        limit,
+        category_filter_id);
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetUpcomingExhibition.fromJson(res);
       if (res['data'] != null) {
-        jsonarray = res['data'];
+        jsonArray = res['data'];
 
         //
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           getnews.Data record = getnews.Data(
               id: data['id'],
               isLike: data['isLike'],
@@ -837,7 +847,6 @@ class _ExhibitionState extends State<Exhibition>
         }
         //isload = true;
 
-        print(getupexbitiondata);
         if (mounted) {
           setState(() {});
         }
@@ -846,25 +855,26 @@ class _ExhibitionState extends State<Exhibition>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
   Future<void> get_pastExhibition(String offset) async {
-    GetUpcomingExhibition getsimmilar = GetUpcomingExhibition();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await getpast_exbition(_pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString(),offset.toString(),limit,category_filter_id);
+    var res = await getpast_exbition(
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        offset.toString(),
+        limit,
+        category_filter_id);
 
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      getsimmilar = GetUpcomingExhibition.fromJson(res);
       if (res['data'] != null) {
-        jsonarray = res['data'];
+        jsonArray = res['data'];
 
         //
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           getnews.Data record = getnews.Data(
               id: data['id'],
               isLike: data['isLike'],
@@ -881,8 +891,6 @@ class _ExhibitionState extends State<Exhibition>
           //loadmore = true;
         }
 
-
-        print(getpastexbitiondata);
         if (mounted) {
           setState(() {});
         }
@@ -894,22 +902,18 @@ class _ExhibitionState extends State<Exhibition>
       Fluttertoast.showToast(msg: res['message']);
     }
     setState(() {});
-    return jsonarray;
+    return jsonArray;
   }
 
-  Future<void> Exhibitionlike(String news_id) async {
-    common_par getsimmilar = common_par();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+  Future<void> Exhibitionlike(String newsId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    print(news_id);
     var res = await exbitionlike_like(
-        news_id.toString(),
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        newsId.toString(),
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
 
-    print(res);
     if (res['status'] == 1) {
-      getsimmilar = common_par.fromJson(res);
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
@@ -919,14 +923,10 @@ class _ExhibitionState extends State<Exhibition>
 
   void getPackage() async {
     packageInfo = await PackageInfo.fromPlatform();
-    String appName = packageInfo!.appName;
     packageName = packageInfo!.packageName;
-    String version = packageInfo!.version;
-    String buildNumber = packageInfo!.buildNumber;
-    print(
-        "App Name : ${appName}, App Package Name: ${packageName},App Version: ${version}, App build Number: ${buildNumber}");
   }
-  void shareImage({required String url,required String title}) async {
+
+  void shareImage({required String url, required String title}) async {
     final imageurl = url;
     final uri = Uri.parse(imageurl);
     final response = await http.get(uri);
@@ -934,17 +934,19 @@ class _ExhibitionState extends State<Exhibition>
     final temp = await getTemporaryDirectory();
     final path = '${temp.path}/image.jpg';
     File(path).writeAsBytesSync(bytes);
-    await Share.shareFiles([path], text: title+"\t"+"\n"+ "\n"+'Hey check out my app at: https://play.google.com/store/apps/details?id='+packageName!);
+    await Share.shareFiles([path],
+        text: title +
+            "\t" +
+            "\n" +
+            "\n" +
+            'Hey check out my app at: https://play.google.com/store/apps/details?id=' +
+            packageName!);
   }
+
   void _scrollercontroller() {
     if (scrollercontroller.position.pixels ==
         scrollercontroller.position.maxScrollExtent) {
-      print(unread);
-      print(alldata);
-
-      if (_tabController.index==0) {
-
-
+      if (_tabController.index == 0) {
         count++;
         if (count == 1) {
           offset = offset + 21;
@@ -953,9 +955,8 @@ class _ExhibitionState extends State<Exhibition>
         }
         _onLoading();
         get_UpcomingExhibition(offset.toString());
-      } else if (_tabController.index==1) {
+      } else if (_tabController.index == 1) {
         count++;
-
 
         if (count == 1) {
           offset = offset + 21;
@@ -963,14 +964,13 @@ class _ExhibitionState extends State<Exhibition>
           offset = offset + 20;
         }
         _onLoading();
-        get_pastExhibition( offset.toString());
+        get_pastExhibition(offset.toString());
       }
-    } /*else{
-      print('hello');
-    }*/
+    }
   }
+
   void _onLoading() {
-    BuildContext dialogContext=context;
+    BuildContext dialogContext = context;
 
     showDialog(
       context: context,
@@ -980,7 +980,7 @@ class _ExhibitionState extends State<Exhibition>
         return Dialog(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          child:  SizedBox(
+          child: SizedBox(
             width: 300.0,
             height: 150.0,
             child: Center(
@@ -989,83 +989,42 @@ class _ExhibitionState extends State<Exhibition>
                 width: 50.0,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 2.0,
-                      color: Color.fromARGB(255, 0, 91, 148),
-                    )
+                        ? const CircularProgressIndicator(
+                            value: null,
+                            strokeWidth: 2.0,
+                            color: Color.fromARGB(255, 0, 91, 148),
+                          )
                         : Platform.isIOS
-                        ? CupertinoActivityIndicator(
-                      color: Color.fromARGB(255, 0, 91, 148),
-                      radius: 20,
-                      animating: true,
-                    )
-                        : Container()
-                ),
+                            ? const CupertinoActivityIndicator(
+                                color: Color.fromARGB(255, 0, 91, 148),
+                                radius: 20,
+                                animating: true,
+                              )
+                            : Container()),
               ),
             ),
-          ),/*Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: 300.0,
-                  height: 150.0,
-                  alignment: AlignmentDirectional.center,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    width: 300.0,
-                    height: 150.0,
-                    alignment: AlignmentDirectional.center,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const
-                      *//*  Container(
-                          margin: const EdgeInsets.only(top: 25.0),
-                          child: Center(
-                            child: Text(
-                              "loading.. wait...",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),*//*
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )*/
+          ),
         );
       },
     );
 
     Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
-      Navigator.of(dialogContext).pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
+      Navigator.of(dialogContext)
+          .pop(); // Use dialogContext to close the dialog
+      // Dialog closed
     });
   }
+
   void get_categorylist() async {
-    GetCategoryController bt = await GetCategoryController();
+    GetCategoryController bt = GetCategoryController();
     constanst.cat_data = bt.setlogin();
 
     constanst.cat_data!.then((value) {
-      if (value != null) {
-        for (var item in value) {
-          constanst.catdata.add(item);
-        }
+      for (var item in value) {
+        constanst.catdata.add(item);
       }
       isload = true;
       setState(() {});
     });
-    //
   }
 }

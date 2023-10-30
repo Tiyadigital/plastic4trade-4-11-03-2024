@@ -1,5 +1,6 @@
 
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 class Notificationsetting extends StatefulWidget {
@@ -49,12 +50,12 @@ class _NotificationsettingState extends State<Notificationsetting> {
   Widget initwidget() {
     return Scaffold(
        // backgroundColor: Color.fromARGB(240, 218, 218, 218),
-        backgroundColor: Color(0xFFDADADA),
+        backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           centerTitle: true,
           elevation: 0,
-          title: Text('Notification Settings',
+          title: const Text('Notification Settings',
               softWrap: true,
               style: TextStyle(
                 fontSize: 20.0,
@@ -66,7 +67,7 @@ class _NotificationsettingState extends State<Notificationsetting> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
@@ -80,14 +81,14 @@ class _NotificationsettingState extends State<Notificationsetting> {
 
   Widget notificationsetting() {
     return Container(
-      margin: EdgeInsets.all(15.0),
+      margin: const EdgeInsets.all(15.0),
         child: FutureBuilder(
 
       //future: load_subcategory(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               snapshot.hasData == null) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
@@ -95,9 +96,9 @@ class _NotificationsettingState extends State<Notificationsetting> {
             //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
                 shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: choices.length,
-                padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+                padding: const EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
                 itemBuilder: (context, index) {
                   Choice record = choices[index];
 
@@ -105,51 +106,47 @@ class _NotificationsettingState extends State<Notificationsetting> {
                     onTap: () {
                       setState(() {});
                     },
-                    child: Container(
+                    child: SizedBox(
                         height: 65,
 
                         child: Card(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(
                                   12.0))
                           ),
                           //elevation: 2,
-                          child: Container(
-                            child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(padding: EdgeInsets.fromLTRB(
-                                      10.0, 0, 5.0, 0.0),
-                                      child: Image.asset(
-                                        'assets/Notification.png',
-                                      color: Colors.black54,height: 20,)),
-                                  Expanded(
+                          child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(padding: const EdgeInsets.fromLTRB(
+                                    10.0, 0, 5.0, 0.0),
+                                    child: Image.asset(
+                                      'assets/Notification.png',
+                                    color: Colors.black54,height: 20,)),
+                                Expanded(
 
-                                      child: Text(
-                                        '${record.title}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontSize: 15,fontWeight: FontWeight.w500),)
-                                  ),
-                                  Padding(padding: EdgeInsets.only(right: 10),
-                                      child:Switch(
-                                        value: record.icon,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            record.icon=value;
-                                            print(record.icon);
-                                          });
-                                        },
-                                        activeTrackColor: Color.fromARGB(255, 0, 91, 148),
-                                        activeColor: Colors.grey,
-                                      ),
-                                  ),
-                                ]),
-                          ),
+                                    child: Text(
+                                      record.title, style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400,color: Colors.black,fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(fontSize: 15,fontWeight: FontWeight.w500),)
+                                ),
+                                Padding(padding: const EdgeInsets.only(right: 10),
+                                    child:Switch(
+                                      value: record.icon,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          record.icon=value;
+                                        });
+                                      },
+                                      activeTrackColor: const Color.fromARGB(255, 0, 91, 148),
+                                      activeColor: Colors.grey,
+                                    ),
+                                ),
+                              ]),
                         )),
                   );
                 });
 
-            return CircularProgressIndicator();
           }
         }));
   }

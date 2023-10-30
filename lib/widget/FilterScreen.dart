@@ -279,7 +279,7 @@ class _FilterScreenState extends State<FilterScreen> {
                _color5 = Colors.black;
                _color6 = Colors.black;
               setState(() {});
-            }, child: Text('Category',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color1),))),
+            }, child: Text('Category',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color1),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -294,7 +294,7 @@ class _FilterScreenState extends State<FilterScreen> {
           _color5 = Colors.black;
           _color6 = Colors.black;
           setState(() {});
-        }, child: Text('Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color2),))),
+        }, child: Text('Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color2),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -309,7 +309,7 @@ class _FilterScreenState extends State<FilterScreen> {
           _color5 = Colors.black;
           _color6 = Colors.black;
           setState(() {});
-        }, child: Text('Grade',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color3),))),
+        }, child: Text('Grade',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color3),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -324,7 +324,7 @@ class _FilterScreenState extends State<FilterScreen> {
           _color5 = Colors.black;
           _color6 = Colors.black;
           setState(() {});
-        }, child: Text('Business Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color4),))),
+        }, child: Text('Business Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color4),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -339,7 +339,7 @@ class _FilterScreenState extends State<FilterScreen> {
           _color4 = Colors.black;
           _color6 = Colors.black;
           setState(() {});
-        }, child: Text('Post Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color5),))),
+        }, child: Text('Post Type',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color5),))),
       ),
       Divider(color: Colors.grey),
       SizedBox(
@@ -354,7 +354,7 @@ class _FilterScreenState extends State<FilterScreen> {
           _color5 = Colors.black;
           _color3 = Colors.black;
           setState(() {});
-        }, child: GestureDetector(child: Text('Location',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf')?.copyWith(fontWeight: FontWeight.w500,color:_color6),),
+        }, child: GestureDetector(child: Text('Location',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color6),),
                                  onTap: () {
                                    search_location();
                                  }, ))),

@@ -5,13 +5,13 @@ class GetProductName {
 
   GetProductName({int? status, String? message, List<Result>? result}) {
     if (status != null) {
-      this._status = status;
+      _status = status;
     }
     if (message != null) {
-      this._message = message;
+      _message = message;
     }
     if (result != null) {
-      this._result = result;
+      _result = result;
     }
   }
 
@@ -28,17 +28,17 @@ class GetProductName {
     if (json['result'] != null) {
       _result = <Result>[];
       json['result'].forEach((v) {
-        _result!.add(new Result.fromJson(v));
+        _result!.add(Result.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this._status;
-    data['message'] = this._message;
-    if (this._result != null) {
-      data['result'] = this._result!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = _status;
+    data['message'] = _message;
+    if (_result != null) {
+      data['result'] = _result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -49,7 +49,7 @@ class Result {
 
   Result({String? productName}) {
     if (productName != null) {
-      this._productName = productName;
+      _productName = productName;
     }
   }
 
@@ -61,8 +61,8 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['productName'] = this._productName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['productName'] = _productName;
     return data;
   }
 }

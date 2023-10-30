@@ -29,16 +29,7 @@ class FirebaseApi {
   final _localNotification = FlutterLocalNotificationsPlugin();
   late BuildContext _context;
 
-  Future<void> handleBackgroundMessage(RemoteMessage message) async {
-    // var data = json.decode(message.payload ?? '');
-    // notificationPayload.value = message.data;
-
-    //notification_redirect(message.data,context);
-    // Navigator.push(
-    //     _context,
-    //     MaterialPageRoute(
-    //         builder: (context) => other_user_profile(int.parse('14969'))));
-  }
+  Future<void> handleBackgroundMessage(RemoteMessage message) async {}
 
   void handleMessage(RemoteMessage message, context) {
     _context = context;
@@ -54,59 +45,44 @@ class FirebaseApi {
     );
 
     if (FirebaseMessaging.instance.isAutoInitEnabled) {
-    } else {
-    }
+    } else {}
 
     FirebaseMessaging.instance.getInitialMessage().then((value) {
       if (value != null) {
-        //Fluttertoast.showToast(msg: 'APP Terminate ');
         _context = context;
         notification_redirect(value.data, _context);
       }
     });
 
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
-    /* FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('inside open');
-     _context=context;
-      notification_redirect(message.data,_context);
-
-    },);*/
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // Extract data from the message payload
-      //String pageToOpen = message.data['page'];
-
-      // Use Navigator to navigate to the desired page
-      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainScreen(3)));
-    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      //_context=context;
-      // Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m notification');
       final notification = message.notification;
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,
+      Fluttertoast.showToast(
+          timeInSecForIosWeb: 2,
           msg: 'notification.title${notification!.title.toString()}');
       if (notification == null) return;
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'i m notification');
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: 'i m notification');
 
       _localNotification.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-              android: AndroidNotificationDetails(
-                  _androidchannel.id, _androidchannel.name,
-                  channelDescription: _androidchannel.description,
-                  importance: Importance.max,
-                  priority: Priority.high,
-                  playSound: true,
-                  styleInformation: const DefaultStyleInformation(true, true),
-                  icon: '@drawable/ic_launcher'),
-              iOS: const IOSNotificationDetails()),
-          payload: jsonEncode(message.toMap()),);
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+            android: AndroidNotificationDetails(
+                _androidchannel.id, _androidchannel.name,
+                channelDescription: _androidchannel.description,
+                importance: Importance.max,
+                priority: Priority.high,
+                playSound: true,
+                styleInformation: const DefaultStyleInformation(true, true),
+                icon: '@drawable/ic_launcher'),
+            iOS: const IOSNotificationDetails()),
+        payload: jsonEncode(message.toMap()),
+      );
       AndroidNotification? notification1 = message.notification?.android;
-      if (notification1 != null) {
-      }
+      if (notification1 != null) {}
     });
   }
 
@@ -125,7 +101,8 @@ class FirebaseApi {
       await Firebase.initializeApp();
       final firebaseMessaging0 = FirebaseMessaging.instance;
       await firebaseMessaging0.requestPermission();
-      await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      await FirebaseMessaging.instance
+          .setForegroundNotificationPresentationOptions(
         alert: true,
         badge: true,
         sound: true,
@@ -133,16 +110,12 @@ class FirebaseApi {
       final APNSToken =
           await firebaseMessaging0.getToken().then((value) => value);
       constanst.APNSToken = APNSToken.toString();
-
     }
     initPushNotification(context);
     initLocalNotification(context);
-
   }
 
-  show_notification(String? title, String? body, Map<String, dynamic> data) {
-
-  }
+  show_notification(String? title, String? body, Map<String, dynamic> data) {}
 
   notification_redirect(Map<String, dynamic> data, BuildContext context) async {
     String notification_type = data['type'];
@@ -152,20 +125,15 @@ class FirebaseApi {
 
     if (notification_type == "profile like") {
       if (user_id.toString().isNotEmpty) {
-        // Navigator.of(_context).push(MaterialPageRoute(builder: (context) => other_user_profile(int.parse(user_id.toString()))));
         try {
           await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
                       other_user_profile(int.parse(user_id.toString()))));
-        } catch (e) {
-
-        }
-      } else {
-      }
-    } else if (notification_type== "follower_profile_like") {
-
+        } catch (e) {}
+      } else {}
+    } else if (notification_type == "follower_profile_like") {
       if (user_id.toString().isNotEmpty) {
         await Navigator.push(
             _context,
@@ -175,10 +143,8 @@ class FirebaseApi {
       }
     } else if (notification_type == "profile_review") {
       if (user_id.toString().isNotEmpty) {
-        await Navigator.push(
-            _context,
-            MaterialPageRoute(
-                builder: (context) => const bussinessprofile()));
+        await Navigator.push(_context,
+            MaterialPageRoute(builder: (context) => const bussinessprofile()));
       }
     } else if (notification_type.toString() == "Business profile dislike") {
       if (user_id.toString().isNotEmpty) {
@@ -194,11 +160,10 @@ class FirebaseApi {
           await Navigator.push(
               _context,
               MaterialPageRoute(
-                  builder: (context) =>Buyer_sell_detail(
+                  builder: (context) => Buyer_sell_detail(
                       post_type: 'SalePost', prod_id: post_id)));
-
         }
-      }else  {
+      } else {
         if (post_type.toString() == "BuyPost") {
           if (post_id.toString().isNotEmpty) {
             await Navigator.push(
@@ -209,20 +174,23 @@ class FirebaseApi {
           }
         }
       }
-    }  else if (notification_type.toString() == "followuser") {
+    } else if (notification_type.toString() == "followuser") {
       if (user_id.toString().isNotEmpty) {
-
         await Navigator.push(
             _context,
             MaterialPageRoute(
-                builder: (context) => const follower(initialIndex: 0,)));
+                builder: (context) => const follower(
+                      initialIndex: 0,
+                    )));
       }
     } else if (notification_type.toString() == "unfollowuser") {
       if (user_id.toString().isNotEmpty) {
         await Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const follower(initialIndex: 0,)));
+                builder: (context) => const follower(
+                      initialIndex: 0,
+                    )));
       }
     } else if (notification_type.toString() == "profile_review") {
       if (user_id.toString().isNotEmpty) {
@@ -233,49 +201,32 @@ class FirebaseApi {
                     other_user_profile(int.parse(user_id.toString()))));
       }
     } else if (notification_type.toString() == "live_price") {
-      // if(result.profileUserId.toString().isNotEmpty){
-      Navigator.push(
-          _context, MaterialPageRoute(builder: (context) => const LivepriceScreen()));
-      // }
+      Navigator.push(_context,
+          MaterialPageRoute(builder: (context) => const LivepriceScreen()));
     } else if (notification_type.toString() == "quick_news_notification") {
-      // if(result.profileUserId.toString().isNotEmpty){
       Navigator.push(
           _context, MaterialPageRoute(builder: (context) => MainScreen(3)));
-      // }
     } else if (notification_type.toString() == "news") {
-      // if(result.profileUserId.toString().isNotEmpty){
       Navigator.push(
           _context, MaterialPageRoute(builder: (context) => MainScreen(3)));
-      // }
     } else if (notification_type.toString() == "blog") {
-      // if(result.profileUserId.toString().isNotEmpty){
-      Navigator.push(_context, MaterialPageRoute(builder: (context) => const Blog()));
-      // }
+      Navigator.push(
+          _context, MaterialPageRoute(builder: (context) => const Blog()));
     } else if (notification_type.toString() == "video") {
-      // if(result.profileUserId.toString().isNotEmpty){
       Navigator.push(
           _context, MaterialPageRoute(builder: (context) => const Videos()));
-      // }
     } else if (notification_type.toString() == "banner") {
-      // if(result.profileUserId.toString().isNotEmpty){
       Navigator.push(
           _context, MaterialPageRoute(builder: (context) => MainScreen(0)));
-      // }
     } else if (notification_type.toString() == "tutorial_video") {
-      // if(result.profileUserId.toString().isNotEmpty){
-      Navigator.push(
-          _context, MaterialPageRoute(builder: (context) => const Tutorial_Videos()));
-      // }
+      Navigator.push(_context,
+          MaterialPageRoute(builder: (context) => const Tutorial_Videos()));
     } else if (notification_type.toString() == "exhibition") {
-      // if(result.profileUserId.toString().isNotEmpty){
-      Navigator.push(
-          _context, MaterialPageRoute(builder: (context) => const Exhibition()));
-      // }
+      Navigator.push(_context,
+          MaterialPageRoute(builder: (context) => const Exhibition()));
     } else if (notification_type.toString() == "quicknews") {
-      // if(result.profileUserId.toString().isNotEmpty){
       Navigator.push(
           _context, MaterialPageRoute(builder: (context) => MainScreen(3)));
-      // }
     }
   }
 
@@ -285,10 +236,6 @@ class FirebaseApi {
     const setting = InitializationSettings(android: android, iOS: iOS);
     await _localNotification.initialize(
       setting,
-      /*onSelectNotification: (payload) {
-        final message=RemoteMessage.fromMap(jsonDecode(payload!));
-        handleMessage(message,context);
-      },*/
     );
     final platform = _localNotification.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
@@ -308,16 +255,14 @@ class FirebaseApi {
     // Also handle any interaction when the app is in the background via a
     // Stream listener
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-    constanst.notificationtype=initialMessage?.data['type'];
-    constanst.notiuser=initialMessage?.data['user_id'];
-    constanst.notipostid=initialMessage?.data['postId'];
-    constanst.notypost_type=initialMessage?.data['post_type'];
-    return  initialMessage!.data.toString();
+    constanst.notificationtype = initialMessage?.data['type'];
+    constanst.notiuser = initialMessage?.data['user_id'];
+    constanst.notipostid = initialMessage?.data['postId'];
+    constanst.notypost_type = initialMessage?.data['post_type'];
+    return initialMessage!.data.toString();
   }
 
   static Future _handleMessage(RemoteMessage? message) async {
-
     return 3;
-
   }
 }

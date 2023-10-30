@@ -168,8 +168,6 @@ class _ChartDetailState extends State<ChartDetail> {
       "userImage2": "",
       "userName1": "",
       "userName2": "",
-
-      // This will use the server's timestamp
     }).catchError(
       (error) => print('Failed to send message: $error'),
     );

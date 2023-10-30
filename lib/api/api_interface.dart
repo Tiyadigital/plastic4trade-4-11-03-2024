@@ -25,8 +25,8 @@ Future androidDevice_Register(String mbl) async {
   String loginUrl = 'androidDeviceRegister';
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + loginUrl), headers: {
-    "Accept": "application/json"
+  final response = await http.post(Uri.parse(baseurl + loginUrl),
+      headers: {"Accept": "application/json"
   }, body: {
     'regId': constanst.fcm_token,
     'device_id': constanst.android_device_id,
@@ -330,7 +330,7 @@ Future getCategoryList() async {
   return res;
 }
 
-// GetBussinessType
+// GetBusinessType
 Future getBussinessType() async {
   String getbussinesstypeUrl = 'getBusinessType';
   var res;
@@ -343,7 +343,7 @@ Future getBussinessType() async {
   return res;
 }
 
-// Add Bussiness Add
+// Add Business Add
 Future addbussiness(
     String userId,
     String userToken,
@@ -1229,11 +1229,11 @@ Future product_like(String newsId, String userId, String userToken) async {
 }
 
 Future profile_like(String profileId, String userId, String userToken) async {
-  String getsalepostUrl = 'addProfileLike';
+  String getSalePostUrl = 'addProfileLike';
 
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
+  final response = await http.post(Uri.parse(baseurl + getSalePostUrl),
       headers: {
         "Accept": "application/json"
       },
@@ -1250,12 +1250,12 @@ Future profile_like(String profileId, String userId, String userToken) async {
 }
 
 Future getnewssdetail(String userId, String userToken, String blogid) async {
-  String getsalepostUrl =
+  String getSalePostUrl =
       'getNewsDetails?userId=$userId&userToken=$userToken&newsId=$blogid';
 
   var res;
 
-  final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+  final response = await http.get(Uri.parse(baseurl + getSalePostUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -1264,11 +1264,11 @@ Future getnewssdetail(String userId, String userToken, String blogid) async {
 }
 
 Future getblogs(String userId, String userToken) async {
-  String getsalepostUrl = 'getBlog?userId=$userId&userToken=$userToken';
+  String getSalePostUrl = 'getBlog?userId=$userId&userToken=$userToken';
 
   var res;
 
-  final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+  final response = await http.get(Uri.parse(baseurl + getSalePostUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -1277,12 +1277,12 @@ Future getblogs(String userId, String userToken) async {
 }
 
 Future getblogsdetail(String userId, String userToken, String blogid) async {
-  String getsalepostUrl =
+  String getSalePostUrl =
       'getBlogDetails?userId=$userId&userToken=$userToken&blogId=$blogid';
 
   var res;
 
-  final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+  final response = await http.get(Uri.parse(baseurl + getSalePostUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -1291,11 +1291,11 @@ Future getblogsdetail(String userId, String userToken, String blogid) async {
 }
 
 Future blog_like(String blogId, String userId, String userToken) async {
-  String getsalepostUrl = 'addBlogLike';
+  String getSalePostUrl = 'addBlogLike';
 
   var res;
 
-  final response = await http.post(Uri.parse(baseurl + getsalepostUrl),
+  final response = await http.post(Uri.parse(baseurl + getSalePostUrl),
       headers: {"Accept": "application/json"},
       body: {'blog_id': blogId, 'user_id': userId, 'userToken': userToken});
 
@@ -1319,6 +1319,21 @@ Future getFollowerLists(
   return res;
 }
 
+
+Future getOtherUserFollowerLists(
+    String userId, String userToken, String profileId) async {
+  String getfollowerlistUrl =
+      'getFollowerList?userId=$userId&userToken=$userToken&profileId=$profileId';
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + getfollowerlistUrl));
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
 Future getfollwingList(
     String userId, String userToken, String profileId, String search) async {
   String getsalepostUrl =
@@ -1332,6 +1347,21 @@ Future getfollwingList(
   }
   return res;
 }
+
+Future getOtherUserFollowingList(
+    String userId, String userToken, String profileId) async {
+  String getsalepostUrl =
+      'getFollowingList?userId=$userId&userToken=$userToken&profileId=$profileId';
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
 
 Future followUnfollow(String isFollow, String otherUserId, String userid,
     String userToken) async {
@@ -1416,6 +1446,19 @@ Future gettutorialvideo_screen(String screenId) async {
   var res;
 
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+Future getSocialLinks() async {
+  String socialLinks = 'getsocialmedia';
+
+  var res;
+
+  final response = await http.get(Uri.parse(baseurl + socialLinks));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -2282,8 +2325,7 @@ Future getProductInterest(userId, userToken, productId) async {
 }
 
 Future getProductView(productId) async {
-  String productView =
-      "getpostviewed_user?post_id=$productId";
+  String productView = "getpostviewed_user?post_id=$productId";
 
   var res;
 
@@ -2294,9 +2336,8 @@ Future getProductView(productId) async {
   return res;
 }
 
-Future getProductShareCount(userId,productId) async {
-  String productShare =
-      "countpostshare?user_id=$userId&post_id=$productId";
+Future getProductShareCount(userId, productId) async {
+  String productShare = "countpostshare?user_id=$userId&post_id=$productId";
 
   var res;
 
@@ -2307,9 +2348,8 @@ Future getProductShareCount(userId,productId) async {
   return res;
 }
 
-Future getProductShare(userId,productId) async {
-  String productShare =
-      "getpostshareuser?user_id=$userId&post_id=$productId";
+Future getProductShare(userId, productId) async {
+  String productShare = "getpostshareuser?user_id=$userId&post_id=$productId";
 
   var res;
 
@@ -2517,15 +2557,9 @@ Future get_databytimeduration(String codeId) async {
 }
 
 Future deleteAccount(userId, userToken) async {
-  String deleteAccount = "deletemyaccount";
+  String deleteAccount = "deletemyaccount?userId=$userId&userToken=$userToken";
   var res;
-  final response =
-      await http.post(Uri.parse(baseurl + deleteAccount), headers: {
-    "Accept": "application/json"
-  }, body: {
-    "userId": userId,
-    "userToken": userToken,
-  });
+  final response = await http.get(Uri.parse(baseurl + deleteAccount));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);

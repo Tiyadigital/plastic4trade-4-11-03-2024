@@ -82,8 +82,8 @@ class _bussinessprofileState extends State<bussinessprofile>
       Third_currency_sign = "";
   int? view_count, like, reviews_count, following_count, followers_count,is_prime;
   bool? isload;
-  GetSalePostList salePostList = new GetSalePostList();
-  GetSalePostList buyPostList = new GetSalePostList();
+  GetSalePostList salePostList = GetSalePostList();
+  GetSalePostList buyPostList = GetSalePostList();
   int offset = 0, post_count = 0;
   int count = 0;
   String? profileid;
@@ -776,8 +776,6 @@ class _bussinessprofileState extends State<bussinessprofile>
                     color: Colors.black26,
                     height: 2.0,
                   ),
-                  /* _tabSection(context),*/
-                  /* LikeWidget1()*/
                   TabBar(
                     controller: _parentController,
                     tabs: [
@@ -1039,7 +1037,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              ...buildWidgets(abot_buss!),
+                                              ...buildWidgets(abot_buss ?? ""),
                                             ],
                                           )
                                         ],

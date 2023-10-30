@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 class getDirectory {
   int? _status;
   String? _message;
@@ -5,13 +7,13 @@ class getDirectory {
 
   getDirectory({int? status, String? message, List<Result>? result}) {
     if (status != null) {
-      this._status = status;
+      _status = status;
     }
     if (message != null) {
-      this._message = message;
+      _message = message;
     }
     if (result != null) {
-      this._result = result;
+      _result = result;
     }
   }
 
@@ -35,10 +37,10 @@ class getDirectory {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this._status;
-    data['message'] = this._message;
-    if (this._result != null) {
-      data['result'] = this._result!.map((v) => v.toJson()).toList();
+    data['status'] = _status;
+    data['message'] = _message;
+    if (_result != null) {
+      data['result'] = _result!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -132,130 +134,130 @@ class Result {
         List<String>? productName,
         String? userImageUrl}) {
     if (id != null) {
-      this._id = id;
+      _id = id;
     }
     if (username != null) {
-      this._username = username;
+      _username = username;
     }
     if (email != null) {
-      this._email = email;
+      _email = email;
     }
     if (password != null) {
-      this._password = password;
+      _password = password;
     }
     if (countryCode != null) {
-      this._countryCode = countryCode;
+      _countryCode = countryCode;
     }
     if (device != null) {
-      this._device = device;
+      _device = device;
     }
     if (phoneno != null) {
-      this._phoneno = phoneno;
+      _phoneno = phoneno;
     }
     if (userImage != null) {
-      this._userImage = userImage;
+      _userImage = userImage;
     }
     if (userToken != null) {
-      this._userToken = userToken;
+      _userToken = userToken;
     }
     if (signupDate != null) {
-      this._signupDate = signupDate;
+      _signupDate = signupDate;
     }
     if (isBlock != null) {
-      this._isBlock = isBlock;
+      _isBlock = isBlock;
     }
     if (blockDate != null) {
-      this._blockDate = blockDate;
+      _blockDate = blockDate;
     }
     if (registerStatus != null) {
-      this._registerStatus = registerStatus;
+      _registerStatus = registerStatus;
     }
     if (createdAt != null) {
-      this._createdAt = createdAt;
+      _createdAt = createdAt;
     }
     if (updatedAt != null) {
-      this._updatedAt = updatedAt;
+      _updatedAt = updatedAt;
     }
     if (emailCode != null) {
-      this._emailCode = emailCode;
+      _emailCode = emailCode;
     }
     if (emailCodeDateTime != null) {
-      this._emailCodeDateTime = emailCodeDateTime;
+      _emailCodeDateTime = emailCodeDateTime;
     }
     if (smsCode != null) {
-      this._smsCode = smsCode;
+      _smsCode = smsCode;
     }
     if (smsCodeDateTime != null) {
-      this._smsCodeDateTime = smsCodeDateTime;
+      _smsCodeDateTime = smsCodeDateTime;
     }
     if (forgotpasswordDateTime != null) {
-      this._forgotpasswordDateTime = forgotpasswordDateTime;
+      _forgotpasswordDateTime = forgotpasswordDateTime;
     }
     if (verifyEmail != null) {
-      this._verifyEmail = verifyEmail;
+      _verifyEmail = verifyEmail;
     }
     if (verifySms != null) {
-      this._verifySms = verifySms;
+      _verifySms = verifySms;
     }
     if (categoryId != null) {
-      this._categoryId = categoryId;
+      _categoryId = categoryId;
     }
     if (typeId != null) {
-      this._typeId = typeId;
+      _typeId = typeId;
     }
     if (gradeId != null) {
-      this._gradeId = gradeId;
+      _gradeId = gradeId;
     }
     if (stepCounter != null) {
-      this._stepCounter = stepCounter;
+      _stepCounter = stepCounter;
     }
     if (posttype != null) {
-      this._posttype = posttype;
+      _posttype = posttype;
     }
     if (locationInterest != null) {
-      this._locationInterest = locationInterest;
+      _locationInterest = locationInterest;
     }
     if (coverImage != null) {
-      this._coverImage = coverImage;
+      _coverImage = coverImage;
     }
     if (isDirector != null) {
-      this._isDirector = isDirector;
+      _isDirector = isDirector;
     }
     if (directorStartDate != null) {
-      this._directorStartDate = directorStartDate;
+      _directorStartDate = directorStartDate;
     }
     if (directorEndDate != null) {
-      this._directorEndDate = directorEndDate;
+      _directorEndDate = directorEndDate;
     }
     if (directorCreatedDate != null) {
-      this._directorCreatedDate = directorCreatedDate;
+      _directorCreatedDate = directorCreatedDate;
     }
     if (deletedAt != null) {
-      this._deletedAt = deletedAt;
+      _deletedAt = deletedAt;
     }
     if (isExhibitor != null) {
-      this._isExhibitor = isExhibitor;
+      _isExhibitor = isExhibitor;
     }
     if (exhibitorStartDate != null) {
-      this._exhibitorStartDate = exhibitorStartDate;
+      _exhibitorStartDate = exhibitorStartDate;
     }
     if (exhibitorEndDate != null) {
-      this._exhibitorEndDate = exhibitorEndDate;
+      _exhibitorEndDate = exhibitorEndDate;
     }
     if (exhibitorCreatedDate != null) {
-      this._exhibitorCreatedDate = exhibitorCreatedDate;
+      _exhibitorCreatedDate = exhibitorCreatedDate;
     }
     if (businessType != null) {
-      this._businessType = businessType;
+      _businessType = businessType;
     }
     if (address != null) {
-      this._address = address;
+      _address = address;
     }
     if (productName != null) {
-      this._productName = productName;
+      _productName = productName;
     }
     if (userImageUrl != null) {
-      this._userImageUrl = userImageUrl;
+      _userImageUrl = userImageUrl;
     }
   }
 
@@ -402,48 +404,48 @@ class Result {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['username'] = this._username;
-    data['email'] = this._email;
-    data['password'] = this._password;
-    data['countryCode'] = this._countryCode;
-    data['device'] = this._device;
-    data['phoneno'] = this._phoneno;
-    data['userImage'] = this._userImage;
-    data['userToken'] = this._userToken;
-    data['signup_date'] = this._signupDate;
-    data['is_block'] = this._isBlock;
-    data['blockDate'] = this._blockDate;
-    data['register_status'] = this._registerStatus;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
-    data['email_code'] = this._emailCode;
-    data['emailCodeDateTime'] = this._emailCodeDateTime;
-    data['sms_code'] = this._smsCode;
-    data['smsCodeDateTime'] = this._smsCodeDateTime;
-    data['forgotpasswordDateTime'] = this._forgotpasswordDateTime;
-    data['verify_email'] = this._verifyEmail;
-    data['verify_sms'] = this._verifySms;
-    data['category_id'] = this._categoryId;
-    data['type_id'] = this._typeId;
-    data['grade_id'] = this._gradeId;
-    data['step_counter'] = this._stepCounter;
-    data['posttype'] = this._posttype;
-    data['location_interest'] = this._locationInterest;
-    data['coverImage'] = this._coverImage;
-    data['is_director'] = this._isDirector;
-    data['director_start_date'] = this._directorStartDate;
-    data['director_end_date'] = this._directorEndDate;
-    data['director_created_date'] = this._directorCreatedDate;
-    data['deleted_at'] = this._deletedAt;
-    data['is_exhibitor'] = this._isExhibitor;
-    data['exhibitor_start_date'] = this._exhibitorStartDate;
-    data['exhibitor_end_date'] = this._exhibitorEndDate;
-    data['exhibitor_created_date'] = this._exhibitorCreatedDate;
-    data['business_type'] = this._businessType;
-    data['address'] = this._address;
-    data['product_name'] = this._productName;
-    data['user_image_url'] = this._userImageUrl;
+    data['id'] = _id;
+    data['username'] = _username;
+    data['email'] = _email;
+    data['password'] = _password;
+    data['countryCode'] = _countryCode;
+    data['device'] = _device;
+    data['phoneno'] = _phoneno;
+    data['userImage'] = _userImage;
+    data['userToken'] = _userToken;
+    data['signup_date'] = _signupDate;
+    data['is_block'] = _isBlock;
+    data['blockDate'] = _blockDate;
+    data['register_status'] = _registerStatus;
+    data['created_at'] = _createdAt;
+    data['updated_at'] = _updatedAt;
+    data['email_code'] = _emailCode;
+    data['emailCodeDateTime'] = _emailCodeDateTime;
+    data['sms_code'] = _smsCode;
+    data['smsCodeDateTime'] = _smsCodeDateTime;
+    data['forgotpasswordDateTime'] = _forgotpasswordDateTime;
+    data['verify_email'] = _verifyEmail;
+    data['verify_sms'] = _verifySms;
+    data['category_id'] = _categoryId;
+    data['type_id'] = _typeId;
+    data['grade_id'] = _gradeId;
+    data['step_counter'] = _stepCounter;
+    data['posttype'] = _posttype;
+    data['location_interest'] = _locationInterest;
+    data['coverImage'] = _coverImage;
+    data['is_director'] = _isDirector;
+    data['director_start_date'] = _directorStartDate;
+    data['director_end_date'] = _directorEndDate;
+    data['director_created_date'] = _directorCreatedDate;
+    data['deleted_at'] = _deletedAt;
+    data['is_exhibitor'] = _isExhibitor;
+    data['exhibitor_start_date'] = _exhibitorStartDate;
+    data['exhibitor_end_date'] = _exhibitorEndDate;
+    data['exhibitor_created_date'] = _exhibitorCreatedDate;
+    data['business_type'] = _businessType;
+    data['address'] = _address;
+    data['product_name'] = _productName;
+    data['user_image_url'] = _userImageUrl;
     return data;
   }
 }

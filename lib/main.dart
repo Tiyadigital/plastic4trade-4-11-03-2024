@@ -3,8 +3,6 @@
 
 import 'dart:async';
 import 'dart:io' show Platform;
-import 'dart:math';
-import 'dart:developer';
 
 import 'package:Plastic4trade/api/firebase_api.dart';
 import 'package:Plastic4trade/widget/MainScreen.dart';
@@ -19,9 +17,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'api/api_interface.dart';
-import 'model/Login.dart';
 import 'screen/LoginScreen.dart';
 import 'utill/constant.dart';
+
 final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -37,164 +35,78 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     if (Platform.isAndroid) {
       await Firebase.initializeApp();
       if (Platform.isAndroid) {
-        // Android-specific code
-        //print('device id $deviceId');
-        //if(constanst.fcm_token!=null || constanst.fcm_token.isEmpty) {
         const androidId = AndroidId();
         constanst.android_device_id = (await androidId.getId())!;
-
-        print('android device');
-        print(constanst.android_device_id);
-        //add_android_device();
-
-
-        // }
       }
       final RemoteNotification? notification = message.notification;
       final AndroidNotification? android = message.notification?.android;
-      /*await FirebaseMessaging.instance.requestPermission();
 
-
-*/
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
-          sound: true, badge: true, alert: true);
+              sound: true, badge: true, alert: true);
       if (notification != null && android != null) {
         await _showNotification(
           title: notification.title ?? '',
           body: notification.body ?? '',
         );
       }
-
-      /* name: 'plastic4Trade',*/
-      /* name: 'plastic4Trade',
-          options: FirebaseOptions(
-          apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
-          appId: "1:929685037367:android:4ee71ab0f0e0608492fab2",
-          messagingSenderId: "929685037367",
-          projectId: "plastic4trade-55372",
-          databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com"));*/
     } else if (Platform.isIOS) {
-      await Firebase.initializeApp(
-        /* options: FirebaseOptions(
-              apiKey: "AIzaSyCTqG3cUX04ACxu1U4tRhfTrI_odai_ZPY",
-              appId: "1:929685037367:ios:2ff9d0954f9bc0e292fab2",
-              messagingSenderId: "929685037367",
-              projectId: "plastic4trade-55372",
-              databaseURL: "https://plastic4trade-55372-default-rtdb.firebaseio.com/")*/
-      );
-      /* final RemoteNotification? notification = message.notification;
-      final AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        await _showNotification(
+      await Firebase.initializeApp();
 
-          title: notification.title ?? '',
-          body: notification.body ?? '',
-        );
-      }*/
-      /* name: 'plastic4Trade',*/
-      /*);*/
       if (Platform.isIOS) {
-        //  if (constanst.APNSToken != null || constanst.fcm_token.isEmpty) {
-        print('ios device');
         final iosinfo = await deviceInfo.iosInfo;
-        constanst.devicename =iosinfo.name!;
+        constanst.devicename = iosinfo.name;
         constanst.ios_device_id = iosinfo.identifierForVendor!;
-        print('ios device_id ${constanst.ios_device_id}');
-        //add_ios_device();
-
-
-        //  }
       }
     }
   }
 }
-add_android_device() async {
 
-  var res = await androidDevice_Register(
-      constanst.usernm.toString());
-  print('Inside Api ');
+add_android_device() async {
+  var res = await androidDevice_Register(constanst.usernm.toString());
   if (res['status'] == 1) {
-    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
   } else {
-    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
   }
 }
 
 add_ios_device() async {
-  Login login1 = Login();
-
-  /*_onLoading();*/
   var res = await iosDevice_Register();
 
   if (res['status'] == 1) {
-    login1 = Login.fromJson(res);
-
-    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
-    /* SharedPreferences _pref = await SharedPreferences.getInstance();
-    _pref.setString('user_id', login.result!.userid.toString());
-    _pref.setString('name', login.result!.userName.toString());
-    _pref.setString('email', login.result!.email.toString());
-    _pref.setString('phone', login.result!.phoneno.toString());
-    _pref.setString('api_token', login.result!.userToken.toString());
-    _pref.setString('step', login.result!.stepCounter.toString());
-
-    _pref.setString('userImage', login.result!.userImage.toString());
-    _pref.setBool('islogin', true);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen(0)));*/
+    Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
   } else {
-    Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+    Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
   }
 }
 
-// ValueNotifier<Map<String, dynamic>?> notificationPayload = ValueNotifier(null);
-
-
 Future<void> _showNotification(
-    {required String title, required String body}) async {
-  AndroidNotificationDetails androidPlatformChannelSpecifics =
-  AndroidNotificationDetails(
-    'high_impotance_channel',
-    'High Importance Notification',
-    channelDescription: 'This channel is used for importance notification',
-
-  );
-  NotificationDetails platformChannelSpecifics =
-  NotificationDetails(android: androidPlatformChannelSpecifics);
-  int notificationId = Random().nextInt(100000);
-  final _androidchannel =  AndroidNotificationChannel(
-      'high_impotance_channel',
-      'High Importance Notification',
-      description: 'This channel is used for importance notification',
-      importance: Importance.defaultImportance);
-
-}
+    {required String title, required String body}) async {}
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  //
-  WidgetsBinding.instance!.addPostFrameCallback((_) async {
-    int appOpenCount =  getAppOpenCount() as int ;
-
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    int appOpenCount = getAppOpenCount() as int;
     saveAppOpenCount(appOpenCount);
-
   });
 
-  runApp(MyApp()
-  );
+  runApp(const MyApp());
 }
 
-Future<int>  getAppOpenCount() async {
+Future<int> getAppOpenCount() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  constanst.appopencount=prefs.getInt('appOpenCount') ?? 1;
+  constanst.appopencount = prefs.getInt('appOpenCount') ?? 1;
 
   return prefs.getInt('appOpenCount') ?? 0;
 }
+
 Future<void> saveAppOpenCount(int count) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setInt('appOpenCount', count);
@@ -204,10 +116,10 @@ Future<void> init(BuildContext context) async {
   await FirebaseApi().initNOtification(context);
 
   const AndroidInitializationSettings initializationSettingsAndroid =
-  AndroidInitializationSettings('mipmap/ic_launcher');
+      AndroidInitializationSettings('mipmap/ic_launcher');
 
   IOSInitializationSettings initializationSettingsios =
-  const IOSInitializationSettings(
+      const IOSInitializationSettings(
     defaultPresentBadge: true,
     defaultPresentAlert: true,
     defaultPresentSound: true,
@@ -222,37 +134,26 @@ Future<void> init(BuildContext context) async {
     initializationSettings,
     onSelectNotification: (String? payload) async {
       if (payload != null) {
-
-        Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'rfsrsfrfr');
-        print('jfjjfrfjfjkfg');
-        print(payload);
+        Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: 'rfsrsfrfr');
       }
     },
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  //await FirebaseApi().initLocalNotification(context);
-
-  // APIs.getSelfInfo();
 }
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     init(context);
-    //Firebase.initializeApp();
-   // FirebaseApi().initPushNotification(context);
+
     return MaterialApp(
       title: 'Flutter Demo',
-      /*onGenerateRoute:
-      navigatorKey: navigatorKey,*/
       theme: ThemeData(
         primaryColor: Colors.white,
-        accentColor: const Color.fromARGB(255, 0, 91, 148),
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // useMaterial3: true,
         fontFamily: 'Metropolis',
         textTheme: const TextTheme(
             titleLarge: TextStyle(
@@ -313,17 +214,17 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
                 fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: const Color.fromARGB(255, 0, 91, 148)),
       ),
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -346,23 +247,20 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Stack(
-          //height: MediaQuery.of(context).size.width,
-          // width: MediaQuery.of(context).size.height,
-            children: [
-              Center(
-                child: Image.asset('assets/plastic4trade logo final.png',
-                    alignment: Alignment.center),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Image.asset(
-                  'assets/image 1.png',
-                  alignment: Alignment.center,
-                  width: 300,
-                ),
-              )
-            ]),
+        child: Stack(children: [
+          Center(
+            child: Image.asset('assets/plastic4trade logo final.png',
+                alignment: Alignment.center),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Image.asset(
+              'assets/image 1.png',
+              alignment: Alignment.center,
+              width: 300,
+            ),
+          )
+        ]),
       ),
     );
   }

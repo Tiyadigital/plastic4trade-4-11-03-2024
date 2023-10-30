@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison, depend_on_referenced_packages, camel_case_types, must_be_immutable, prefer_interpolation_to_compose_strings, non_constant_identifier_names, prefer_typing_uninitialized_variables, library_prefixes
 
 import 'dart:core';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:Plastic4trade/model/CommonPostdetail.dart' as postdetail;
@@ -1285,7 +1284,6 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       notiId.toString(),
     );
 
-    print("RESPONSE DATA == $res");
 
     var jsonArray, subjsonarray, color_array;
     if (res['status'] == 1) {
@@ -1437,10 +1435,8 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
           updat_date.toString(),
         );
 
-        create_formattedDate =
-            dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
-        update_formattedDate =
-            dt2 != null ? DateFormat('dd MMMM, yyyy').format(dt2) : "";
+        create_formattedDate = dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
+        update_formattedDate = dt2 != null ? DateFormat('dd MMMM, yyyy').format(dt2) : "";
       }
       if (color_array != null) {
         for (var data in color_array) {
@@ -1498,6 +1494,7 @@ class _Buyer_sell_detailState extends State<Buyer_sell_detail> {
       pref.getString('api_token').toString(),
       widget.prod_id.toString(),
     );
+
     var jsonArray;
 
     if (res['status'] == 1) {
@@ -1961,7 +1958,6 @@ class _ViewWidgetState extends State<ViewWidget>
       common = ApiResponse.fromJson(res);
       dataList = common.result ?? [];
       isload = true;
-      print("DATA LIST  == $dataList");
     } else {}
     setState(() {});
   }
@@ -1971,7 +1967,6 @@ class _ViewWidgetState extends State<ViewWidget>
 
     var res = await getProductView(prod_id);
 
-    print("RES == RES  == $res");
 
     if (res['status'] == 1) {
       common = GetProductView.fromJson(res);

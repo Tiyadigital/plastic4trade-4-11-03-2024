@@ -47,7 +47,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
     _pageController = PageController(initialPage: 0);*/
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
     );
     initCountry();
     super.initState();
@@ -95,7 +95,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 ),
                 SlideSwitcher(
 
-                  containerColor: Color.fromARGB(255, 0, 91, 148),
+                  containerColor: const Color.fromARGB(255, 0, 91, 148),
                   onSelect: (int index) =>
                       setState(() => switcherIndex2 = index),
                   containerHeight: 40,
@@ -109,7 +109,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                             ? FontWeight.w500
                             : FontWeight.w400,
                         color: switcherIndex2 == 0
-                            ? Color.fromARGB(255, 0, 91, 148)
+                            ? const Color.fromARGB(255, 0, 91, 148)
                             : Colors.white,
                       ),
                     ),
@@ -120,7 +120,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                             ? FontWeight.w500
                             : FontWeight.w400,
                         color: switcherIndex2 == 1
-                            ? Color.fromARGB(255, 0, 91, 148)
+                            ? const Color.fromARGB(255, 0, 91, 148)
                             : Colors.white,
                       ),
                     ),
@@ -159,19 +159,19 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
 
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
+          padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
           child: TextFormField(
             controller: _useremail,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 15.0,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
                 fontFamily: 'assets/fonst/Metropolis-Black.otf'),
             decoration: InputDecoration(
               hintText: "Enter Your Email",
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                   fontSize: 15.0,
                   fontFamily: 'Metropolis',
                   color: Colors.black),
@@ -202,7 +202,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
             },*/
             onFieldSubmitted: (value) {
               if (value.isEmpty) {
-                WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                 Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 _color2 = Colors.red;
               } else {
@@ -222,7 +222,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
             },
             onChanged: (value) {
               if (value.isEmpty) {
-                WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                 Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 //Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 setState(() {
@@ -268,10 +268,9 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   setState(() {
                     _color2 = Colors.red;
                   });
-                  WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                  WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                   Fluttertoast.showToast(msg: 'Please Enter Correct Email');
                 }
-                print(_useremail.text);
               } else {
                 Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 setState(() {
@@ -310,13 +309,13 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   width: 50.0,
                   child: Center(
                       child: Platform.isAndroid
-                          ? CircularProgressIndicator(
+                          ? const CircularProgressIndicator(
                         value: null,
                         strokeWidth: 2.0,
                         color: Color.fromARGB(255, 0, 91, 148),
                       )
                           : Platform.isIOS
-                          ? CupertinoActivityIndicator(
+                          ? const CupertinoActivityIndicator(
                         color: Color.fromARGB(255, 0, 91, 148),
                         radius: 20,
                         animating: true,
@@ -362,7 +361,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
       // mainAxisAlignment: MainAxisAlignment.center,
 
       children: [
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Row(
@@ -374,7 +373,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   border: Border.all(width: 1, color: Colors.black26),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                margin: EdgeInsets.fromLTRB(25.0, 5.0, 5.0, 5.0),
+                margin: const EdgeInsets.fromLTRB(25.0, 5.0, 5.0, 5.0),
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -386,7 +385,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                         },
                         child: Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Image.asset(
@@ -394,76 +393,33 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                               package: countryCodePackageName,
                               width: 30,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 16,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 2,
                             ),
                             Text(
-                              '${country.callingCode}',
+                              country.callingCode,
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 15),
+                              style: const TextStyle(fontSize: 15),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                           ],
                         ),
-                      )
-                      /* new Expanded(
-
-                          child:
-                          CountryCodePickerX(
-                              onChanged: (value) {
-                                country_code=value.toString();
-                                print(country_code);
-                              },
-                              // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                              initialSelection: 'IN',
-                              favorite: ['+39','FR'],
-
-                              // optional. Shows only country name and flag
-                              showCountryOnly: false,
-                              //showDropDownButton: true,
-
-                              // optional. Shows only country name and flag when popup is closed.
-                              showOnlyCountryWhenClosed: false,
-                              flagWidth: 20.0,
-                              textStyle: TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: Colors.black),
-
-
-
-                              // padding: EdgeInsets.all(10.0),
-                              alignLeft: false,
-                              searchDecoration: InputDecoration(
-                                  hintText: 'Select Country',
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                      BorderSide(width: 1, color: Colors.black),
-                                      borderRadius:
-                                      BorderRadius.circular(10.0))
-                              )
-                          ),
-                          flex: 8),*/
+                      ),
                     ],
                   ),
-                )
-
-                // ],
-                // ),
-                //),
+                ),
                 ),
             Expanded(
               flex: 2,
               child: Container(
-                //padding: EdgeInsets.only(bottom: 3.0),
                 height: 57,
-                /*width: MediaQuery.of(context).size.width /
-                                          1.58,*/
-                margin: EdgeInsets.only(right: 25),
+                margin: const EdgeInsets.only(right: 25),
                 child: TextFormField(
-                  // controller: _usernm,
                   controller: _usermbl,
                   style: const TextStyle(
                       fontSize: 15.0,
@@ -477,8 +433,6 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   textInputAction: TextInputAction.next,
                   decoration: InputDecoration(
-                    // labelText: 'Your phone *',
-                    // labelStyle: TextStyle(color: Colors.red),
                     filled: true,
                     fillColor: Colors.white,
                     hintText: "Mobile Number",
@@ -487,7 +441,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
                             fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                        ?.copyWith(color: Colors.black45),
+                        .copyWith(color: Colors.black45),
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: _color3),
                         borderRadius: BorderRadius.circular(10.0)),
@@ -498,41 +452,21 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                         borderSide: BorderSide(width: 1, color: _color3),
                         borderRadius: BorderRadius.circular(10.0)),
                   ),
-                  /*validator: (value) {
-                    if (value!.isEmpty) {
-                      // Fluttertoast.showToast(msg:'Enter a Mobile Number!');
-                      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                      Fluttertoast.showToast(msg: 'Please Enter Your Number');
-                      _color3 = Colors.red;
-                      // return '';
-                    } else {
-                      // setState(() {
-                      _color3 = Colors.green.shade600;
-                      //});
-                    }
-
-                    return null;
-                  },*/
                   onFieldSubmitted: (value) {
                     var numValue = value.length;
                     if (numValue >= 6 && numValue < 12) {
                       _color3 = Colors.green.shade600;
                     } else {
-                      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                       _color3 = Colors.red;
                       Fluttertoast.showToast(
                           msg: 'Please Enter Correct Number');
-                      setState(() {
-
-                      });
+                      setState(() {});
                     }
                   },
                   onChanged: (value) {
                     if (value.isEmpty) {
-                      /* Fluttertoast.showToast(
-                          msg:
-                          'Please Your Mobile Number');*/
-                      WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+                      WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                       Fluttertoast.showToast(msg: 'Please Enter Your Number');
                       setState(() {
                         _color2 = Colors.red;
@@ -548,7 +482,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 10.0,
         ),
         Container(
@@ -556,18 +490,15 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
           decoration: BoxDecoration(
               border: Border.all(width: 1),
               borderRadius: BorderRadius.circular(50.0),
-              color: Color.fromARGB(255, 0, 91, 148)),
+              color: const Color.fromARGB(255, 0, 91, 148)),
           child: TextButton(
             onPressed: () {
-              WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
+              WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
               if (_usermbl.text.isNotEmpty) {
-                print(country_code);
-                print(_usermbl.text.toString());
                 var numValue = _usermbl.text.length;
                 if (numValue >= 6 && numValue < 12) {
                   _color3 = Colors.green.shade600;
                   _onLoading();
-                  print('======');
                   get_otp(country_code, _usermbl.text.toString(), '').then((value) {
                     Navigator.of(dialogContext!).pop();
                     if (value) {
@@ -599,7 +530,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 });
               }
             },
-            child: Text('Submit',
+            child: const Text('Submit',
                 style: TextStyle(
                     fontSize: 19.0,
                     fontWeight: FontWeight.w800,
@@ -611,14 +542,11 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
     );
   }
 
-  Future<bool> get_otp(conutry_code, phone, email) async {
-    common_par login = common_par();
+  Future<bool> get_otp(conutryCode, phone, email) async {
 
     var res = await forgotpassword_ME(phone, country_code, email);
-   // String? msg = res['message'];
-    //Fluttertoast.showToast(msg: "$msg");
+
     if (res['status'] == 1) {
-      login = common_par.fromJson(res);
       isloading=true;
       Fluttertoast.showToast(msg: res['message']);
 
@@ -658,7 +586,7 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                 fontFamily: 'assets/fonst/Metropolis-Black.otf')),
       ),
 
-      Container(
+      SizedBox(
         height: 20.0,
         width: MediaQuery.of(context).size.width / 1.09,
         //padding: EdgeInsets.symmetric(horizontal: 10),
@@ -670,23 +598,23 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                     fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                ?.copyWith(fontWeight: FontWeight.w400)),
+                .copyWith(fontWeight: FontWeight.w400)),
       ),
 
       //alignment: Alignment.center,
 
-      Container(
+      SizedBox(
         height: 40.0,
         width: MediaQuery.of(context).size.width / 1.09,
         //padding: EdgeInsets.symmetric(horizontal: 10),
         child: Text('we will send 4 digits code to your email/Moblie',
             //maxLines: 2,
-            style: TextStyle(
+            style: const TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                     fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                ?.copyWith(fontWeight: FontWeight.w400)),
+                .copyWith(fontWeight: FontWeight.w400)),
       ),
     ]);
   }

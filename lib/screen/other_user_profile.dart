@@ -7,6 +7,8 @@ import 'package:Plastic4trade/model/GetSalePostList.dart' as homepost;
 import 'package:Plastic4trade/model/Get_likeUser.dart' as like;
 import 'package:Plastic4trade/model/Get_shareUser.dart' as share_pro;
 import 'package:Plastic4trade/model/Get_viewUser.dart' as view_pro;
+import 'package:Plastic4trade/model/other_user_follower.dart' as getfllow;
+import 'package:Plastic4trade/model/other_user_following.dart' as getfllowing;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ import '../model/Get_shareUser.dart';
 import '../model/Get_viewUser.dart';
 import 'Buyer_sell_detail.dart';
 import 'Review.dart';
+
+int? following_count, followers_count;
 
 class other_user_profile extends StatefulWidget {
   int user_id;
@@ -71,11 +75,17 @@ class _bussinessprofileState extends State<other_user_profile>
       is_follow,
       abot_buss,
       pan_number;
+
   String? First_currency = "", Second_currency = "", Third_currency = "";
   String? First_currency_sign = "",
       Second_currency_sign = "",
       Third_currency_sign = "";
-  int? view_count, like, reviews_count, following_count, followers_count,is_prime;
+  int? view_count,
+      like,
+      reviews_count,
+      following_count,
+      followers_count,
+      is_prime;
   bool? isload;
   GetSalePostList salePostList = GetSalePostList();
   GetSalePostList buyPostList = GetSalePostList();
@@ -104,6 +114,7 @@ class _bussinessprofileState extends State<other_user_profile>
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
     } else {
+      print("USER ID === ${widget.user_id}");
       getPackage();
       getProfiless();
       get_buypostlist();
@@ -193,9 +204,8 @@ class _bussinessprofileState extends State<other_user_profile>
                                               BorderRadius.circular(15),
                                           color: const Color(0xffFFC107),
                                         ),
-                                        child:  Text(
-                                          (is_prime == 0) ? "Free":
-                                          'Premium',
+                                        child: Text(
+                                          (is_prime == 0) ? "Free" : 'Premium',
                                           style: const TextStyle(fontSize: 9),
                                         ),
                                       ),
@@ -410,48 +420,54 @@ class _bussinessprofileState extends State<other_user_profile>
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          height: 25,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: const Color.fromARGB(255, 0, 91, 148),
-                          ),
-                          child: is_follow == "0"
-                              ? GestureDetector(
-                                  onTap: () {
-                                    followUnfollowUser("1");
-                                    is_follow = "1";
-                                    setState(() {});
-                                  },
-                                  child: const Center(
-                                    child: Text('Follow',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                        textAlign: TextAlign.center),
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    followUnfollowUser("0");
-                                    is_follow = "0";
-                                    setState(() {});
-                                  },
-                                  child: const Center(
-                                    child: Text('Followed',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                        textAlign: TextAlign.center),
-                                  ),
-                                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 25,
+                        width: 55,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: const Color.fromARGB(255, 0, 91, 148),
                         ),
-                        Row(
+                        child: is_follow == "0"
+                            ? GestureDetector(
+                                onTap: () {
+                                  followUnfollowUser("1");
+                                  is_follow = "1";
+                                  followers_count = followers_count! + 1;
+                                  setState(() {});
+                                },
+                                child: const Center(
+                                  child: Text('Follow',
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  followUnfollowUser("0");
+                                  is_follow = "0";
+                                  followers_count = followers_count! - 1;
+                                  setState(() {});
+                                },
+                                child: const Center(
+                                  child: Text('Followed',
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                ),
+                              ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          viewFollowerFollowing(context);
+                        },
+                        child: Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
@@ -473,7 +489,9 @@ class _bussinessprofileState extends State<other_user_profile>
                                         'assets/fonst/Metropolis-SemiBold.otf'),
                               ),
                             ]),
-                        Row(children: [
+                      ),
+                      Row(
+                        children: [
                           Text(
                             following_count.toString(),
                             style: const TextStyle(
@@ -492,8 +510,10 @@ class _bussinessprofileState extends State<other_user_profile>
                                 fontFamily:
                                     'assets/fonst/Metropolis-SemiBold.otf'),
                           ),
-                        ])
-                      ]),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
@@ -699,39 +719,30 @@ class _bussinessprofileState extends State<other_user_profile>
                         height: 40,
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width / 3.8,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => review(
-                                        profileid.toString(),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Image.asset(
+                          child: GestureDetector(
+    onTap : (){},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
                                   'assets/star.png',
                                   color: Colors.black,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'Reviews ($reviews_count)',
-                                style: const TextStyle(
-                                  fontSize: 11.0,
-                                  fontFamily: 'Metropolis',
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
+                                const SizedBox(
+                                  width: 2,
                                 ),
-                              )
-                            ],
+                                Text(
+                                  'Reviews ($reviews_count)',
+                                  style: const TextStyle(
+                                    fontSize: 11.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -1046,7 +1057,7 @@ class _bussinessprofileState extends State<other_user_profile>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          ...buildWidgets(abot_buss!),
+                                          ...buildWidgets(abot_buss ?? ""),
                                         ],
                                       )
                                     ],
@@ -2205,35 +2216,6 @@ class _bussinessprofileState extends State<other_user_profile>
     return jsonArray;
   }
 
-  ViewItem(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          // <-- SEE HERE
-          topLeft: Radius.circular(25.0),
-          topRight: Radius.circular(25.0),
-        ),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-          expand: false,
-          initialChildSize:
-              0.60, // Initial height as a fraction of screen height
-          builder: (BuildContext context, ScrollController scrollController) {
-            return StatefulBuilder(
-              builder: (context, setState) {
-                return ViewWidget(
-                  profileid.toString(),
-                );
-              },
-            );
-          }),
-    ).then(
-      (value) {},
-    );
-  }
-
   get_salepostlist() async {
     salePostList = GetSalePostList();
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -2418,6 +2400,62 @@ class _bussinessprofileState extends State<other_user_profile>
       children: lineWidgets,
     );
   }
+
+  ViewItem(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          // <-- SEE HERE
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize:
+              0.60, // Initial height as a fraction of screen height
+          builder: (BuildContext context, ScrollController scrollController) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return ViewWidget(
+                  profileid.toString(),
+                );
+              },
+            );
+          }),
+    ).then(
+      (value) {},
+    );
+  }
+
+  viewFollowerFollowing(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          // <-- SEE HERE
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize:
+              0.60, // Initial height as a fraction of screen height
+          builder: (BuildContext context, ScrollController scrollController) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return ViewFollowerFollowingList(widget.user_id.toString());
+              },
+            );
+          }),
+    ).then(
+      (value) {},
+    );
+  }
 }
 
 class ViewWidget extends StatefulWidget {
@@ -2430,7 +2468,6 @@ class ViewWidget extends StatefulWidget {
 }
 
 class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
-
   bool? isload;
   late TabController _tabController;
   List<like.Data> dataList = [];
@@ -2601,6 +2638,346 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                             ),
                           );
                         }),
+                  ],
+                ),
+              ),
+            ],
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
+  }
+}
+
+class ViewFollowerFollowingList extends StatefulWidget {
+  String userId;
+
+  ViewFollowerFollowingList(this.userId, {Key? key}) : super(key: key);
+
+  @override
+  State<ViewFollowerFollowingList> createState() =>
+      _ViewFollowerFollowingListState();
+}
+
+class _ViewFollowerFollowingListState extends State<ViewFollowerFollowingList>
+    with SingleTickerProviderStateMixin {
+  bool? isload;
+  late TabController _tabController;
+  List<getfllow.Result> getfollowdata = [];
+  List<getfllowing.Result> getfllowingdata = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // TODO: implement initState
+    _tabController = TabController(length: 2, vsync: this);
+    getFollower();
+    getFollowing();
+  }
+
+  Future<void> getFollower() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var res = await getOtherUserFollowerLists(
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        widget.userId);
+
+    var jsonArray;
+    if (res['status'] == 1) {
+      if (res['result'] != null) {
+        jsonArray = res['result'];
+        followers_count = res['totalFollowers'];
+
+        for (var data in jsonArray) {
+          getfllow.Result record = getfllow.Result(
+              isFollowing: data['is_following'],
+              name: data['name'],
+              id: data['id'],
+              image: data['image'],
+              status: data['Status']);
+
+          getfollowdata.add(record);
+          isload = true;
+          setState(() {});
+        }
+
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    } else {
+      Fluttertoast.showToast(msg: res['message']);
+    }
+    return jsonArray;
+  }
+
+
+  Future<void> getFollowing() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var res = await getOtherUserFollowingList(
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString(),
+        widget.userId);
+
+    var jsonArray;
+    if (res['status'] == 1) {
+      if (res['result'] != null) {
+        jsonArray = res['result'];
+        following_count = res['totalFollowing'];
+
+        for (var data in jsonArray) {
+          getfllowing.Result record = getfllowing.Result(
+              name: data['name'],
+              id: data['id'],
+              image: data['image'],
+              status: data['Status']);
+          getfllowingdata.add(record);
+        }
+
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    } else {
+      Fluttertoast.showToast(msg: res['message']);
+    }
+    setState(() {});
+    return jsonArray;
+  }
+
+  Future<void> followUnfollowUser(isFollow) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var response = await followUnfollow(
+      isFollow.toString(),
+      widget.userId,
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
+
+    log("FOLLOW RESPONSE == $response");
+
+    var jsonArray;
+
+    if (response['status'] == 1) {
+      Fluttertoast.showToast(msg: response['message']);
+    } else {
+      Fluttertoast.showToast(msg: response['message']);
+    }
+    setState(() {});
+    return jsonArray;
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return isload == true
+        ? Column(
+            children: [
+              const SizedBox(height: 5),
+              Image.asset(
+                'assets/hori_line.png',
+                width: 150,
+                height: 5,
+              ),
+              TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Followers'),
+                  Tab(text: 'Following'),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: getfollowdata.length,
+                      padding: const EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+                      itemBuilder: (context, index) {
+                        getfllow.Result result = getfollowdata[index];
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 80,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      5.0, 0, 15.0, 0.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 25,
+                                    backgroundImage: result.image.toString() !=
+                                            ''
+                                        ? NetworkImage(
+                                            result.image.toString(),
+                                          ) as ImageProvider
+                                        : const AssetImage(
+                                            'assets/plastic4trade logo final 1 (2).png'),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    result.name.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child:  Container(
+                                    alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(5.0),
+                                          decoration: const BoxDecoration(
+                                            color:
+                                                Color.fromARGB(255, 0, 91, 148),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(50),
+                                            ),
+                                          ),
+                                          height: 35,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              6.5,
+                                          child: (result.isFollowing == 1) ? GestureDetector(
+                                            onTap: () {
+                                              followUnfollowUser("0");
+                                              // is_follow = "0";
+                                              setState(() {});
+                                            },
+                                            child: const Text(
+                                              'followed',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ) : GestureDetector(
+                                            onTap: () {
+                                              followUnfollowUser("1");
+                                              // is_follow = "1";
+                                              setState(() {});
+                                            },
+                                            child: const Text(
+                                              'follow',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: getfllowingdata.length,
+                      padding: const EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+                      itemBuilder: (context, index) {
+                        getfllowing.Result result = getfllowingdata[index];
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 80,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      5.0, 0, 15.0, 0.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 25,
+                                    backgroundImage: result.image.toString() !=
+                                            ''
+                                        ? NetworkImage(
+                                            result.image.toString(),
+                                          ) as ImageProvider
+                                        : const AssetImage(
+                                            'assets/plastic4trade logo final 1 (2).png'),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    result.name.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child:  Container(
+                                    alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(5.0),
+                                          decoration: const BoxDecoration(
+                                            color:
+                                                Color.fromARGB(255, 0, 91, 148),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(50),
+                                            ),
+                                          ),
+                                          height: 35,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              6.5,
+                                          child: (result.isFollowing == 1) ? GestureDetector(
+                                            onTap: () {},
+                                            child: const Text(
+                                              'followed',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ) : GestureDetector(
+                                            onTap: () {},
+                                            child: const Text(
+                                              'follow',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w500),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

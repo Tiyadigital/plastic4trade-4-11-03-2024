@@ -1,25 +1,25 @@
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, prefer_typing_uninitialized_variables
+
+import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+
+import 'package:Plastic4trade/model/GetPriceList.dart' as price;
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 import '../api/api_interface.dart';
 import '../model/DataPoint.dart';
-import '../model/GetPriceList.dart';
-import 'package:Plastic4trade/model/GetPriceList.dart' as price;
 import '../model/get_graph.dart';
+import '../utill/constant.dart';
 import '../widget/live_priceFilterScreen.dart';
 import 'Liveprice_detail.dart';
 import 'Videos.dart';
-import '../utill/constant.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class LivepriceScreen extends StatefulWidget {
   const LivepriceScreen({Key? key}) : super(key: key);
@@ -37,7 +37,6 @@ class RadioModel {
 
 class _LivepriceScreenState extends State<LivepriceScreen> {
   bool isgraph = false;
-  static const cutOffYValue = 0.0;
   final scrollercontroller = ScrollController();
   List<price.Result> price_data = [];
   List<bool> show_graph_data = [];
@@ -45,7 +44,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
   bool isload = false;
   int offset = 0;
   int count = 0;
-  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   List<DataPoint> data1 = [];
   List<DataPoint> data2 = [];
   List<DataPoint> data3 = [];
@@ -57,22 +55,16 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       country = '';
   int? selectedItemIndex;
   List<RadioModel> sampleData1 = <RadioModel>[];
-  TextEditingController _search = TextEditingController();
+  final TextEditingController _search = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scrollercontroller.addListener(_scrollercontroller);
-    sampleData1.add(new RadioModel(true, 'Month'));
-    sampleData1.add(new RadioModel(
-      false,
-      'Year',
-    ));
-    sampleData1.add(new RadioModel(
-      false,
-      'All',
-    ));
+    sampleData1.add(RadioModel(true, 'Month'));
+    sampleData1.add(RadioModel(false, 'Year'));
+    sampleData1.add(RadioModel(false, 'All'));
     clear();
     checknetowork();
   }
@@ -88,7 +80,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           elevation: 0,
-          title: Text('Live Price',
+          title: const Text('Live Price',
               softWrap: false,
               style: TextStyle(
                 fontSize: 20.0,
@@ -100,7 +92,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,
             ),
@@ -109,14 +101,14 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
             GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Videos()));
+                      MaterialPageRoute(builder: (context) => const Videos()));
                 },
                 child: SizedBox(
                     width: 40,
                     child: Image.asset(
                       'assets/Play.png',
                     ))),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             GestureDetector(
@@ -127,212 +119,210 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                     child: Image.asset(
                       'assets/share1.png',
                     ))),
-            SizedBox(
+            const SizedBox(
               width: 5,
             )
           ],
         ),
-        body: Container(
-          child: Column(
-            children: [
-              Container(
-                  height: 65,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          height: 55,
-                          margin: EdgeInsets.only(left: 5.0),
-                          width: MediaQuery.of(context).size.width / 1.35,
-                          child: Card(
-                              //margin: EdgeInsets.all(10),
-                              shape: StadiumBorder(
-                                  side: BorderSide(
-                                      style: BorderStyle.solid,
-                                      color: Colors.white)),
-                              child: Row(
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  /*  Padding(
-                                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                      child: ImageIcon(
-                                          AssetImage('assets/search.png'))),*/
-                                  Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(40.0),
-                                              bottomRight:
-                                                  Radius.circular(40.0),
-                                              topLeft: Radius.circular(40.0),
-                                              bottomLeft:
-                                                  Radius.circular(40.0)),
-                                          color: Colors.white),
-                                      height: 40,
-                                      margin: EdgeInsets.only(left: 8.0),
-                                      width: MediaQuery.of(context).size.width /
-                                          2.2,
-                                      child: Padding(
-                                          padding: EdgeInsets.only(left: 5.0),
-                                          child: TextField(
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 14),
-                                            controller: _search,
-                                            textInputAction:
-                                                TextInputAction.search,
-                                            decoration: const InputDecoration(
-                                                border: InputBorder.none,
-                                                prefixIconConstraints:
-                                                    BoxConstraints(
-                                                        minWidth: 24),
-                                                prefixIcon: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 10),
-                                                  child: Icon(
-                                                    Icons.search,
-                                                    color: Colors.black45,
-                                                    size: 20,
-                                                  ),
+        body: Column(
+          children: [
+            SizedBox(
+                height: 65,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        height: 55,
+                        margin: const EdgeInsets.only(left: 5.0),
+                        width: MediaQuery.of(context).size.width / 1.35,
+                        child: Card(
+                            //margin: EdgeInsets.all(10),
+                            shape: const StadiumBorder(
+                                side: BorderSide(
+                                    style: BorderStyle.solid,
+                                    color: Colors.white)),
+                            child: Row(
+                              // mainAxisAlignment:
+                              //     MainAxisAlignment.spaceEvenly,
+                              children: [
+                                /*  Padding(
+                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                    child: ImageIcon(
+                                        AssetImage('assets/search.png'))),*/
+                                Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(40.0),
+                                            bottomRight:
+                                                Radius.circular(40.0),
+                                            topLeft: Radius.circular(40.0),
+                                            bottomLeft:
+                                                Radius.circular(40.0)),
+                                        color: Colors.white),
+                                    height: 40,
+                                    margin: const EdgeInsets.only(left: 8.0),
+                                    width: MediaQuery.of(context).size.width /
+                                        2.2,
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(left: 5.0),
+                                        child: TextField(
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14),
+                                          controller: _search,
+                                          textInputAction:
+                                              TextInputAction.search,
+                                          decoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              prefixIconConstraints:
+                                                  BoxConstraints(
+                                                      minWidth: 24),
+                                              prefixIcon: Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: 10),
+                                                child: Icon(
+                                                  Icons.search,
+                                                  color: Colors.black45,
+                                                  size: 20,
                                                 ),
-                                                hintText: 'Search',
-                                                hintStyle: TextStyle(
-                                                    fontSize: 14.0,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'assets\fonst\Metropolis-Black.otf')),
-                                            onSubmitted: (value) {
-                                              price_data.clear();
+                                              ),
+                                              hintText: 'Search',
+                                              hintStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf')),
+                                          onSubmitted: (value) {
+                                            price_data.clear();
+                                            count = 0;
+                                            offset = 0;
+                                            _onLoading();
+                                            get_HomePost();
+                                            setState(() {});
+                                          },
+                                          onChanged: (value) {
+                                            if (value.isEmpty) {
+                                              _search.clear();
                                               count = 0;
                                               offset = 0;
+                                              price_data.clear();
                                               _onLoading();
                                               get_HomePost();
                                               setState(() {});
-                                            },
-                                            onChanged: (value) {
-                                              if (value.isEmpty) {
-                                                _search.clear();
-                                                count = 0;
-                                                offset = 0;
-                                                price_data.clear();
-                                                _onLoading();
-                                                get_HomePost();
-                                                setState(() {});
-                                              }
-                                            },
-                                          ))),
-                                ],
-                              ))),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      isgraph
-                          ? GestureDetector(
-                              onTap: () {
-                                //ViewItem(context);
-                                // showAlertDialog(context);
-                                setState(() {
-                                  isgraph = false;
-                                });
-                              },
-                              child: Container(
-                                  height: 65,
-                                  width:
-                                      MediaQuery.of(context).size.width / 9.5,
-                                  padding: EdgeInsets.all(8.0),
-                                  // padding: EdgeInsets.only(right: 5),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white),
-                                  child: Image.asset(
-                                    'assets/list_data.png',
-                                    width: 20,
-                                  )))
-                          : GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isgraph = true;
-                                });
+                                            }
+                                          },
+                                        ))),
+                              ],
+                            ))),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    isgraph
+                        ? GestureDetector(
+                            onTap: () {
+                              //ViewItem(context);
+                              // showAlertDialog(context);
+                              setState(() {
+                                isgraph = false;
+                              });
+                            },
+                            child: Container(
+                                height: 65,
+                                width:
+                                    MediaQuery.of(context).size.width / 9.5,
+                                padding: const EdgeInsets.all(8.0),
+                                // padding: EdgeInsets.only(right: 5),
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white),
+                                child: Image.asset(
+                                  'assets/list_data.png',
+                                  width: 20,
+                                )))
+                        : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isgraph = true;
+                              });
 
-                                //ViewItem(context);
-                                // showAlertDialog(context);
-                              },
-                              child: Container(
-                                  height: 65,
-                                  width:
-                                      MediaQuery.of(context).size.width / 9.5,
-                                  padding: EdgeInsets.all(8.0),
-                                  // padding: EdgeInsets.only(right: 5),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white),
-                                  child: Image.asset(
-                                    'assets/diagram.png',
-                                    width: 20,
-                                  ))),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            ViewItem(context);
-                          },
-                          child: Container(
-                              height: 55,
-                              width: MediaQuery.of(context).size.width / 9.5,
-                              // padding: EdgeInsets.only(right: 5),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 0, 91, 148)),
-                              child: Icon(
-                                Icons.filter_alt,
-                                color: Colors.white,
-                              ))),
-                    ],
-                  )),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Category',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf',
-                            color: Colors.black)),
-                    Text('Grade',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf',
-                            color: Colors.black)),
-                    Text('Code',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf',
-                            color: Colors.black)),
-                    Text('Price',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf',
-                            color: Colors.black)),
-                    Text('+/-',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf',
-                            color: Colors.black)),
+                              //ViewItem(context);
+                              // showAlertDialog(context);
+                            },
+                            child: Container(
+                                height: 65,
+                                width:
+                                    MediaQuery.of(context).size.width / 9.5,
+                                padding: const EdgeInsets.all(8.0),
+                                // padding: EdgeInsets.only(right: 5),
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white),
+                                child: Image.asset(
+                                  'assets/diagram.png',
+                                  width: 20,
+                                ))),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          ViewItem(context);
+                        },
+                        child: Container(
+                            height: 55,
+                            width: MediaQuery.of(context).size.width / 9.5,
+                            // padding: EdgeInsets.only(right: 5),
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color.fromARGB(255, 0, 91, 148)),
+                            child: const Icon(
+                              Icons.filter_alt,
+                              color: Colors.white,
+                            ))),
                   ],
-                ),
+                )),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text('Category',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                          color: Colors.black)),
+                  Text('Grade',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                          color: Colors.black)),
+                  Text('Code',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                          color: Colors.black)),
+                  Text('Price',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                          color: Colors.black)),
+                  Text('+/-',
+                      style: TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                          color: Colors.black)),
+                ],
               ),
-              isgraph ? Container() : pricelist()
-            ],
-          ),
+            ),
+            isgraph ? Container() : pricelist()
+          ],
         ));
   }
 
@@ -348,7 +338,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
         // Use the lastMonthRecords list as needed
         // ...
       }
-      print(lastMonthRecords);
       return lastMonthRecords;
       // return graph.lastMonthRecord!.map((data) => DataPoint(data.priceDate.toString(), data.price.toString())).toList();
     } else {
@@ -362,8 +351,8 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       charts.Series<DataPoint, DateTime>(
         id: 'Price',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (DataPoint record, _) => DateTime.parse(record.price_date!),
-        measureFn: (DataPoint record, _) => double.parse(record.price!),
+        domainFn: (DataPoint record, _) => DateTime.parse(record.price_date),
+        measureFn: (DataPoint record, _) => double.parse(record.price),
         data: records,
       ),
     ];
@@ -386,19 +375,15 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return live_priceFilterScreen();
+                  return const live_priceFilterScreen();
                 },
               );
             })).then(
       (value) {
         category_id = constanst.select_categotyId.join(",");
-        print(category_id);
         company_id = constanst.select_typeId.join(",");
-        print(company_id);
         country = constanst.select_country.join(",");
-        print(country);
         state = constanst.select_state.join(",");
-        print(state);
 
         price_data.clear();
         _onLoading();
@@ -455,7 +440,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
             child: Container(
                 //height: 200,
 
-                padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
                 width: MediaQuery.of(context).size.width,
                 child: FutureBuilder(
                     //future: load_category(),
@@ -468,7 +453,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                     return price_data.isNotEmpty
                         ? ListView.builder(
                             shrinkWrap: false,
-                            physics: AlwaysScrollableScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: price_data.length,
                             controller: scrollercontroller,
                             itemBuilder: (context, index) {
@@ -479,7 +464,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Container(
-                                  margin: EdgeInsets.all(8.0),
+                                  margin: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
                                       GestureDetector(
@@ -517,7 +502,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                       )));
                                         },
                                         child: Column(children: [
-                                          Container(
+                                          SizedBox(
                                             // margin: EdgeInsets.all(10.0),
                                             height: 30,
                                             child: Row(
@@ -530,24 +515,24 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                     child: Text(
                                                         result.category
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 13.0,
                                                             color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf'))),
+                                                                'assets/fonst/Metropolis-Black.otf'))),
                                                 Flexible(
                                                     flex: 3,
                                                     child: Text(
                                                       result.codeName
                                                           .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 13.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           color: Colors.black),
                                                       maxLines: 2,
                                                     )),
@@ -555,12 +540,12 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                     flex: 2,
                                                     child: Text(
                                                       result.grade.toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 13.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           color: Colors.black),
                                                     )),
                                                 Flexible(
@@ -570,30 +555,30 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                               .toString() +
                                                           result.price
                                                               .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 13.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           color: Colors.black),
                                                     )),
                                                 Flexible(
+                                                    flex: 1,
                                                     child: Text(
                                                       result.changed.toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 13.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontFamily:
-                                                              'assets\fonst\Metropolis-Black.otf',
+                                                              'assets/fonst/Metropolis-Black.otf',
                                                           color: Colors.black),
-                                                    ),
-                                                    flex: 1),
+                                                    )),
                                               ],
                                             ),
                                           ),
-                                          Divider(color: Colors.grey),
+                                          const Divider(color: Colors.grey),
                                           Container(
                                               //height: 50,
                                               margin: const EdgeInsets.fromLTRB(
@@ -606,7 +591,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                   Text(
                                                       result.priceDate
                                                           .toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                               fontSize: 12.0,
                                                               fontWeight:
                                                                   FontWeight
@@ -614,20 +599,14 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                               color:
                                                                   Colors.black,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
-                                                          ?.copyWith(
+                                                                  'assets/fonst/Metropolis-Black.otf')
+                                                          .copyWith(
                                                               color: Colors
                                                                   .black38,
                                                               fontSize: 11)),
                                                   Text(
-                                                      result.company
-                                                              .toString() +
-                                                          '-' +
-                                                          result.state
-                                                              .toString() +
-                                                          result.country
-                                                              .toString(),
-                                                      style: TextStyle(
+                                                      '${result.company}-${result.state}${result.country}',
+                                                      style: const TextStyle(
                                                               fontSize: 12.0,
                                                               fontWeight:
                                                                   FontWeight
@@ -635,8 +614,8 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                                                               color:
                                                                   Colors.black,
                                                               fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')
-                                                          ?.copyWith(
+                                                                  'assets/fonst/Metropolis-Black.otf')
+                                                          .copyWith(
                                                               color: Colors
                                                                   .black38,
                                                               fontSize: 11)),
@@ -653,20 +632,19 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                               );
                             },
                           )
-                        : Center(child: Text('Not Found '));
+                        : const Center(child: Text('Not Found '));
                   }
 
-                  return CircularProgressIndicator();
                 })))
         : Center(
             child: Platform.isAndroid
-                ? CircularProgressIndicator(
+                ? const CircularProgressIndicator(
                     value: null,
                     strokeWidth: 2.0,
                     color: Color.fromARGB(255, 0, 91, 148),
                   )
                 : Platform.isIOS
-                    ? CupertinoActivityIndicator(
+                    ? const CupertinoActivityIndicator(
                         color: Color.fromARGB(255, 0, 91, 148),
                         radius: 20,
                         animating: true,
@@ -678,15 +656,13 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       String? codeName, String? changed, String? priceDate) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 1,
         child: SfCartesianChart(
             tooltipBehavior: TooltipBehavior(
                 enable: true,
                 builder: (dynamic data, dynamic point, dynamic series,
                     int pointIndex, int seriesIndex) {
-                  print('tooltip');
-                  print(point.x);
                   return CustomTooltip(
                     category: category.toString(),
                     price: point.y.toString(),
@@ -698,9 +674,9 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                 } // Customize the tooltip text as per your requirements
                 ),
             primaryXAxis: CategoryAxis(
-                majorGridLines: MajorGridLines(width: 0),
+                majorGridLines: const MajorGridLines(width: 0),
                 //Hide the axis line of x-axis
-                axisLine: AxisLine(width: 0),
+                axisLine: const AxisLine(width: 0),
                 labelRotation: 45),
             primaryYAxis:
                 NumericAxis(majorGridLines: const MajorGridLines(width: 0)),
@@ -714,13 +690,13 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 
             series: <AreaSeries<DataPoint, String>>[
               AreaSeries(
-                  borderColor: Color.fromARGB(255, 176, 159, 255),
+                  borderColor: const Color.fromARGB(255, 176, 159, 255),
                   borderWidth: 3,
                   borderDrawMode: BorderDrawMode.top,
                   gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
                   ], stops: const [
                     0.1,
                     0.3,
@@ -739,7 +715,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       String? codeName, String? changed, String? priceDate) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 1,
         child: SfCartesianChart(
             tooltipBehavior: TooltipBehavior(
@@ -756,9 +732,9 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                 } // Customize the tooltip text as per your requirements
                 ),
             primaryXAxis: CategoryAxis(
-                majorGridLines: MajorGridLines(width: 0),
+                majorGridLines: const MajorGridLines(width: 0),
                 //Hide the axis line of x-axis
-                axisLine: AxisLine(width: 0),
+                axisLine: const AxisLine(width: 0),
                 labelRotation: 45),
             primaryYAxis:
                 NumericAxis(majorGridLines: const MajorGridLines(width: 0)),
@@ -772,13 +748,13 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 
             series: <AreaSeries<DataPoint, String>>[
               AreaSeries(
-                  borderColor: Color.fromARGB(255, 176, 159, 255),
+                  borderColor: const Color.fromARGB(255, 176, 159, 255),
                   borderWidth: 3,
                   borderDrawMode: BorderDrawMode.top,
                   gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
                   ], stops: const [
                     0.1,
                     0.3,
@@ -795,7 +771,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 
   findcartItem(productId) {
     var found = false;
-    print(productId);
     //if (cartdata != Null) {
     for (var i = 0; i < price_data.length; i++) {
       if (price_data[i].codeId == (productId)) {
@@ -804,7 +779,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       }
     }
     //}
-    print('found $found');
     return found;
   }
 
@@ -812,7 +786,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       String? codeName, String? changed, String? priceDate) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width / 1,
         child: SfCartesianChart(
             tooltipBehavior: TooltipBehavior(
@@ -830,9 +804,9 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                 ),
             primaryXAxis: CategoryAxis(
                 isVisible: true,
-                majorGridLines: MajorGridLines(width: 0),
+                majorGridLines: const MajorGridLines(width: 0),
                 //Hide the axis line of x-axis
-                axisLine: AxisLine(width: 0),
+                axisLine: const AxisLine(width: 0),
                 labelRotation: 45),
             primaryYAxis:
                 NumericAxis(majorGridLines: const MajorGridLines(width: 0)),
@@ -846,13 +820,13 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 
             series: <AreaSeries<DataPoint, String>>[
               AreaSeries(
-                  borderColor: Color.fromARGB(255, 176, 159, 255),
+                  borderColor: const Color.fromARGB(255, 176, 159, 255),
                   borderWidth: 3,
                   borderDrawMode: BorderDrawMode.top,
                   gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
-                    Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.4),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.2),
+                    const Color.fromARGB(255, 176, 159, 255).withOpacity(0.1)
                   ], stops: const [
                     0.1,
                     0.3,
@@ -903,22 +877,22 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
                 width: 50.0,
                 child: Center(
                     child: Platform.isAndroid
-                        ? CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 2.0,
-                      color: Color.fromARGB(255, 0, 91, 148),
-                    )
+                        ? const CircularProgressIndicator(
+                            value: null,
+                            strokeWidth: 2.0,
+                            color: Color.fromARGB(255, 0, 91, 148),
+                          )
                         : Platform.isIOS
-                        ? CupertinoActivityIndicator(
-                      color: Color.fromARGB(255, 0, 91, 148),
-                      radius: 20,
-                      animating: true,
-                    )
-                        : Container()
-                ),
+                            ? const CupertinoActivityIndicator(
+                                color: Color.fromARGB(255, 0, 91, 148),
+                                radius: 20,
+                                animating: true,
+                              )
+                            : Container()),
               ),
             ),
-          ), /*Container(
+          ),
+          /*Container(
             child: Stack(
               children: <Widget>[
                 Container(
@@ -962,10 +936,9 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     );
 
     Future.delayed(const Duration(seconds: 5), () {
-      print('exit');
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
-      print('exit1'); // Dialog closed
+      // Dialog closed
     });
   }
 
@@ -981,21 +954,15 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
   }
 
   get_HomePost() async {
-    GetPriceList gethomepost = GetPriceList();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
 
-    print(country);
     var res = await getlive_price(offset.toString(), '20', _search.text,
         category_id, company_id, country, state, constanst.date);
-    var jsonarray;
-    print(res);
+    var jsonArray;
     if (res['status'] == 1) {
-      gethomepost = GetPriceList.fromJson(res);
       if (res['result'] != null) {
-        jsonarray = res['result'];
-        print(jsonarray);
+        jsonArray = res['result'];
 
-        for (var data in jsonarray) {
+        for (var data in jsonArray) {
           price.Result record = price.Result(
               codeId: data['codeId'],
               codeName: data['CodeName'],
@@ -1014,7 +981,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
         for (int i = 0; i < price_data.length; i++) {
           show_graph_data.add(false);
         }
-        print(price_data);
         isload = true;
         if (mounted) {
           setState(() {});
@@ -1024,23 +990,16 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       isload = true;
       Fluttertoast.showToast(msg: res['message']);
     }
-    return jsonarray;
+    return jsonArray;
   }
 
   get_graphmonthvalue(String string) async {
-    get_graph gethomepost = get_graph();
     var res = await get_databytimeduration(string);
-    var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       // gethomepost = get_graph.fromJson(res);
-      List<LastMonthRecord> lastMonthRecords = [];
-      List<LastYearRecord> lastYearRecord = [];
-      List<AllRecord> allRecord = [];
       //if (res.statusCode == 200) {
       get_graph graph = get_graph.fromJson(res);
       if (graph.lastMonthRecord != null) {
-        lastMonthRecords = graph.lastMonthRecord!;
         // Use the lastMonthRecords list as needed
         // ...
       }
@@ -1051,24 +1010,18 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       /* } else {
         throw Exception('Failed to fetch data from API');
       }*/
-      return jsonarray;
     }
   }
 
   get_graphyearvalue(String string) async {
-    get_graph gethomepost = get_graph();
     var res = await get_databytimeduration(string);
-    var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       // gethomepost = get_graph.fromJson(res);
 
-      List<LastYearRecord> lastYearRecord = [];
 
       //if (res.statusCode == 200) {
       get_graph graph = get_graph.fromJson(res);
       if (graph.lastYearRecord != null) {
-        lastYearRecord = graph.lastYearRecord!;
         // Use the lastMonthRecords list as needed
         // ...
       }
@@ -1079,24 +1032,18 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       /* } else {
         throw Exception('Failed to fetch data from API');
       }*/
-      return jsonarray;
     }
   }
 
   get_graphallvalue(String string) async {
-    get_graph gethomepost = get_graph();
     var res = await get_databytimeduration(string);
-    var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       // gethomepost = get_graph.fromJson(res);
 
-      List<AllRecord> allRecord = [];
 
       //if (res.statusCode == 200) {
       get_graph graph = get_graph.fromJson(res);
       if (graph.allRecord != null) {
-        allRecord = graph.allRecord!;
         // Use the lastMonthRecords list as needed
         // ...
       }
@@ -1104,10 +1051,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
           .map((data) =>
               DataPoint(data.priceDate.toString(), data.price.toString()))
           .toList();
-      /* } else {
-        throw Exception('Failed to fetch data from API');
-      }*/
-      return jsonarray;
+
     }
   }
 }
@@ -1115,7 +1059,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 class CustomTooltip extends StatelessWidget {
   final String category, price, company, codeName, changed, priceDate;
 
-  CustomTooltip({
+  const CustomTooltip({super.key,
     required this.category,
     required this.price,
     required this.company,
@@ -1134,18 +1078,18 @@ class CustomTooltip extends StatelessWidget {
         color: Colors.black.withOpacity(0.8),
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Row(
             children: [
               Text(
                 'New Price:$price ',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               Text(
                 'old Price:$old',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ],
           ),
@@ -1153,27 +1097,27 @@ class CustomTooltip extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 'change:$changed',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               )),
           Align(
             alignment: Alignment.topLeft,
             child: Text(
               company,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           Align(
             alignment: Alignment.topLeft,
             child: Text(
               "$category/$codeName",
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           Align(
               alignment: Alignment.topLeft,
               child: Text(
                 priceDate,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               )),
         ],
       ),
