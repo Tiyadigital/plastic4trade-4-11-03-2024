@@ -46,20 +46,20 @@ class _FavouriteState extends State<Favourite> {
                 ? fav_list()
                 : Platform.isAndroid
                     ? const Center(
-                      child: CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           value: null,
                           strokeWidth: 2.0,
                           color: Color.fromARGB(255, 0, 91, 148),
                         ),
-                    )
+                      )
                     : Platform.isIOS
                         ? const Center(
-                          child: CupertinoActivityIndicator(
+                            child: CupertinoActivityIndicator(
                               color: Color.fromARGB(255, 0, 91, 148),
                               radius: 20,
                               animating: true,
                             ),
-                        )
+                          )
                         : Container()
           ],
         ),
@@ -229,8 +229,6 @@ class _FavouriteState extends State<Favourite> {
     var res = await favList(pref.getString('user_id').toString(),
         pref.getString('api_token').toString());
 
-    print("RESPONSE === $res");
-
     var jsonArray;
     if (res['status'] == 1) {
       if (res['result'] != null) {
@@ -249,7 +247,8 @@ class _FavouriteState extends State<Favourite> {
               city: data['City'],
               productId: data['productId'],
               mainproductImage: data['mainproductImage'],
-              state: data['State']);
+              state: data['State'],
+          );
 
           favlist.add(record);
         }
@@ -268,8 +267,11 @@ class _FavouriteState extends State<Favourite> {
   getremove_product(String prodId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     Fluttertoast.showToast(msg: prodId.toString());
-    var res = await removefav(pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(), prodId.toString());
+    var res = await removefav(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+      prodId.toString(),
+    );
     var jsonArray;
 
     if (res['status'] == 1) {

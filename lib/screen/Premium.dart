@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable, prefer_typing_uninitialized_variables
 
+import 'package:Plastic4trade/common/premium_page_list.dart';
 import 'package:flutter/material.dart';
 import 'Videos.dart';
 
@@ -263,28 +264,20 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin {
   Widget _buildCarousel(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      //crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        //Text('Carousel $carouselIndex'),
         SizedBox(
-          // you may want to use an aspect ratio here for tablet support
-          height: MediaQuery.of(context).size.height,
+          // height: 100,
           child: PageView.builder(
-            // store this controller in a State to save the carousel scroll position
             controller: _pageController,
             itemCount: 5,
             pageSnapping: false,
-            //padEnds: false,
             itemBuilder: (BuildContext context, int itemIndex) {
               return _buildCarouselItem(context, itemIndex);
             },
             onPageChanged: (value) {
               setState(() {
                 init_page = value;
-                //_tabController.addListener(() {
-
                 _tabController.animateTo(init_page);
-                //});
               });
             },
           ),
@@ -295,501 +288,505 @@ class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin {
 
   Widget _buildCarouselItem(BuildContext context, int itemIndex) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        //padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-        margin: const EdgeInsets.fromLTRB(0, 10.0, 0.0, 150.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          padding: const EdgeInsets.all(10),
-          // child: Container(
-          //   margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+      decoration: const BoxDecoration(
+        color: Colors.white,
 
-          child: Column(children: [
-            Stack(
-              children: [
-                Image.asset('assets/Premium1.png'),
-                Positioned(
-                    top: 28,
-                    left: 98,
-                    child: Text('Free',
-                        style: const TextStyle(
-                                fontSize: 26.0,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                            .copyWith(fontSize: 41, color: Colors.white))),
-                Positioned(
-                    bottom: 18,
-                    left: 25,
-                    child: Text('₹0/Month',
-                        style: const TextStyle(
-                                fontSize: 26.0,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                            .copyWith(fontSize: 15, color: Colors.white))),
-                Positioned(
-                    bottom: 18,
-                    right: 25,
-                    child: Text('0/Month',
-                        style: const TextStyle(
-                                fontSize: 26.0,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                            .copyWith(fontSize: 15, color: Colors.white)))
-              ],
-            ),
-            FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
+        // border: Border.all(color: Colors.red),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Image.asset('assets/Premium1.png'),
+              Positioned(
+                  top: 28,
+                  left: 98,
+                  child: Text('Free',
+                      style: const TextStyle(
+                              fontSize: 26.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                          .copyWith(fontSize: 41, color: Colors.white))),
+              Positioned(
+                  bottom: 18,
+                  left: 25,
+                  child: Text(
+                      '${priceInInr[itemIndex]}${itemIndex == 0 ? "" : "₹/Month"}',
+                      style: const TextStyle(
+                              fontSize: 26.0,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                          .copyWith(fontSize: 15, color: Colors.white))),
+              Positioned(
+                bottom: 18,
+                right: 25,
+                child: Text(
+                  '${priceInUsd[itemIndex]}${itemIndex == 0 ? "" : "\$/Month"}',
+                  style: const TextStyle(
+                          fontSize: 26.0,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                      .copyWith(fontSize: 15, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+          FutureBuilder(
+            builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 //List<dynamic> users = snapshot.data as List<dynamic>;
-                return ListView.builder(
-                  /* gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                             // crossAxisCount: 2,
-                             // mainAxisSpacing: 5,
-                             // crossAxisSpacing: 5,
-                             // childAspectRatio: .90,
-
-                             childAspectRatio:MediaQuery.of(context).size.height/1400,
-                             mainAxisSpacing: 1.0,
-                             crossAxisCount: 1,
-                           ),*/
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: 1,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    //Choice record = choices[index];
-                    return GestureDetector(
-                      onTap: (() {}),
-                      child: Container(
-                        margin: const EdgeInsets.all(8.0),
-                        child: Column(children: [
-                          Row(
+                return SizedBox(
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: 1,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      //Choice record = choices[index];
+                      return GestureDetector(
+                        onTap: (() {}),
+                        child: Container(
+                          margin: const EdgeInsets.all(8.0),
+                          child: Column(
                             children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green.shade600,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    'Free Post',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-SemiBold.otf'),
+                                  )
+                                ],
                               ),
                               const SizedBox(
-                                width: 3,
+                                height: 6,
                               ),
-                              const Text(
-                                'Free Post',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green.shade600,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    'Domestic Live Price',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-SemiBold.otf'),
+                                  )
+                                ],
                               ),
                               const SizedBox(
-                                width: 3,
+                                height: 6,
                               ),
-                              const Text(
-                                'Domestic Live Price',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green.shade600,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    'International Live Price',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-SemiBold.otf'),
+                                  )
+                                ],
                               ),
                               const SizedBox(
-                                width: 3,
+                                height: 6,
                               ),
-                              const Text(
-                                'International Live Price',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green.shade600,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    'International News',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-SemiBold.otf'),
+                                  )
+                                ],
                               ),
                               const SizedBox(
-                                width: 3,
-                              ),
-                              const Text(
-                                'International News',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-SemiBold.otf'),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Chat Functionality',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
-                                ],
+                                height: 6,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Chat Functionality',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Business Profile View',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Chat Functionality',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Business Profile View',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
+                              const SizedBox(
+                                height: 6,
+                              ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Reversible (Open Contact)',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Chat Functionality',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Reversible (Open Contact)',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
-                                ],
+                              const SizedBox(
+                                height: 6,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Notification Ads',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Notification Ads',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Paid Post',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
-                                ],
+                              const SizedBox(
+                                height: 6,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Paid Post',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Business Directory',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Time Duration: Monthly',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  ),
-                                ],
+                              const SizedBox(
+                                height: 6,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Business Directory',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
                                   ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
                                 ],
-                              )
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        'Time Duration: Monthly',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-SemiBold.otf'),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: const [
+                                      Icon(
+                                        Icons.info_outline,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height / 20,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                margin: const EdgeInsets.only(bottom: 10),
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: 1),
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    color:
+                                        const Color.fromARGB(255, 0, 91, 148)),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text('Free',
+                                      style: TextStyle(
+                                          fontSize: 19.0,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')),
+                                ),
+                              ),
+                              //SizedBox(height: 5.0,)
                             ],
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 20,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                                border: Border.all(width: 1),
-                                borderRadius: BorderRadius.circular(50.0),
-                                color: const Color.fromARGB(255, 0, 91, 148)),
-                            child: TextButton(
-                              onPressed: () {},
-                              child: const Text('Free',
-                                  style: TextStyle(
-                                      fontSize: 19.0,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.white,
-                                      fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf')),
-                            ),
-                          ),
-                          //SizedBox(height: 5.0,)
-                        ]),
-                      ),
-                    );
-                  },
+                        ),
+                      );
+                    },
+                  ),
                 );
               }
-            })
-          ]),
-        ));
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

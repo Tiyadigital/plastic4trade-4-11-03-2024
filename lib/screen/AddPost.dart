@@ -1654,7 +1654,8 @@ class _AddPostState extends State<AddPost> {
                 toolbarColor: const Color.fromARGB(255, 0, 91, 148),
                 toolbarWidgetColor: Colors.white,
                 initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: false),
+                lockAspectRatio: false,
+            ),
             IOSUiSettings(
               title: 'Cropper',
             ),

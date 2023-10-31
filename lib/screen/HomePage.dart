@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final _androidchannel = const AndroidNotificationChannel(
-      'high_impotance_channel', 'High Importance Notification',
+      'high_importance_channel', 'High Importance Notification',
       description: 'This channel is used for importance notification',
       importance: Importance.max);
   final _localNotification = FlutterLocalNotificationsPlugin();
