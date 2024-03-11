@@ -145,57 +145,73 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const EditBussinessProfile()));
-                                  },
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            height: 60,
-                                            child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    children: const [
-                                                  Align(
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20.0),
-                                                      child: Text('Business Info',
-                                                          style: TextStyle(
-                                                              fontSize: 17.0,
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                              color: Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const EditBussinessProfile()));
+                                    },
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              height: 60,
+                                              child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: const [
+                                                    Align(
+                                                      child: Padding(
+                                                        padding: EdgeInsets.only(
+                                                            left: 20.0),
+                                                        child: Text('Business Info',
+                                                            style: TextStyle(
+                                                                fontSize: 17.0,
+                                                                fontWeight:
+                                                                    FontWeight.w500,
+                                                                color: Colors.black,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ]))),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditBussinessProfile()));
-                                          },
-                                          child: Image.asset(
-                                            'assets/forward.png',
-                                            height: 18,
-                                            width: 50,
-                                          ),
-                                        )
-                                      ]))),
+                                                  ]))),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditBussinessProfile()));
+                                            },
+                                            child: Image.asset(
+                                              'assets/forward.png',
+                                              height: 18,
+                                              width: 50,
+                                            ),
+                                          )
+                                        ])),
+                              )),
                         ),
                         SizedBox(
                           height: 10,
@@ -212,49 +228,65 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Bussinessverification()));
-                                },
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          height: 60,
-                                          child: Center(
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: const [
-                                                Align(
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.only(left: 20.0),
-                                                    child: Text(
-                                                        'Business Verification',
-                                                        style: TextStyle(
-                                                            fontSize: 17.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets\fonst\Metropolis-Black.otf')),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Bussinessverification()));
+                                  },
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                            height: 60,
+                                            child: Center(
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: const [
+                                                  Align(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.only(left: 20.0),
+                                                      child: Text(
+                                                          'Business Verification',
+                                                          style: TextStyle(
+                                                              fontSize: 17.0,
+                                                              fontWeight:
+                                                                  FontWeight.w500,
+                                                              color: Colors.black,
+                                                              fontFamily:
+                                                                  'assets\fonst\Metropolis-Black.otf')),
+                                                    ),
                                                   ),
-                                                ),
-                                              ]))),
-                                      Image.asset(
-                                        'assets/forward.png',
-                                        height: 18,
-                                        width: 50,
-                                      )
-                                    ]),
+                                                ]))),
+                                        Image.asset(
+                                          'assets/forward.png',
+                                          height: 18,
+                                          width: 50,
+                                        )
+                                      ]),
+                                ),
                               )),
                         ),
                         const SizedBox(
@@ -271,48 +303,64 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => socialmedia()));
-                                  },
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            height: 60,
-                                            child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    children: [
-                                                  Align(
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20.0),
-                                                      child: Text(
-                                                          'Social Media URL',
-                                                          style: TextStyle(
-                                                              fontSize: 17.0,
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                              color: Colors.black,
-                                                              fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => socialmedia()));
+                                    },
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              height: 60,
+                                              child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: const [
+                                                    Align(
+                                                      child: Padding(
+                                                        padding: EdgeInsets.only(
+                                                            left: 20.0),
+                                                        child: Text(
+                                                            'Social Media URL',
+                                                            style: TextStyle(
+                                                                fontSize: 17.0,
+                                                                fontWeight:
+                                                                    FontWeight.w500,
+                                                                color: Colors.black,
+                                                                fontFamily:
+                                                                    'assets\fonst\Metropolis-Black.otf')),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ]))),
-                                        Image.asset(
-                                          'assets/forward.png',
-                                          height: 18,
-                                          width: 50,
-                                        )
-                                      ]))),
+                                                  ]))),
+                                          Image.asset(
+                                            'assets/forward.png',
+                                            height: 18,
+                                            width: 50,
+                                          )
+                                        ])),
+                              )),
                         ),
                         const SizedBox(
                           height: 10,
@@ -328,47 +376,63 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(14)),
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => const LoginDetail()));
-                                  },
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                            height: 55,
-                                            child: Center(
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    children: const [
-                                                  Align(
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20.0),
-                                                      child: Text('Login Details',
-                                                          style: TextStyle(
-                                                              fontSize: 17.0,
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                              color: Colors.black,
-                                                              fontFamily:
-                                                                  'assets\fonst\Metropolis-Black.otf')),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginDetail()));
+                                    },
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                              height: 55,
+                                              child: Center(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: const [
+                                                    Align(
+                                                      child: Padding(
+                                                        padding: EdgeInsets.only(
+                                                            left: 20.0),
+                                                        child: Text('Login Details',
+                                                            style: TextStyle(
+                                                                fontSize: 17.0,
+                                                                fontWeight:
+                                                                    FontWeight.w500,
+                                                                color: Colors.black,
+                                                                fontFamily:
+                                                                    'assets\fonst\Metropolis-Black.otf')),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],),),),
-                                        Image.asset(
-                                          'assets/forward.png',
-                                          height: 18,
-                                          width: 50,
-                                        )
-                                      ]))),
+                                                  ],),),),
+                                          Image.asset(
+                                            'assets/forward.png',
+                                            height: 18,
+                                            width: 50,
+                                          )
+                                        ])),
+                              )),
                         ),
                       ])),
             ],
@@ -411,12 +475,12 @@ class _BussinessinfoState extends State<Bussinessinfo> {
                 width: 40,
                 height: 40,
                 child: FloatingActionButton(
-                  backgroundColor: Color.fromARGB(255, 0, 91, 148),
+                  backgroundColor: Colors.white,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context, builder: (context) => bottomsheet());
                   },
-                  child: ImageIcon(AssetImage('assets/Vector (1).png')),
+                  child: ImageIcon(AssetImage('assets/Vector (1).png'),color: Color(0xFF005C94)),
                 )),
           ),
         ],
@@ -559,14 +623,14 @@ class _BussinessinfoState extends State<Bussinessinfo> {
       },
     );
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 1), () {
       print('exit');
       Navigator.of(context).pop(); // Use dialogContext to close the dialog
       print('exit1'); // Dialog closed
     });
   }
   void get_data() async {
-    GetBussinessTypeController bt = await GetBussinessTypeController();
+    GetBussinessTypeController bt = GetBussinessTypeController();
     constanst.bt_data = bt.getBussiness_Type();
 
     constanst.bt_data!.then((value) {
@@ -580,8 +644,6 @@ class _BussinessinfoState extends State<Bussinessinfo> {
     // setState(() {});
     print(constanst.btype_data);
   }
-
-
 
   Widget bottomsheet() {
     return Container(

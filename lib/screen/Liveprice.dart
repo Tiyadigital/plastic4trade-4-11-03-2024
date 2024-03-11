@@ -3,14 +3,23 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'dart:ui' as ui;
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 import 'package:Plastic4trade/model/GetPriceList.dart' as price;
-import 'package:charts_flutter/flutter.dart' as charts;
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../api/api_interface.dart';
@@ -36,6 +45,8 @@ class RadioModel {
 }
 
 class _LivepriceScreenState extends State<LivepriceScreen> {
+  PackageInfo? packageInfo;
+  String? packageName;
   bool isgraph = false;
   final scrollercontroller = ScrollController();
   List<price.Result> price_data = [];
@@ -56,6 +67,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
   int? selectedItemIndex;
   List<RadioModel> sampleData1 = <RadioModel>[];
   final TextEditingController _search = TextEditingController();
+  GlobalKey previewContainer = GlobalKey();
 
   @override
   void initState() {
@@ -69,12 +81,39 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     checknetowork();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return init();
+  void getPackage() async {
+    packageInfo = await PackageInfo.fromPlatform();
+    packageName = packageInfo!.packageName;
   }
 
-  Widget init() {
+  Future<void> _captureSocialPng() {
+    List<String> imagePaths = [];
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    return Future.delayed(const Duration(milliseconds: 20), () async {
+      if(previewContainer.currentContext != null){
+      RenderRepaintBoundary? boundary = previewContainer.currentContext!.findRenderObject() as RenderRepaintBoundary?;
+      ui.Image image = await boundary!.toImage();
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      ByteData? byteData =
+      await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      File imgFile = File('$directory/screenshot.png');
+      imagePaths.add(imgFile.path);
+      imgFile.writeAsBytes(pngBytes).then((value) async {
+        await Share.shareFiles(imagePaths,
+            subject: 'Share',
+            text: "Live Price\t\n\nHey check out my app at: https://play.google.com/store/apps/details?id=${packageName!}",
+            sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+      }).catchError((onError) {
+        print(onError);
+      });
+    }else{
+        print("context:- ${previewContainer.currentContext}");
+      }});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
@@ -112,217 +151,220 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
               width: 5,
             ),
             GestureDetector(
-                onTap: () {},
+                onTap: _captureSocialPng,
                 child: SizedBox(
                     width: 30,
-                    height: 20,
+                    height: 30,
                     child: Image.asset(
                       'assets/share1.png',
                     ))),
             const SizedBox(
-              width: 5,
+              width: 10,
             )
           ],
         ),
-        body: Column(
-          children: [
-            SizedBox(
-                height: 65,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        height: 55,
-                        margin: const EdgeInsets.only(left: 5.0),
+        body: RefreshIndicator(
+          displacement: 50,
+          color: const Color(0xFF005C94),
+          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+          onRefresh: ()async{},
+          child: Column(
+            children: [
+              SizedBox(
+                  height: 60,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 40,
+                        margin: const EdgeInsets.only(left: 10.0),
                         width: MediaQuery.of(context).size.width / 1.35,
-                        child: Card(
-                            //margin: EdgeInsets.all(10),
-                            shape: const StadiumBorder(
-                                side: BorderSide(
-                                    style: BorderStyle.solid,
-                                    color: Colors.white)),
-                            child: Row(
-                              // mainAxisAlignment:
-                              //     MainAxisAlignment.spaceEvenly,
-                              children: [
-                                /*  Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                    child: ImageIcon(
-                                        AssetImage('assets/search.png'))),*/
-                                Container(
-                                    decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(40.0),
-                                            bottomRight:
-                                                Radius.circular(40.0),
-                                            topLeft: Radius.circular(40.0),
-                                            bottomLeft:
-                                                Radius.circular(40.0)),
-                                        color: Colors.white),
-                                    height: 40,
-                                    margin: const EdgeInsets.only(left: 8.0),
-                                    width: MediaQuery.of(context).size.width /
-                                        2.2,
-                                    child: Padding(
-                                        padding: const EdgeInsets.only(left: 5.0),
-                                        child: TextField(
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14),
-                                          controller: _search,
-                                          textInputAction:
-                                              TextInputAction.search,
-                                          decoration: const InputDecoration(
-                                              border: InputBorder.none,
-                                              prefixIconConstraints:
-                                                  BoxConstraints(
-                                                      minWidth: 24),
-                                              prefixIcon: Padding(
-                                                padding: EdgeInsets.only(
-                                                    right: 10),
-                                                child: Icon(
-                                                  Icons.search,
-                                                  color: Colors.black45,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                              hintText: 'Search',
-                                              hintStyle: TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf')),
-                                          onSubmitted: (value) {
-                                            price_data.clear();
-                                            count = 0;
-                                            offset = 0;
-                                            _onLoading();
-                                            get_HomePost();
-                                            setState(() {});
-                                          },
-                                          onChanged: (value) {
-                                            if (value.isEmpty) {
-                                              _search.clear();
-                                              count = 0;
-                                              offset = 0;
-                                              price_data.clear();
-                                              _onLoading();
-                                              get_HomePost();
-                                              setState(() {});
-                                            }
-                                          },
-                                        ))),
-                              ],
-                            ))),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    isgraph
-                        ? GestureDetector(
-                            onTap: () {
-                              //ViewItem(context);
-                              // showAlertDialog(context);
-                              setState(() {
-                                isgraph = false;
-                              });
-                            },
-                            child: Container(
-                                height: 65,
-                                width:
-                                    MediaQuery.of(context).size.width / 9.5,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(47),
+                          ),
+                          shadows: const [
+                          BoxShadow(
+                          color: Color(0x3FA6A6A6),
+                          blurRadius: 16.32,
+                          offset: Offset(0, 3.26),
+                          spreadRadius: 0,
+                        )]),
+                        child: TextField(
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 14),
+                          controller: _search,
+                          textInputAction: TextInputAction.search,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              prefixIconConstraints:
+                                  BoxConstraints(minWidth: 24),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(left: 10,right: 10),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.black45,
+                                  size: 20,
+                                ),
+                              ),
+                              hintText: 'Search',
+                              hintStyle: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf')),
+                          onSubmitted: (value) {
+                            price_data.clear();
+                            count = 0;
+                            offset = 0;
+                            _onLoading();
+                            get_HomePost();
+                            setState(() {});
+                          },
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                              _search.clear();
+                              count = 0;
+                              offset = 0;
+                              price_data.clear();
+                              _onLoading();
+                              get_HomePost();
+                              setState(() {});
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      isgraph
+                          ? GestureDetector(
+                              onTap: () {
+                                //ViewItem(context);
+                                // showAlertDialog(context);
+                                // setState(() {
+                                //   isgraph = false;
+                                // });
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
                                 padding: const EdgeInsets.all(8.0),
                                 // padding: EdgeInsets.only(right: 5),
                                 decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white),
+                                    shape: BoxShape.circle, color: Colors.white),
                                 child: Image.asset(
                                   'assets/list_data.png',
                                   width: 20,
-                                )))
-                        : GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isgraph = true;
-                              });
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                // setState(() {
+                                //   isgraph = true;
+                                // });
 
-                              //ViewItem(context);
-                              // showAlertDialog(context);
-                            },
-                            child: Container(
-                                height: 65,
-                                width:
-                                    MediaQuery.of(context).size.width / 9.5,
+                                //ViewItem(context);
+                                // showAlertDialog(context);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
                                 padding: const EdgeInsets.all(8.0),
                                 // padding: EdgeInsets.only(right: 5),
                                 decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white),
+                                    shape: BoxShape.circle, color: Colors.white),
                                 child: Image.asset(
                                   'assets/diagram.png',
                                   width: 20,
-                                ))),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          ViewItem(context);
-                        },
-                        child: Container(
-                            height: 55,
-                            width: MediaQuery.of(context).size.width / 9.5,
-                            // padding: EdgeInsets.only(right: 5),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color.fromARGB(255, 0, 91, 148)),
-                            child: const Icon(
-                              Icons.filter_alt,
-                              color: Colors.white,
-                            ))),
-                  ],
-                )),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Category',
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                          color: Colors.black)),
-                  Text('Grade',
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                          color: Colors.black)),
-                  Text('Code',
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                          color: Colors.black)),
-                  Text('Price',
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                          color: Colors.black)),
-                  Text('+/-',
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                          color: Colors.black)),
-                ],
+                                ),
+                              ),
+                            ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            ViewItem(context);
+                          },
+                          child: Container(
+                                height: 40,
+                                width: 40,
+                              // padding: EdgeInsets.only(right: 5),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,),
+                              child: const Icon(
+                                Icons.filter_alt,
+                                color: Colors.black,
+                              ),),
+                      ),
+                    ],
+                  )),
+              Expanded(
+                child: RepaintBoundary(
+                  key: previewContainer,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: const Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Category',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.24,
+                                )),
+                            Text('Code',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.24,
+                                )),
+                            Text('Grade',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.24,
+                                )),
+                            Text('Price',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.24,
+                                )),
+                            Text('+/-',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Metropolis',
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.24,
+                                )),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      pricelist()
+                    ],
+                  ),
+                ),
               ),
-            ),
-            isgraph ? Container() : pricelist()
-          ],
+            ],
+          ),
         ));
   }
 
@@ -345,18 +387,17 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     }
   }
 
-  List<charts.Series<DataPoint, DateTime>> createSeries(
-      List<DataPoint> records) {
-    return [
-      charts.Series<DataPoint, DateTime>(
-        id: 'Price',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (DataPoint record, _) => DateTime.parse(record.price_date),
-        measureFn: (DataPoint record, _) => double.parse(record.price),
-        data: records,
-      ),
-    ];
-  }
+  // List<charts.Series<DataPoint, DateTime>> createSeries(List<DataPoint> records) {
+  //   return [
+  //     charts.Series<DataPoint, DateTime>(
+  //       id: 'Price',
+  //       colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+  //       domainFn: (DataPoint record, _) => DateTime.parse(record.price_date),
+  //       measureFn: (DataPoint record, _) => double.parse(record.price),
+  //       data: records,
+  //     ),
+  //   ];
+  // }
 
   ViewItem(BuildContext context) {
     return showModalBottomSheet(
@@ -410,6 +451,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
+      getPackage();
       get_HomePost();
 
       // get_data();
@@ -437,205 +479,191 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
   Widget pricelist() {
     return isload == true
         ? Expanded(
-            child: Container(
-                //height: 200,
+            child: price_data.isNotEmpty
+              ? ListView.builder(
+                  padding: const EdgeInsets.only(left: 7,right: 7,bottom: 10),
+                  shrinkWrap: false,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: price_data.length,
+                  controller: scrollercontroller,
+                  itemBuilder: (context, index) {
+                    // Choice record = choices[index];
+                    price.Result result = price_data[index];
+                    return Column(
+                      children: [
+                        Container(
+                          decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x3FA6A6A6),
+                              blurRadius: 16.32,
+                              offset: Offset(0, 3.26),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8,),
+                          child: GestureDetector(
+                            onTap: () {
+                              Fluttertoast.showToast(
+                                  msg: result.codeId.toString());
 
-                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-                width: MediaQuery.of(context).size.width,
-                child: FutureBuilder(
-                    //future: load_category(),
-
-                    builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    //List<dynamic> users = snapshot.data as List<dynamic>;
-                    return price_data.isNotEmpty
-                        ? ListView.builder(
-                            shrinkWrap: false,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: price_data.length,
-                            controller: scrollercontroller,
-                            itemBuilder: (context, index) {
-                              // Choice record = choices[index];
-                              price.Result result = price_data[index];
-                              return Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Container(
-                                  margin: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Fluttertoast.showToast(
-                                              msg: result.codeId.toString());
-
-                                          Fluttertoast.showToast(
-                                              msg: show_graph_data[index]
-                                                  .toString());
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Liveprice_detail(
-                                                        category: result
-                                                            .category
-                                                            .toString(),
-                                                        changed: result.changed
-                                                            .toString(),
-                                                        codeName: result
-                                                            .codeName
-                                                            .toString(),
-                                                        price: result.price
-                                                            .toString(),
-                                                        priceDate: result
-                                                            .priceDate
-                                                            .toString(),
-                                                        company: result.company
-                                                            .toString(),
-                                                        code_id: result.codeId
-                                                            .toString(),
-                                                        grade: result.grade
-                                                            .toString(),
-                                                      )));
-                                        },
-                                        child: Column(children: [
-                                          SizedBox(
-                                            // margin: EdgeInsets.all(10.0),
-                                            height: 30,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Text(
-                                                        result.category
-                                                            .toString(),
-                                                        style: const TextStyle(
-                                                            fontSize: 13.0,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf'))),
-                                                Flexible(
-                                                    flex: 3,
-                                                    child: Text(
-                                                      result.codeName
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          color: Colors.black),
-                                                      maxLines: 2,
-                                                    )),
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Text(
-                                                      result.grade.toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          color: Colors.black),
-                                                    )),
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Text(
-                                                      result.currency
-                                                              .toString() +
-                                                          result.price
-                                                              .toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          color: Colors.black),
-                                                    )),
-                                                Flexible(
-                                                    flex: 1,
-                                                    child: Text(
-                                                      result.changed.toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf',
-                                                          color: Colors.black),
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                          const Divider(color: Colors.grey),
-                                          Container(
-                                              //height: 50,
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  10.0, 2.0, 0.0, 0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                      result.priceDate
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                              fontSize: 12.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              color: Colors
-                                                                  .black38,
-                                                              fontSize: 11)),
-                                                  Text(
-                                                      '${result.company}-${result.state}${result.country}',
-                                                      style: const TextStyle(
-                                                              fontSize: 12.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              color: Colors
-                                                                  .black38,
-                                                              fontSize: 11)),
-                                                ],
-                                              )),
-
-                                          /*choices[index].showgraph ? graph() : Container()*/
-                                          //SizedBox(height: 5.0,)
-                                        ]),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
+                              Fluttertoast.showToast(
+                                  msg: show_graph_data[index]
+                                      .toString());
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Liveprice_detail(
+                                            category: result
+                                                .category
+                                                .toString(),
+                                            changed: result.changed
+                                                .toString(),
+                                            codeName: result
+                                                .codeName
+                                                .toString(),
+                                            price: result.price
+                                                .toString(),
+                                            priceDate: result
+                                                .priceDate
+                                                .toString(),
+                                            company: result.company
+                                                .toString(),
+                                            code_id: result.codeId
+                                                .toString(),
+                                            grade: result.grade
+                                                .toString(),
+                                          )));
                             },
-                          )
-                        : const Center(child: Text('Not Found '));
-                  }
-
-                })))
+                            child: Column(children: [
+                              SizedBox(
+                                // margin: EdgeInsets.all(10.0),
+                                height: 30,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .spaceBetween,
+                                  children: [
+                                    Flexible(
+                                       // flex: 1,
+                                        child: Text(
+                                            result.category
+                                                .toString(),
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                height: 0,
+                                                letterSpacing: -0.24,
+                                                fontFamily: 'assets/fonst/Metropolis-Black.otf'
+                                            ),)),
+                                    Flexible(
+                                        //flex: 1,
+                                        child: Text(
+                                          result.codeName.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              height: 0,
+                                              letterSpacing: -0.24,
+                                              fontFamily: 'assets/fonst/Metropolis-Black.otf'
+                                          ),
+                                          maxLines: 2,
+                                        )),
+                                    Flexible(
+                                       // flex: 1,
+                                        child: Text(
+                                          result.grade.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              height: 0,
+                                              letterSpacing: -0.24,
+                                              fontFamily: 'assets/fonst/Metropolis-Black.otf'
+                                          ),
+                                        )),
+                                    Flexible(
+                                        //flex: 1,
+                                        child: Text(
+                                          result.currency
+                                                  .toString() +
+                                              result.price
+                                                  .toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              height: 0,
+                                              letterSpacing: -0.24,
+                                              fontFamily: 'assets/fonst/Metropolis-Black.otf'
+                                          ),
+                                        )),
+                                    Flexible(
+                                      //flex: 1,
+                                      child: Text(
+                                         (result.sign != null ? result.sign.toString() : '') + result.currency.toString() + (result.changed!.replaceFirst("-", "").toString()),
+                                          // result.changed![0] == "0" ? result.currency.toString() + result.changed.toString() :
+                                          // result.changed![0] == "-"  ? '-${result.currency}${result.changed!.replaceFirst('-', '')}':
+                                          // '+${result.currency}${result.changed}',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            height: 0,
+                                            letterSpacing: -0.24,
+                                            //color: result.changed![0] == "0" ? result.changed!.length >= 2 ? result.changed![1] == "." ?Colors.green :Colors.black :Colors.black:  result.changed![0] == "-" ? Colors.redAccent : Colors.green),
+                                          color: result.sign == "+" ? Colors.green : result.sign == "-" ? Colors.redAccent : Colors.black,)
+                                      )),
+                                  ],
+                                ),
+                              ),
+                              const Divider(color: Colors.grey,height: 1),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 6),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        DateFormat("dd MMM, yyyy").format(DateFormat("dd-MM-yyyy").parse(result.priceDate.toString())),
+                                        //result.priceDate.toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 11,
+                                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                                          fontWeight: FontWeight.w400,
+                                          height: 0,
+                                          letterSpacing: -0.24,)
+                                    ),
+                                    Text(
+                                        '${result.company} - ${result.state}, ${result.country}',
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 11,
+                                          fontFamily: 'Metropolis',
+                                          fontWeight: FontWeight.w400,
+                                          height: 0,
+                                          letterSpacing: -0.24,
+                                    ),)
+                                  ],
+                                ),
+                              ),
+                              /*choices[index].showgraph ? graph() : Container()*/
+                              //SizedBox(height: 5.0,)
+                            ]),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                      ],
+                    );
+                  },
+                )
+              : const Center(child: Text('Not Found '))
+            )
         : Center(
             child: Platform.isAndroid
                 ? const CircularProgressIndicator(
@@ -841,21 +869,21 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     );
   }
 
-  Widget buildLoadMoreView(
-      BuildContext context, ChartSwipeDirection direction) {
-    if (direction == ChartSwipeDirection.end) {
-      return FutureBuilder<String>(
-        //future: get_graphmonthvalue(), /// Adding additional data using updateDataSource method
-        builder: (BuildContext futureContext, AsyncSnapshot<String> snapShot) {
-          return snapShot.connectionState != ConnectionState.done
-              ? const CircularProgressIndicator()
-              : SizedBox.fromSize(size: Size.zero);
-        },
-      );
-    } else {
-      return SizedBox.fromSize(size: Size.zero);
-    }
-  }
+  // Widget buildLoadMoreView(
+  //     BuildContext context, ChartSwipeDirection direction) {
+  //   if (direction == ChartSwipeDirection.end) {
+  //     return FutureBuilder<String>(
+  //       future: get_graphmonthvalue(), /// Adding additional data using updateDataSource method
+  //       builder: (BuildContext futureContext, AsyncSnapshot<String> snapShot) {
+  //         return snapShot.connectionState != ConnectionState.done
+  //             ? const CircularProgressIndicator()
+  //             : SizedBox.fromSize(size: Size.zero);
+  //       },
+  //     );
+  //   } else {
+  //     return SizedBox.fromSize(size: Size.zero);
+  //   }
+  // }
 
   void _onLoading() {
     BuildContext dialogContext = context;
@@ -935,7 +963,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed
@@ -954,7 +982,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
   }
 
   get_HomePost() async {
-
     var res = await getlive_price(offset.toString(), '20', _search.text,
         category_id, company_id, country, state, constanst.date);
     var jsonArray;
@@ -963,6 +990,7 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
         jsonArray = res['result'];
 
         for (var data in jsonArray) {
+          print("Livedata:-${data}");
           price.Result record = price.Result(
               codeId: data['codeId'],
               codeName: data['CodeName'],
@@ -975,7 +1003,9 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
               currency: data['Currency'],
               state: data['State'],
               company: data['Company'],
-              country: data['Country']);
+              country: data['Country'],
+              sign: data['sign']
+          );
           price_data.add(record);
         }
         for (int i = 0; i < price_data.length; i++) {
@@ -1018,7 +1048,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     if (res['status'] == 1) {
       // gethomepost = get_graph.fromJson(res);
 
-
       //if (res.statusCode == 200) {
       get_graph graph = get_graph.fromJson(res);
       if (graph.lastYearRecord != null) {
@@ -1040,7 +1069,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
     if (res['status'] == 1) {
       // gethomepost = get_graph.fromJson(res);
 
-
       //if (res.statusCode == 200) {
       get_graph graph = get_graph.fromJson(res);
       if (graph.allRecord != null) {
@@ -1051,7 +1079,6 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
           .map((data) =>
               DataPoint(data.priceDate.toString(), data.price.toString()))
           .toList();
-
     }
   }
 }
@@ -1059,7 +1086,8 @@ class _LivepriceScreenState extends State<LivepriceScreen> {
 class CustomTooltip extends StatelessWidget {
   final String category, price, company, codeName, changed, priceDate;
 
-  const CustomTooltip({super.key,
+  const CustomTooltip({
+    //super.key,
     required this.category,
     required this.price,
     required this.company,

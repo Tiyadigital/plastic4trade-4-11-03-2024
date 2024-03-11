@@ -14,8 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'api/api_interface.dart';
 import 'screen/LoginScreen.dart';
 import 'utill/constant.dart';
@@ -84,15 +84,14 @@ add_ios_device() async {
 Future<void> _showNotification(
     {required String title, required String body}) async {}
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   WidgetsBinding.instance.addPostFrameCallback((_) async {
-    int appOpenCount = getAppOpenCount() as int;
+    var appOpenCount = await getAppOpenCount();
     saveAppOpenCount(appOpenCount);
   });
 
@@ -118,8 +117,8 @@ Future<void> init(BuildContext context) async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('mipmap/ic_launcher');
 
-  IOSInitializationSettings initializationSettingsios =
-      const IOSInitializationSettings(
+   IOSInitializationSettings initializationSettingsios =
+   const IOSInitializationSettings(
     defaultPresentBadge: true,
     defaultPresentAlert: true,
     defaultPresentSound: true,
@@ -140,6 +139,8 @@ Future<void> init(BuildContext context) async {
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
+
+
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -189,6 +190,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 15.0,
                 fontWeight: FontWeight.w700,
                 color: Color.fromARGB(255, 0, 91, 148),
+
                 fontFamily: 'assets/fonst/Metropolis-Black.otf'),
             displaySmall: TextStyle(
                 fontSize: 12.0,
@@ -214,8 +216,8 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
                 fontFamily: 'assets/fonst/Metropolis-Black.otf')),
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(secondary: const Color.fromARGB(255, 0, 91, 148)),
+        // colorScheme: ColorScheme.fromSwatch()
+        //     .copyWith(secondary: const Color.fromARGB(255, 0, 91, 148)),
       ),
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
@@ -240,6 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    initPermissions();
     startTimer();
   }
 
@@ -265,15 +268,26 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  initPermissions() async {
+
+    PermissionStatus notificationStatus = await Permission.notification.request();
+
+    if (notificationStatus.isGranted) {
+      print("All permissions granted.");
+    } else {
+      print("One or more permissions were rejected.");
+    }
+  }
+
   startTimer() async {
     var duration = const Duration(seconds: 3);
     return Timer(duration, registerpage);
   }
 
   void registerpage() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    if (_pref.getBool('islogin') != true) {
+    if (pref.getBool('islogin') != true) {
       Navigator.push(
           context,
           MaterialPageRoute(

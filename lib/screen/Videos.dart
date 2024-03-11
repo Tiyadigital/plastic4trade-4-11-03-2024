@@ -39,51 +39,55 @@ class _YourWidgetState extends State<Videos> {
       backgroundColor: const Color.fromARGB(240, 218, 218, 218),
       appBar: CustomeApp('Videos'),
       body: load
-          ? Container(
-              margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-              child: SingleChildScrollView(child: FutureBuilder(
-
-                  //future: load_subcategory(),
-                  builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.none &&
-                    snapshot.hasData == null) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  //List<dynamic> users = snapshot.data as List<dynamic>;
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: videolist.length,
-                      //padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
-                      itemBuilder: (context, index) {
-                        //Choice record = choices[index];
-                        return Container(
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                color: Colors.white),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(children: [
-                                  YoutubeViewer(videolist[index]),
-                                  Text(
-                                    videocontent[index].toString(),
-                                    style: const TextStyle(
-                                            fontSize: 13.0,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf')
-                                        .copyWith(fontSize: 15),
-                                  )
-                                ])));
-                      });
-                }
-              })))
+          ? RefreshIndicator(
+            displacement: 50,
+            color: const Color(0xFF005C94),
+            triggerMode: RefreshIndicatorTriggerMode.anywhere,
+            onRefresh: ()async{},
+            child: FutureBuilder(
+              future: get_videolist(),
+            //future: load_subcategory(),
+            builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none &&
+              snapshot.hasData == null) {
+            return const Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+                        } else {
+            //List<dynamic> users = snapshot.data as List<dynamic>;
+            return ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: videolist.length,
+                //padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+                itemBuilder: (context, index) {
+                  //Choice record = choices[index];
+                  return Container(
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(13.05)),
+                          color: Colors.white),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Padding(
+                          padding: const EdgeInsets.all(13.05),
+                          child: Column(children: [
+                            YoutubeViewer(videolist[index]),
+                            Text(
+                              videocontent[index].toString(),
+                              style: const TextStyle(
+                                      fontSize: 13.0,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf')
+                                  .copyWith(fontSize: 15),
+                            )
+                          ])));
+                });
+                        }
+                      }),
+          )
           : Center(
               child: Platform.isAndroid
                   ? const CircularProgressIndicator(
@@ -148,7 +152,9 @@ class _YourWidgetState extends State<Videos> {
 class YoutubeViewer extends StatefulWidget {
   final String videoID;
 
-  const YoutubeViewer(this.videoID, {super.key});
+  const YoutubeViewer(this.videoID,
+     // {super.key}
+      );
   // const YoutubeViewer({super.key});
 
   @override
@@ -196,7 +202,7 @@ class _YoutubeViewerState extends State<YoutubeViewer>
 
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(20), // Image border
+      borderRadius: BorderRadius.circular(13.05), // Image border
       child: player,
     );
   }

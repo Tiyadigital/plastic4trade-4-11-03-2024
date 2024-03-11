@@ -12,14 +12,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
+import '../common/popUpDailog.dart';
 import '../model/GetSalePostList.dart';
 import '../widget/HomeAppbar.dart';
 import 'AddPost.dart';
+import 'Buyer_sell_detail.dart';
 import 'GradeScreen.dart';
 import 'Videos.dart';
 
 class managebuypost extends StatefulWidget {
   final String Title;
+
   const managebuypost({Key? key, required this.Title}) : super(key: key);
 
   @override
@@ -75,8 +78,8 @@ class _managebuypostState extends State<managebuypost> {
         actions: [
           GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => const Videos()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Videos()));
               },
               child: SizedBox(
                   width: 40,
@@ -96,8 +99,8 @@ class _managebuypostState extends State<managebuypost> {
         height: 70,
         width: 70,
         decoration: BoxDecoration(
-            image:
-                const DecorationImage(image: AssetImage("assets/floating_back.png")),
+            image: const DecorationImage(
+                image: AssetImage("assets/floating_back.png")),
             borderRadius: BorderRadius.circular(30)),
         child: IconButton(
           onPressed: () {
@@ -136,7 +139,6 @@ class _managebuypostState extends State<managebuypost> {
               } else if (constanst.isgrade) {
                 constanst.redirectpage = "add_type";
                 categoryDialog(context);
-
               } else if (constanst.istype) {
                 constanst.redirectpage = "add_grade";
 
@@ -156,7 +158,7 @@ class _managebuypostState extends State<managebuypost> {
                   !constanst.istype &&
                   !constanst.iscategory &&
                   !constanst.isprofile) {
-                 Navigator.push(
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AddPost(),
@@ -175,31 +177,39 @@ class _managebuypostState extends State<managebuypost> {
     return isload == true
         ? Padding(
             padding: const EdgeInsets.all(15),
-            child: FutureBuilder(
-
-                //future: load_subcategory(),
-                builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return ListView.builder(
+            child:
+            // FutureBuilder(
+            //
+            //     //future: load_subcategory(),
+            //     builder: (context, snapshot) {
+            //   if (snapshot.connectionState == ConnectionState.none &&
+            //       snapshot.hasData == null) {
+            //     return const Center(child: CircularProgressIndicator());
+            //   }
+            //   if (snapshot.hasError) {
+            //     return Text('Error: ${snapshot.error}');
+            //   } else {
+            //     //List<dynamic> users = snapshot.data as List<dynamic>;
+            //     return
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: salepostlist_data.length,
                     itemBuilder: (context, index) {
                       Result? record = salePostList.result![index];
-                      
+
                       for (int i = 0; i < salepostlist_data.length; i++) {
                         selectedItemValue.add(record.productStatus.toString());
                       }
                       return GestureDetector(
                         onTap: () {
-                          setState(() {});
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(
+                                  prod_id: record.productId.toString(),
+                                  post_type: record.postType,)));
+                          });
                         },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10),
@@ -241,8 +251,7 @@ class _managebuypostState extends State<managebuypost> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10.0))),
                                   // color: Color.fromARGB(0,255, 255, 255),
-                                  child: Text(
-                                      '₹${record.productPrice}',
+                                  child: Text('₹${record.productPrice}',
                                       style: const TextStyle(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w800,
@@ -333,7 +342,8 @@ class _managebuypostState extends State<managebuypost> {
 
                                   GridView.builder(
                                     shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     padding: EdgeInsets.zero,
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
@@ -366,7 +376,8 @@ class _managebuypostState extends State<managebuypost> {
                                           margin: EdgeInsets.zero,
                                           padding: EdgeInsets.zero,
                                           child: newStr == 'ffffff'
-                                              ? const Icon(Icons.circle_outlined,
+                                              ? const Icon(
+                                                  Icons.circle_outlined,
                                                   size: 15)
                                               : Icon(Icons.circle_rounded,
                                                   size: 15, color: colors));
@@ -381,12 +392,14 @@ class _managebuypostState extends State<managebuypost> {
                                       SizedBox(
                                           width: 105,
                                           child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(
-                                                  0.0, 0.0, 0.0, 0),
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0.0, 0.0, 0.0, 0),
                                               child: Container(
                                                   height: 30,
                                                   width: 80,
-                                                  padding: const EdgeInsets.only(
+                                                  padding:
+                                                      const EdgeInsets.only(
                                                     left: 5.0,
                                                   ),
                                                   decoration: BoxDecoration(
@@ -404,13 +417,12 @@ class _managebuypostState extends State<managebuypost> {
                                                     items: _dropDownItem(),
                                                     //hint: Text('Enter team'),
                                                     onChanged: (value) {
-                                                      selectedItemValue[index] =
-                                                          value!;
+                                                      selectedItemValue[index] = value.toString();
                                                       setState(() {
-                                                        set_prod_status(
-                                                            record.productId
-                                                                .toString(),
-                                                            value);
+                                                  set_prod_status(
+                                                            record.productId.toString(),
+                                                            value.toString(),
+                                                        );
                                                       });
                                                     },
                                                     isExpanded: true,
@@ -449,16 +461,27 @@ class _managebuypostState extends State<managebuypost> {
                                       SizedBox(
                                           child: GestureDetector(
                                         onTap: () {
-                                          if (salepostlist_data.length == 1) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Minimum 1 Sale Post or Buy Post Is Required');
-                                          } else {
-                                            delete_confirm(
-                                                context,
-                                                record.productId.toString(),
-                                                index);
-                                          }
+                                          // if (salepostlist_data.length == 1) {
+                                          //   Fluttertoast.showToast(
+                                          //       msg:
+                                          //           'Minimum 1 Sale Post or Buy Post Is Required');
+                                          // } else {
+                                          setState(() { });
+
+                                          showDialog(
+                                              context: context,
+                                            builder: (context) {
+                                              return CommanDialog(
+                                                title: "Delete Post",
+                                                content: "Are you sure want to delete post?",
+                                                onPressed: (){
+                                                  delete_salepost(record.productId.toString());
+                                                  Navigator.of(context).pop(false);
+                                                  salepostlist_data.removeAt(index);
+                                                },
+                                              );
+                                            }
+                                          );
                                         },
                                         child: Image.asset(
                                           'assets/delete1.png',
@@ -474,10 +497,11 @@ class _managebuypostState extends State<managebuypost> {
                           ]),
                         ),
                       );
-                    });
-
-              }
-            }))
+                    }),
+            //   }
+            // }
+            // )
+    )
         : Center(
             child: Platform.isAndroid
                 ? const CircularProgressIndicator(
@@ -517,10 +541,8 @@ class _managebuypostState extends State<managebuypost> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
-
     } else {
       get_buypostlist();
-
     }
   }
 
@@ -568,11 +590,9 @@ class _managebuypostState extends State<managebuypost> {
                   colorName: data['colorName'], haxCode: data['HaxCode']);
               colors.add(record);
             }
-
           }
           salepostlist_data.add(record);
         }
-
 
         isload = true;
         if (mounted) {
@@ -588,11 +608,9 @@ class _managebuypostState extends State<managebuypost> {
   }
 
   set_prod_status(String prodId, String prodStatus) async {
-
     var res = await save_prostatus(prodId, prodStatus);
     var jsonArray;
     if (res['status'] == 1) {
-
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
@@ -601,7 +619,6 @@ class _managebuypostState extends State<managebuypost> {
   }
 
   set_pushnotification(String prodId) async {
-
     var res = await push_notification(prodId);
     var jsonArray;
     if (res['status'] == 1) {
@@ -614,12 +631,9 @@ class _managebuypostState extends State<managebuypost> {
   }
 
   delete_salepost(String prodId) async {
-
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res = await deletebuypost(
-        prodId,
-        pref.getString('user_id').toString(),
+    var res = await deletebuypost(prodId, pref.getString('user_id').toString(),
         pref.getString('api_token').toString());
     var jsonArray;
     if (res['status'] == 1) {

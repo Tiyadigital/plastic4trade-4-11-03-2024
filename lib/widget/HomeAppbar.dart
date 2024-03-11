@@ -2,21 +2,15 @@
 
 import 'package:Plastic4trade/widget/AddPost_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:Plastic4trade/screen/Chat.dart';
 import 'package:Plastic4trade/screen/Liveprice.dart';
 import 'package:Plastic4trade/screen/Notifications.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:Plastic4trade/utill/constant.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../screen/AddPost.dart';
-import '../screen/Register2.dart';
-import '../screen/Videos.dart';
 import 'BussinesPro_dialog.dart';
 import 'Category_dialog.dart';
 import 'Tutorial_Videos_dialog.dart';
+import 'login_dialog.dart';
 
 class CustomeApp extends StatelessWidget implements PreferredSizeWidget {
   String title = '';
@@ -192,9 +186,10 @@ Widget myAppbar(String title, context) {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_back_ios,
                     color: Colors.black,
+                    size: 20,
                   )),
               const Text('Tutorial Video',
                   softWrap: false,
@@ -260,79 +255,92 @@ Widget myAppbar(String title, context) {
                 onTap: () {
                   showTutorial_Video(context, title);
                 },
-                child: SizedBox(
-                    width: 40,
-                    child: Image.asset(
-                      'assets/Play.png',
-                    ))),
+                child: Image.asset(
+                  'assets/Play.png',
+                  width: 40,
+                  height: 40,
+                )),
           const SizedBox(
             width: 10,
           ),
           GestureDetector(
               onTap: () {
                 constanst.redirectpage="live_price";
-                if (constanst.appopencount == constanst.appopencount1) {
+               if(constanst.isWithoutLogin == true){
+                 showLoginDialog(context);
+               }else{
+                 if (constanst.appopencount == constanst.appopencount1) {
 
-                  if (!constanst.isgrade &&
-                      !constanst.istype &&
-                      !constanst.iscategory &&
-                      !constanst.isprofile &&
-                      constanst.step == 11) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LivepriceScreen(),
-                        ));
-                  } else if (constanst.isprofile) {
-                    showInformationDialog(context);
-                  } else if (constanst.iscategory) {
-                    categoryDialog(context);
-                  } else if (constanst.isgrade) {
-                    categoryDialog(context);
-                  } else if (constanst.istype) {
-                    categoryDialog(context);
-                  } else if (constanst.step != 11) {
-                    addPostDialog(context);
-                  }
-                }
-                else if (constanst.isprofile) {
-                  showInformationDialog(context);
-                }else if(constanst.appopencount == constanst.appopencount1){
-                  categoryDialog(context);
-                }
-                else {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LivepriceScreen(),
-                      ));
-                }
+                   if (!constanst.isgrade &&
+                       !constanst.istype &&
+                       !constanst.iscategory &&
+                       !constanst.isprofile &&
+                       constanst.step == 11) {
+                     Navigator.push(
+                         context,
+                         MaterialPageRoute(
+                           builder: (context) => const LivepriceScreen(),
+                         ));
+                   } else if (constanst.isprofile) {
+                     showInformationDialog(context);
+                   } else if (constanst.iscategory) {
+                     categoryDialog(context);
+                   } else if (constanst.isgrade) {
+                     categoryDialog(context);
+                   } else if (constanst.istype) {
+                     categoryDialog(context);
+                   } else if (constanst.step != 11) {
+                     addPostDialog(context);
+                   }
+                 }
+                 else if (constanst.isprofile) {
+                   showInformationDialog(context);
+                 }else if(constanst.appopencount == constanst.appopencount1){
+                   categoryDialog(context);
+                 }
+                 else {
+                   Navigator.push(
+                       context,
+                       MaterialPageRoute(
+                         builder: (context) => const LivepriceScreen(),
+                       ));
+                 }
+               }
               },
-              child: SizedBox(
+              child: Image.asset(
+                'assets/homeprice.png',
                 width: 40,
                 height: 40,
-                child: Image.asset(
-                  'assets/homeprice.png',
-                ),
               )),
           const SizedBox(
             width: 10,
           ),
-          GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Chat(),
-                    ));
-              },
-              child: SizedBox(
-                width: 40,
-                height: 50,
-                child: Image.asset(
-                  'assets/homemsg.png',
-                ),
-              )),
+          Align(
+            child: badges.Badge(
+              position: badges.BadgePosition.topEnd(top: 0, end: 3),
+              badgeStyle: const badges.BadgeStyle(badgeColor: Colors.red),
+              badgeAnimation: const badges.BadgeAnimation.slide(
+                  animationDuration: Duration(milliseconds: 300)),
+              badgeContent: Text(constanst.notification_count.toString(),
+                  style: const TextStyle(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Chat(),
+                        ));
+                  },
+                  child: Image.asset(
+                    'assets/homemsg.png',
+                    width: 40,
+                    height: 40,
+                  )),
+            ),
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -354,12 +362,10 @@ Widget myAppbar(String title, context) {
                         MaterialPageRoute(
                             builder: (context) => const notification()));
                   },
-                  child: SizedBox(
+                  child: Image.asset(
+                    'assets/Notification.png',
                     width: 40,
-                    child: Image.asset(
-                      'assets/Notification.png',
-                      height: 34,
-                    ),
+                    height: 40,
                   )),
             ),
           ),
@@ -378,6 +384,16 @@ Future<void> showInformationDialog(BuildContext context) async {
     barrierDismissible: false,
     builder: (context) {
       return const BussinessPro_dialog();
+    },
+  );
+}
+
+Future<void> showLoginDialog(BuildContext context) async {
+  return await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return const LoginDialog();
     },
   );
 }

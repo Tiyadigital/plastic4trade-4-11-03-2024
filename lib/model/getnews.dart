@@ -30,7 +30,7 @@ class GetNews {
 class Result {
   int? newsId;
   String? newsTitle;
-  Null? shortContent;
+  Null shortContent;
   String? longContent;
   String? newsDate;
   String? newsTime;

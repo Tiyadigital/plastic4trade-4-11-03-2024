@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables
+// ignore_for_file: non_constant_identifier_names, unnecessary_null_comparison, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'dart:io';
 
@@ -78,226 +78,229 @@ class _BuyerPostState extends State<BuyerPost> {
       child: Scaffold(
         backgroundColor: const Color(0xFFDADADA),
         body: isload == true
-            ? Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  horiztallist(),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: Row(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(40.0),
-                                bottomRight: Radius.circular(40.0),
-                                topLeft: Radius.circular(40.0),
-                                bottomLeft: Radius.circular(40.0),
-                              ),
-                              color: Colors.white),
-                          height: 40,
-                          margin: const EdgeInsets.only(left: 8.0),
-                          width: MediaQuery.of(context).size.width / 2.5,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 5.0, right: 5.0),
-                            child: TextField(
-                              controller: _loc,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
-                              readOnly: true,
-                              onTap: () async {
-                                var place = await PlacesAutocomplete.show(
-                                    context: context,
-                                    apiKey: googleApikey,
-                                    mode: Mode.overlay,
-                                    types: ['(cities)'],
-                                    onError: (err) {});
-
-                                if (place != null) {
-                                  setState(() {
-                                    location = place.description.toString();
-                                    constanst.location =
-                                        place.description.toString();
-                                    _loc.text = location!;
-                                  });
-
-                                  final plist = GoogleMapsPlaces(
-                                    apiKey: googleApikey,
-                                    apiHeaders: await const GoogleApiHeaders()
-                                        .getHeaders(),
-                                  );
-                                  String placeid = place.placeId ?? "0";
-                                  final detail =
-                                      await plist.getDetailsByPlaceId(placeid);
-
-                                  final geometry = detail.result.geometry!;
-                                  constanst.lat =
-                                      geometry.location.lat.toString();
-
-                                  constanst.log =
-                                      geometry.location.lng.toString();
-                                  buyerpost_data.clear();
-                                  count = 0;
-                                  offset = 0;
-                                  WidgetsBinding
-                                      .instance.focusManager.primaryFocus
-                                      ?.unfocus();
-                                  _onLoading();
-                                  get_buyerPost();
-                                  setState(() {});
-                                }
-                              },
-                              textInputAction: TextInputAction.search,
-                              decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
-                                border: InputBorder.none,
-                                prefixIconConstraints:
-                                    const BoxConstraints(minWidth: 24),
-                                suffixIconConstraints:
-                                    const BoxConstraints(minWidth: 24),
-                                prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(right: 2, left: 2),
-                                  child: Icon(
-                                    Icons.location_on_outlined,
-                                    color: Colors.black45,
-                                    size: 23,
-                                  ),
+            ? RefreshIndicator(
+              displacement: 50,
+              color: const Color(0xFF005C94),
+              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+              onRefresh: ()async{},
+                  child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    horiztallist(),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    SizedBox(
+                      height: 50,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(40.0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(40.0),
+                                  bottomLeft: Radius.circular(40.0),
                                 ),
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    _loc.clear();
+                                color: Colors.white),
+                            height: 40,
+                            margin: const EdgeInsets.only(left: 8.0),
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 5.0),
+                              child: TextField(
+                                controller: _loc,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                readOnly: true,
+                                onTap: () async {
+                                  var place = await PlacesAutocomplete.show(
+                                      context: context,
+                                      apiKey: googleApikey,
+                                      mode: Mode.overlay,
+                                      types: ['(cities)'],
+                                      onError: (err) {});
+
+                                  if (place != null) {
+                                    setState(() {
+                                      location = place.description.toString();
+                                      constanst.location =
+                                          place.description.toString();
+                                      _loc.text = location!;
+                                    });
+
+                                    final plist = GoogleMapsPlaces(
+                                      apiKey: googleApikey,
+                                      apiHeaders: await const GoogleApiHeaders()
+                                          .getHeaders(),
+                                    );
+                                    String placeid = place.placeId ?? "0";
+                                    final detail =
+                                        await plist.getDetailsByPlaceId(placeid);
+
+                                    final geometry = detail.result.geometry!;
+                                    constanst.lat =
+                                        geometry.location.lat.toString();
+
+                                    constanst.log =
+                                        geometry.location.lng.toString();
+                                    buyerpost_data.clear();
                                     count = 0;
                                     offset = 0;
-                                    constanst.lat = "";
-                                    constanst.log = "";
-                                    buyerpost_data.clear();
+                                    WidgetsBinding
+                                        .instance.focusManager.primaryFocus
+                                        ?.unfocus();
                                     _onLoading();
                                     get_buyerPost();
                                     setState(() {});
-                                  },
-                                  child: const Padding(
+                                  }
+                                },
+                                textInputAction: TextInputAction.search,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  prefixIconConstraints:
+                                      const BoxConstraints(minWidth: 24),
+                                  suffixIconConstraints:
+                                      const BoxConstraints(minWidth: 24),
+                                  prefixIcon: const Padding(
                                     padding: EdgeInsets.only(right: 2, left: 2),
                                     child: Icon(
-                                      Icons.clear,
+                                      Icons.location_on_outlined,
                                       color: Colors.black45,
                                       size: 20,
                                     ),
                                   ),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      _loc.clear();
+                                      count = 0;
+                                      offset = 0;
+                                      constanst.lat = "";
+                                      constanst.log = "";
+                                      buyerpost_data.clear();
+                                      _onLoading();
+                                      get_buyerPost();
+                                      setState(() {});
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(right: 2, left: 2),
+                                      child: Icon(
+                                        Icons.clear,
+                                        color: Colors.black45,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  hintText: 'Location',
+                                  hintStyle: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf'),
                                 ),
-                                hintText: 'Location',
-                                hintStyle: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf'),
+                                onChanged: (value) {},
                               ),
-                              onChanged: (value) {},
                             ),
                           ),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(40.0),
-                                bottomRight: Radius.circular(40.0),
-                                topLeft: Radius.circular(40.0),
-                                bottomLeft: Radius.circular(40.0),
-                              ),
-                              color: Colors.white),
-                          height: 40,
-                          margin: const EdgeInsets.only(left: 6.0),
-                          width: MediaQuery.of(context).size.width / 2.2,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 5.0, right: 5.0),
-                            child: TextField(
-                              style: const TextStyle(
-                                  color: Colors.black, fontSize: 14),
-                              controller: _search,
-                              textInputAction: TextInputAction.search,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                prefixIconConstraints:
-                                    BoxConstraints(minWidth: 24),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 1.0),
-                                prefixIcon: Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 5.0, left: 5.0),
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Colors.black45,
-                                    size: 25,
-                                  ),
+                          Container(
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(40.0),
+                                  bottomRight: Radius.circular(40.0),
+                                  topLeft: Radius.circular(40.0),
+                                  bottomLeft: Radius.circular(40.0),
                                 ),
-                                hintText: 'Search',
-                                hintStyle: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf'),
-                              ),
-                              onSubmitted: (value) {
-                                WidgetsBinding
-                                    .instance.focusManager.primaryFocus
-                                    ?.unfocus();
-                                buyerpost_data.clear();
-                                count = 0;
-                                offset = 0;
-                                _onLoading();
-                                get_buyerPost();
-                                setState(() {});
-                              },
-                              onChanged: (value) {
-                                if (value.isEmpty) {
+                                color: Colors.white),
+                            height: 40,
+                            margin: const EdgeInsets.only(left: 6.0),
+                            width: MediaQuery.of(context).size.width / 2.2,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 5.0),
+                              child: TextField(
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                controller: _search,
+                                textInputAction: TextInputAction.search,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  prefixIconConstraints:
+                                      BoxConstraints(minWidth: 24),
+                                  prefixIcon: Padding(
+                                    padding:
+                                        EdgeInsets.only(right: 5.0, left: 5.0),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.black45,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  hintText: 'Search',
+                                  hintStyle: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf'),
+                                ),
+                                onSubmitted: (value) {
                                   WidgetsBinding
                                       .instance.focusManager.primaryFocus
                                       ?.unfocus();
-                                  _search.clear();
+                                  buyerpost_data.clear();
                                   count = 0;
                                   offset = 0;
-                                  buyerpost_data.clear();
                                   _onLoading();
                                   get_buyerPost();
                                   setState(() {});
-                                }
-                              },
+                                },
+                                onChanged: (value) {
+                                  if (value.isEmpty) {
+                                    WidgetsBinding
+                                        .instance.focusManager.primaryFocus
+                                        ?.unfocus();
+                                    _search.clear();
+                                    count = 0;
+                                    offset = 0;
+                                    buyerpost_data.clear();
+                                    _onLoading();
+                                    get_buyerPost();
+                                    setState(() {});
+                                  }
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            ViewItem(context);
-                          },
-                          child: Container(
-                            height: 45,
-                            margin: const EdgeInsets.only(
-                                bottom: 3.0, left: 1.2, top: 3.0),
-                            width: MediaQuery.of(context).size.width / 11.2,
-                            // padding: EdgeInsets.only(right: 5),
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: const Icon(
-                              Icons.filter_alt,
-                              color: Colors.black,
+                          GestureDetector(
+                            onTap: () {
+                              ViewItem(context);
+                            },
+                            child: Container(
+                              height: 45,
+                              margin: const EdgeInsets.only(
+                                  bottom: 3.0, left: 1.2, top: 3.0),
+                              width: MediaQuery.of(context).size.width / 11.2,
+                              // padding: EdgeInsets.only(right: 5),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: const Icon(
+                                Icons.filter_alt,
+                                color: Colors.black,
+                                size: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  category()
-                ],
-              )
+                    category()
+                  ],
+                ),
+            )
             : Center(
                 child: Platform.isAndroid
                     ? const CircularProgressIndicator(
@@ -323,60 +326,66 @@ class _BuyerPostState extends State<BuyerPost> {
             borderRadius: BorderRadius.circular(30),
           ),
           child: IconButton(
-            onPressed: () {
+            onPressed: () async{
               constanst.redirectpage = "add_post";
-              if (constanst.appopencount == constanst.appopencount1) {
-                if (!constanst.isgrade &&
-                    !constanst.istype &&
-                    !constanst.iscategory &&
-                    !constanst.isprofile) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddPost(),
-                    ),
-                  );
-                } else if (constanst.isprofile) {
-                  showInformationDialog(context);
-                } else if (constanst.iscategory) {
-                  constanst.redirectpage = "add_cat";
-                  categoryDialog(context);
-                } else if (constanst.isgrade) {
-                  constanst.redirectpage = "add_type";
-                  categoryDialog(context);
-                } else if (constanst.istype) {
-                  constanst.redirectpage = "add_grade";
-                  categoryDialog(context);
-                }
-              } else {
-                if (constanst.isprofile) {
-                  showInformationDialog(context);
-                } else if (constanst.iscategory) {
-                  constanst.redirectpage = "add_cat";
-                  categoryDialog(context);
-                } else if (constanst.isgrade) {
-                  constanst.redirectpage = "add_type";
-                  categoryDialog(context);
-                } else if (constanst.istype) {
-                  constanst.redirectpage = "add_grade";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Grade(),
-                    ),
-                  );
-                } else if (!constanst.isgrade &&
-                    !constanst.istype &&
-                    !constanst.iscategory &&
-                    !constanst.isprofile) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddPost(),
-                    ),
-                  );
-                }
-              }
+              SharedPreferences pref = await SharedPreferences.getInstance();
+             if(pref.getBool('isWithoutLogin') == true){
+               showLoginDialog(context);
+             }else{
+               if (constanst.appopencount == constanst.appopencount1) {
+                 if (!constanst.isgrade &&
+                     !constanst.istype &&
+                     !constanst.iscategory &&
+                     !constanst.isprofile) {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const AddPost(),
+                     ),
+                   );
+                 } else if (constanst.isprofile) {
+                   showInformationDialog(context);
+                 } else if (constanst.iscategory) {
+                   constanst.redirectpage = "add_cat";
+                   categoryDialog(context);
+                 } else if (constanst.isgrade) {
+                   constanst.redirectpage = "add_type";
+                   categoryDialog(context);
+                 } else if (constanst.istype) {
+                   constanst.redirectpage = "add_grade";
+                   categoryDialog(context);
+                 }
+               }
+               else {
+                 if (constanst.isprofile) {
+                   showInformationDialog(context);
+                 } else if (constanst.iscategory) {
+                   constanst.redirectpage = "add_cat";
+                   categoryDialog(context);
+                 } else if (constanst.isgrade) {
+                   constanst.redirectpage = "add_type";
+                   categoryDialog(context);
+                 } else if (constanst.istype) {
+                   constanst.redirectpage = "add_grade";
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const Grade(),
+                     ),
+                   );
+                 } else if (!constanst.isgrade &&
+                     !constanst.istype &&
+                     !constanst.iscategory &&
+                     !constanst.isprofile) {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) => const AddPost(),
+                     ),
+                   );
+                 }
+               }
+             }
             },
             icon: const Icon(Icons.add, color: Colors.white, size: 40),
           ),
@@ -395,10 +404,8 @@ class _BuyerPostState extends State<BuyerPost> {
     return Container(
       height: 50,
       color: Colors.white,
-      //margin: EdgeInsets.only(top: 5.0),
-      //margin: EdgeInsets.fromLTRB(10, 2.0, 0.0, 0),
       child: FutureBuilder(
-        //future: load_subcategory(),
+        future: constanst.cat_data,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.none &&
               snapshot.hasData == null) {
@@ -408,7 +415,8 @@ class _BuyerPostState extends State<BuyerPost> {
           }
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
-          } else {
+          }
+          else {
             //List<dynamic> users = snapshot.data as List<dynamic>;
             return ListView.builder(
               shrinkWrap: false,
@@ -422,7 +430,7 @@ class _BuyerPostState extends State<BuyerPost> {
                   child: Wrap(
                     spacing: 6.0,
                     runSpacing: 6.0,
-                    children: <Widget>[
+                    children: [
                       ChoiceChip(
                         label: Text(
                           constanst.catdata[index].categoryName.toString(),
@@ -531,281 +539,31 @@ class _BuyerPostState extends State<BuyerPost> {
   Widget category() {
     return buyerpost_data.isNotEmpty
         ? Expanded(
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return LayoutBuilder(builder: (context, constraints) {
-                  return GridView.builder(
-                    padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: constraints.maxWidth > 700 ? 4 : 2,
-                      childAspectRatio: MediaQuery.of(context).size.width / 620,
-                    ),
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    controller: scrollercontroller,
-                    itemCount: buyerpost_data.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      buyerpost.Result result = buyerpost_data[index];
-                      return GestureDetector(
-                        onTap: (() {
-                          constanst.productId = result.productId.toString();
-                          constanst.post_type = result.postType.toString();
-                          constanst.redirectpage = "sale_buy";
-
-                          if (constanst.appopencount ==
-                              constanst.appopencount1) {
-                            if (!constanst.isgrade &&
-                                !constanst.istype &&
-                                !constanst.iscategory &&
-                                !constanst.isprofile &&
-                                constanst.step == 11) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Buyer_sell_detail(
-                                    prod_id: result.productId.toString(),
-                                    post_type: result.postType.toString(),
-                                  ),
-                                ),
-                              );
-                            } else if (constanst.isprofile) {
-                              showInformationDialog(context);
-                            } else if (constanst.iscategory) {
-                              categoryDialog(context);
-                            } else if (constanst.isgrade) {
-                              categoryDialog(context);
-                            } else if (constanst.istype) {
-                              categoryDialog(context);
-                            } else if (constanst.step != 11) {
-                              addPostDialog(context);
-                            }
-                          } else if (constanst.isprofile) {
-                            showInformationDialog(context);
-                          } else if (constanst.appopencount ==
-                              constanst.appopencount1) {
-                            categoryDialog(context);
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Buyer_sell_detail(
-                                  prod_id: result.productId.toString(),
-                                  post_type: result.postType.toString(),
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                        child: Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(children: [
-                            Stack(fit: StackFit.passthrough, children: <Widget>[
-                              Container(
-                                height: 165,
-                                width: 175,
-                                margin: const EdgeInsets.all(5.0),
-                                decoration: const BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30.0),
-                                  ),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0),),*/
-                                  child: Image(
-                                    image: NetworkImage(
-                                      result.mainproductImage.toString(),
-                                    ),
-                                    fit: BoxFit.cover,
-                                    height: 150,
-                                    width: 170,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 10,
-                                left: 10,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 5.0),
-                                  decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0),
-                                    ),
-                                  ),
-                                  // color: Color.fromARGB(0,255, 255, 255),
-                                  child: Text(
-                                    '₹${result.productPrice}',
-                                    style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              result.isPaidPost == 'Paid'
-                                  ? Positioned(
-                                      top: -10,
-                                      left: -30,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(5),
-                                        child: Image.asset(
-                                          'assets/PaidPost.png',
-                                          height: 50,
-                                          width: 100,
-                                        ),
-                                      ),
-                                    )
-                                  : Container()
-                            ]),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.categoryName} | ${result.productGrade}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.state}, ${result.country}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0),
-                                    child: result.postType.toString() ==
-                                            "BuyPost"
-                                        ? const Text(
-                                            'Buy Post',
-                                            style: TextStyle(
-                                              fontSize: 13.0,
-                                              fontFamily: 'Metropolis',
-                                              fontWeight: FontWeight.w600,
-                                              color:
-                                                  Color.fromRGBO(0, 148, 95, 1),
-                                            ),
-                                          )
-                                        : result.postType.toString() ==
-                                                "SalePost"
-                                            ? const Text(
-                                                "Sale Post",
-                                                style: TextStyle(
-                                                  fontSize: 13.0,
-                                                  fontFamily: 'Metropolis',
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color.fromRGBO(
-                                                      0, 148, 95, 1),
-                                                ),
-                                              )
-                                            : Container(),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ]),
-                        ),
-                      );
-                    },
-                  );
-                });
-              }
-            }),
-          )
-        : Expanded(
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return GridView.builder(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: MediaQuery.of(context).size.height /
-                        1250, //MediaQuery.of(context).size.aspectRatio * 1.3,
-                    mainAxisSpacing: 3.0,
-                    crossAxisCount: 2,
-                  ),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: scrollercontroller,
-                  itemCount: homepostsearch_data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    homesearch.Result result = homepostsearch_data[index];
-                    return GestureDetector(
-                      onTap: (() {
-                        constanst.redirectpage == "sale_buy";
-                        if (constanst.appopencount == constanst.appopencount1) {
+            child:GridView.builder(
+                padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: MediaQuery.of(context).size.width /
+                    620, //MediaQuery.of(context).size.aspectRatio * 1.3,
+                mainAxisSpacing: 3.0,
+                crossAxisCount: 2,
+              ),
+                physics: const AlwaysScrollableScrollPhysics(),
+                controller: scrollercontroller,
+                itemCount: buyerpost_data.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  buyerpost.Result result = buyerpost_data[index];
+                  return GestureDetector(
+                    onTap: (() async{
+                      constanst.productId = result.productId.toString();
+                      constanst.post_type = result.postType.toString();
+                      constanst.redirectpage = "sale_buy";
+                      SharedPreferences pref = await SharedPreferences.getInstance();
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+                        if (constanst.appopencount ==
+                            constanst.appopencount1) {
                           if (!constanst.isgrade &&
                               !constanst.istype &&
                               !constanst.iscategory &&
@@ -820,66 +578,80 @@ class _BuyerPostState extends State<BuyerPost> {
                                 ),
                               ),
                             );
-                          } else if (!constanst.iscategory) {
+                          } else if (constanst.isprofile) {
                             showInformationDialog(context);
-                          } else if (!constanst.isgrade) {
-                            showInformationDialog(context);
-                          } else if (!constanst.istype) {
-                            showInformationDialog(context);
+                          } else if (constanst.iscategory) {
+                            categoryDialog(context);
+                          } else if (constanst.isgrade) {
+                            categoryDialog(context);
+                          } else if (constanst.istype) {
+                            categoryDialog(context);
                           } else if (constanst.step != 11) {
-                            showInformationDialog(context);
-                          } else {
-                            showInformationDialog(context);
+                            addPostDialog(context);
                           }
-                        } else {
-                          if (!constanst.isprofile) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Buyer_sell_detail(
-                                  prod_id: result.productId.toString(),
-                                  post_type: result.postType.toString(),
-                                ),
+                        } else if (constanst.isprofile) {
+                          showInformationDialog(context);
+                        } else if(!constanst.isgrade &&
+                            !constanst.istype &&
+                            !constanst.iscategory &&
+                            !constanst.isprofile &&
+                            constanst.step == 11){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Buyer_sell_detail(
+                                prod_id: result.productId.toString(),
+                                post_type: result.postType.toString(),
                               ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Register2(),
-                              ),
-                            );
-                          }
+                            ),
+                          );
+                        }else {
+                          categoryDialog(context);
                         }
-                      }),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                      }
+                    }),
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(13.05),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(13.05)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x3FA6A6A6),
+                              blurRadius: 16.32,
+                              offset: Offset(0, 3.26),
+                              spreadRadius: 0,
+                            )
+                          ],
                         ),
                         child: Column(children: [
-                          Stack(fit: StackFit.passthrough, children: <Widget>[
-                            Container(
-                              height: 165,
-                              width: 175,
-                              margin: const EdgeInsets.all(5.0),
-                              decoration: const BoxDecoration(
-                                //color: Colors.black26,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0),),*/
-                                child: Image(
-                                  image: NetworkImage(
-                                    result.mainproductImage.toString(),
+                          Stack(children: <Widget>[
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                height: 165,
+                                width: 175,
+                                margin: const EdgeInsets.all(5.0),
+                                decoration: const BoxDecoration(
+                                  //color: Colors.black26,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(13.05),
                                   ),
-                                  fit: BoxFit.cover,
-                                  height: 150,
-                                  width: 170,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(13.05),
+                                  /*shape: RoundedRectangleBorder(
+                                       borderRadius: BorderRadius.circular(10.0),),*/
+                                  child: Image(
+                                    image: NetworkImage(
+                                      result.mainproductImage.toString(),
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -902,24 +674,24 @@ class _BuyerPostState extends State<BuyerPost> {
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w800,
                                       fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf',
+                                      'assets/fonst/Metropolis-Black.otf',
                                       color: Colors.white),
                                 ),
                               ),
                             ),
                             result.isPaidPost == 'Paid'
                                 ? Positioned(
-                                    top: -10,
-                                    left: -30,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Image.asset(
-                                        'assets/PaidPost.png',
-                                        height: 50,
-                                        width: 100,
-                                      ),
-                                    ),
-                                  )
+                              top: -10,
+                              left: -30,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                child: Image.asset(
+                                  'assets/PaidPost.png',
+                                  height: 50,
+                                  width: 100,
+                                ),
+                              ),
+                            )
                                 : Container()
                           ]),
                           Column(
@@ -929,14 +701,14 @@ class _BuyerPostState extends State<BuyerPost> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 10.0, left: 10.0),
+                                      top: 5.0, left: 10.0),
                                   child: Text(result.postName.toString(),
                                       style: const TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets/fonst/Metropolis-SemiBold.otf'),
+                                          'assets/fonst/Metropolis-SemiBold.otf'),
                                       softWrap: false,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis),
@@ -946,8 +718,9 @@ class _BuyerPostState extends State<BuyerPost> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 10.0, left: 10.0),
-                                  child: Text(result.productGrade.toString(),
+                                      top: 5.0, left: 10.0),
+                                  child: Text(
+                                      '${result.categoryName} | ${result.productGrade}',
                                       style: const TextStyle(
                                         fontSize: 13.0,
                                         color: Colors.grey,
@@ -962,28 +735,261 @@ class _BuyerPostState extends State<BuyerPost> {
                                 alignment: Alignment.topLeft,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 10.0, left: 10.0),
-                                  child:
-                                      Text('${result.state},${result.country}',
-                                          style: const TextStyle(
-                                            fontSize: 13.0,
-                                            color: Colors.grey,
-                                            fontFamily: 'Metropolis',
-                                          ),
-                                          softWrap: false,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis),
+                                      top: 5.0, left: 10.0),
+                                  child: Text(
+                                      '${result.state}, ${result.country}',
+                                      style: const TextStyle(
+                                        fontSize: 13.0,
+                                        color: Colors.grey,
+                                        fontFamily: 'Metropolis',
+                                      ),
+                                      softWrap: false,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5.0, left: 10.0),
+                                  child: result.postType.toString() ==
+                                      "BuyPost"
+                                      ? const Text(
+                                    'Buy Post',
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color:
+                                      Color.fromRGBO(0, 148, 95, 1),
+                                    ),
+                                  )
+                                      : result.postType.toString() ==
+                                      "SalePost"
+                                      ? const Text(
+                                    "Sale Post",
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(
+                                          0, 148, 95, 1),
+                                    ),
+                                  )
+                                      : Container(),
                                 ),
                               ),
                             ],
                           )
                         ]),
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
+              ),
+          )
+        : Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: MediaQuery.of(context).size.height /
+                    1250, //MediaQuery.of(context).size.aspectRatio * 1.3,
+                mainAxisSpacing: 3.0,
+                crossAxisCount: 2,
+              ),
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: scrollercontroller,
+              itemCount: homepostsearch_data.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                homesearch.Result result = homepostsearch_data[index];
+                return GestureDetector(
+                  onTap: (() async{
+                    SharedPreferences pref = await SharedPreferences.getInstance();
+                    constanst.redirectpage == "sale_buy";
+                    if(pref.getBool('isWithoutLogin') == true){
+                      showLoginDialog(context);
+                    }else{
+                      if (constanst.appopencount == constanst.appopencount1) {
+                        if (!constanst.isgrade &&
+                            !constanst.istype &&
+                            !constanst.iscategory &&
+                            !constanst.isprofile &&
+                            constanst.step == 11) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Buyer_sell_detail(
+                                prod_id: result.productId.toString(),
+                                post_type: result.postType.toString(),
+                              ),
+                            ),
+                          );
+                        } else if (!constanst.iscategory) {
+                          showInformationDialog(context);
+                        } else if (!constanst.isgrade) {
+                          showInformationDialog(context);
+                        } else if (!constanst.istype) {
+                          showInformationDialog(context);
+                        } else if (constanst.step != 11) {
+                          showInformationDialog(context);
+                        } else {
+                          showInformationDialog(context);
+                        }
+                      }
+                      else {
+                        if (!constanst.isprofile) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Buyer_sell_detail(
+                                prod_id: result.productId.toString(),
+                                post_type: result.postType.toString(),
+                              ),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Register2(),
+                            ),
+                          );
+                        }
+                      }
+                    }
+                  }),
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(children: [
+                      Stack(fit: StackFit.passthrough, children: <Widget>[
+                        Container(
+                          height: 165,
+                          width: 175,
+                          margin: const EdgeInsets.all(5.0),
+                          decoration: const BoxDecoration(
+                            //color: Colors.black26,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            /*shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.circular(10.0),),*/
+                            child: Image(
+                              image: NetworkImage(
+                                result.mainproductImage.toString(),
+                              ),
+                              fit: BoxFit.cover,
+                              height: 150,
+                              width: 170,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: 10,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 5.0),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 0, 148, 95),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                            // color: Color.fromARGB(0,255, 255, 255),
+                            child: Text(
+                              '₹${result.productPrice}',
+                              style: const TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf',
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        result.isPaidPost == 'Paid'
+                            ? Positioned(
+                          top: -10,
+                          left: -30,
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: Image.asset(
+                              'assets/PaidPost.png',
+                              height: 50,
+                              width: 100,
+                            ),
+                          ),
+                        )
+                            : Container()
+                      ]),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0),
+                              child: Text(result.postName.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontFamily:
+                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0),
+                              child: Text(result.productGrade.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0),
+                              child:
+                              Text('${result.state},${result.country}',
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                          ),
+                        ],
+                      )
+                    ]),
+                  ),
                 );
-              }
-            }),
+              },
+            ),
           );
   }
 
@@ -1027,7 +1033,7 @@ class _BuyerPostState extends State<BuyerPost> {
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed
@@ -1065,14 +1071,20 @@ class _BuyerPostState extends State<BuyerPost> {
 
   Future<void> checknetowork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
-
+    SharedPreferences pref = await SharedPreferences.getInstance();
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(
           timeInSecForIosWeb: 2, msg: 'Internet Connection not available');
     } else {
-      get_categorylist();
-      getBussinessProfile();
-      get_buyerPost();
+
+      if(pref.getBool('isWithoutLogin') == true){
+        getBuyPostWithoutLogin();
+        get_categorylist();
+      }else{
+        get_categorylist();
+        getBussinessProfile();
+        get_buyerPost();
+      }
     }
   }
 
@@ -1158,6 +1170,40 @@ class _BuyerPostState extends State<BuyerPost> {
       constanst.log,
       _search.text.toString(),
     );
+    var jsonArray;
+    print("resdata:-$res");
+    if (res['status'] == 1) {
+      jsonArray = res['result'];
+
+      for (var data in jsonArray) {
+        buyerpost.Result record = buyerpost.Result(
+            postName: data['PostName'],
+            categoryName: data['CategoryName'],
+            productGrade: data['ProductGrade'],
+            currency: data['Currency'],
+            productPrice: data['ProductPrice'],
+            state: data['State'],
+            country: data['Country'],
+            postType: data['PostType'],
+            isPaidPost: data['is_paid_post'],
+            productType: data['ProductType'],
+            productId: data['productId'],
+            mainproductImage: data['mainproductImage']);
+        buyerpost_data.add(record);
+        loadmore = true;
+        isload = true;
+      }
+      setState(() {});
+    } else {
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
+    }
+    return jsonArray;
+  }
+
+  getBuyPostWithoutLogin() async{
+
+    var res = await buyPostWithoutLogin();
+
     var jsonArray;
     if (res['status'] == 1) {
       jsonArray = res['result'];

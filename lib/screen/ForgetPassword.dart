@@ -1,33 +1,29 @@
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names
+
 import 'package:country_calling_code_picker/picker.dart';
-import 'package:country_calling_code_picker/country.dart';
-import 'package:country_calling_code_picker/country_code_picker.dart';
-import 'package:country_calling_code_picker/functions.dart';
-import 'package:country_calling_code_picker/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io' show Platform;
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:Plastic4trade/model/common.dart';
-import 'package:Plastic4trade/screen/HomePage.dart';
 import 'package:Plastic4trade/screen/LoginScreen.dart';
 import 'package:Plastic4trade/screen/OtpScreen.dart';
-import 'package:Plastic4trade/widget/MainScreen.dart';
 import 'package:slide_switcher/slide_switcher.dart';
 import '../api/api_interface.dart';
-import 'RegisterScreen.dart';
 import 'package:email_validator/email_validator.dart';
 
 class ForgetPasswprd extends StatefulWidget {
-  const ForgetPasswprd({super.key});
+  const ForgetPasswprd(
+     // {super.key}
+      );
 
   @override
   State<ForgetPasswprd> createState() => _ForgetPasswprdState();
 }
 
 class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProviderStateMixin  {
-  TextEditingController _useremail = TextEditingController();
-  TextEditingController _usermbl = TextEditingController();
+  final TextEditingController _useremail = TextEditingController();
+  final TextEditingController _usermbl = TextEditingController();
   Color _color2 = Colors.black26;
   Color _color3 = Colors.black26;
   late AnimationController _animationController;
@@ -76,65 +72,58 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
       // backgroundColor: Color.fromARGB(255, 218, 218, 218),
 
 
-      body: Container(
-        // height: MediaQuery.of(context).size.height,
-        child: SafeArea(
-            top: true,
-            left: true,
-            right: true,
-            bottom: true,
-            maintainBottomViewPadding: true,
-            child: SingleChildScrollView(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                header(),
+      body: SafeArea(
+          top: true,
+          left: true,
+          right: true,
+          bottom: true,
+          maintainBottomViewPadding: true,
+          child: SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(children: [
+              header(),
 
-                const SizedBox(
-                  height: 10,
-                ),
-                SlideSwitcher(
+              const SizedBox(
+                height: 10,
+              ),
+              SlideSwitcher(
 
-                  containerColor: const Color.fromARGB(255, 0, 91, 148),
-                  onSelect: (int index) =>
-                      setState(() => switcherIndex2 = index),
-                  containerHeight: 40,
-                  containerWight: 350,
+                containerColor: const Color.fromARGB(255, 0, 91, 148),
+                onSelect: (int index) =>
+                    setState(() => switcherIndex2 = index),
+                containerHeight: 40,
+                containerWight: 350,
 
-                  children: [
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        fontWeight: switcherIndex2 == 0
-                            ? FontWeight.w500
-                            : FontWeight.w400,
-                        color: switcherIndex2 == 0
-                            ? const Color.fromARGB(255, 0, 91, 148)
-                            : Colors.white,
-                      ),
+                children: [
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                      fontWeight: switcherIndex2 == 0
+                          ? FontWeight.w500
+                          : FontWeight.w400,
+                      color: switcherIndex2 == 0
+                          ? const Color.fromARGB(255, 0, 91, 148)
+                          : Colors.white,
                     ),
-                    Text(
-                      'Moblie',
-                      style: TextStyle(
-                        fontWeight: switcherIndex2 == 1
-                            ? FontWeight.w500
-                            : FontWeight.w400,
-                        color: switcherIndex2 == 1
-                            ? const Color.fromARGB(255, 0, 91, 148)
-                            : Colors.white,
-                      ),
+                  ),
+                  Text(
+                    'Moblie',
+                    style: TextStyle(
+                      fontWeight: switcherIndex2 == 1
+                          ? FontWeight.w500
+                          : FontWeight.w400,
+                      color: switcherIndex2 == 1
+                          ? const Color.fromARGB(255, 0, 91, 148)
+                          : Colors.white,
                     ),
-                  ],
-                ),
-                switcherIndex2 == 0 ? email_otp() : phone_otp()
-                //_subtabSection(context),
+                  ),
+                ],
+              ),
+              switcherIndex2 == 0 ? email_otp() : phone_otp()
 
-                //  ExpandablePageView(
-
-                // second tab bar view widget
-              ]),
-            ))),
-      ),
+            ],),
+          ),)),
       bottomNavigationBar: Container(
         // margin: EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 25.0),
         child: TextButton(
@@ -184,22 +173,8 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
               focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: _color2),
                   borderRadius: BorderRadius.circular(10.0)),
-              //errorText: _validusernm ? 'Name is not empty' : null),
-            ),
-            /*validator: (value) {
-              if (value!.isEmpty) {
-                WidgetsBinding.instance?.focusManager.primaryFocus?.unfocus();
-                //Fluttertoast.showToast(msg: 'Please Enter Your Email');
-                Fluttertoast.showToast(msg: 'Please Enter Your Email');
-                //return '';
-              } else {
-                // setState(() {
-                _color2 = Colors.green.shade600;
-                //});
-              }
 
-              return null;
-            },*/
+            ),
             onFieldSubmitted: (value) {
               if (value.isEmpty) {
                 WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
@@ -208,23 +183,18 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
               } else {
                 if(!EmailValidator.validate(_useremail.text)){
                   _color2 = Colors.red;
-                  setState(() {
-
-                  });
+                  setState(() {});
                   Fluttertoast.showToast(msg: 'Please Enter Correct Email');
                 }else{
                   _color2 = Colors.green.shade600;
                 }
-                // setState(() {
 
-                //});
               }
             },
             onChanged: (value) {
               if (value.isEmpty) {
                 WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
                 Fluttertoast.showToast(msg: 'Please Enter Your Email');
-                //Fluttertoast.showToast(msg: 'Please Enter Your Email');
                 setState(() {
                   _color2 = Colors.red;
                 });
@@ -374,44 +344,42 @@ class _ForgetPasswprdState extends State<ForgetPasswprd> with SingleTickerProvid
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 margin: const EdgeInsets.fromLTRB(25.0, 5.0, 5.0, 5.0),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    //mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _onPressedShowBottomSheet();
-                        },
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Image.asset(
-                              country!.flag,
-                              package: countryCodePackageName,
-                              width: 30,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Text(
-                              country.callingCode,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                          ],
-                        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        _onPressedShowBottomSheet();
+                      },
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Image.asset(
+                            country!.flag,
+                            package: countryCodePackageName,
+                            width: 30,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            country.callingCode,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 ),
             Expanded(

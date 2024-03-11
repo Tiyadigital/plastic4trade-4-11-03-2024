@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Plastic4trade/screen/AddPost.dart';
 import 'package:Plastic4trade/screen/GradeScreen.dart';
@@ -160,7 +159,7 @@ class _BussinessPro_dialogState extends State<AddPost_dialog> {
                         MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(prod_id: constanst.productId,post_type: constanst.post_type,)),
                         ModalRoute.withName('/'));*/
                     }
-
+                    setState(() {});
 
                     print("STEP === ${constanst.step}");
                   },
@@ -215,6 +214,7 @@ class _BussinessPro_dialogState extends State<AddPost_dialog> {
                             builder: (context) => const AddPost(),
                           ));
                     }
+                    setState(() {});
                   },
                   child: const Text('Proceed',
                       style: TextStyle(
@@ -232,11 +232,10 @@ class _BussinessPro_dialogState extends State<AddPost_dialog> {
   }
 
   getBussinessProfile() async {
-    GetmybusinessprofileController bt = await GetmybusinessprofileController();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    GetmybusinessprofileController bt = GetmybusinessprofileController();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.getmyprofile = bt.Getmybusiness_profile(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
-
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
   }
 }

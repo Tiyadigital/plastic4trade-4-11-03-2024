@@ -43,6 +43,7 @@ class Result {
   String? newsId;
   String? livepriceId;
   String? advertiseId;
+  String? isAdminNotificationTable;
   int? isRead;
   String? time;
   String? otherImage;
@@ -64,6 +65,7 @@ class Result {
         this.livepriceId,
         this.advertiseId,
         this.isRead,
+        this.isAdminNotificationTable,
         this.time,
         this.otherImage});
 
@@ -83,6 +85,7 @@ class Result {
     newsId = json['news_id'];
     livepriceId = json['liveprice_id'];
     advertiseId = json['advertise_id'];
+    isAdminNotificationTable = json['is_admin_notification_table'];
     isRead = json['is_read'];
     time = json['time'];
     otherImage = json['other_image'];
@@ -105,6 +108,7 @@ class Result {
     data['news_id'] = this.newsId;
     data['liveprice_id'] = this.livepriceId;
     data['advertise_id'] = this.advertiseId;
+    data['is_admin_notification_table'] = this.isAdminNotificationTable;
     data['is_read'] = this.isRead;
     data['time'] = this.time;
     data['other_image'] = this.otherImage;

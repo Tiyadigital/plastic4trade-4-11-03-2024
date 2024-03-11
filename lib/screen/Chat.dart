@@ -2,14 +2,16 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io' show Platform;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +29,6 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  late Size mq;
   late var yourStream;
   final List<String> _username = [];
   final List<String> _userImage = [];
@@ -45,8 +46,10 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     getUserList();
+    //readData();
+    super.initState();
+
   }
 
   Future<void> updateChatCountToZero(
@@ -83,11 +86,46 @@ class _ChatState extends State<Chat> {
         userData.add(userDataItem);
       }
     }
-
     return userData;
   }
 
-  getUserList() async {
+  // Future<void> readData() async {
+  //
+  //   // Please replace the Database URL
+  //   // which we will get in “Add Realtime Database”
+  //   // step with DatabaseURL
+  //
+  //   var url = "https://plastic4trade-55372-default-rtdb.firebaseio.com/messages.json";
+  //   // Do not remove “data.json”,keep it as it is
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+  //     if (extractedData == null) {
+  //       return;
+  //     }
+  //     for(Map<String, dynamic> childSnapshot in extractedData.values) {
+  //       print("Ee:-${childSnapshot.values}");
+  //       if(childSnapshot != null && childSnapshot.values != null && childSnapshot.values.first != null && childSnapshot.values.first != ""){
+  //         if(childSnapshot.values.first['senderId'] == customUserId){
+  //           print("childSnapshot:-${childSnapshot.values.first['messageText']}");}
+  //         }
+  //     }
+  //
+  //     List list = [];
+  //     extractedData.forEach((blogId, blogData) {
+  //       if(blogData[''] != null){
+  //       list.add(blogData["messageText"]);}
+  //     });
+  //     setState(() {
+  //       print("List:-$list");
+  //     });
+  //   } catch (error) {
+  //     rethrow;
+  //   }
+  // }
+
+  Future<void> getUserList() async {
+    try{
     SharedPreferences pref = await SharedPreferences.getInstance();
     if (Platform.isAndroid) {
       await Firebase.initializeApp(
@@ -98,7 +136,7 @@ class _ChatState extends State<Chat> {
               messagingSenderId: "929685037367",
               projectId: "plastic4trade-55372",
               databaseURL:
-                  "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
+              "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
     }
     else if (Platform.isAndroid) {
       await Firebase.initializeApp(
@@ -109,62 +147,55 @@ class _ChatState extends State<Chat> {
               messagingSenderId: "929685037367",
               projectId: "plastic4trade-55372",
               databaseURL:
-                  "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
+              "https://plastic4trade-55372-default-rtdb.firebaseio.com/"));
     }
-
     customUserId = pref.getString('user_id').toString();
-
+    print("customUserId22775:-$customUserId");
     yourStream = FirebaseFirestore.instance.collection('users').where('senderId', isEqualTo: customUserId);
-
-    // print("DATA 1  ==  $yourStream");
-
-    Future<DataSnapshot> newRef2 =
-        FirebaseDatabase.instance.ref().child("users").get();
-
+    Future<DataSnapshot> newRef2 = FirebaseDatabase.instance.ref().child("users").get();
     newRef2.then((DataSnapshot snapshot) {
-
-
       if (snapshot.value != null) {
+        // print("children.length:-${snapshot.children.length}");
         for (var childSnapshot in snapshot.children) {
           String childData = childSnapshot.key.toString();
 
-          chat_userlist login = chat_userlist();
           List<String> parts = childData.split('-');
+          print("parts:- $parts");
+          print("customUserId:- $customUserId");
+          chat_userlist login = chat_userlist();
           if (parts.length == 2) {
             if (parts[0].toString() == customUserId) {
-              _userId.contains(parts[1].toString())
-                  ? null
-                  : _userId.add(parts[1].toString());
-
+              //print("List ==> ${parts[1].toString()} == $customUserId");
+              _userId.contains(parts[1].toString()) ? null : _userId.add(parts[1].toString());
               jsonData = childSnapshot.value;
-
               var convertedMap = jsonData.cast<String, dynamic>();
               login = chat_userlist.fromJson(convertedMap);
-
               childList.add(login);
-              _username.add(login.userName2.toString());
-              _userImage.add(login.userImage2.toString());
+              print("childList:- $childList");
+              _username.add(login.userName1.toString());
+              _userImage.add(login.userImage1.toString());
             } else if (parts[1].toString() == customUserId) {
               _userId.contains(parts[0].toString())
                   ? null
                   : _userId.add(parts[0].toString());
               jsonData = childSnapshot.value;
+
               var convertedMap = jsonData.cast<String, dynamic>();
               login = chat_userlist.fromJson(convertedMap);
               childList.add(login);
-              _username.add(login.userName1.toString());
-              _userImage.add(login.userImage1.toString());
+              _username.add(login.userName2.toString());
+              _userImage.add(login.userImage2.toString());
             }
           }
         }
-      } else {
       }
       load = true;
       setState(() {});
     });
-
-
     return yourStream;
+  } catch(e){
+      print(e.toString());
+    }
   }
 
   List<chat_userlist> parseMessages(String jsonData) {
@@ -174,18 +205,18 @@ class _ChatState extends State<Chat> {
         .toList();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return init();
-  }
+
+  // Widget build(BuildContext context) {
+  //   return init();
+  // }
 
   Future<UserCredential> signInAnonymously() async {
     UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
     return userCredential;
   }
 
-
-  Widget init() {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFDADADA),
       appBar: AppBar(
@@ -218,10 +249,13 @@ class _ChatState extends State<Chat> {
                 ),
               );
             },
-            child: SizedBox(
-              width: 40,
-              child: Image.asset(
-                'assets/Play.png',
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: SizedBox(
+                width: 40,
+                child: Image.asset(
+                  'assets/Play.png',
+                ),
               ),
             ),
           )
@@ -291,290 +325,277 @@ class _ChatState extends State<Chat> {
           ],
         ),
       ),
-      floatingActionButton: Container(
-        height: 70,
-        width: 70,
-        decoration: BoxDecoration(
-            image: const DecorationImage(
-                image: AssetImage("assets/floating_back.png")),
-            borderRadius: BorderRadius.circular(30)),
-        child: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.add, color: Colors.white, size: 40),
-        ),
-      ),
+      // floatingActionButton: Container(
+      //   height: 70,
+      //   width: 70,
+      //   decoration: BoxDecoration(
+      //       image: const DecorationImage(
+      //           image: AssetImage("assets/floating_back.png")),
+      //       borderRadius: BorderRadius.circular(30)),
+      //   child: IconButton(
+      //     onPressed: () {},
+      //     icon: const Icon(Icons.add, color: Colors.white, size: 40),
+      //   ),
+      // ),
     );
   }
 
   Widget chatlist() {
-    return FutureBuilder(
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: childList.length,
-            itemBuilder: (BuildContext context, int index) {
-              chat_userlist record = childList[index];
-              DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-                int.parse(
-                  record.messageTime.toString(),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: childList.length,
+      itemBuilder: (BuildContext context, int index) {
+        chat_userlist record = childList[index];
+        DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(
+            record.messageTime.toString(),
+          ),
+        );
+
+        String formattedDateTime =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+        var date = getTextForDate(DateTime.parse(formattedDateTime));
+
+        return Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: Stack(
+            clipBehavior: Clip.antiAlias,
+            children: [
+              Positioned.fill(
+                child: Builder(
+                  builder: (context) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      height: 50,
+                      color: Colors.red.shade600,
+                    ),
+                  ),
                 ),
-              );
-
-              String formattedDateTime =
-                  DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
-              var date = getTextForDate(DateTime.parse(formattedDateTime));
-
-              return Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Stack(
-                  clipBehavior: Clip.antiAlias,
-                  children: [
-                    Positioned.fill(
-                      child: Builder(
-                        builder: (context) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: SlidableAutoCloseBehavior(
+                  child: Slidable(
+                    direction: Axis.horizontal,
+                    endActionPane: ActionPane(
+                      motion: const BehindMotion(),
+                      extentRatio: 0.25,
+                      children: [
+                        Expanded(
                           child: Container(
-                            height: 50,
                             color: Colors.red.shade600,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                            },
+                                            icon: Image.asset(
+                                                'assets/delete2.png',
+                                                color: Colors.white,
+                                                width: 30,
+                                                height: 30),
+                                          ),
+                                          const Text(
+                                            'Remove',
+                                            style: TextStyle(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: SlidableAutoCloseBehavior(
-                        child: Slidable(
-                          direction: Axis.horizontal,
-                          endActionPane: ActionPane(
-                            motion: const BehindMotion(),
-                            extentRatio: 0.25,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  color: Colors.red.shade600,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: InkWell(
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                IconButton(
-                                                  onPressed: () {
-                                                  },
-                                                  icon: Image.asset(
-                                                      'assets/delete2.png',
-                                                      color: Colors.white,
-                                                      width: 30,
-                                                      height: 30),
-                                                ),
-                                                const Text(
-                                                  'Remove',
-                                                  style: TextStyle(
-                                                      fontSize: 9,
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.white),
-                                                )
-                                              ],
-                                            ),
+                    child: GestureDetector(
+                      onTap: () {
+                        updateChatCountToZero(
+                          "1",
+                          // customUserId!,
+                          "14969",
+                          "19559",
+                        );
+
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChartDetail(
+                                  _userId[index],
+                                  _username[index],
+                                  _userImage[index]),
+                            ),
+                          );
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                Stack(
+                                    fit: StackFit.passthrough,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 45.0,
+                                        height: 45.0,
+                                        margin:
+                                        const EdgeInsets.all(15.0),
+                                        decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                'assets/Ellipse 13.png'),
+                                            fit: BoxFit.cover,
                                           ),
-                                          onTap: () {},
                                         ),
+                                        child: CircleAvatar(
+                                          radius: 100.0,
+                                          backgroundImage: NetworkImage(
+                                              _userImage[index]),
+                                          backgroundColor:
+                                          const Color.fromARGB(
+                                              255, 240, 238, 238),
+                                        ),
+                                      ),
+                                    ]),
+                                IntrinsicWidth(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(_username[index],
+                                          style: record.count == 0
+                                              ? const TextStyle(
+                                              fontSize: 13.0,
+                                              fontWeight:
+                                              FontWeight.w500,
+                                              fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(
+                                              fontSize: 15,
+                                              color: const Color.fromARGB(
+                                                  255, 0, 91, 148),
+                                              fontWeight:
+                                              FontWeight.bold)
+                                              : const TextStyle(
+                                              fontSize: 13.0,
+                                              fontWeight:
+                                              FontWeight.w500,
+                                              fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(fontSize: 15, color: Colors.black),
+                                          maxLines: 1,
+                                          softWrap: false),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width / 1.76,
+                                        child: Text('${record.messageText}',
+                                            style: record.count != "0"
+                                                ? const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
+                                                color: const Color.fromARGB(
+                                                    255, 0, 91, 148),
+                                                fontWeight:
+                                                FontWeight.bold)
+                                                : const TextStyle(
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight
+                                                    .w400,
+                                                color:
+                                                Colors.black,
+                                                fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.grey),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              updateChatCountToZero(
-                                "1",
-                                // customUserId!,
-                                "14969",
-                                "19559",
-                              );
-
-                              setState(() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChartDetail(
-                                        _userId[index],
-                                        _username[index],
-                                        _userImage[index]),
-                                  ),
-                                );
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Stack(
-                                          fit: StackFit.passthrough,
-                                          children: <Widget>[
-                                            Container(
-                                              width: 45.0,
-                                              height: 45.0,
-                                              margin:
-                                                  const EdgeInsets.all(15.0),
-                                              decoration: const BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: NetworkImage(
-                                                      'assets/Ellipse 13.png'),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              child: CircleAvatar(
-                                                radius: 100.0,
-                                                backgroundImage: NetworkImage(
-                                                    _userImage[index]),
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                        255, 240, 238, 238),
-                                              ),
-                                            ),
-                                          ]),
-                                      IntrinsicWidth(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Text(_username[index],
-                                                style: record.count == 0
-                                                    ? const TextStyle(
-                                                            fontSize: 13.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf')
-                                                        .copyWith(
-                                                            fontSize: 15,
-                                                            color: const Color.fromARGB(
-                                                                255, 0, 91, 148),
-                                                            fontWeight:
-                                                                FontWeight.bold)
-                                                    : const TextStyle(
-                                                            fontSize: 13.0,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf')
-                                                        .copyWith(fontSize: 15, color: Colors.black),
-                                                maxLines: 1,
-                                                softWrap: false),
-                                            const SizedBox(
-                                              height: 3,
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context).size.width / 1.76,
-                                              child: Text('${record.messageText}',
-                                                  style: record.count != "0"
-                                                      ? const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400, color: Colors.black, fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
-                                                          color: const Color.fromARGB(
-                                                              255, 0, 91, 148),
-                                                          fontWeight:
-                                                              FontWeight.bold)
-                                                      : const TextStyle(
-                                                              fontSize: 12.0,
-                                                              fontWeight: FontWeight
-                                                                  .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.grey),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  softWrap: false),
-                                            ),
-                                          ],
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 5, right: 2.5),
+                              child: IntrinsicWidth(
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(date,
+                                        style: const TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight:
+                                            FontWeight.w400,
+                                            color: Colors.black,
+                                            fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(
+                                            fontSize: 11,
+                                            color: Colors.grey),
+                                        maxLines: 1,
+                                        softWrap: false),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Visibility(
+                                      visible: record.count == "0"
+                                          ? false
+                                          : true,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 0, 91, 148),
+                                            border: Border.all(
+                                                color: Colors.white,
+                                                width: 1.0,
+                                                style: BorderStyle.solid),
+                                            shape: BoxShape.circle),
+                                        child: Center(
+                                          child: Text(
+                                            record.count.toString(),
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 5, right: 5),
-                                    child: IntrinsicWidth(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(date,
-                                              style: const TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.black,
-                                                      fontFamily:
-                                                          'assets/fonst/Metropolis-Black.otf')
-                                                  .copyWith(
-                                                      fontSize: 11,
-                                                      color: Colors.grey),
-                                              maxLines: 1,
-                                              softWrap: false),
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          Visibility(
-                                            visible: record.count == "0"
-                                                ? false
-                                                : true,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  color: const Color.fromARGB(
-                                                      255, 0, 91, 148),
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 1.0,
-                                                      style: BorderStyle.solid),
-                                                  shape: BoxShape.circle),
-                                              child: Center(
-                                                child: Text(
-                                                  record.count.toString(),
-                                                  style: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              );
-            },
-          );
-        }
+              ),
+            ],
+          ),
+        );
       },
     );
   }

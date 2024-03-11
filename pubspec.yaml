@@ -5,7 +5,8 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: ">=2.19.2 <3.0.0"
+    #">=3.0.0 <4.0.0"
 
 dependencies:
 
@@ -13,16 +14,14 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.0
-  retrofit: any
-  dio: any
-  charts_flutter: any
-  provider: any
+  #retrofit: any
+  #dio: ^5.4.0
+  #provider: any
   fluttertoast: any
   shared_preferences: any
   flutter_otp_text_field: ^1.1.1
   file_picker: ^5.2.7
   url_launcher: ^6.0.10
-
   intl: any
   flutter_slidable: any
   pointer_interceptor: any
@@ -31,10 +30,10 @@ dependencies:
   flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
   google_api_headers: ^1.1.1
   google_maps_webservice: ^0.0.20-nullsafety.5
-  google_maps_flutter: ^2.1.1
-  connectivity_plus: any
+  google_maps_flutter: ^2.5.0
+  permission_handler: ^11.0.1
+  #connectivity_plus: any
   flutter_image_compress: any
-#  webview_flutter: any
   share: any
   path_provider: ^2.0.15
   package_info_plus: any
@@ -43,7 +42,7 @@ dependencies:
   google_maps_flutter_ios: ^2.2.3
   firebase_messaging: any
   firebase_core: any
-  flutter_local_notifications: ^9.3.2
+  flutter_local_notifications: ^9.0.0
   firebase_core_platform_interface: any
   firebase_auth: any
   flutter_firebase_chat_core: any
@@ -60,8 +59,10 @@ dependencies:
   firebase_database: any
   photo_view : any
   responsive_grid_list: ^1.3.2
-  flutter_localizations:
-    sdk: flutter
+  flutter_localization: ^0.2.0
+  connectivity_plus: ^5.0.2
+  info_popup: ^4.3.1
+  #share_plus: ^7.2.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,7 @@ dev_dependencies:
   http: any
   slide_switcher: ^1.1.2
   image_cropper: ^4.0.0
+
 
 flutter_launcher_icons:
   android: true
@@ -94,6 +96,11 @@ flutter:
       - assets/image 1.png
       - assets/image 2.png
       - assets/Vector.png
+      - assets/adWithUs1.png
+      - assets/adWithUs2.png
+      - assets/adWithUs3.png
+      - assets/adWithUs4.png
+      - assets/adWithUs5.png
       - assets/Ellipse 1.png
       - assets/Ellipse 6.png
       - assets/Vector (1).png

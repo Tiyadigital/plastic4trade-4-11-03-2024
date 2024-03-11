@@ -37,6 +37,7 @@ class Result {
   String? country;
   String? state;
   String? currency;
+  String? sign;
   String? price;
   String? changed;
   String? priceDate;
@@ -53,6 +54,7 @@ class Result {
         this.state,
         this.currency,
         this.price,
+        this.sign,
         this.changed,
         this.priceDate,
         this.updatedAt});
@@ -68,6 +70,7 @@ class Result {
     state = json['State'];
     currency = json['Currency'];
     price = json['Price'];
+    sign = json['sign'];
     changed = json['Changed'];
     priceDate = json['PriceDate'];
     updatedAt = json['updated_at'];
@@ -84,6 +87,7 @@ class Result {
     data['Country'] = this.country;
     data['State'] = this.state;
     data['Currency'] = this.currency;
+    data['sign'] = this.sign;
     data['Price'] = this.price;
     data['Changed'] = this.changed;
     data['PriceDate'] = this.priceDate;

@@ -68,7 +68,6 @@ class _LoginDetailState extends State<LoginDetail> {
     getBussinessProfile();
   }
 
-
   void _onPressedShowBottomSheet() async {
     final country = await showCountryPickerSheet(
       context,
@@ -219,11 +218,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .fromLTRB(
-                                                                0.0,
-                                                                5.0,
-                                                                0.0,
-                                                                0.0),
+                                                                .fromLTRB(0.0,
+                                                                5.0, 0.0, 0.0),
                                                         child: Text(
                                                           'Phone Number               ',
                                                           style: const TextStyle(
@@ -378,7 +374,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                             ),
                                                             margin:
                                                                 const EdgeInsets
-                                                                        .fromLTRB(
+                                                                    .fromLTRB(
                                                                     5.0,
                                                                     5.0,
                                                                     5.0,
@@ -444,7 +440,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                               1.68,
                                                           margin:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   bottom: 0.0),
                                                           child: TextFormField(
                                                             // controller: _usernm,
@@ -594,7 +590,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 height: 60,
                                                                 margin:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         20.0),
                                                                 decoration: BoxDecoration(
                                                                     border: Border.all(
@@ -603,7 +599,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                     borderRadius:
                                                                         BorderRadius.circular(
                                                                             50.0),
-                                                                    color: const Color.fromARGB(
+                                                                    color: const Color
+                                                                            .fromARGB(
                                                                             255,
                                                                             0,
                                                                             91,
@@ -663,9 +660,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                               Navigator.of(dialogContext!).pop();
                                                                               if (value) {
                                                                                 _startTimer();
-                                                                              } else {
-
-                                                                              }
+                                                                              } else {}
                                                                             });
                                                                             isloading1 =
                                                                                 false;
@@ -688,12 +683,13 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                       ),
                                                               ),
                                                               Container(
-                                                                margin: const EdgeInsets
+                                                                margin:
+                                                                    const EdgeInsets
                                                                         .fromLTRB(
-                                                                    25.0,
-                                                                    0.0,
-                                                                    25.0,
-                                                                    0.0),
+                                                                        25.0,
+                                                                        0.0,
+                                                                        25.0,
+                                                                        0.0),
                                                                 child:
                                                                     TextFormField(
                                                                   controller:
@@ -811,7 +807,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 height: 60,
                                                                 margin:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         20.0),
                                                                 decoration: BoxDecoration(
                                                                     border: Border.all(
@@ -821,7 +817,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         BorderRadius.circular(
                                                                             50.0),
                                                                     color: const Color
-                                                                            .fromARGB(
+                                                                        .fromARGB(
                                                                         255,
                                                                         0,
                                                                         91,
@@ -897,7 +893,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         .circular(
                                                                             50.0),
                                                                 color: const Color
-                                                                        .fromARGB(
+                                                                    .fromARGB(
                                                                     255,
                                                                     0,
                                                                     91,
@@ -1019,11 +1015,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .fromLTRB(
-                                                                10.0,
-                                                                5.0,
-                                                                0.0,
-                                                                0.0),
+                                                                .fromLTRB(10.0,
+                                                                5.0, 0.0, 0.0),
                                                         child: Text(
                                                           'Email Address',
                                                           style: const TextStyle(
@@ -1044,7 +1037,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                     ),
                                                     Container(
                                                       padding: const EdgeInsets
-                                                              .fromLTRB(
+                                                          .fromLTRB(
                                                           10.0, 2.0, 0.0, 2.0),
                                                       child: Text(
                                                           email.toString(),
@@ -1239,7 +1232,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 height: 60,
                                                                 margin:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         20.0),
                                                                 decoration: BoxDecoration(
                                                                     border: Border.all(
@@ -1248,7 +1241,8 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                     borderRadius:
                                                                         BorderRadius.circular(
                                                                             50.0),
-                                                                    color: const Color.fromARGB(
+                                                                    color: const Color
+                                                                            .fromARGB(
                                                                             255,
                                                                             0,
                                                                             91,
@@ -1312,12 +1306,13 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                       ),
                                                               ),
                                                               Container(
-                                                                margin: const EdgeInsets
+                                                                margin:
+                                                                    const EdgeInsets
                                                                         .fromLTRB(
-                                                                    25.0,
-                                                                    0.0,
-                                                                    25.0,
-                                                                    0.0),
+                                                                        25.0,
+                                                                        0.0,
+                                                                        25.0,
+                                                                        0.0),
                                                                 child:
                                                                     TextFormField(
                                                                   controller:
@@ -1461,7 +1456,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                 height: 60,
                                                                 margin:
                                                                     const EdgeInsets
-                                                                            .all(
+                                                                        .all(
                                                                         20.0),
                                                                 decoration: BoxDecoration(
                                                                     border: Border.all(
@@ -1471,7 +1466,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         BorderRadius.circular(
                                                                             50.0),
                                                                     color: const Color
-                                                                            .fromARGB(
+                                                                        .fromARGB(
                                                                         255,
                                                                         0,
                                                                         91,
@@ -1542,7 +1537,7 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                         .circular(
                                                                             50.0),
                                                                 color: const Color
-                                                                        .fromARGB(
+                                                                    .fromARGB(
                                                                     255,
                                                                     0,
                                                                     91,
@@ -1580,7 +1575,6 @@ class _LoginDetailState extends State<LoginDetail> {
                                                                     update_email()
                                                                         .then(
                                                                             (value) {
-
                                                                       Navigator.of(
                                                                               dialogContext!)
                                                                           .pop();
@@ -1697,369 +1691,173 @@ class _LoginDetailState extends State<LoginDetail> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .fromLTRB(
+                                                                .fromLTRB(
                                                                 25.0,
                                                                 5.0,
                                                                 25.0,
                                                                 10.0),
                                                         child: TextFormField(
                                                           controller: _newpass,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .text,
-                                                          autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
+                                                          keyboardType: TextInputType.text,
+                                                          autovalidateMode: AutovalidateMode.onUserInteraction,
                                                           style: const TextStyle(
                                                               fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf'),
-                                                          obscureText:
-                                                              !_cpasswordVisible,
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.black,
+                                                              fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                                          obscureText: !_cpasswordVisible,
+                                                          textInputAction: TextInputAction.next,
+                                                          decoration: InputDecoration(
                                                             // labelText: 'Your Confirm Password',
                                                             // labelStyle: TextStyle(color: Colors.red),
-                                                            hintText:
-                                                                "New Password",
+                                                            hintText: "New Password",
                                                             hintStyle: const TextStyle(
                                                                 fontSize: 15.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-Black.otf'),
-                                                            suffixIcon:
-                                                                IconButton(
-                                                              icon:
-                                                                  // Based on passwordVisible state choose the icon
+                                                                fontWeight: FontWeight.w400,
+                                                                color: Colors.black,
+                                                                fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                                            suffixIcon: IconButton(
+                                                              icon: // Based on passwordVisible state choose the icon
                                                                   _cpasswordVisible
-                                                                      ? Image.asset(
-                                                                          'assets/hidepassword.png')
-                                                                      : Image
-                                                                          .asset(
-                                                                          'assets/Vector.png',
-                                                                          width:
-                                                                              20.0,
-                                                                          height:
-                                                                              20.0,
-                                                                        ),
-                                                              color:
-                                                                  Colors.white,
-                                                              onPressed: () {
-                                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                                      ? Image.asset('assets/hidepassword.png')
+                                                                      : Image.asset('assets/Vector.png',width: 20.0, height: 20.0,),
+                                                              color: Colors.white,
+                                                              onPressed: () {// Update the state i.e. toogle the state of passwordVisible variable
                                                                 setState(() {
-                                                                  _cpasswordVisible =
-                                                                      !_cpasswordVisible;
+                                                                  _cpasswordVisible = !_cpasswordVisible;
                                                                 });
                                                               },
                                                             ),
                                                             enabledBorder: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color3),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                             border: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color3),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                             focusedBorder: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color3),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color3),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                             //errorText: _validusernm ? 'Name is not empty' : null),
                                                           ),
                                                           validator: (value) {
-                                                            if (value!
-                                                                .isEmpty) {
-                                                              _color3 =
-                                                                  Colors.red;
-                                                            } else {
-                                                              _color3 = Colors
-                                                                  .green
-                                                                  .shade600;
-                                                            }
+                                                              if (value!.isEmpty) {
+                                                                _color3 = Colors.red;
+                                                              } else if(value.length <6 ){
+                                                                _color3 = Colors.red;
+                                                              } else{
+                                                                _color3 = Colors.green.shade600;
+                                                              }
                                                             return null;
                                                           },
                                                           onChanged: (value) {
-                                                            if (value.isEmpty) {
-                                                              WidgetsBinding
-                                                                  .instance
-                                                                  .focusManager
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          'Please Enter New Password');
-                                                              setState(() {
-                                                                _color3 =
-                                                                    Colors.red;
-                                                              });
-                                                            } else {
-                                                              setState(() {
-                                                                _color3 = Colors
-                                                                    .green
-                                                                    .shade600;
-                                                              });
-                                                            }
+                                                            setState(() {
+                                                              if (value.isEmpty) {
+                                                                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                                Fluttertoast.showToast(msg: 'Please Enter New Password');
+                                                                _color3 = Colors.red;
+                                                              } else if(value.length < 6){
+                                                                _color3 = Colors.red;
+                                                              } else{
+                                                                _color3 = Colors.green.shade600;
+                                                              }
+                                                            });
                                                           },
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                25.0,
-                                                                5.0,
-                                                                25.0,
-                                                                10.0),
+                                                        padding: const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
                                                         child: TextFormField(
-                                                          controller:
-                                                              _confirpass,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .text,
-                                                          autovalidateMode:
-                                                              AutovalidateMode
-                                                                  .onUserInteraction,
+                                                          controller: _confirpass,
+                                                          keyboardType: TextInputType.text,
+                                                          autovalidateMode: AutovalidateMode.onUserInteraction,
                                                           style: const TextStyle(
                                                               fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf'),
-                                                          obscureText:
-                                                              !_cfrpasswordVisible,
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
+                                                              fontWeight: FontWeight.w400,
+                                                              color: Colors.black,
+                                                              fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                                          obscureText: !_cfrpasswordVisible,
+                                                          textInputAction: TextInputAction.next,
+                                                          decoration: InputDecoration(
                                                             // labelText: 'Your Confirm Password',
                                                             // labelStyle: TextStyle(color: Colors.red),
-                                                            hintText:
-                                                                "Confirm New Password",
+                                                            hintText: "Confirm New Password",
                                                             hintStyle: const TextStyle(
                                                                 fontSize: 15.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-Black.otf'),
-                                                            suffixIcon:
-                                                                IconButton(
-                                                              icon:
-                                                                  // Based on passwordVisible state choose the icon
-                                                                  _cfrpasswordVisible
-                                                                      ? Image.asset(
-                                                                          'assets/hidepassword.png')
-                                                                      : Image
-                                                                          .asset(
-                                                                          'assets/Vector.png',
-                                                                          width:
-                                                                              20.0,
-                                                                          height:
-                                                                              20.0,
-                                                                        ),
-                                                              color:
-                                                                  Colors.white,
-                                                              onPressed: () {
-                                                                // Update the state i.e. toogle the state of passwordVisible variable
+                                                                fontWeight: FontWeight.w400,
+                                                                color: Colors.black,
+                                                                fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                                            suffixIcon: IconButton(
+                                                              icon: // Based on passwordVisible state choose the icon
+                                                                  _cfrpasswordVisible ? Image.asset('assets/hidepassword.png')
+                                                                      : Image.asset('assets/Vector.png', width: 20.0, height: 20.0,),
+                                                              color: Colors.white,
+                                                              onPressed: () {// Update the state i.e. toogle the state of passwordVisible variable
                                                                 setState(() {
-                                                                  _cfrpasswordVisible =
-                                                                      !_cfrpasswordVisible;
+                                                                  _cfrpasswordVisible = !_cfrpasswordVisible;
                                                                 });
                                                               },
                                                             ),
                                                             enabledBorder: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color5),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color5),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                             border: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color5),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color5),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                             focusedBorder: OutlineInputBorder(
-                                                                borderSide:
-                                                                    BorderSide(
-                                                                        width:
-                                                                            1,
-                                                                        color:
-                                                                            _color5),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10.0)),
+                                                                borderSide: BorderSide(width: 1, color: _color5),
+                                                                borderRadius: BorderRadius.circular(10.0)),
                                                           ),
                                                           validator: (value) {
-                                                            if (value!
-                                                                .isEmpty) {
-                                                              return 'Enter a Confirm New Password!';
-                                                            }
                                                             return null;
                                                           },
                                                           onChanged: (value) {
-                                                            if (value.isEmpty) {
-                                                              WidgetsBinding
-                                                                  .instance
-                                                                  .focusManager
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                              Fluttertoast
-                                                                  .showToast(
-                                                                      msg:
-                                                                          'Please Enter Confirm New Password');
-                                                              setState(() {
-                                                                _color5 =
-                                                                    Colors.red;
-                                                              });
-                                                            } else {
-                                                              setState(() {
-                                                                _color5 = Colors
-                                                                    .green
-                                                                    .shade600;
-                                                              });
-                                                            }
+                                                            setState(() {
+                                                              if (value.isEmpty) {
+                                                                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                                Fluttertoast.showToast(msg: 'Please Enter Confirm New Password');
+                                                                _color5 = Colors.red;
+                                                              } else if(_newpass.text != value){
+                                                                _color5 = Colors.red;
+                                                              } else{
+                                                                _color5 = Colors.green.shade600;
+                                                              }
+                                                            });
                                                           },
                                                         ),
                                                       ),
                                                       Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            1.2,
+                                                        width: MediaQuery.of(context).size.width *1.2,
                                                         height: 60,
-                                                        margin: const EdgeInsets
-                                                            .all(20.0),
+                                                        margin: const EdgeInsets.all(20.0),
                                                         decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                width: 1),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0),
-                                                            color: const Color
-                                                                    .fromARGB(
-                                                                255,
-                                                                0,
-                                                                91,
-                                                                148)),
+                                                            border: Border.all(width: 1),
+                                                            borderRadius: BorderRadius.circular(50.0),
+                                                            color: const Color.fromARGB(255, 0, 91, 148)),
                                                         child: TextButton(
                                                           onPressed: () {
-                                                            WidgetsBinding
-                                                                .instance
-                                                                .focusManager
-                                                                .primaryFocus
-                                                                ?.unfocus();
-
                                                             setState(() {
-                                                              if (_newpass.text
-                                                                  .isEmpty) {
-                                                                _color3 =
-                                                                    Colors.red;
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Please Enter Password...");
-                                                              } else if (_newpass
-                                                                      .text
-                                                                      .length <
-                                                                  6) {
-                                                                _color3 =
-                                                                    Colors.red;
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Password must have 6 digit...");
-                                                              } else if (_confirpass
-                                                                  .text
-                                                                  .isEmpty) {
-                                                                _color5 =
-                                                                    Colors.red;
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Please Enter Confirm Password");
-                                                              } else if (_confirpass
-                                                                      .text !=
-                                                                  _newpass
-                                                                      .text) {
-                                                                _color3 =
-                                                                    Colors.red;
-                                                                _color5 =
-                                                                    Colors.red;
-                                                                Fluttertoast
-                                                                    .showToast(
-                                                                        msg:
-                                                                            "Password Doesn't Match");
+                                                            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                              if (_newpass.text.isEmpty) {
+                                                                _color3 = Colors.red;
+                                                                Fluttertoast.showToast(msg: "Please Enter Password...");
+                                                              } else if (_newpass.text.length < 6) {
+                                                               // WidgetsBinding.instance.focusManager.primaryFocus?.previousFocus();
+                                                                _color3 = Colors.red;
+                                                                Fluttertoast.showToast(msg: "Password must have 6 digit...");
+                                                              } else if (_confirpass.text.isEmpty) {
+                                                                _color5 = Colors.red;
+                                                                Fluttertoast.showToast(msg: "Please Enter Confirm Password");
+                                                              } else if (_confirpass.text != _newpass.text) {
+                                                                _color3 = Colors.red;
+                                                                _color5 = Colors.red;
+                                                                Fluttertoast.showToast(msg: "Password Doesn't Match");
                                                               } else {
-                                                                isloading1 =
-                                                                    true;
-                                                                WidgetsBinding
-                                                                    .instance
-                                                                    .focusManager
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                                change_password()
-                                                                    .then(
-                                                                        (value) {
-                                                                  Navigator.of(
-                                                                          dialogContext!)
-                                                                      .pop();
+                                                                isloading1 = true;
+                                                                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+                                                                change_password().then((value) {
+                                                                  Navigator.of(dialogContext!).pop();
                                                                 });
-                                                                isloading1 =
-                                                                    false;
+                                                                isloading1 = false;
                                                               }
                                                             });
                                                           },
@@ -2127,8 +1925,9 @@ class _LoginDetailState extends State<LoginDetail> {
                                                     //   });
                                                     // },
                                                     onPressed: () async {
-                                                      Navigator.of(context).pop(); // Close the dialog
-                                                     deleteMyAccount();
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the dialog
+                                                      deleteMyAccount();
                                                     },
                                                     child: const Text("Yes"),
                                                   ),
@@ -2427,12 +2226,9 @@ class _LoginDetailState extends State<LoginDetail> {
           builder: (_) => const MyHomePage(),
         ),
       );
-
     } else {
       Fluttertoast.showToast(msg: "Something went wrong..!");
-
     }
     setState(() {});
-
   }
 }

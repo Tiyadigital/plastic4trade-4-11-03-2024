@@ -15,8 +15,6 @@ class Tutorial_Videos_dialog extends StatefulWidget {
 }
 
 
-
-
 class _YourWidgetState extends State<Tutorial_Videos_dialog> {
   String? assignedName;
   bool? load;
@@ -39,36 +37,25 @@ class _YourWidgetState extends State<Tutorial_Videos_dialog> {
       Dialog(
             alignment: Alignment.center,
             elevation: 0,
-
             backgroundColor: const Color.fromARGB(255, 0, 91, 148),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25.0),
             ),
             child :Container(
-
-              margin: const EdgeInsets.only(right: 5.0,bottom: 5.0,left: 5.0),
-
-              height: 250,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1,color: const Color.fromARGB(255, 0, 91, 148)),
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-
-
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+                height: 300,
+                padding: const EdgeInsets.all(10),
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF005C94),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+            child: Stack(
               children: [
-               Align(
-                 alignment: Alignment.bottomRight,
-                 child: IconButton(
-                   icon: const Icon(Icons.cancel_rounded,color: Colors.white),
-                   onPressed: () {
-                     Navigator.pop(context);
-                   },
-                 ),
-               ),
-                link!=""?Column(
+                link!=""?
+                Column(
                   children: [
+                    const SizedBox(height: 40),
                     YoutubeViewer(link),
                     Text(
                       content.toString(),
@@ -78,13 +65,35 @@ class _YourWidgetState extends State<Tutorial_Videos_dialog> {
                           ?.copyWith(fontSize: 15,color: Colors.white),
                     )
                   ],
-                ) : Text(
-                  "Not Found",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontSize: 15,color: Colors.white),
                 )
+                    : Center(
+                  child: Text(
+                    "Not Found",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontSize: 15,color: Colors.white),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      alignment: Alignment.center,
+                      decoration: ShapeDecoration(
+                        color: Colors.white.withOpacity(0.2199999988079071),
+                        shape: const OvalBorder(),
+                      ),
+                      child: const Icon(Icons.close,color: Colors.white, size: 25),
+                    ),
+                  ),
+                ),
 
               ],
             )),
@@ -98,14 +107,12 @@ class _YourWidgetState extends State<Tutorial_Videos_dialog> {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
 
     } else {
-
       get_videolistScreen();
       // get_data();
     }
   }
 
   Future<void> get_videolistScreen() async {
-
         if (widget.title == 'Home') {
           screen_id="1";
         } else if (widget.title == 'Saller') {
@@ -152,27 +159,17 @@ class _YourWidgetState extends State<Tutorial_Videos_dialog> {
     if (res['status'] == 1) {
       if (res['result'] != null) {
         jsonArray = res['result'];
-
-
-
-        link =jsonArray['video_id'];
-        content=jsonArray['title'];
-
-
+        link = jsonArray['video_id'] ?? "";
+        content=jsonArray['title'] ?? "";
         load=true;
-        if (mounted) {
-          setState(() {
-
-          });
-        }
       }else{
         load=true;
       }
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
+        setState(() {});
     return jsonArray;
-
   }
 }
 

@@ -35,9 +35,11 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   int offset = 0;
   int count = 0;
   final scrollercontroller = ScrollController();
-  String create_date = "", create_date1 = "";
-  var create_formattedDate, update_formattedDate, descr;
+  var create_formattedDate;
   PackageInfo? packageInfo;
+  int sameDateCount = 0;
+  List showdate =[];
+
   @override
   void initState() {
     checknetowork();
@@ -55,114 +57,112 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return init();
   }
-  Future<bool> _onbackpress(BuildContext context) async {
 
+  Future<bool> _onbackpress(BuildContext context) async {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainScreen(0)));
+        context, MaterialPageRoute(builder: (context) => MainScreen(0)));
     return Future.value(true);
   }
+
   Widget init() {
     return WillPopScope(
         onWillPop: () => _onbackpress(context),
-    child: Scaffold(
-      backgroundColor: const Color(0xFFDADADA),
-      body:  isload==true?Padding(
-        padding: const EdgeInsets.fromLTRB(25, 8, 25, 8),
-        child: Column(
-          children: [
-            // give the tab bar a height [can change height to preferred height]
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 45,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(
-                  25.0,
-                ),
-              ),
-              child: TabBar(
-                controller: _tabController,
-                // give the indicator a decoration (color and border radius)
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    25.0,
-                  ),
-                  color: const Color.fromARGB(255, 0, 91, 148),
-                ),
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.black,
-                tabs: const [
-                  // first tab [you can add an icon using the icon property]
-                  Tab(
-                    //text: 'Quick News',
-                    child: Text(
-                      'Quick News',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Metropolis',
+        child: Scaffold(
+          backgroundColor: const Color(0xFFDADADA),
+          body: isload == true
+              ? Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                  child: Column(
+                    children: [
+                      // give the tab bar a height [can change height to preferred height]
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ),
+                      Container(
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(
+                            25.0,
+                          ),
+                        ),
+                        child: TabBar(
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          controller: _tabController,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(42.26),
+                            color: const Color.fromARGB(255, 0, 91, 148),
+                          ),
+                          labelColor: Colors.white,
+                          unselectedLabelColor: Colors.black,
+                          tabs: const [
+                            // first tab [you can add an icon using the icon property]
+                            Tab(
+                              //text: 'Quick News',
+                              child: Text(
+                                'Quick News',
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Metropolis',
+                                ),
+                              ),
+                            ),
 
-                  // second tab [you can add an icon using the icon property]
-                  Tab(
-                    child: Text(
-                      'News',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Metropolis',
+                            // second tab [you can add an icon using the icon property]
+                            Tab(
+                              child: Text(
+                                'News',
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Metropolis',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 11,
+                      ),
+                      // tab bar view here
+                      isload
+                          ? Expanded(
+                            child: TabBarView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                controller: _tabController,
+                                // first tab bar view widget
+                                children: [
+                                Quicknews(),
+                                news()
+                                /*news()*/
+                              ]),
+                          )
+                          : Container()
+                    ],
                   ),
-                ],
-              ),
-            ),
-            // tab bar view here
-            isload
-                ? Expanded(
-                    child: TabBarView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        controller: _tabController,
-                        // first tab bar view widget
-                        children: [
-                        Quicknews(),
-                        news()
-                        /*news()*/
-                      ])
-
-                    // second tab bar view widget
-                    )
-                : Container()
-          ],
-        ),
-      ): Center(
-          child: Platform.isAndroid
-              ? const CircularProgressIndicator(
-            value: null,
-            strokeWidth: 2.0,
-            color: Color.fromARGB(255, 0, 91, 148),
-          )
-              : Platform.isIOS
-              ? const CupertinoActivityIndicator(
-            color: Color.fromARGB(255, 0, 91, 148),
-            radius: 20,
-            animating: true,
-          )
-              : Container()),
-    ));
+                )
+              : Center(
+                  child: Platform.isAndroid
+                      ? const CircularProgressIndicator(
+                          value: null,
+                          strokeWidth: 2.0,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                        )
+                      : Platform.isIOS
+                          ? const CupertinoActivityIndicator(
+                              color: Color.fromARGB(255, 0, 91, 148),
+                              radius: 20,
+                              animating: true,
+                            )
+                          : Container()),
+        ));
   }
 
   void _scrollercontroller() {
-
     if (scrollercontroller.position.pixels ==
         scrollercontroller.position.maxScrollExtent) {
-
       if (_tabController.index == 0) {
         count++;
         if (count == 1) {
@@ -199,18 +199,17 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
                 child: Center(
                     child: Platform.isAndroid
                         ? const CircularProgressIndicator(
-                      value: null,
-                      strokeWidth: 2.0,
-                      color: Color.fromARGB(255, 0, 91, 148),
-                    )
+                            value: null,
+                            strokeWidth: 2.0,
+                            color: Color.fromARGB(255, 0, 91, 148),
+                          )
                         : Platform.isIOS
-                        ? const CupertinoActivityIndicator(
-                      color: Color.fromARGB(255, 0, 91, 148),
-                      radius: 20,
-                      animating: true,
-                    )
-                        : Container()
-                ),
+                            ? const CupertinoActivityIndicator(
+                                color: Color.fromARGB(255, 0, 91, 148),
+                                radius: 20,
+                                animating: true,
+                              )
+                            : Container()),
               ),
             ),
           ), /*Container(
@@ -256,7 +255,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed
@@ -264,407 +263,408 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
   }
 
   Widget news() {
-    return Container(
-        padding: const EdgeInsets.fromLTRB(2.0, 12.0, 3.0, 0),
-        width: MediaQuery.of(context).size.width,
-        child:
-            /*  FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } if(snapshot.hasData) {
-                //List<dynamic> users = snapshot.data as List<dynamic>;*/
-            ListView.builder(
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          // crossAxisCount: 2,
-          // mainAxisSpacing: 5,
-          // crossAxisSpacing: 5,
-          // childAspectRatio: .90,
-          //  childAspectRatio:MediaQuery.of(context).size.height/700,
-          // MediaQuery.of(context).size.aspectRatio * 2.55,
-          // mainAxisSpacing: 12.0,
-          // crossAxisCount: 1,
+    return ListView.builder(
+              // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              // crossAxisCount: 2,
+              // mainAxisSpacing: 5,
+              // crossAxisSpacing: 5,
+              // childAspectRatio: .90,
+              //  childAspectRatio:MediaQuery.of(context).size.height/700,
+              // MediaQuery.of(context).size.aspectRatio * 2.55,
+              // mainAxisSpacing: 12.0,
+              // crossAxisCount: 1,
 
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: getnewsdata.length,
-          shrinkWrap: true,
-          controller: scrollercontroller,
-          itemBuilder: (context, index) {
-            getnews.Result result = getnewsdata[index];
-
-            //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: result.isLike.toString());
-            return GestureDetector(
-              onTap: (() {
-                // cate_name = record.name.toString();
-                // cate_id = record.id.toString();
-                // Fluttertoast.showToast(timeInSecForIosWeb: 2,
-                //     msg: cate_id.toString());
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) =>
-                //             Subcategory(cate_id, cate_name)));
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          NewsDetail(news_id: result.newsId.toString()),
-                    ));
-              }),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                child: Column(children: [
-                  Container(
-                    margin: const EdgeInsets.all(10.0),
-                    height: 150,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
-                      child: Image(
-                        errorBuilder: (context, object, trace) {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color.fromARGB(255, 223, 220, 220),
-                            ),
-                          );
-                        },
-                        image: NetworkImage(result.newsImage ?? ''
-                            //data[index]['member_image'] ?? '',
-                            ),
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.fill,
-                      ),
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: getnewsdata.length,
+              shrinkWrap: true,
+              controller: scrollercontroller,
+              itemBuilder: (context, index) {
+    getnews.Result result = getnewsdata[index];
+    //Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: result.isLike.toString());
+    return Column(
+      children: [
+        GestureDetector (
+          onTap: (() {
+            // cate_name = record.name.toString();
+            // cate_id = record.id.toString();
+            // Fluttertoast.showToast(timeInSecForIosWeb: 2,
+            //     msg: cate_id.toString());
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) =>
+            //             Subcategory(cate_id, cate_name)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      NewsDetail(news_id: result.newsId.toString()),
+                ));
+          }),
+          child: Container(
+            decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(13.05),
+            ),
+            shadows: const [
+            BoxShadow(
+            color: Color(0x3FA6A6A6),
+            blurRadius: 16.32,
+            offset: Offset(0, 3.26),
+            spreadRadius: 0,
+            )
+            ],),
+            child: Column(
+                children: [
+              Container(
+                margin: const EdgeInsets.all(10.0),
+                height: 150,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(13.05),
+                  /*shape: RoundedRectangleBorder(
+                               borderRadius: BorderRadius.circular(10.0)),*/
+                  child: Image(
+                    errorBuilder: (context, object, trace) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 223, 220, 220),
+                        ),
+                      );
+                    },
+                    image: NetworkImage(result.newsImage ?? ''
+                        //data[index]['member_image'] ?? '',
+                        ),
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    child: Text(
+                       result.newsTitle.toString(),
+                       maxLines: 2,
+                       style: const TextStyle(
+                         color: Colors.black,
+                         fontSize: 14,
+                         fontFamily: 'Metropolis',
+                         fontWeight: FontWeight.w600,
+                         letterSpacing: -0.24,
+                         overflow: TextOverflow.ellipsis,
+                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          // child: Flexible(
-                          child: Text(result.newsTitle.toString(),
-                              maxLines: 2,
-                              softWrap: true,
-                              style: const TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: 'Metropolis',
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ))
-                          // )
-
-                          ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                result.isLike == "0"
-                                    ? IconButton(
-                                        onPressed: () {
-                                          Newslike(result.newsId.toString());
-                                          result.isLike = '1';
-                                          int like = int.parse(
-                                              result.likeCount.toString());
-                                          like = like + 1;
-                                          result.likeCount = like.toString();
-                                          /*getnewsdata.clear();
-                                              get_News();*/
-                                          setState(() {});
-                                        },
-                                        icon: const ImageIcon(
-                                          AssetImage('assets/like.png'),
-                                        ))
-                                    : GestureDetector(
-                                        onTap: () {
-                                          Newslike(result.newsId.toString());
-                                          result.isLike = '0';
-                                          int like = int.parse(
-                                              result.likeCount.toString());
-                                          like = like - 1;
-                                          result.likeCount = like.toString();
-                                          //getnewsdata.clear();
-                                          // get_News();
-                                          setState(() {});
-                                        },
-                                        child: Image.asset(
-                                          'assets/like1.png',
-                                          width: 50,
-                                          height: 28,
-                                        )),
-                                Text(
-                                    'Like (${result.likeCount})',
-                                    style: const TextStyle(
-                                      fontSize: 12.0,
-                                      fontFamily: 'Metropolis',
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ))
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.remove_red_eye_outlined)),
-                                const Text('View (0)',
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontFamily: 'Metropolis',
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ))
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                              child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    shareImage(
-                                        url: result.newsImage.toString(),
-                                        title: result.newsTitle.toString());
-                                  },
-                                  icon: const ImageIcon(
-                                    AssetImage('assets/Send.png'),
-                                    size: 20,
-                                  )),
-                              const Text('Share',
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontFamily: 'Metropolis',
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ))
-                            ],
-                          ))
+                          result.isLike == "0"
+                            ? IconButton    (
+                            iconSize: 17,
+                              padding: const EdgeInsets.all(0),
+                                onPressed: () {
+                                  Newslike(result.newsId.toString());
+                                  result.isLike = '1';
+                                  int like = int.parse(
+                                      result.likeCount.toString());
+                                  like = like + 1;
+                                  result.likeCount = like.toString();
+                                  /*getnewsdata.clear();
+                                      get_News();*/
+                                  setState(() {});
+                                },
+                                icon: const ImageIcon(
+                                  size: 17,
+                                  AssetImage('assets/like.png'),
+                                ))
+                            : IconButton(
+                              padding: const EdgeInsets.all(0),
+                            onPressed: (){
+                              Newslike(result.newsId.toString());
+                              result.isLike = '0';
+                              int like = int.parse(
+                                  result.likeCount.toString());
+                              like = like - 1;
+                              result.likeCount = like.toString();
+                              //getnewsdata.clear();
+                              // get_News();
+                              setState(() {});
+                            },
+                            icon: const ImageIcon(
+                            size: 17,
+                            color: Color(0xFF005C94),
+                            AssetImage('assets/like1.png'),
+                            )),
+                            Text('Like (${result.likeCount})',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Metropolis',
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.24,
+                              )),
                         ],
-                      )
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            iconSize: 17,
+                            padding: const EdgeInsets.all(0),
+                              onPressed: () {},
+                              icon: const Icon(
+                                  Icons.remove_red_eye_outlined,size: 17,)),
+                           Text('View (${result.viewCounter})',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Metropolis',
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: -0.24,
+                              ))
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Row(
+                        children: [
+                        IconButton(
+                          iconSize: 14,
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              shareImage(
+                                  url: result.newsImage.toString(),
+                                  title: result.newsTitle.toString());
+                            },
+                            icon: const ImageIcon(
+                              AssetImage('assets/Send.png'),
+                              size: 14,
+                            )),
+                        const Text('Share',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Metropolis',
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.24,
+                            ))
+                            ],
+                          ),
+                      ),
+                      //const SizedBox(),
                     ],
                   )
-                ]),
-              ),
-            );
-          },
-        ));
+                ],
+              )
+            ]),
+          ),
+        ),
+        const SizedBox(height: 13),
+      ],
+    );
+    },
+  );
   }
 
   Widget Quicknews() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(2.0, 8.0, 3.0, 0),
-      width: MediaQuery.of(context).size.width,
-      child: FutureBuilder(
-          //future: load_category(),
-          builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          //List<dynamic> users = snapshot.data as List<dynamic>;
-          return ListView.builder(
-            //gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            // crossAxisCount: 2,
-            // mainAxisSpacing: 5,
-            // crossAxisSpacing: 5,
-            // childAspectRatio: .90,
-            /*childAspectRatio:
-                        MediaQuery.of(context).size.aspectRatio * 6.5,
-                    mainAxisSpacing: 2.0,
-                    crossAxisCount: 1,*/
-            // ),
-            controller: scrollercontroller,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: getQuicknewsdata.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              getquicknews.Result record = getQuicknewsdata[index];
-
-              DateFormat format = DateFormat("yyyy-MM-dd");
-              create_date = record.newsDate.toString();
-              var updatDate = format.parse(create_date);
-
-              create_date1 = record.newsDate.toString();
-              var curretDate = format.parse(create_date);
-
-              DateTime? dt1 = DateTime.parse(curretDate.toString());
-              DateTime? dt2 = DateTime.parse(updatDate.toString());
-              //print('dt1 $dt2');
-              update_formattedDate =
-                  dt2 != null ? DateFormat('dd-MMMM-yyyy').format(dt2) : "";
-              descr = "<b>${record.longDescription}</b>";
-
-              // print(dt1);
-
-              create_formattedDate =
-                  dt1 != null ? DateFormat("dd-MM-yyyy").format(dt1) : "";
-              // print('Todat $create_formattedDate');
-              String displayDate = dateConverter(create_formattedDate);
-
-              return GestureDetector(
-                  onTap: (() {
-                    // cate_name = record.name.toString();
-                    // cate_id = record.id.toString();
-                    // Fluttertoast.showToast(timeInSecForIosWeb: 2,
-                    //     msg: cate_id.toString());
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) =>
-                    //             Subcategory(cate_id, cate_name)));
-                  }),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(displayDate.toString(),
-                              style: const TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: 'Metropolis',
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ))),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Column(
-                            children: [
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    record.newsImage != null
-                                        ? Stack(
-                                            fit: StackFit.passthrough,
-                                            children: <Widget>[
-                                                Container(
-                                                  height: 165,
-                                                  width: 175,
-                                                  margin:
-                                                      const EdgeInsets.all(5.0),
-                                                  decoration: const BoxDecoration(
-                                                      //color: Colors.black26,
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30.0))),
-                                                  child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius
-                                                              .circular(
-                                                                  20.0),
-                                                      /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
-                                                      /* child: record.newsImage!=null? Image.network(
-                                                      record.newsImage.toString(),
-
-                                                  fit: BoxFit.cover,
-                                                  height: 100,
-                                                  width: 100,
-                                                ):Image.asset("assets/plastic4trade logo final 1 (4).png") as ImageProvider,*/
-                                                      child: Image.network(
-                                                        record.imageUrl
-                                                            .toString(),
-                                                        fit: BoxFit.cover,
-                                                        height: 50,
-                                                        width: 50,
-                                                      )),
-                                                ),
-                                              ])
-                                        : Align(
-                                            alignment: Alignment.topCenter,
-                                            child: Container(
-                                              height: 80,
-                                              width: 80,
-                                              margin: const EdgeInsets.all(5.0),
-                                              /* decoration: BoxDecoration(
-                                        //color: Colors.black26,
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(30.0))),*/
-                                              child: Image.asset(
-                                                "assets/plastic4trade logo final 1 (2).png",
-
-                                                //fit: BoxFit.fitHeight,
-                                                // height: 100,
-                                                width: 50,
-                                              ),
-                                            ),
-                                          ),
-
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 15.0, 0, 8.0),
-                                            child: Text(
-                                                '${record.newsTitle}',
-                                                style: const TextStyle(
-                                                  fontSize: 10.0,
-                                                  fontFamily: 'Metropolis',
-                                                  fontWeight:
-                                                      FontWeight.w600,
-                                                  color: Colors.black,
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 5.0, 0, 5.0),
-                                            child: Text(
-                                                update_formattedDate,
-                                                style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontFamily: 'Metropolis',
-                                                  fontWeight:
-                                                      FontWeight.w400,
-                                                  color: Colors.black,
-                                                )),
-                                          ),
-                                          Html(data: descr)
-                                          /*Text(
-                                                    'HPL, IOCL. HDPE PRICES NO CHANGES',
-                                                    style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontFamily: 'Metropolis',
-                                                      fontWeight: FontWeight.w600,
-                                                      color: Colors.black,
-                                                    )),*/
-                                        ],
-                                      ),
-                                    ),
-                                    //cartwidget(),
-                                  ]),
-                            ],
-                          )),
-                    ],
-                  ));
-            },
-          );
+    return  ListView.builder(
+      //gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      // crossAxisCount: 2,
+      // mainAxisSpacing: 5,
+      // crossAxisSpacing: 5,
+      // childAspectRatio: .90,
+      /*childAspectRatio:
+                      MediaQuery.of(context).size.aspectRatio * 6.5,
+                  mainAxisSpacing: 2.0,
+                  crossAxisCount: 1,*/
+      // ),
+      controller: scrollercontroller,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: getQuicknewsdata.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        getquicknews.Result record = getQuicknewsdata[index];
+        String displayDate = "";
+        if(record.newsDate != null){
+        create_formattedDate = DateFormat("dd-MMM-yyyy").format(DateFormat("yyyy-MM-dd").parse(record.newsDate.toString()));
+        displayDate = dateConverter(create_formattedDate);
         }
+        return GestureDetector(
+            onTap: (() {
+              // cate_name = record.name.toString();
+              // cate_id = record.id.toString();
+              // Fluttertoast.showToast(timeInSecForIosWeb: 2,
+              //     msg: cate_id.toString());
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>
+              //             Subcategory(cate_id, cate_name)));
+            }),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if(index == 0)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(displayDate.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          height: 0.06,
+                          fontFamily: 'Metropolis',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.24,
+                        )),
+                  ),
+                if(index > 0 && getQuicknewsdata[index - 1].newsDate != null)
+                dateConverter(DateFormat("dd-MMM-yyyy").format(DateTime.parse(getQuicknewsdata[index - 1].newsDate.toString()))) != displayDate ?
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(displayDate.toString(),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: 'Metropolis',
+                        fontWeight: FontWeight.w600,
+                        height: 0.06,
+                        letterSpacing: -0.24,
+                      )),
+                )
+                    : const SizedBox(),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.05),
+                    ),
+                    shadows: const [
+                      BoxShadow(
+                        color: Color(0x3FA6A6A6),
+                        blurRadius: 16.32,
+                        offset: Offset(0, 3.26),
+                        spreadRadius: 0,
+                      )
+                    ],),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        record.newsImage != null
+                            ? Stack(
+                            fit: StackFit.passthrough,
+                            children: <Widget>[
+                              Container(
+                                height: 165,
+                                width: 175,
+                                margin:
+                                const EdgeInsets.all(5.0),
+                                decoration:
+                                const BoxDecoration(
+                                  //color: Colors.black26,
+                                    borderRadius:
+                                    BorderRadius.all(
+                                        Radius.circular(
+                                            30.0))),
+                                child: ClipRRect(
+                                    borderRadius:
+                                    BorderRadius.circular(
+                                        20.0),
+                                    /*shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10.0)),*/
+                                    /* child: record.newsImage!=null? Image.network(
+                                              record.newsImage.toString(),
 
-      }),
+                                          fit: BoxFit.cover,
+                                          height: 100,
+                                          width: 100,
+                                        ):Image.asset("assets/plastic4trade logo final 1 (4).png") as ImageProvider,*/
+                                    child: Image.network(
+                                      record.imageUrl.toString(),
+                                      fit: BoxFit.cover,
+                                      height: 50,
+                                      width: 50,
+                                    )),
+                              ),
+                            ])
+                            : SizedBox(
+                              height: 50,
+                              width: 50,
+                              /* decoration: BoxDecoration(
+                                  //color: Colors.black26,
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),*/
+                              child: Image.asset(
+                                "assets/plastic4trade logo final 1 (2).png",
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                        const SizedBox(width: 9,),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+                                child: Text('${record.newsTitle}',
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 10,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.24,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: Text(create_formattedDate,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 10,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0.20,
+                                    letterSpacing: -0.24,
+                                  ),),
+                              ),
+                              Html(data: record.longDescription,
+                                style: {
+                                  "p": Style(
+                                    fontSize: FontSize(12),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.24,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  "body": Style(
+                                    fontSize: FontSize(12),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.24,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                      ]),
+                ),
+                const SizedBox(height: 7),
+              ],
+            ));
+      },
     );
   }
 
@@ -672,11 +672,12 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
+      Fluttertoast.showToast(
+          timeInSecForIosWeb: 2, msg: 'Internet Connection not available');
       //isprofile=true;
     } else {
       getPackage();
-     await get_News();
+      await get_News();
       get_QuickNews();
       // get_data();
     }
@@ -701,8 +702,9 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
             newsImage: data['newsImage'],
             isLike: data['isLike'],
             likeCount: data['likeCount'],
+            viewCounter: data['viewCounter'],
           );
-
+          print("record:-${record.viewCounter}");
           getnewsdata.add(record);
           //loadmore = true;
         }
@@ -712,7 +714,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
     }
     return jsonArray;
   }
@@ -739,7 +741,6 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
           );
 
           getQuicknewsdata.add(record);
-          //loadmore = true;
         }
         isload = true;
         if (mounted) {
@@ -747,7 +748,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
     }
 
     return jsonArray;
@@ -774,7 +775,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
         }
       }
     } else {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
     }
     setState(() {});
     return jsonArray;
@@ -782,7 +783,7 @@ class _NewsState extends State<News> with SingleTickerProviderStateMixin {
 
   String dateConverter(String myDate) {
     String date;
-    DateTime convertedDate = DateFormat("dd-MM-yyyy").parse(myDate.toString());
+    DateTime convertedDate = DateFormat("dd-MMM-yyyy").parse(myDate.toString());
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = DateTime(now.year, now.month, now.day - 1);

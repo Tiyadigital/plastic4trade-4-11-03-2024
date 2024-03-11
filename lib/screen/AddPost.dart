@@ -31,7 +31,6 @@ import '../constroller/GetCategoryController.dart';
 import '../constroller/GetCategoryGradeController.dart';
 import '../constroller/GetCategoryTypeController.dart';
 import '../model/GetProductName.dart';
-import '../model/common.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key? key}) : super(key: key);
@@ -59,6 +58,7 @@ class _AddPostState extends State<AddPost> {
   final TextEditingController _loc = TextEditingController();
   final TextEditingController _proddetail = TextEditingController();
 
+
   Color _color1 = Colors.black26;
   Color _color2 = Colors.black26;
   Color _color3 = Colors.black26;
@@ -76,8 +76,8 @@ class _AddPostState extends State<AddPost> {
   var place;
 
   final _formKey = GlobalKey<FormState>();
-  PickedFile? _imagefiles, _imagefiles1, _imagefiles2;
-  io.File? file, file1, file2, mainfile;
+  //PickedFile? _imagefiles, _imagefiles1, _imagefiles2;
+  io.File? file, file1, file2;
   bool? _isloading = false;
   bool _isloading1 = false;
   late double lat = 0.0;
@@ -115,1127 +115,1092 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
-    return initwidget(context);
-  }
-
-  Widget initwidget(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              SafeArea(
-                top: true,
-                left: true,
-                right: true,
-                maintainBottomViewPadding: true,
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: _isloading == false
-                        ? Center(
-                            child: Platform.isAndroid
-                                ? const CircularProgressIndicator(
-                                    value: null,
-                                    strokeWidth: 2.0,
+        child: Column(
+          children: [
+            SafeArea(
+              top: true,
+              left: true,
+              right: true,
+              maintainBottomViewPadding: true,
+              child: Form(
+                key: _formKey,
+                child: _isloading == false
+                    ? Center(
+                        child: Platform.isAndroid
+                            ? const CircularProgressIndicator(
+                                value: null,
+                                strokeWidth: 2.0,
+                                color: Color.fromARGB(255, 0, 91, 148),
+                              )
+                            : Platform.isIOS
+                                ? const CupertinoActivityIndicator(
                                     color: Color.fromARGB(255, 0, 91, 148),
+                                    radius: 20,
+                                    animating: true,
                                   )
-                                : Platform.isIOS
-                                    ? const CupertinoActivityIndicator(
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                        radius: 20,
-                                        animating: true,
-                                      )
-                                    : Container())
-                        : Column(
+                                : Container())
+                    : Column(
+                        children: [
+                          Row(
                             children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    child: Image.asset('assets/back.png',
-                                        height: 50, width: 60),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    width: 100.0,
-                                  ),
-                                  Center(
-                                      child: Text(
-                                    'Add Post',
+                              GestureDetector(
+                                child: Image.asset('assets/back.png',
+                                    height: 50, width: 60),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              const SizedBox(
+                                width: 100.0,
+                              ),
+                              Center(
+                                  child: Text(
+                                'Add Post',
+                                style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf')
+                                    .copyWith(fontSize: 20.0),
+                              ))
+                            ],
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(
+                                25.0, 10.0, 25.0, 5.0),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'You’re like to do?',
                                     style: const TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w400,
                                             color: Colors.black,
                                             fontFamily:
-                                                'assets\fonstMetropolis-Black.otf')
-                                        .copyWith(fontSize: 20.0),
-                                  ))
-                                ],
-                              ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    25.0, 10.0, 25.0, 5.0),
-                                child: Column(
+                                                'assets/fonst/Metropolis-Black.otf')
+                                        .copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black38),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
                                   children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'You’re like to do?',
-                                        style: const TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets\fonstMetropolis-Black.otf')
-                                            .copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black38),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          child: SizedBox(
-                                            height: 30,
-                                            width: 120,
-                                            child: Row(
+                                    GestureDetector(
+                                      child: SizedBox(
+                                        height: 30,
+                                        width: 120,
+                                        child: Row(
+                                          children: [
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    GestureDetector(
-                                                      child: sampleData1.first
-                                                                  .isSelected ==
-                                                              true
-                                                          ? Icon(
-                                                              Icons
-                                                                  .check_circle,
-                                                              color: Colors
-                                                                  .green
-                                                                  .shade600)
-                                                          : const Icon(
-                                                              Icons
-                                                                  .circle_outlined,
-                                                              color: Colors
-                                                                  .black38),
-                                                      onTap: () {
-                                                        setState(() {
+                                                GestureDetector(
+                                                  child: sampleData1.first
+                                                              .isSelected ==
+                                                          true
+                                                      ? Icon(
+                                                          Icons
+                                                              .check_circle,
+                                                          color: Colors
+                                                              .green
+                                                              .shade600)
+                                                      : const Icon(
+                                                          Icons
+                                                              .circle_outlined,
+                                                          color: Colors
+                                                              .black38),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      sampleData1.first
+                                                              .isSelected =
+                                                          true;
+                                                      type_post =
                                                           sampleData1.first
-                                                                  .isSelected =
-                                                              true;
-                                                          type_post =
-                                                              sampleData1.first
-                                                                  .buttonText;
-                                                          sampleData1.last
-                                                                  .isSelected =
-                                                              false;
-                                                          category1 = true;
-                                                        });
-                                                      },
-                                                    ),
-                                                    Text(
-                                                        sampleData1
-                                                            .first.buttonText,
-                                                        style: const TextStyle(
-                                                                fontSize: 13.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets\fonstMetropolis-Black.otf')
-                                                            .copyWith(
-                                                                fontSize: 17))
-                                                  ],
+                                                              .buttonText;
+                                                      sampleData1.last
+                                                              .isSelected =
+                                                          false;
+                                                      category1 = true;
+                                                    });
+                                                  },
                                                 ),
+                                                Text(
+                                                    sampleData1
+                                                        .first.buttonText,
+                                                    style: const TextStyle(
+                                                            fontSize: 13.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500,
+                                                            color: Colors
+                                                                .black,
+                                                            fontFamily:
+                                                                'assets/fonst/Metropolis-Black.otf')
+                                                        .copyWith(
+                                                            fontSize: 17))
                                               ],
                                             ),
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              sampleData1.first.isSelected =
-                                                  true;
-                                              type_post =
-                                                  sampleData1.first.buttonText;
-                                              sampleData1.last.isSelected =
-                                                  false;
-                                              category1 = true;
-                                            });
-                                          },
+                                          ],
                                         ),
-                                        GestureDetector(
-                                          child: SizedBox(
-                                              width: 150,
-                                              height: 30,
-                                              child: Row(
-                                                children: [
-                                                  GestureDetector(
-                                                    child: sampleData1.last
-                                                                .isSelected ==
-                                                            true
-                                                        ? Icon(
-                                                            Icons.check_circle,
-                                                            color: Colors
-                                                                .green.shade600)
-                                                        : const Icon(
-                                                            Icons
-                                                                .circle_outlined,
-                                                            color:
-                                                                Colors.black38),
-                                                    onTap: () {
-                                                      setState(() {
-                                                        sampleData1.last
-                                                            .isSelected = true;
-                                                        sampleData1.first
-                                                            .isSelected = false;
-                                                        category1 = true;
-                                                        type_post = sampleData1
-                                                            .last.buttonText;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                      sampleData1
-                                                          .last.buttonText,
-                                                      style: const TextStyle(
-                                                              fontSize: 13.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets\fonstMetropolis-Black.otf')
-                                                          .copyWith(
-                                                              fontSize: 17))
-                                                ],
-                                              )),
-                                          onTap: () {
-                                            setState(() {
-                                              sampleData1.last.isSelected =
-                                                  true;
-                                              sampleData1.first.isSelected =
-                                                  false;
-                                              category1 = true;
-                                              type_post =
-                                                  sampleData1.last.buttonText;
-                                            });
-                                          },
-                                        ),
-                                      ],
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          sampleData1.first.isSelected =
+                                              true;
+                                          type_post =
+                                              sampleData1.first.buttonText;
+                                          sampleData1.last.isSelected =
+                                              false;
+                                          category1 = true;
+                                        });
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      child: SizedBox(
+                                          width: 150,
+                                          height: 30,
+                                          child: Row(
+                                            children: [
+                                              GestureDetector(
+                                                child: sampleData1.last
+                                                            .isSelected ==
+                                                        true
+                                                    ? Icon(
+                                                        Icons.check_circle,
+                                                        color: Colors
+                                                            .green.shade600)
+                                                    : const Icon(
+                                                        Icons
+                                                            .circle_outlined,
+                                                        color:
+                                                            Colors.black38),
+                                                onTap: () {
+                                                  setState(() {
+                                                    sampleData1.last
+                                                        .isSelected = true;
+                                                    sampleData1.first
+                                                        .isSelected = false;
+                                                    category1 = true;
+                                                    type_post = sampleData1
+                                                        .last.buttonText;
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                  sampleData1
+                                                      .last.buttonText,
+                                                  style: const TextStyle(
+                                                          fontSize: 13.0,
+                                                          fontWeight:
+                                                              FontWeight
+                                                                  .w500,
+                                                          color:
+                                                              Colors.black,
+                                                          fontFamily:
+                                                              'assets/fonst/Metropolis-Black.otf')
+                                                      .copyWith(
+                                                          fontSize: 17))
+                                            ],
+                                          )),
+                                      onTap: () {
+                                        setState(() {
+                                          sampleData1.last.isSelected =
+                                              true;
+                                          sampleData1.first.isSelected =
+                                              false;
+                                          category1 = true;
+                                          type_post =
+                                              sampleData1.last.buttonText;
+                                        });
+                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: SizedBox(
-                                  height: 55,
-                                  child: TypeAheadField<String>(
-                                    textFieldConfiguration:
-                                        TextFieldConfiguration(
-                                      controller: _prodnm,
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 5.0, 25.0, 5.0),
+                            child: SizedBox(
+                              height: 55,
+                              child: TypeAheadField<String>(
+                                textFieldConfiguration:
+                                    TextFieldConfiguration(
+                                  controller: _prodnm,
+                                  style: const TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf'),
+                                  onChanged: (value) {
+                                    if (value.isEmpty) {
+                                      WidgetsBinding.instance.focusManager
+                                          .primaryFocus
+                                          ?.unfocus();
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              'Please Add Your Product Name');
+                                      _color1 = Colors.red;
+                                    } else {}
+                                  },
+                                  onSubmitted: (value) {
+                                    if (value.isEmpty) {
+                                      _color1 = Colors.red;
+                                      setState(() {});
+                                    } else if (value.isNotEmpty) {
+                                      _color1 = Colors.green.shade600;
+                                      setState(() {});
+                                    }
+                                  },
+                                  textCapitalization:
+                                      TextCapitalization.words,
+                                  keyboardType: TextInputType.name,
+                                  decoration: InputDecoration(
+                                    hintText: "Product Name *",
+                                    hintStyle: const TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black,
+                                            fontFamily:
+                                                'assets/fonst/Metropolis-Black.otf')
+                                        .copyWith(color: Colors.grey),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color1),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color1),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 1, color: _color1),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                  ),
+                                ),
+                                suggestionsCallback: (pattern) {
+                                  return _getSuggestions(pattern);
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  return ListTile(
+                                    title: Text(
+                                      suggestion,
                                       style: const TextStyle(
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
                                           fontFamily:
-                                              'assets\fonstMetropolis-Black.otf'),
-                                      onChanged: (value) {
-                                        if (value.isEmpty) {
-                                          WidgetsBinding.instance.focusManager
-                                              .primaryFocus
-                                              ?.unfocus();
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  'Please Add Your Product Name');
-                                          _color1 = Colors.red;
-                                        } else {}
-                                      },
-                                      onSubmitted: (value) {
-                                        if (value.isEmpty) {
-                                          _color1 = Colors.red;
-                                          setState(() {});
-                                        } else if (value.isNotEmpty) {
-                                          _color1 = Colors.green.shade600;
-                                          setState(() {});
-                                        }
-                                      },
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      keyboardType: TextInputType.name,
-                                      decoration: InputDecoration(
-                                        hintText: "Product Name *",
-                                        hintStyle: const TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets\fonstMetropolis-Black.otf')
-                                            .copyWith(color: Colors.grey),
+                                              'assets/fonst/Metropolis-Black.otf'),
+                                    ),
+                                  );
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  _prodnm.text = suggestion;
+                                  _color1 = Colors.green.shade600;
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 5.0, 25.0, 5.0),
+                            child: TextFormField(
+                                controller: _prod_cate,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                readOnly: true,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  suffixIcon:
+                                      const Icon(Icons.arrow_drop_down_sharp),
+                                  hintText: "Product Category*",
+                                  hintStyle: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(color: Colors.grey),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color2),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color2),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color2),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    _color2 = Colors.red;
+                                  } else {}
+                                  return null;
+                                },
+                                onTap: () {
+                                  Viewproduct(context);
+                                },
+                                onFieldSubmitted: (value) {
+                                  if (value.isEmpty) {
+                                    setState(() {});
+                                  } else if (value.isNotEmpty) {
+                                    setState(() {});
+                                  }
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 5.0, 25.0, 5.0),
+                            child: TextFormField(
+                                controller: _prod_type,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                readOnly: true,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  suffixIcon: const Icon(
+                                      Icons.arrow_drop_down_sharp),
+                                  hintText: "Product Type *",
+                                  hintStyle: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(color: Colors.grey),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color3),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color3),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color3),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    _color3 = Colors.red;
+                                  } else {}
+                                  return null;
+                                },
+                                onTap: () {
+                                  Viewtype(context);
+                                },
+                                onFieldSubmitted: (value) {
+                                  if (value.isEmpty) {
+                                    setState(() {});
+                                  } else if (value.isNotEmpty) {
+                                    setState(() {});
+                                  }
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 5.0, 25.0, 5.0),
+                            child: TextFormField(
+                                controller: _prod_grade,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                readOnly: true,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  hintText: "Product Grade*",
+                                  hintStyle: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(color: Colors.grey),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon: const Icon(
+                                      Icons.arrow_drop_down_sharp),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color4),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color4),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color4),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    _color4 = Colors.red;
+                                  } else {}
+                                  return null;
+                                },
+                                onTap: () {
+                                  Viewgrade(context);
+                                },
+                                onFieldSubmitted: (value) {
+                                  if (value.isEmpty) {
+                                    setState(() {});
+                                  } else if (value.isNotEmpty) {
+                                    setState(() {});
+                                  }
+                                }),
+                          ),
+                          Container(
+                            height: 62,
+                            width: MediaQuery.of(context).size.width,
+                            margin:
+                                 const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: _color8),
+                                color: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10))),
+                            child: Row(children: [
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width /
+                                      2.9,
+                                  child: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _prodprice,
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"\d"),
+                                      ),
+                                      LengthLimitingTextInputFormatter(5)
+                                    ],
+                                    decoration: const InputDecoration(
+
                                         filled: true,
                                         fillColor: Colors.white,
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color1),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color1),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: 1, color: _color1),
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                      ),
-                                    ),
-                                    suggestionsCallback: (pattern) {
-                                      return _getSuggestions(pattern);
-                                    },
-                                    itemBuilder: (context, suggestion) {
-                                      return ListTile(
-                                        title: Text(
-                                          suggestion,
-                                          style: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets\fonstMetropolis-Black.otf'),
-                                        ),
-                                      );
-                                    },
-                                    onSuggestionSelected: (suggestion) {
-                                      _prodnm.text = suggestion;
-                                      _color1 = Colors.green.shade600;
-                                      setState(() {});
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_cate,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      suffixIcon:
-                                          const Icon(Icons.arrow_drop_down_sharp),
-                                      hintText: "Product Category*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets\fonstMetropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color2),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color2),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color2),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        _color2 = Colors.red;
-                                      } else {}
-                                      return null;
-                                    },
-                                    onTap: () {
-                                      Viewproduct(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_type,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      hintText: "Product Type *",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets\fonstMetropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color3),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color3),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color3),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        _color3 = Colors.red;
-                                      } else {}
-                                      return null;
-                                    },
-                                    onTap: () {
-                                      Viewtype(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_grade,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      hintText: "Product Grade*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets\fonstMetropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color4),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color4),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color4),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                    ),
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        _color4 = Colors.red;
-                                      } else {}
-                                      return null;
-                                    },
-                                    onTap: () {
-                                      Viewgrade(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Container(
-                                height: 62,
-                                width: MediaQuery.of(context).size.width,
-                                margin:
-                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: _color8),
-                                    color: Colors.white,
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(10))),
-                                child: Row(children: [
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.9,
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _prodprice,
-                                        keyboardType: TextInputType.number,
-                                        style: const TextStyle(
+                                        hintText: 'Price *',
+                                        hintStyle: TextStyle(
                                             fontSize: 15.0,
                                             fontWeight: FontWeight.w400,
-                                            color: Colors.black,
+                                            color: Colors.grey,
                                             fontFamily:
-                                                'assets\fonstMetropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"\d"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(5)
-                                        ],
-                                        decoration: const InputDecoration(
+                                                'assets/fonst/Metropolis-Black.otf'),
+                                        border: InputBorder.none),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                      } else {}
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
 
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: 'Price *',
-                                            hintStyle: TextStyle(
+                                        setState(() {});
+                                      }
+                                    },
+                                    onFieldSubmitted: (value) {
+                                      if (value.isEmpty) {
+                                        /* Fluttertoast.showToast(
+                                              msg:
+                                                  'Please Add Your Product Price');*/
+                                        setState(() {});
+                                      } else {
+                                        setState(() {});
+                                      }
+                                    },
+                                  )),
+                              const VerticalDivider(
+                                width: 1,
+                                color: Colors.black38,
+                              ),
+                              Unit_dropdown(constanst.unitdata, "Unit"),
+                              const VerticalDivider(
+                                width: 1,
+                                color: Colors.black38,
+                              ),
+                              rupess_dropdown(listrupes, 'Currency'),
+                            ]),
+                          ),
+                          Container(
+                            height: 62,
+                            width: MediaQuery.of(context).size.width,
+                            margin:
+                                  const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: _color10),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10))),
+                            child: Row(children: [
+                              Container(
+                                  width: MediaQuery.of(context).size.width /
+                                      1.7,
+                                  padding:   const EdgeInsets.only(
+                                      top: 3, bottom: 3.0, left: 2.0),
+                                  child: TextFormField(
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    controller: _prodqty,
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf'),
+                                    textInputAction: TextInputAction.next,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                        RegExp(r"\d"),
+                                      ),
+                                      LengthLimitingTextInputFormatter(5)
+                                    ],
+                                    decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        hintText: 'Qty *',
+                                        hintStyle: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400,
                                                 color: Colors.grey,
                                                 fontFamily:
-                                                    'assets\fonstMetropolis-Black.otf'),
-                                            border: InputBorder.none),
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                          } else {}
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-
-                                            setState(() {});
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            /* Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Add Your Product Price');*/
-                                            setState(() {});
-                                          } else {
-                                            setState(() {});
-                                          }
-                                        },
-                                      )),
-                                  const VerticalDivider(
-                                    width: 1,
-                                    color: Colors.black38,
-                                  ),
-                                  Unit_dropdown(constanst.unitdata, "Unit"),
-                                  const VerticalDivider(
-                                    width: 1,
-                                    color: Colors.black38,
-                                  ),
-                                  rupess_dropdown(listrupes, 'Currency'),
-                                ]),
-                              ),
-                              Container(
-                                height: 62,
-                                width: MediaQuery.of(context).size.width,
-                                margin:
-                                      const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: _color10),
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(10))),
-                                child: Row(children: [
-                                  Container(
-
-
-                                      width: MediaQuery.of(context).size.width /
-                                          1.7,
-                                      padding:   const EdgeInsets.only(
-                                          top: 3, bottom: 3.0, left: 2.0),
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _prodqty,
-                                        keyboardType: TextInputType.number,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets\fonstMetropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"\d"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(5)
-                                        ],
-                                        decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: 'Qty *',
-                                            hintStyle: const TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.grey,
-                                                    fontFamily:
-                                                        'assets\fonstMetropolis-Black.otf')
-                                                .copyWith(height: 2),
-                                            border: InputBorder.none),
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-
-                                          } else {
-
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-
-                                            setState(() {});
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-
-                                            setState(() {});
-                                          } else {
-                                            setState(() {});
-                                          }
-                                        },
-                                      )),
-                                  const VerticalDivider(
-                                    width: 1,
-                                    color: Colors.black38,
-                                  ),
-                                  Unit_dropdown1(constanst.unitdata, 'Unit')
-                                ]),
-                              ),
-                              Padding(
-                                padding:
-                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prodcolor,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      hintText: "Color*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets\fonstMetropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      suffixIcon:
-                                          const Icon(Icons.arrow_drop_down_sharp),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color5),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color5),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color5),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-
-
-                                    ),
+                                                    'assets/fonst/Metropolis-Black.otf')
+                                            .copyWith(height: 2),
+                                        border: InputBorder.none),
                                     validator: (value) {
-
                                       if (value!.isEmpty) {
 
-
-                                        _color5 = Colors.red;
                                       } else {
 
                                       }
                                       return null;
                                     },
-                                    onTap: () {
+                                    onChanged: (value) {
+                                      if (value.isEmpty) {
 
-                                      ViewItem(context);
-
+                                        setState(() {});
+                                      }
                                     },
                                     onFieldSubmitted: (value) {
                                       if (value.isEmpty) {
 
-                                        _color5 = Colors.red;
                                         setState(() {});
-                                      } else if (value.isNotEmpty) {
+                                      } else {
                                         setState(() {});
                                       }
-                                    }),
+                                    },
+                                  )),
+                              const VerticalDivider(
+                                width: 1,
+                                color: Colors.black38,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                  controller: _loc,
-                                  readOnly: true,
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonstMetropolis-Black.otf'),
-                                  onTap: () async {
-                                    place = await PlacesAutocomplete.show(
-                                        context: context,
-                                        apiKey: googleApikey,
-                                        mode: Mode.overlay,
-                                        types: ['(cities)'],
-                                        strictbounds: false,
+                              Unit_dropdown1(constanst.unitdata, 'Unit')
+                            ]),
+                          ),
+                          Padding(
+                            padding:
+                                 const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 5.0),
+                            child: TextFormField(
+                                controller: _prodcolor,
+                                keyboardType: TextInputType.text,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                readOnly: true,
+                                textInputAction: TextInputAction.next,
+                                decoration: InputDecoration(
+                                  hintText: "Color*",
+                                  hintStyle: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(color: Colors.grey),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  suffixIcon:
+                                      const Icon(Icons.arrow_drop_down_sharp),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color5),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color5),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1, color: _color5),
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
 
-                                        onError: (err) {
-                                        });
 
-                                    if (place != null) {
-                                      setState(() {
-                                        location = place.description.toString();
-                                        _loc.text = location;
-                                      });
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: "Location/ Address / City",
-                                    hintStyle: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-
-                                    filled: true,
-                                    fillColor: Colors.white,
-
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color6),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-
-                                  ),
-                                  validator: (value) {
-
-                                    if (value!.isEmpty) {
-
-                                      _color6 = Colors.red;
-                                    } else {
-
-                                    }
-                                    return null;
-                                  },
-                                  onFieldSubmitted: (value) {
-                                    if (value.isEmpty) {
-                                      /* Fluttertoast.showToast(
-                                            msg: 'Please Add Stock Location ');*/
-                                      setState(() {
-                                        _color6 = Colors.red;
-                                      });
-                                    } else if (value.isNotEmpty) {
-                                      setState(() {
-                                        _color6 = Colors.green.shade600;
-                                      });
-                                    }
-                                  },
                                 ),
+                                validator: (value) {
+
+                                  if (value!.isEmpty) {
+
+
+                                    _color5 = Colors.red;
+                                  } else {
+
+                                  }
+                                  return null;
+                                },
+                                onTap: () {
+
+                                  ViewItem(context);
+
+                                },
+                                onFieldSubmitted: (value) {
+                                  if (value.isEmpty) {
+
+                                    _color5 = Colors.red;
+                                    setState(() {});
+                                  } else if (value.isNotEmpty) {
+                                    setState(() {});
+                                  }
+                                }),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                                25.0, 5.0, 25.0, 5.0),
+                            child: TextFormField(
+                              controller: _loc,
+                              readOnly: true,
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                              onTap: () async {
+                                place = await PlacesAutocomplete.show(
+                                    context: context,
+                                    apiKey: googleApikey,
+                                    mode: Mode.overlay,
+                                    types: ['(cities)'],
+                                    strictbounds: false,
+
+                                    onError: (err) {
+                                    });
+
+                                if (place != null) {
+                                  setState(() {
+                                    location = place.description.toString();
+                                    _loc.text = location;
+                                  });
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: "Location/ Address / City",
+                                hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+
+                                filled: true,
+                                fillColor: Colors.white,
+
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color6),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color6),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color6),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+
                               ),
-                              Padding(
-                                padding:
-                                     const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
-                                child: TextFormField(
-                                  controller: _proddetail,
-                                  keyboardType: TextInputType.multiline,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets\fonstMetropolis-Black.otf'),
-                                  maxLines: 4,
-                                  textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    hintText: "Product Description ",
-                                    hintStyle: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey,
-                                        fontFamily:
-                                            'assets\fonstMetropolis-Black.otf'),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color7),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color7),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color7),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
+                              validator: (value) {
+
+                                if (value!.isEmpty) {
+
+                                  _color6 = Colors.red;
+                                } else {
+
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isEmpty) {
+                                  /* Fluttertoast.showToast(
+                                        msg: 'Please Add Stock Location ');*/
+                                  setState(() {
+                                    _color6 = Colors.red;
+                                  });
+                                } else if (value.isNotEmpty) {
+                                  setState(() {
+                                    _color6 = Colors.green.shade600;
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                 const EdgeInsets.fromLTRB(25.0, 5.0, 25.0, 10.0),
+                            child: TextFormField(
+                              controller: _proddetail,
+                              keyboardType: TextInputType.multiline,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                              maxLines: 4,
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                hintText: "Product Description ",
+                                hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color7),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color7),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: _color7),
+                                    borderRadius:
+                                        BorderRadius.circular(10.0)),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  _color7 = Colors.red;
+                                } else {
+
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isEmpty) {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Please Add Your Product Description');
+                                  _color7 = Colors.red;
+                                  setState(() {});
+                                } else if (value.isNotEmpty) {
+                                  setState(() {});
+                                }
+                              },
+                            ),
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin:
+                                  const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                    child: Stack(
+                                      children: [
+                                        GestureDetector(
+                                          child: file != null
+                                              ? Image.file(file!,
+                                                  height: 100, width: 100,fit: BoxFit.cover,)
+                                              : Image.asset(
+                                                  'assets/addphoto1.png',
+                                                  height: 100,
+                                                  width: 100),
+                                          onTap: () {
+                                            if(file == null){
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) =>
+                                                    bottomsheet());
+                                            }
+                                          },
+                                        ),
+                                        Visibility(
+                                          visible: file == null
+                                              ? false
+                                              : true,
+                                          child: Positioned(
+                                              bottom: -5,
+                                              left: 0,
+                                              right: 0,
+                                              child: Container(
+                                                width: 40,
+                                                height: 40,
+                                                margin:  const EdgeInsets.all(2.0),
+                                                child: Card(
+                                                    shape: const CircleBorder(),
+                                                    child: GestureDetector(
+                                                      child: const Icon(
+                                                          Icons.delete,
+                                                          color: Colors.red),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          constanst.imagesList.remove(file);
+                                                          file = null;
+                                                        });
+                                                      },
+                                                    )),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      _color7 = Colors.red;
-                                    } else {
-
-                                    }
-                                    return null;
-                                  },
-                                  onFieldSubmitted: (value) {
-                                    if (value.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              'Please Add Your Product Description');
-                                      _color7 = Colors.red;
-                                      setState(() {});
-                                    } else if (value.isNotEmpty) {
-                                      setState(() {});
-                                    }
-                                  },
-                                ),
-                              ),
-                              Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin:
-                                      const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 5.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          GestureDetector(
-                                            child: _imagefiles != null
-                                                ? Image.file(file!,
-                                                    height: 100, width: 100)
-                                                : Image.asset(
-                                                    'assets/addphoto1.png',
-                                                    height: 100,
-                                                    width: 100),
-                                            onTap: () {
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      bottomsheet());
-                                            },
-                                          ),
-                                          Visibility(
-                                            visible: _imagefiles == null
-                                                ? false
-                                                : true,
-                                            child: Positioned(
-                                                bottom: -5,
-                                                left: 25,
-                                                child: Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  margin:  const EdgeInsets.all(2.0),
-                                                  child: Card(
-
-                                                      shape: const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _imagefiles = null;
-                                                            constanst.imagesList
-                                                                .remove(
-                                                                    _imagefiles);
-                                                          });
-                                                        },
-                                                      )),
-                                                )),
-                                          )
-                                        ],
-                                      ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                      Stack(
-                                        children: [
-                                          GestureDetector(
-                                            child: _imagefiles1 != null
-                                                ? Image.file(file1!,
-                                                height: 100, width: 100)
-                                                : Image.asset(
-                                                'assets/addphoto1.png',
-                                                height: 100,
-                                                width: 100),
-                                            onTap: () {
-
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      bottomsheet1());
-                                            },
-                                          ),
-                                          Visibility(
-                                            visible: _imagefiles1 == null
-                                                ? false
-                                                : true,
-                                            child: Positioned(
-                                                bottom: -5,
-                                                left: 25,
-                                                child: Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  margin:  const EdgeInsets.all(2.0),
-                                                  child: Card(
-
-                                                      shape: const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _imagefiles1 = null;
-                                                            constanst.imagesList
-                                                                .remove(
-                                                                _imagefiles1);
-                                                          });
-                                                        },
-                                                      )),
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                      Stack(
-                                        children: [
-                                          GestureDetector(
-                                            child: _imagefiles2 != null
-                                                ? Image.file(file2!,
-                                                height: 100, width: 100)
-                                                : Image.asset(
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                    child: Stack(
+                                      children: [
+                                        GestureDetector(
+                                          child: file1 != null
+                                              ? Image.file(file1!,
+                                              height: 100, width: 100,fit: BoxFit.cover,)
+                                              : Image.asset(
                                               'assets/addphoto1.png',
                                               height: 100,
-                                              width: 100,
-                                            ),
-                                            onTap: () {
-
-                                              showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      bottomsheet2());
-                                            },
-                                          ),
-                                          Visibility(
-                                              visible: _imagefiles2 == null
-                                                  ? false
-                                                  : true,
-                                              child: Positioned(
-                                                bottom: -10,
-                                                left: 30,
-                                                child: SizedBox(
-                                                  width: 40,
-                                                  height: 40,
-
-                                                  child: Card(
-
-                                                      shape:
-                                                      const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _imagefiles2 = null;
-                                                            constanst.imagesList
-                                                                .remove(
-                                                                _imagefiles2);
-                                                          });
-                                                        },
-                                                      )),
-                                                ),
-                                              ))
-                                        ],
-                                      ),
-                                    ],
-                                  )),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  vaild_data();
-                                },
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(width: 1),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      color: const Color.fromARGB(255, 0, 91, 148)),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      place ??= Prediction(
-                                          description: _loc.text, placeId: "0");
-
-                                      List<String> list = place.description
-                                          .toString()
-                                          .split(",");
-
-                                      list.length == 1
-                                          ? country = list[0].toString()
-                                          : country = '';
-                                      list.length == 2
-                                          ? state = list[0].toString()
-                                          : state = '';
-                                      list.length == 2
-                                          ? country = list[1].toString()
-                                          : country = '';
-
-                                      if (list.length == 3) {
-                                        country = list.last.toString();
-                                        city = list[0].toString();
-                                        state = list[1].toString();
-                                      }
-                                      if (list.length == 4) {
-                                        country = list.last.toString();
-                                        city = list.first.toString();
-                                        state = list[2].toString();
-                                      }
-                                      if (list.length == 5) {
-                                        country = list.last.toString();
-                                        city = list.first.toString();
-                                        state = list[3].toString();
-                                      }
-
-
-                                      if (_formKey.currentState!.validate()) {
-
-                                      }
-                                      setState(() {
-                                        vaild_data();
-                                      });
-                                    },
-                                    child: const Text('Publish',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 19,
-                                            color: Colors.white)),
+                                              width: 100),
+                                          onTap: () {
+                                            if(file1 == null){
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) =>
+                                                    bottomsheet1());}
+                                          },
+                                        ),
+                                        Visibility(
+                                          visible: file1 == null
+                                              ? false
+                                              : true,
+                                          child: Positioned(
+                                              bottom: -5,
+                                              left: 25,
+                                              child: Container(
+                                                width: 40,
+                                                height: 40,
+                                                margin:  const EdgeInsets.all(2.0),
+                                                child: Card(
+                                                    shape: const CircleBorder(),
+                                                    child: GestureDetector(
+                                                      child: const Icon(
+                                                          Icons.delete,
+                                                          color: Colors.red),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          constanst.imagesList.remove(file1);
+                                                          file1 = null;
+                                                        });
+                                                      },
+                                                    )),
+                                              )),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                    child: Stack(
+                                      children: [
+                                        GestureDetector(
+                                          child: file2 != null
+                                              ? Image.file(file2!,
+                                              height: 100, width: 100,fit: BoxFit.cover,)
+                                              : Image.asset(
+                                            'assets/addphoto1.png',
+                                            height: 100,
+                                            width: 100,
+                                          ),
+                                          onTap: () {
+                                            if(file2 == null){
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) =>
+                                                    bottomsheet2());}
+                                          },
+                                        ),
+                                        Visibility(
+                                            visible: file2 == null
+                                                ? false
+                                                : true,
+                                            child: Positioned(
+                                              bottom: -10,
+                                              left: 30,
+                                              child: SizedBox(
+                                                width: 40,
+                                                height: 40,
+                                                child: Card(
+                                                    shape:
+                                                    const CircleBorder(),
+                                                    child: GestureDetector(
+                                                      child: const Icon(
+                                                          Icons.delete,
+                                                          color: Colors.red),
+                                                      onTap: () {
+                                                        setState(() {
+                                                          constanst.imagesList.remove(file2);
+                                                          file2 = null;
+                                                        });
+                                                      },
+                                                    )),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          const SizedBox(
+                            height: 20,
                           ),
-                  ),
-                ),
-              )
-            ],
-          ),
+                          GestureDetector(
+                            onTap: () {
+                              print("imageList:-${constanst.imagesList}");
+                              //vaild_data();
+                            },
+                            child: Container(
+                              width:
+                                  MediaQuery.of(context).size.width * 0.9,
+                              decoration: BoxDecoration(
+                                  border: Border.all(width: 1),
+                                  borderRadius: BorderRadius.circular(50.0),
+                                  color: const Color.fromARGB(255, 0, 91, 148)),
+                              child: TextButton(
+                                onPressed: () {
+                                  place ??= Prediction(
+                                      description: _loc.text, placeId: "0");
+
+                                  List<String> list = place.description
+                                      .toString()
+                                      .split(",");
+
+                                  list.length == 1
+                                      ? country = list[0].toString()
+                                      : country = '';
+                                  list.length == 2
+                                      ? state = list[0].toString()
+                                      : state = '';
+                                  list.length == 2
+                                      ? country = list[1].toString()
+                                      : country = '';
+
+                                  if (list.length == 3) {
+                                    country = list.last.toString();
+                                    city = list[0].toString();
+                                    state = list[1].toString();
+                                  }
+                                  if (list.length == 4) {
+                                    country = list.last.toString();
+                                    city = list.first.toString();
+                                    state = list[2].toString();
+                                  }
+                                  if (list.length == 5) {
+                                    country = list.last.toString();
+                                    city = list.first.toString();
+                                    state = list[3].toString();
+                                  }
+
+
+                                  if (_formKey.currentState!.validate()) {
+
+                                  }
+                                  setState(() {
+                                    print("imageList1:-${constanst.imagesList}");
+                                    vaild_data();
+                                  });
+                                },
+                                child: const Text('Publish',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 19,
+                                        color: Colors.white)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -1400,7 +1365,6 @@ class _AddPostState extends State<AddPost> {
       _prodnm.text.toString(),
       constanst.select_cat_id,
     );
-
     if (res['status'] == 1) {
       Fluttertoast.showToast(msg: res['message']);
       clear_data();
@@ -1458,14 +1422,15 @@ class _AddPostState extends State<AddPost> {
   }
 
   void takephoto(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles = pickedfile!;
-      file = await _cropImage(imagefile: io.File(_imagefiles!.path));
-      constanst.imagesList.add(file!);
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
+     // _imagefiles = pickedfile;
+      if(pickedfile != null && pickedfile.path != null){
+      file = await _cropImage(imagefile: io.File(pickedfile.path));
+      if(file != null){
+        constanst.imagesList.add(file!);
+      }
+      }
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage({required io.File imagefile}) async {
@@ -1479,7 +1444,6 @@ class _AddPostState extends State<AddPost> {
                 toolbarTitle: 'Cropper',
                 toolbarColor: const Color.fromARGB(255, 0, 91, 148),
                 toolbarWidgetColor: Colors.white,
-
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
             IOSUiSettings(
@@ -1550,14 +1514,14 @@ class _AddPostState extends State<AddPost> {
   }
 
   void takephoto1(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles1 = pickedfile!;
-      file1 = await _cropImage1(imagefile: io.File(_imagefiles1!.path));
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
+      //_imagefiles1 = pickedfile;
+      if(pickedfile != null && pickedfile.path != null){
+      file1 = await _cropImage1(imagefile: io.File(pickedfile.path));
+      if(file1 != null){
       constanst.imagesList.add(file1!);
+      }}
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage1({required io.File imagefile}) async {
@@ -1632,14 +1596,15 @@ class _AddPostState extends State<AddPost> {
   }
 
   void takephoto2(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles2 = pickedfile!;
-      file2 = await _cropImage2(imagefile: io.File(_imagefiles2!.path));
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
+     // _imagefiles2 = pickedfile;
+      if(pickedfile != null && pickedfile.path != null){
+      file2 = await _cropImage2(imagefile: io.File(pickedfile.path));
+      if(file2 != null){
       constanst.imagesList.add(file2!);
+      }
+      }
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage2({required io.File imagefile}) async {
@@ -1685,7 +1650,7 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             dropdownColor: Colors.white,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
@@ -1699,7 +1664,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1725,7 +1690,7 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             dropdownColor: Colors.white,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
@@ -1739,7 +1704,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1764,7 +1729,7 @@ class _AddPostState extends State<AddPost> {
                     fontSize: 14.0,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             dropdownColor: Colors.white,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 40,
@@ -1778,7 +1743,7 @@ class _AddPostState extends State<AddPost> {
                           fontSize: 15.0,
                           fontWeight: FontWeight.w400,
                           color: Colors.black,
-                          fontFamily: 'assets\fonstMetropolis-Black.otf')));
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')));
             }).toList(),
             onChanged: (value) {
               setState(() {
@@ -1803,12 +1768,12 @@ class _AddPostState extends State<AddPost> {
       setState(() {});
     }
 
-    if (_prodnm.text.isEmpty) {
+    if (category1 == false) {
+      Fluttertoast.showToast(msg: 'Please Select Sale Post or Buy Post');
+    } else if (_prodnm.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please Add Your Product Name');
       _color1 = Colors.red;
       setState(() {});
-    } else if (category1 == false) {
-      Fluttertoast.showToast(msg: 'Please Select Sale Post or Buy Post');
     } else if (_prodnm.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please Add Your Product Name');
       _color1 = Colors.red;
@@ -2229,15 +2194,13 @@ class _selectcolorState extends State<selectcolor> {
                     fontSize: 17.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
           const SizedBox(height: 5),
 
 
           FutureBuilder(
-
-
-
+              future: constanst.color_data!,
               builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
@@ -2304,7 +2267,7 @@ class _selectcolorState extends State<selectcolor> {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonstMetropolis-Black.otf')),
+                                        'assets/fonst/Metropolis-Black.otf')),
                             leading: IconButton(
                                 icon: constanst.colorsitemsCheck[index] ==
                                         Icons.circle_outlined
@@ -2373,7 +2336,7 @@ class _selectcolorState extends State<selectcolor> {
                       fontSize: 19.0,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             ),
           ),
         ],
@@ -2405,20 +2368,46 @@ class _selectcategoryState extends State<selectcategory> {
             height: 5,
           ),
           const SizedBox(height: 5),
-          const Center(
-            child: Text('Select Product Category',
-                style: TextStyle(
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+          Row(
+            children: [
+              Expanded(child: Container(),),
+              const Text('Select Product Category',
+                  style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+              Expanded(child: Container(),),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.21,
+                height: 40,
+                margin:  const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 1),
+                    borderRadius: BorderRadius.circular(50.0),
+                    color: const Color.fromARGB(255, 0, 91, 148)),
+                child: TextButton(
+                  onPressed: () {
+                    if (constanst.select_cat_name != "") {
+                      Navigator.pop(context, constanst.Product_color);
+                    } else {
+                      Fluttertoast.showToast(msg: 'Select Minimum 1 Category ');
+                    }
+                  },
+                  child: const Text('Update',
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 5),
 
-
-          FutureBuilder(
-
-
+          FutureBuilder <List<cat.Result>?>(
+              future: constanst.cat_data,
               builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
@@ -2468,7 +2457,7 @@ class _selectcategoryState extends State<selectcategory> {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonstMetropolis-Black.otf')),
+                                        'assets/fonst/Metropolis-Black.otf')),
                             leading: IconButton(
                                 icon: constanst.select_cat_idx == index
                                     ? Icon(Icons.check_circle,
@@ -2523,7 +2512,7 @@ class _selectcategoryState extends State<selectcategory> {
                       fontSize: 19.0,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             ),
           ),
         ],
@@ -2562,12 +2551,12 @@ class _selectTypeState extends State<selectType> {
                     fontSize: 17.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
           const SizedBox(height: 5),
 
-          FutureBuilder(
-
+          FutureBuilder<List<type.Result>?>(
+              future: constanst.cat_typedata!,
               builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
@@ -2616,7 +2605,7 @@ class _selectTypeState extends State<selectType> {
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                     fontFamily:
-                                        'assets\fonstMetropolis-Black.otf')),
+                                        'assets/fonst/Metropolis-Black.otf')),
                             leading: IconButton(
                                 icon: constanst.select_type_idx == index
                                     ? Icon(Icons.check_circle,
@@ -2670,7 +2659,7 @@ class _selectTypeState extends State<selectType> {
                       fontSize: 19.0,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             ),
           ),
         ],
@@ -2708,11 +2697,12 @@ class _selectGradeState extends State<selectGrade> {
                     fontSize: 17.0,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
-                    fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                    fontFamily: 'assets/fonst/Metropolis-Black.otf')),
           ),
           const SizedBox(height: 5),
 
-          FutureBuilder(
+          FutureBuilder<List<grade.Result>?>(
+           future: constanst.cat_gradedata,
               builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
@@ -2759,7 +2749,7 @@ class _selectGradeState extends State<selectGrade> {
                               fontSize: 17.0,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                              fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                       leading: IconButton(
                         icon: constanst.Grade_itemsCheck[index] !=
                                 Icons.circle_outlined
@@ -2820,7 +2810,7 @@ class _selectGradeState extends State<selectGrade> {
                       fontSize: 19.0,
                       fontWeight: FontWeight.w800,
                       color: Colors.white,
-                      fontFamily: 'assets\fonstMetropolis-Black.otf')),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             ),
           ),
         ],

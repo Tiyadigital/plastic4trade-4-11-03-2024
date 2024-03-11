@@ -29,7 +29,9 @@ class FirebaseApi {
   final _localNotification = FlutterLocalNotificationsPlugin();
   late BuildContext _context;
 
-  Future<void> handleBackgroundMessage(RemoteMessage message) async {}
+  Future<void> handleBackgroundMessage(RemoteMessage message) async {
+
+  }
 
   void handleMessage(RemoteMessage message, context) {
     _context = context;
@@ -61,7 +63,8 @@ class FirebaseApi {
       final notification = message.notification;
       Fluttertoast.showToast(
           timeInSecForIosWeb: 2,
-          msg: 'notification.title${notification!.title.toString()}');
+          msg: 'notification.title${notification!.title.toString()}',
+      );
       if (notification == null) return;
       Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: 'i m notification');
 

@@ -2,6 +2,7 @@ import UIKit
 import Flutter
 import FirebaseCore
 import FirebaseMessaging
+
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
@@ -13,8 +14,9 @@ import FirebaseMessaging
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
   override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-
-     Messaging.messaging().apnsToken = deviceToken
+//   print("Token: \(deviceToken)")
+       Messaging.messaging().apnsToken = deviceToken
+       Messaging.messaging().isAutoInitEnabled = true
      super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
    }
 }

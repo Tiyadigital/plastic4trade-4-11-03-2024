@@ -18,6 +18,8 @@ import '../widget/HomeAppbar.dart';
 import 'package:Plastic4trade/model/getDirectory.dart' as dir;
 import 'package:Plastic4trade/model/GetCategory.dart' as cat;
 
+import 'other_user_profile.dart';
+
 class Directory1 extends StatefulWidget {
   const Directory1({Key? key}) : super(key: key);
 
@@ -362,7 +364,7 @@ class _DirectoryState extends State<Directory1> {
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext).pop();
     });
   }
@@ -372,26 +374,46 @@ class _DirectoryState extends State<Directory1> {
       child: Container(
           padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0),
           width: MediaQuery.of(context).size.width,
-          child: FutureBuilder(builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return ListView.builder(
+          child:
+          // FutureBuilder(
+          //     builder: (context, snapshot) {
+          //   if (snapshot.hasError) {
+          //     return Text('Error: ${snapshot.error}');
+          //   } else {
+          //     return
+                ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: dir_data.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   dir.Result record = dir_data[index];
-
                   return GestureDetector(
-                    onTap: (() {}),
+                    onTap: (() {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) =>
+                              other_user_profile(int.parse(dir_data[index].id.toString()))));
+                    }),
                     child: Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(13.05),
                       ),
                       child: Container(
-                        margin: const EdgeInsets.all(8.0),
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13.05),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x3FA6A6A6),
+                              blurRadius: 16.32,
+                              offset: Offset(0, 3.26),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(8.0),
                         child: Column(children: [
                           SizedBox(
                             height: 75,
@@ -433,12 +455,15 @@ class _DirectoryState extends State<Directory1> {
                                         margin: const EdgeInsets.fromLTRB(
                                             10.0, 2.0, 0, 0),
                                         child: Text(
-                                          record.address.toString(),
+                                          record.address!.length > 35 ?"${record.address!.substring(0,35)}..." : record.address!,
                                           style: const TextStyle(
                                               fontSize: 13.0,
                                               fontWeight: FontWeight.w500,
                                               fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf'),
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ]),
@@ -490,27 +515,32 @@ class _DirectoryState extends State<Directory1> {
                     ),
                   );
                 },
-              );
-            }
-          })),
+              ),
+            //}
+          //}
+        //  )
+     ),
     );
   }
 
   Widget horiztallist() {
     return Container(
       height: 50,
-      color: Colors.white,
-      child: FutureBuilder(builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return ListView.builder(
+      margin: const EdgeInsets.fromLTRB(10.0, 2.0, 0, 0),
+      //color: Colors.white,
+      child:
+      // FutureBuilder(builder: (context, snapshot) {
+      //   if (snapshot.connectionState == ConnectionState.none &&
+      //       snapshot.hasData == null) {
+      //     return const Center(
+      //       child: CircularProgressIndicator(),
+      //     );
+      //   }
+      //   if (snapshot.hasError) {
+      //     return Text('Error: ${snapshot.error}');
+      //   } else {
+      //     return
+            ListView.builder(
               shrinkWrap: false,
               physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -521,6 +551,7 @@ class _DirectoryState extends State<Directory1> {
                   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: Wrap(spacing: 6.0, runSpacing: 6.0, children: <Widget>[
                     ChoiceChip(
+                      color: MaterialStateProperty.all(Colors.white),
                       label: Text(
                         constanst.catdata[index].categoryName.toString(),
                       ),
@@ -557,9 +588,10 @@ class _DirectoryState extends State<Directory1> {
                     )
                   ]),
                 );
-              });
-        }
-      }),
+              }),
+      //   }
+      // }
+      //),
     );
   }
 
@@ -615,7 +647,9 @@ class _DirectoryState extends State<Directory1> {
           dir.Result record = dir.Result(
               userImage: data['username'],
               address: data['address'],
-              userImageUrl: data['user_image_url']);
+              userImageUrl: data['user_image_url'],
+              id: data['id'],
+          );
 
           List<dynamic>? strs = (data["business_type"] as List)
               .map(

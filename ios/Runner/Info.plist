@@ -77,13 +77,16 @@
 	</array>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
-	  <key>FirebaseAppDelegateProxyEnabled</key>
-    <string>NO</string>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+     <key>FirebaseMessagingAutoInitEnabled</key>
+   <string>NO</string>
     <key>UIBackgroundModes</key>
     <array>
         <string>fetch</string>
         <string>remote-notification</string>
     </array>
-
+<key>FLTEnableImpeller</key>
+<false />
 </dict>
 </plist>

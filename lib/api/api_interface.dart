@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:Plastic4trade/utill/constant.dart';
 
+
 String baseurl = 'https://www.plastic4trade.com/api/';
 
 Future login_user(String devicenm, String mbl, String password) async {
@@ -512,6 +513,7 @@ Future getbussinessprofile(String userId, String userToken) async {
   String getmybusinessprofileUrl = 'getmybusinessprofile';
   var res;
 
+  print("user:-${baseurl + getmybusinessprofileUrl}");
   final response = await http.post(Uri.parse(baseurl + getmybusinessprofileUrl),
       headers: {"Accept": "application/json"},
       body: {'userId': userId, 'userToken': userToken});
@@ -581,12 +583,10 @@ Future addBuyPost(
     Uri.parse(baseurl + addbussinessprofileUrl),
   );
   Map<String, String> headers = {"Content-type": "multipart/form-data"};
-  int j = 0;
   for (int i = 0; i < constanst.imagesList.length; i++) {
-    j = j + 1;
     request.files.add(
       http.MultipartFile(
-        'image$j',
+        'image$i',
         constanst.imagesList[i].readAsBytes().asStream(),
         constanst.imagesList[i].lengthSync(),
         filename: constanst.imagesList[i].path,
@@ -930,8 +930,7 @@ Future getbusiness_document_types() async {
 }
 
 Future getSlider(String userId, String apiToken) async {
-  String getsliderlistUrl =
-      'getBannerImage?user_id=$userId&userToken=$apiToken';
+  String getsliderlistUrl = 'getBannerImage';
   var res;
 
   final response = await http.get(Uri.parse(baseurl + getsliderlistUrl));
@@ -992,6 +991,18 @@ Future getHome_Post(
   return res;
 }
 
+Future homePostWithoutLogin() async{
+  String endUrl = "getHomePost_v2?offset=0&category_id='""'&limit=20";
+  var res;
+  final response = await http.get(Uri.parse(baseurl + endUrl));
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+
 // Get Sale Post
 Future getSale_Post(
     String userId,
@@ -1018,6 +1029,17 @@ Future getSale_Post(
   return res;
 }
 
+Future sellPostWithoutLogin() async{
+  String endUrl = "getSalePost_v2?offset=0&category_id='""'&limit=20";
+  var res;
+  final response = await http.get(Uri.parse(baseurl + endUrl));
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
 // Get Buyer Post
 Future getBuyer_Post(
     String userId,
@@ -1037,6 +1059,17 @@ Future getBuyer_Post(
   var res;
 
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
+print("datares:P-${response.body}");
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+}
+
+Future buyPostWithoutLogin() async{
+  String endUrl = "getBuyPost_v2?offset=0&category_id='""'&limit=20";
+  var res;
+  final response = await http.get(Uri.parse(baseurl + endUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -1091,7 +1124,6 @@ Future similar_product_buyer(
   String getpostdatailUrl =
       'relatedpost_for_buy?productId=$productId&limit=$limit&offset=$offset';
   var res;
-
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
 
   if (response.statusCode == 200) {
@@ -1105,12 +1137,12 @@ Future similar_product_saler(
   String getpostdatailUrl =
       'relatedpost_for_sale?productId=$productId&limit=$limit&offset=$offset';
   var res;
-
+  print("similar_product_saler:- ${baseurl + getpostdatailUrl}");
   final response = await http.get(Uri.parse(baseurl + getpostdatailUrl));
-
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
   }
+  print("red:-${res}");
   return res;
 }
 
@@ -1176,10 +1208,12 @@ Future getnewss(String userId, String userToken) async {
 
   var res;
 
+  print("newa:-${baseurl + getsalepostUrl}");
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
+    print("dataSavar:-${res}");
   }
   return res;
 }
@@ -1195,6 +1229,7 @@ Future getQuicknews(String userId, String userToken, String offset) async {
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
   }
+
   return res;
 }
 
@@ -1307,9 +1342,9 @@ Future blog_like(String blogId, String userId, String userToken) async {
 
 Future getFollowerLists(
     String userId, String userToken, String profileId, String search) async {
-  String getfollowerlistUrl =
-      'getFollowerList?userId=$userId&userToken=$userToken&profileId=$profileId&search=$search';
+  String getfollowerlistUrl = 'getFollowerList?userId=$userId&userToken=$userToken&profileId=$profileId&search=$search';
   var res;
+
 
   final response = await http.get(Uri.parse(baseurl + getfollowerlistUrl));
 
@@ -1325,7 +1360,7 @@ Future getOtherUserFollowerLists(
   String getfollowerlistUrl =
       'getFollowerList?userId=$userId&userToken=$userToken&profileId=$profileId';
   var res;
-
+  print("FollowerLists:- ${baseurl + getfollowerlistUrl}");
   final response = await http.get(Uri.parse(baseurl + getfollowerlistUrl));
 
   if (response.statusCode == 200) {
@@ -1340,6 +1375,7 @@ Future getfollwingList(
       'getFollowingList?userId=$userId&userToken=$userToken&profileId=$profileId&search=$search';
   var res;
 
+  print("follwingList:-${baseurl + getsalepostUrl}");
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
   if (response.statusCode == 200) {
@@ -1353,7 +1389,7 @@ Future getOtherUserFollowingList(
   String getsalepostUrl =
       'getFollowingList?userId=$userId&userToken=$userToken&profileId=$profileId';
   var res;
-
+  print("follwingList:-${baseurl + getsalepostUrl}");
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
   if (response.statusCode == 200) {
@@ -1481,28 +1517,50 @@ Future gettutorialvideolist(
   return res;
 }
 
+Future getAllnotification({
+  required String userId,
+  required String userToken,
+  required String offset,
+  required String limit}) async {
+  try{
+  String getallnotificationUrl = 'getallnotification?userId=$userId&limit=$limit&offset=$offset';
+  var res;
+  final response = await http.get(Uri.parse(baseurl + getallnotificationUrl),
+  );
+
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
+  return res;
+  }catch(e){
+    print("getAllnotification:-${e}");
+  }
+}
+
 Future getnotification(String userId, String userToken, String readStatus,
     String offset, String limit) async {
   String getsalepostUrl =
-      'getNotificationlist?userId=$userId&userToken=$userToken&user_type=$readStatus&offset=$offset&limit=$limit';
+      'getNotificationlist?userId=$userId&userToken=$userToken&user_type=1&offset=$offset&limit=$limit';
 
   var res;
-
+print("url:-${baseurl + getsalepostUrl}");
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
   }
+  print("resdata:-$res");
   return res;
 }
 
 Future getadminnotification(String userId, String userToken, String readStatus,
     String offset, String limit) async {
   String getsalepostUrl =
-      'getadminNotificationlist?userId=$userId&userToken=$userToken&user_type=$readStatus&offset=$offset&limit=$limit';
+      'getadminNotificationlist?userId=$userId&userToken=$userToken&user_type=0&offset=$offset&limit=$limit';
 
   var res;
 
+  print("");
   final response = await http.get(Uri.parse(baseurl + getsalepostUrl));
 
   if (response.statusCode == 200) {
@@ -1541,9 +1599,9 @@ Future add_contact(
   var res;
 
   final response =
-      await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
-    "Accept": "application/json"
-  }, body: {
+      await http.post(Uri.parse(baseurl + getsalepostUrl),
+          headers: {"Accept": "application/json"},
+          body: {
     'userId': userid,
     'userToken': userToken,
     'feedback': feedback,
@@ -1694,8 +1752,7 @@ Future exbitionlike_like(String exId, String userId, String userToken) async {
 }
 
 Future getexbitiondetail(String userId, String userToken, String exId) async {
-  String getsalepostUrl =
-      'exhibitiondetail?userId=$userId&userToken=$userToken&ex_id=$exId';
+  String getsalepostUrl = 'exhibitiondetail?userId=$userId&userToken=$userToken&ex_id=$exId';
 
   var res;
 
@@ -2183,6 +2240,7 @@ Future get_exhibitor(
       'getexhibitor?offset=$offset&limit=20&category_id=$categoryId&grade_id=$gradeId&type_id=$typeId&businesstype_id=$businesstypeId&post_type=$postType&latitude=$latitude&longitude=$longitude&search=$search';
   var res;
 
+  print("¸ˇ:-${baseurl + gethomepostUrl}");
   final response = await http.get(Uri.parse(baseurl + gethomepostUrl));
 
   if (response.statusCode == 200) {
@@ -2191,42 +2249,31 @@ Future get_exhibitor(
   return res;
 }
 
-Future updateBusinessVerification(
-    String userId,
-    String userToken,
-    String registrationDate,
-    String panNumber,
-    String exportImportNumber,
-    String premises,
-    String gstTaxVat,
-    String currency_20_21,
-    String amount_20_21,
-    String currency_21_22,
-    String amount_21_22,
-    String currency_22_23,
-    String amount_22_23,
-    String docType,
-    String productionCapacity,
-    File? file) async {
+Future updateBusinessVerification({
+  required String userId,
+  required String userToken,
+  required String registrationDate,
+  required String panNumber,
+  required String exportImportNumber,
+  required String premises,
+  required String gstTaxVat,
+  required String currency_20_21,
+  required String amount_20_21,
+  required String currency_21_22,
+  required String amount_21_22,
+  required String currency_22_23,
+  required String amount_22_23,
+  required String docType,
+  required String productionCapacity,
+  //File? file,
+  required List<File> filesList,
+  required String selectFilesLables,
+}) async {
   var res;
   try {
     String addbussinessprofileUrl = 'updateBusinessVerification';
-
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(baseurl + addbussinessprofileUrl),
-    );
+    var request = http.MultipartRequest('POST', Uri.parse(baseurl + addbussinessprofileUrl),);
     Map<String, String> headers = {"Content-type": "multipart/form-data"};
-    if (file != null) {
-      request.files.add(
-        http.MultipartFile(
-          'document',
-          file.readAsBytes().asStream(),
-          file.lengthSync(),
-          filename: file.path,
-        ),
-      );
-    }
     request.headers.addAll(headers);
     request.fields.addAll({
       'userId': userId,
@@ -2244,20 +2291,28 @@ Future updateBusinessVerification(
       'amount_22_23': amount_22_23,
       'doc_type': docType,
       'production_capacity': productionCapacity,
+      if(selectFilesLables.isNotEmpty) 'doc_types' : selectFilesLables,
     });
-
+    if (filesList.isNotEmpty) {
+      for(int i=0; i<filesList.length;i++){
+      request.files.add(
+          await http.MultipartFile.fromPath(
+         'documents[$i]', filesList[i].path));
+      }
+    }
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
-
     if (response.statusCode == 200) {
       res = jsonDecode(response.body);
     }
+    print("rrs:-${response.body}");
   } catch (e) {
     rethrow;
   }
 
   return res;
 }
+
 
 Future get_productname() async {
   String gethomepostUrl = 'getProductName';
@@ -2405,6 +2460,10 @@ Future getbusinessprofileDetail(
   String getpostdatailUrl = 'getbusinessprofileDetail';
   var res;
 
+  print("profile:-${baseurl + getpostdatailUrl}");
+  print("profile:-${userId}");
+  print("profile:-${apiToken}");
+  print("profile:-${profileId}");
   final response = await http.post(Uri.parse(baseurl + getpostdatailUrl),
       body: {'userId': userId, 'userToken': apiToken, 'profile_id': profileId});
 
@@ -2454,12 +2513,17 @@ Future addReview(String userId, String userToken, String profileId,
   return res;
 }
 
-Future Getcomment(String profileid, String offset, String limit) async {
+Future Getcomment({
+  required String profileid,
+  required String offset,
+  required String limit,
+required String userId,
+required String userToken}) async {
   String getpostdatailUrl = 'getprofilereview';
   var res;
 
   final response = await http.post(Uri.parse(baseurl + getpostdatailUrl),
-      body: {'profile_id': profileid, 'offset': offset, 'limit': limit});
+      body: {'profile_id': profileid, 'offset': offset, 'limit': limit,'user_id' : userId, 'userToken' : userToken});
 
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
@@ -2472,8 +2536,7 @@ Future addReply(String userId, String userToken, String commentId,
   String gethomepostUrl = 'addprofilesubcomment';
   var res;
 
-  final response =
-      await http.post(Uri.parse(baseurl + gethomepostUrl), headers: {
+  final response = await http.post(Uri.parse(baseurl + gethomepostUrl), headers: {
     "Accept": "application/json"
   }, body: {
     'user_id': userId,
@@ -2486,6 +2549,7 @@ Future addReply(String userId, String userToken, String commentId,
   if (response.statusCode == 200) {
     res = jsonDecode(response.body);
   }
+  print("Datar:-${res}");
   return res;
 }
 
@@ -2565,5 +2629,20 @@ Future deleteAccount(userId, userToken) async {
     res = jsonDecode(response.body);
   }
 
+  return res;
+}
+
+Future getPremiumPlan(String userid, String userToken,) async {
+  String getsalepostUrl = 'getallplan';
+  var res;
+  final response = await http.post(Uri.parse(baseurl + getsalepostUrl), headers: {
+    "Accept": "application/json"
+  }, body: {
+    'user_id': userid,
+    'userToken': userToken,
+  });
+  if (response.statusCode == 200) {
+    res = jsonDecode(response.body);
+  }
   return res;
 }

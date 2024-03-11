@@ -75,13 +75,14 @@ class _UpdatePOstState extends State<UpdatePOst> {
   final Color _color12 = Colors.grey;
 
   final _formKey = GlobalKey<FormState>();
-  PickedFile? _imagefiles, _imagefiles1, _imagefiles2;
-  io.File? file, file1, file2, mainfile;
+  //PickedFile? _imagefiles, _imagefiles1, _imagefiles2;
+  io.File? file, file1, file2;
   bool? _isloading = false;
   String notiId = "",
       main_product = "",
       main_product1 = "",
       main_product2 = "",
+      image_id = "",
       image1_id = "",
       image2_id = "";
   CommonPostdetail? commonPostdetail;
@@ -161,1144 +162,1239 @@ class _UpdatePOstState extends State<UpdatePOst> {
 
   @override
   Widget build(BuildContext context) {
-    return initwidget(context);
-  }
-
-  Widget initwidget(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              SafeArea(
-                top: true,
-                left: true,
-                right: true,
-                maintainBottomViewPadding: true,
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: _isloading == false
-                        ? Center(
-                            child: Platform.isAndroid
-                                ? const CircularProgressIndicator(
-                                    value: null,
-                                    strokeWidth: 2.0,
-                                    color: Color.fromARGB(255, 0, 91, 148),
-                                  )
-                                : Platform.isIOS
-                                    ? const CupertinoActivityIndicator(
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                        radius: 20,
-                                        animating: true,
-                                      )
-                                    : Container(),
-                          )
-                        : Column(
-                            children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    child: Image.asset('assets/back.png',
-                                        height: 50, width: 60),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      clear_data();
-                                    },
-                                  ),
-                                  const SizedBox(
-                                    width: 80.0,
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      'Update Post',
-                                      style: const TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(fontSize: 20.0),
-                                    ),
-                                  )
-                                ],
+      body: SafeArea(
+        top: true,
+        left: true,
+        right: true,
+        maintainBottomViewPadding: true,
+        child: SingleChildScrollView(
+          child: _isloading == false
+              ? Center(
+                  child: Platform.isAndroid
+                      ? const CircularProgressIndicator(
+                          value: null,
+                          strokeWidth: 2.0,
+                          color: Color.fromARGB(255, 0, 91, 148),
+                        )
+                      : Platform.isIOS
+                          ? const CupertinoActivityIndicator(
+                              color: Color.fromARGB(255, 0, 91, 148),
+                              radius: 20,
+                              animating: true,
+                            )
+                          : Container(),
+                )
+              : Column(
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                          child: Image.asset('assets/back.png',
+                              height: 50, width: 60),
+                          onTap: () {
+                            Navigator.pop(context);
+                            clear_data();
+                          },
+                        ),
+                        const SizedBox(
+                          width: 80.0,
+                        ),
+                        Center(
+                          child: Text(
+                            'Update Post',
+                            style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(fontSize: 20.0),
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(
+                          25.0, 10.0, 25.0, 5.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'You’re like to do?',
+                                style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontFamily:
+                                            'assets/fonst/Metropolis-Black.otf')
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black38),
                               ),
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(
-                                    25.0, 10.0, 25.0, 5.0),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'You’re like to do?',
-                                        style: const TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf')
-                                            .copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black38),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: 120,
+                                    child: Row(
                                       children: [
-                                        GestureDetector(
-                                          child: SizedBox(
-                                            height: 30,
-                                            width: 120,
-                                            child: Row(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    GestureDetector(
-                                                      child: sampleData1.first
-                                                                  .isSelected ==
-                                                              true
-                                                          ? Icon(
-                                                              Icons
-                                                                  .check_circle,
-                                                              color: Colors
-                                                                  .green
-                                                                  .shade600)
-                                                          : const Icon(
-                                                              Icons
-                                                                  .circle_outlined,
-                                                              color: Colors
-                                                                  .black38),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          /* sampleData1.first
-                                                              .isSelected = true;
-                                                          type_post = 'BuyPost';
-                                                          sampleData1.last
-                                                              .isSelected = false;
-                                                          category1 = true;*/
-                                                        });
-                                                      },
-                                                    ),
-                                                    Text(
-                                                      sampleData1
-                                                          .first.buttonText,
-                                                      style: const TextStyle(
-                                                              fontSize: 13.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              fontSize: 17),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                        Row(
+                                          children: [
+                                            GestureDetector(
+                                              child: sampleData1.first
+                                                          .isSelected ==
+                                                      true
+                                                  ? Icon(
+                                                      Icons
+                                                          .check_circle,
+                                                      color: Colors
+                                                          .green
+                                                          .shade600)
+                                                  : const Icon(
+                                                      Icons
+                                                          .circle_outlined,
+                                                      color: Colors
+                                                          .black38),
+                                              onTap: () {
+                                                setState(() {
+                                                  /* sampleData1.first
+                                                      .isSelected = true;
+                                                  type_post = 'BuyPost';
+                                                  sampleData1.last
+                                                      .isSelected = false;
+                                                  category1 = true;*/
+                                                });
+                                              },
                                             ),
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              sampleData1.first.isSelected =
-                                                  true;
-                                              sampleData1.last.isSelected =
-                                                  false;
-                                              category1 = true;
-                                              type_post =
-                                                  sampleData1.first.buttonText;
-                                            });
-                                          },
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              sampleData1.last.isSelected =
-                                                  true;
-                                              sampleData1.first.isSelected =
-                                                  false;
-                                              category1 = true;
-                                              type_post =
-                                                  sampleData1.last.buttonText;
-                                            });
-                                          },
-                                          child: SizedBox(
-                                            width: 150,
-                                            height: 30,
-                                            child: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  child: sampleData1.last
-                                                              .isSelected ==
-                                                          true
-                                                      ? Icon(Icons.check_circle,
-                                                          color: Colors
-                                                              .green.shade600)
-                                                      : const Icon(
-                                                          Icons.circle_outlined,
-                                                          color:
-                                                              Colors.black38),
-                                                  onTap: () {
-                                                    setState(() {});
-                                                  },
-                                                ),
-                                                Text(
-                                                  sampleData1.last.buttonText,
-                                                  style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.black,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf')
-                                                      .copyWith(fontSize: 17),
-                                                )
-                                              ],
-                                            ),
-                                          ),
+                                            Text(
+                                              sampleData1
+                                                  .first.buttonText,
+                                              style: const TextStyle(
+                                                      fontSize: 13.0,
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .w500,
+                                                      color:
+                                                          Colors.black,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                      fontSize: 17),
+                                            )
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: SizedBox(
-                                  height: 55,
-                                  child: TypeAheadField<String>(
-                                    textFieldConfiguration:
-                                        TextFieldConfiguration(
-                                      controller: _prodnm,
-                                      style: const TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                          fontFamily:
-                                              'assets/fonst/Metropolis-Black.otf'),
-                                      onChanged: (value) {
-                                        if (value.isEmpty) {
-                                          Fluttertoast.showToast(
-                                              timeInSecForIosWeb: 2,
-                                              msg:
-                                                  'Please Add Your Product Name');
-                                          _color1 = Colors.red;
-                                        } else {}
-                                      },
-                                      onSubmitted: (value) {
-                                        if (value.isEmpty) {
-                                          _color1 = Colors.red;
-                                          setState(() {});
-                                        } else if (value.isNotEmpty) {
-                                          _color1 = Colors.green.shade600;
-                                          setState(() {});
-                                        }
-                                      },
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      keyboardType: TextInputType.name,
-                                      decoration: InputDecoration(
-                                        hintText: "Product Name *",
-                                        hintStyle: const TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf')
-                                            .copyWith(color: Colors.grey),
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color1),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color1),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 1, color: _color1),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                      ),
-                                    ),
-                                    suggestionsCallback: (pattern) {
-                                      return _getSuggestions(pattern);
-                                    },
-                                    itemBuilder: (context, suggestion) {
-                                      return ListTile(
-                                        title: Text(
-                                          suggestion,
-                                          style: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf'),
-                                        ),
-                                      );
-                                    },
-                                    onSuggestionSelected: (suggestion) {
-                                      _prodnm.text = suggestion;
-                                      _color1 = Colors.green.shade600;
-                                      setState(() {});
-                                    },
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_cate,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      hintText: "Product Category*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color2),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color2),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color2),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                    onTap: () {},
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            timeInSecForIosWeb: 2,
-                                            msg:
-                                                'Please Your Product Category');
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_type,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      hintText: "Product Type *",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color3),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color3),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color3),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      Viewtype(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            timeInSecForIosWeb: 2,
-                                            msg:
-                                                'Please Your Product Category');
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prod_grade,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      hintText: "Product Grade*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color4),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color4),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color4),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      Viewgrade(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        _color4 = Colors.red;
-                                        Fluttertoast.showToast(
-                                            timeInSecForIosWeb: 2,
-                                            msg:
-                                                'Please Your Product Category');
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Container(
-                                height: 62,
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 10.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: _color8),
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.9,
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _prodprice,
-                                        keyboardType: TextInputType.number,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"\d"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(5)
-                                        ],
-                                        decoration: const InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: 'Price *',
-                                            hintStyle: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.grey,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf'),
-                                            border: InputBorder.none),
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                          } else {}
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            setState(() {});
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            setState(() {});
-                                          } else {
-                                            setState(() {});
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    const VerticalDivider(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                    Unit_dropdown(constanst.unitdata, "Unit"),
-                                    const VerticalDivider(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                    rupess_dropdown(listrupes, 'Currency'),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 62,
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.fromLTRB(
-                                    25.0, 0.0, 25.0, 5.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: _color10),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.7,
-                                      padding: const EdgeInsets.only(
-                                          top: 3, bottom: 3.0, left: 2.0),
-                                      child: TextFormField(
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        controller: _prodqty,
-                                        keyboardType: TextInputType.number,
-                                        style: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                            RegExp(r"\d"),
-                                          ),
-                                          LengthLimitingTextInputFormatter(5)
-                                        ],
-                                        decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            hintText: 'Qty *',
-                                            hintStyle: const TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Colors.grey,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(height: 2),
-                                            border: InputBorder.none),
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                          } else {}
-                                          return null;
-                                        },
-                                        onChanged: (value) {
-                                          if (value.isEmpty) {
-                                            setState(() {});
-                                          }
-                                        },
-                                        onFieldSubmitted: (value) {
-                                          if (value.isEmpty) {
-                                            setState(() {});
-                                          } else {
-                                            setState(() {});
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    const VerticalDivider(
-                                      width: 1,
-                                      color: Colors.black38,
-                                    ),
-                                    Unit_dropdown1(constanst.unitdata, 'Unit')
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                    controller: _prodcolor,
-                                    keyboardType: TextInputType.text,
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    readOnly: true,
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      hintText: "Color*",
-                                      hintStyle: const TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                              fontFamily:
-                                                  'assets/fonst/Metropolis-Black.otf')
-                                          .copyWith(color: Colors.grey),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      suffixIcon: const Icon(
-                                          Icons.arrow_drop_down_sharp),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color5),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color5),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: _color5),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      ViewItem(context);
-                                    },
-                                    onFieldSubmitted: (value) {
-                                      if (value.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            timeInSecForIosWeb: 2,
-                                            msg: 'Please Your Color');
-                                        _color5 = Colors.red;
-                                        setState(() {});
-                                      } else if (value.isNotEmpty) {
-                                        setState(() {});
-                                      }
-                                    }),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 5.0),
-                                child: TextFormField(
-                                  controller: _loc,
-                                  readOnly: true,
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf'),
-                                  onTap: () async {
-                                    var place = await PlacesAutocomplete.show(
-                                        context: context,
-                                        apiKey: googleApikey,
-                                        mode: Mode.overlay,
-                                        types: ['(cities)'],
-                                        strictbounds: false,
-                                        onError: (err) {});
-
-                                    if (place != null) {
-                                      setState(() {
-                                        location = place.description.toString();
-
-                                        List<String> list = place.description
-                                            .toString()
-                                            .split(",");
-                                        list.length == 1
-                                            ? country = list[0].toString()
-                                            : country = '';
-                                        list.length == 2
-                                            ? state = list[0].toString()
-                                            : state = '';
-                                        list.length == 2
-                                            ? country = list[1].toString()
-                                            : country = '';
-
-                                        if (list.length == 3) {
-                                          country = list.last.toString();
-                                          city = list[0].toString();
-                                          state = list[1].toString();
-                                        }
-                                        if (list.length == 4) {
-                                          country = list.last.toString();
-                                          city = list.first.toString();
-                                          state = list[2].toString();
-                                        }
-                                        if (list.length == 5) {
-                                          country = list.last.toString();
-                                          city = list.first.toString();
-                                          state = list[3].toString();
-                                        }
-
-                                        _loc.text = location;
-                                        _color5 = Colors.green.shade600;
-
-                                        setState(() {});
-                                      });
-
-                                      final plist = GoogleMapsPlaces(
-                                        apiKey: googleApikey,
-                                        apiHeaders:
-                                            await const GoogleApiHeaders()
-                                                .getHeaders(),
-                                      );
-                                      String placeid = place.placeId ?? "0";
-                                      final detail = await plist
-                                          .getDetailsByPlaceId(placeid);
-
-                                      final geometry = detail.result.geometry!;
-                                      lat = geometry.location.lat;
-
-                                      log = geometry.location.lng;
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    hintText: "Location/ Address / City",
-                                    hintStyle: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf')
-                                        .copyWith(color: Colors.grey),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color6),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color6),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color6),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                  onFieldSubmitted: (value) {
-                                    if (value.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          timeInSecForIosWeb: 2,
-                                          msg: 'Please Your Location');
-                                      setState(() {
-                                        _color6 = Colors.red;
-                                      });
-                                    } else if (value.isNotEmpty) {
-                                      setState(() {
-                                        _color6 = Colors.green.shade600;
-                                      });
-                                    }
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    25.0, 5.0, 25.0, 10.0),
-                                child: TextFormField(
-                                  controller: _proddetail,
-                                  keyboardType: TextInputType.multiline,
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  style: const TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                      fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf'),
-                                  maxLines: 4,
-                                  textInputAction: TextInputAction.done,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    hintText: "Product Description ",
-                                    hintStyle: const TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf')
-                                        .copyWith(color: Colors.grey),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color7),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color7),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(width: 1, color: _color7),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                  onFieldSubmitted: (value) {
-                                    if (value.isEmpty) {
-                                      Fluttertoast.showToast(
-                                          timeInSecForIosWeb: 2,
-                                          msg:
-                                              'Please Your Product Description');
-                                      _color7 = Colors.red;
-                                      setState(() {});
-                                    } else if (value.isNotEmpty) {
-                                      setState(() {});
-                                    }
-                                  },
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: const EdgeInsets.fromLTRB(
-                                    25.0, 0.0, 25.0, 5.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                        child: file != null
-                                            ? Image.network(main_product,
-                                                height: 100, width: 100)
-                                            : Image.file(mainfile!,
-                                                height: 100, width: 100),
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: (context) => bottomsheet(),
-                                          );
-                                        }),
-                                    image1_id.isNotEmpty
-                                        ? Stack(
-                                            children: [
-                                              GestureDetector(
-                                                child: file1 != null
-                                                    ? Image.network(
-                                                        main_product1,
-                                                        height: 100,
-                                                        width: 100)
-                                                    : Image.asset(
-                                                        'assets/addphoto1.png',
-                                                        height: 100,
-                                                        width: 100),
-                                                onTap: () {},
-                                              ),
-                                              Visibility(
-                                                visible: file1 == null
-                                                    ? false
-                                                    : true,
-                                                child: Positioned(
-                                                  bottom: -5,
-                                                  left: 25,
-                                                  child: Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            2.0),
-                                                    child: Card(
-                                                      shape:
-                                                          const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            file1 = null;
-
-                                                            delete_subimage(
-                                                                image1_id);
-                                                            image1_id = "";
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        : Stack(
-                                            children: [
-                                              GestureDetector(
-                                                child: _imagefiles1 != null
-                                                    ? Image.file(file1!,
-                                                        height: 100, width: 100)
-                                                    : Image.asset(
-                                                        'assets/addphoto1.png',
-                                                        height: 100,
-                                                        width: 100),
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        bottomsheet1(),
-                                                  );
-                                                },
-                                              ),
-                                              Visibility(
-                                                visible: _imagefiles1 == null
-                                                    ? false
-                                                    : true,
-                                                child: Positioned(
-                                                  bottom: -5,
-                                                  left: 25,
-                                                  child: Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            2.0),
-                                                    child: Card(
-                                                      shape:
-                                                          const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _imagefiles1 = null;
-                                                            constanst.imagesList
-                                                                .remove(
-                                                                    _imagefiles1);
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                    image2_id.isNotEmpty
-                                        ? Stack(
-                                            children: [
-                                              GestureDetector(
-                                                child: file2 != null
-                                                    ? Image.network(
-                                                        main_product2,
-                                                        height: 100,
-                                                        width: 100)
-                                                    : Image.asset(
-                                                        'assets/addphoto1.png',
-                                                        height: 100,
-                                                        width: 100),
-                                                onTap: () {},
-                                              ),
-                                              Visibility(
-                                                visible: file2 == null
-                                                    ? false
-                                                    : true,
-                                                child: Positioned(
-                                                  bottom: -5,
-                                                  left: 25,
-                                                  child: Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            2.0),
-                                                    child: Card(
-                                                      shape:
-                                                          const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            file2 = null;
-
-                                                            delete_subimage(
-                                                                image2_id);
-                                                            image2_id = "";
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        : Stack(
-                                            children: [
-                                              GestureDetector(
-                                                child: _imagefiles2 != null
-                                                    ? Image.file(file2!,
-                                                        height: 100, width: 100)
-                                                    : Image.asset(
-                                                        'assets/addphoto1.png',
-                                                        height: 100,
-                                                        width: 100),
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        bottomsheet2(),
-                                                  );
-                                                },
-                                              ),
-                                              Visibility(
-                                                visible: _imagefiles2 == null
-                                                    ? false
-                                                    : true,
-                                                child: Positioned(
-                                                  bottom: -5,
-                                                  left: 25,
-                                                  child: Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            2.0),
-                                                    child: Card(
-                                                      shape:
-                                                          const CircleBorder(),
-                                                      child: GestureDetector(
-                                                        child: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red),
-                                                        onTap: () {
-                                                          setState(() {
-                                                            _imagefiles2 = null;
-                                                            constanst.imagesList
-                                                                .remove(
-                                                                    _imagefiles2);
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 1),
-                                  borderRadius: BorderRadius.circular(50.0),
-                                  color: const Color.fromARGB(255, 0, 91, 148),
-                                ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      /*Fluttertoast.showToast(
-                                            msg: "Data Proccess");*/
-                                    }
+                                  onTap: () {
                                     setState(() {
-                                      vaild_data();
+                                      sampleData1.first.isSelected =
+                                          true;
+                                      sampleData1.last.isSelected =
+                                          false;
+                                      category1 = true;
+                                      type_post =
+                                          sampleData1.first.buttonText;
                                     });
                                   },
-                                  child: const Text(
-                                    'Update',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 19,
-                                        color: Colors.white),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      sampleData1.last.isSelected =
+                                          true;
+                                      sampleData1.first.isSelected =
+                                          false;
+                                      category1 = true;
+                                      type_post =
+                                          sampleData1.last.buttonText;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                    width: 150,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          child: sampleData1.last
+                                                      .isSelected ==
+                                                  true
+                                              ? Icon(Icons.check_circle,
+                                                  color: Colors
+                                                      .green.shade600)
+                                              : const Icon(
+                                                  Icons.circle_outlined,
+                                                  color:
+                                                      Colors.black38),
+                                          onTap: () {
+                                            setState(() {});
+                                          },
+                                        ),
+                                        Text(
+                                          sampleData1.last.buttonText,
+                                          style: const TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontWeight:
+                                                      FontWeight.w500,
+                                                  color: Colors.black,
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(fontSize: 17),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: SizedBox(
+                        height: 55,
+                        child: TypeAheadField<String>(
+                          textFieldConfiguration:
+                              TextFieldConfiguration(
+                            controller: _prodnm,
+                            style: const TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                                fontFamily:
+                                    'assets/fonst/Metropolis-Black.otf'),
+                            onChanged: (value) {
+                              if (value.isEmpty) {
+                                Fluttertoast.showToast(
+                                    timeInSecForIosWeb: 2,
+                                    msg:
+                                        'Please Add Your Product Name');
+                                _color1 = Colors.red;
+                              } else {}
+                            },
+                            onSubmitted: (value) {
+                              if (value.isEmpty) {
+                                _color1 = Colors.red;
+                                setState(() {});
+                              } else if (value.isNotEmpty) {
+                                _color1 = Colors.green.shade600;
+                                setState(() {});
+                              }
+                            },
+                            textCapitalization:
+                                TextCapitalization.words,
+                            keyboardType: TextInputType.name,
+                            decoration: InputDecoration(
+                              hintText: "Product Name *",
+                              hintStyle: const TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf')
+                                  .copyWith(color: Colors.grey),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 1, color: _color1),
+                                borderRadius:
+                                    BorderRadius.circular(10.0),
                               ),
-                            ],
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 1, color: _color1),
+                                borderRadius:
+                                    BorderRadius.circular(10.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 1, color: _color1),
+                                borderRadius:
+                                    BorderRadius.circular(10.0),
+                              ),
+                            ),
                           ),
-                  ),
+                          suggestionsCallback: (pattern) {
+                            return _getSuggestions(pattern);
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              title: Text(
+                                suggestion,
+                                style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                              ),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            _prodnm.text = suggestion;
+                            _color1 = Colors.green.shade600;
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: TextFormField(
+                          controller: _prod_cate,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf'),
+                          readOnly: true,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            suffixIcon: const Icon(
+                                Icons.arrow_drop_down_sharp),
+                            hintText: "Product Category*",
+                            hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color2),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color2),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color2),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onTap: () {
+                            Viewproduct(context);
+                          },
+                          onFieldSubmitted: (value) {
+                            if (value.isEmpty) {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 2,
+                                  msg:
+                                      'Please Your Product Category');
+                              setState(() {});
+                            } else if (value.isNotEmpty) {
+                              setState(() {});
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: TextFormField(
+                          controller: _prod_type,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf'),
+                          readOnly: true,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            suffixIcon: const Icon(
+                                Icons.arrow_drop_down_sharp),
+                            hintText: "Product Type *",
+                            hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color3),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color3),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color3),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onTap: () {
+                            Viewtype(context);
+                          },
+                          onFieldSubmitted: (value) {
+                            if (value.isEmpty) {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 2,
+                                  msg:
+                                      'Please Your Product Category');
+                              setState(() {});
+                            } else if (value.isNotEmpty) {
+                              setState(() {});
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: TextFormField(
+                          controller: _prod_grade,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf'),
+                          readOnly: true,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "Product Grade*",
+                            hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon: const Icon(
+                                Icons.arrow_drop_down_sharp),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color4),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color4),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color4),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onTap: () {
+                            Viewgrade(context);
+                          },
+                          onFieldSubmitted: (value) {
+                            if (value.isEmpty) {
+                              _color4 = Colors.red;
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 2,
+                                  msg:
+                                      'Please Your Product Category');
+                              setState(() {});
+                            } else if (value.isNotEmpty) {
+                              setState(() {});
+                            }
+                          }),
+                    ),
+                    Container(
+                      height: 62,
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: _color8),
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width /
+                                2.9,
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: _prodprice,
+                              keyboardType: TextInputType.number,
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                              textInputAction: TextInputAction.next,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r"\d"),
+                                ),
+                                LengthLimitingTextInputFormatter(5)
+                              ],
+                              decoration: const InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  hintText: 'Price *',
+                                  hintStyle: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf'),
+                                  border: InputBorder.none),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                } else {}
+                                return null;
+                              },
+                              onChanged: (value) {
+                                if (value.isEmpty) {
+                                  setState(() {});
+                                }
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isEmpty) {
+                                  setState(() {});
+                                } else {
+                                  setState(() {});
+                                }
+                              },
+                            ),
+                          ),
+                          const VerticalDivider(
+                            width: 1,
+                            color: Colors.black38,
+                          ),
+                          Unit_dropdown(constanst.unitdata, "Unit"),
+                          const VerticalDivider(
+                            width: 1,
+                            color: Colors.black38,
+                          ),
+                          rupess_dropdown(listrupes, 'Currency'),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 62,
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.fromLTRB(
+                          25.0, 0.0, 25.0, 5.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: _color10),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width /
+                                1.7,
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 3.0, left: 2.0),
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              controller: _prodqty,
+                              keyboardType: TextInputType.number,
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'),
+                              textInputAction: TextInputAction.next,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r"\d"),
+                                ),
+                                LengthLimitingTextInputFormatter(5)
+                              ],
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  hintText: 'Qty *',
+                                  hintStyle: const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(height: 2),
+                                  border: InputBorder.none),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                } else {}
+                                return null;
+                              },
+                              onChanged: (value) {
+                                if (value.isEmpty) {
+                                  setState(() {});
+                                }
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isEmpty) {
+                                  setState(() {});
+                                } else {
+                                  setState(() {});
+                                }
+                              },
+                            ),
+                          ),
+                          const VerticalDivider(
+                            width: 1,
+                            color: Colors.black38,
+                          ),
+                          Unit_dropdown1(constanst.unitdata, 'Unit')
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: TextFormField(
+                          controller: _prodcolor,
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf'),
+                          readOnly: true,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "Color*",
+                            hintStyle: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(color: Colors.grey),
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon: const Icon(
+                                Icons.arrow_drop_down_sharp),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color5),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color5),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: _color5),
+                              borderRadius:
+                                  BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onTap: () {
+                            ViewItem(context);
+                          },
+                          onFieldSubmitted: (value) {
+                            if (value.isEmpty) {
+                              Fluttertoast.showToast(
+                                  timeInSecForIosWeb: 2,
+                                  msg: 'Please Your Color');
+                              _color5 = Colors.red;
+                              setState(() {});
+                            } else if (value.isNotEmpty) {
+                              setState(() {});
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 5.0),
+                      child: TextFormField(
+                        controller: _loc,
+                        readOnly: true,
+                        style: const TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontFamily:
+                                'assets/fonst/Metropolis-Black.otf'),
+                        onTap: () async {
+                          var place = await PlacesAutocomplete.show(
+                              context: context,
+                              apiKey: googleApikey,
+                              mode: Mode.overlay,
+                              types: ['(cities)'],
+                              strictbounds: false,
+                              onError: (err) {});
+
+                          if (place != null) {
+                            setState(() {
+                              location = place.description.toString();
+
+                              List<String> list = place.description
+                                  .toString()
+                                  .split(",");
+                              list.length == 1
+                                  ? country = list[0].toString()
+                                  : country = '';
+                              list.length == 2
+                                  ? state = list[0].toString()
+                                  : state = '';
+                              list.length == 2
+                                  ? country = list[1].toString()
+                                  : country = '';
+
+                              if (list.length == 3) {
+                                country = list.last.toString();
+                                city = list[0].toString();
+                                state = list[1].toString();
+                              }
+                              if (list.length == 4) {
+                                country = list.last.toString();
+                                city = list.first.toString();
+                                state = list[2].toString();
+                              }
+                              if (list.length == 5) {
+                                country = list.last.toString();
+                                city = list.first.toString();
+                                state = list[3].toString();
+                              }
+
+                              _loc.text = location;
+                              _color5 = Colors.green.shade600;
+
+                              setState(() {});
+                            });
+
+                            final plist = GoogleMapsPlaces(
+                              apiKey: googleApikey,
+                              apiHeaders:
+                                  await const GoogleApiHeaders()
+                                      .getHeaders(),
+                            );
+                            String placeid = place.placeId ?? "0";
+                            final detail = await plist
+                                .getDetailsByPlaceId(placeid);
+
+                            final geometry = detail.result.geometry!;
+                            lat = geometry.location.lat;
+
+                            log = geometry.location.lng;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Location/ Address / City",
+                          hintStyle: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf')
+                              .copyWith(color: Colors.grey),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color6),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color6),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color6),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        onFieldSubmitted: (value) {
+                          if (value.isEmpty) {
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 2,
+                                msg: 'Please Your Location');
+                            setState(() {
+                              _color6 = Colors.red;
+                            });
+                          } else if (value.isNotEmpty) {
+                            setState(() {
+                              _color6 = Colors.green.shade600;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                          25.0, 5.0, 25.0, 10.0),
+                      child: TextFormField(
+                        controller: _proddetail,
+                        keyboardType: TextInputType.multiline,
+                        autovalidateMode:
+                            AutovalidateMode.onUserInteraction,
+                        style: const TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                            fontFamily:
+                                'assets/fonst/Metropolis-Black.otf'),
+                        maxLines: 4,
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: "Product Description ",
+                          hintStyle: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf')
+                              .copyWith(color: Colors.grey),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color7),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color7),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: _color7),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                        onFieldSubmitted: (value) {
+                          if (value.isEmpty) {
+                            Fluttertoast.showToast(
+                                timeInSecForIosWeb: 2,
+                                msg:
+                                    'Please Your Product Description');
+                            _color7 = Colors.red;
+                            setState(() {});
+                          } else if (value.isNotEmpty) {
+                            setState(() {});
+                          }
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.fromLTRB(
+                          25.0, 10.0, 25.0, 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(13.05),
+                            child: image_id.isNotEmpty ? Stack(
+                            children: [
+                              GestureDetector(
+                                  child: main_product != null
+                                      ? Image.network(main_product,
+                                          height: 100, width: 100,fit: BoxFit.cover,)
+                                      : Image.asset(
+                                      'assets/addphoto1.png',
+                                      height: 100,
+                                      width: 100),
+                                  onTap: () {
+                                    if(main_product == null){
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => bottomsheet(),
+                                    );
+                                    }
+                                  }),
+                              Visibility(
+                                visible: main_product == null
+                                    ? false
+                                    : true,
+                                child: Positioned(
+                                  bottom: -5,
+                                  left: 25,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    margin:
+                                    const EdgeInsets.all(
+                                        2.0),
+                                    child: Card(
+                                      shape:
+                                      const CircleBorder(),
+                                      child: GestureDetector(
+                                        child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red),
+                                        onTap: () {
+                                          delete_subimage(image_id).then((value){
+                                            setState(() {
+                                              if(value == true){
+                                                main_product = "";
+                                                image_id = "";
+                                                file = null;
+                                              }
+                                            });
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ) : Stack(
+                            children: [
+                              GestureDetector(
+                                child: file != null
+                                    ? Image.file(file!,
+                                    height: 100, width: 100,fit: BoxFit.cover,)
+                                    : Image.asset(
+                                    'assets/addphoto1.png',
+                                    height: 100,
+                                    width: 100),
+                                onTap: () {
+                                  if(file == null){
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) =>
+                                        bottomsheet(),
+                                  );}
+                                },
+                              ),
+                              Visibility(
+                                visible: file == null
+                                    ? false
+                                    : true,
+                                child: Positioned(
+                                  bottom: -5,
+                                  left: 25,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    margin:
+                                    const EdgeInsets.all(
+                                        2.0),
+                                    child: Card(
+                                      shape:
+                                      const CircleBorder(),
+                                      child: GestureDetector(
+                                        child: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red),
+                                        onTap: () {
+                                          setState(() {
+                                            constanst.imagesList.remove(file);
+                                            file = null;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(13.05),
+                            child: image1_id.isNotEmpty
+                              ? Stack(
+                                  children: [
+                                    GestureDetector(
+                                      child: main_product1 != null
+                                          ? Image.network(
+                                              main_product1,
+                                              height: 100,
+                                              width: 100,fit: BoxFit.cover,)
+                                          : Image.asset(
+                                              'assets/addphoto1.png',
+                                              height: 100,
+                                              width: 100),
+                                      onTap: () {
+                                        if(main_product1 == null){
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) => bottomsheet1(),
+                                          );}
+                                      },
+                                    ),
+                                    Visibility(
+                                      visible: main_product1 == null
+                                          ? false
+                                          : true,
+                                      child: Positioned(
+                                        bottom: -5,
+                                        left: 25,
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin: const EdgeInsets.all(2.0),
+                                          child: Card(
+                                            shape: const CircleBorder(),
+                                            child: GestureDetector(
+                                              child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red),
+                                              onTap: () {
+                                                setState(() {
+                                                  delete_subimage(image1_id).then((value){
+                                                    setState(() {
+                                                      if(value == true){
+                                                        main_product1 = "";
+                                                        image1_id = "";
+                                                        file1 = null;
+                                                      }
+                                                    });
+                                                  });
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Stack(
+                                  children: [
+                                    GestureDetector(
+                                      child: file1 != null
+                                          ? Image.file(file1!,
+                                              height: 100, width: 100,fit: BoxFit.cover,)
+                                          : Image.asset(
+                                              'assets/addphoto1.png',
+                                              height: 100,
+                                              width: 100),
+                                      onTap: () {
+                                        if(file1 == null){
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) => bottomsheet1(),
+                                        );}
+                                      },
+                                    ),
+                                    Visibility(
+                                      visible: file1 == null
+                                          ? false
+                                          : true,
+                                      child: Positioned(
+                                        bottom: -5,
+                                        left: 25,
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin: const EdgeInsets.all(2.0),
+                                          child: Card(
+                                            shape: const CircleBorder(),
+                                            child: GestureDetector(
+                                              child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red),
+                                              onTap: () {
+                                                setState(() {
+                                                  constanst.imagesList.remove(file1);
+                                                  file1 = null;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(13.05),
+                            child: image2_id.isNotEmpty
+                              ? Stack(
+                                  children: [
+                                    GestureDetector(
+                                      child: main_product2 != null
+                                          ? Image.network(
+                                              main_product2,
+                                              height: 100,
+                                              width: 100,fit: BoxFit.cover,)
+                                          : Image.asset(
+                                              'assets/addphoto1.png',
+                                              height: 100,
+                                              width: 100),
+                                      onTap: () {
+                                        if(main_product2 == null){
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) => bottomsheet2(),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    Visibility(
+                                      visible: main_product2 == null
+                                          ? false
+                                          : true,
+                                      child: Positioned(
+                                        bottom: -5,
+                                        left: 25,
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin:
+                                              const EdgeInsets.all(
+                                                  2.0),
+                                          child: Card(
+                                            shape:
+                                                const CircleBorder(),
+                                            child: GestureDetector(
+                                              child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red),
+                                              onTap: () {
+                                                  delete_subimage(image2_id).then((value){
+                                                    setState(() {
+                                                      if(value == true){
+                                                      main_product2 = "";
+                                                      image2_id = "";
+                                                      file2 = null;
+                                                      }
+                                                  });
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : Stack(children: [
+                                    GestureDetector(
+                                      child: file2 != null
+                                          ? Image.file(file2!,
+                                              height: 100, width: 100,fit: BoxFit.cover,)
+                                          : Image.asset(
+                                              'assets/addphoto1.png',
+                                              height: 100,
+                                              width: 100),
+                                      onTap: () {
+                                        if(file2 == null){
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) =>
+                                              bottomsheet2(),
+                                        );
+                                        }
+                                      },
+                                    ),
+                                    Visibility(
+                                      visible: file2 == null
+                                          ? false
+                                          : true,
+                                      child: Positioned(
+                                        bottom: -5,
+                                        left: 25,
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin: const EdgeInsets.all(2.0),
+                                          child: Card(
+                                            shape: const CircleBorder(),
+                                            child: GestureDetector(
+                                              child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red),
+                                              onTap: () {
+                                                setState(() {
+                                                  constanst.imagesList.remove(file2);
+                                                  file2 = null;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ]),),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        borderRadius: BorderRadius.circular(50.0),
+                        color: const Color.fromARGB(255, 0, 91, 148),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            /*Fluttertoast.showToast(
+                                  msg: "Data Proccess");*/
+                          }
+                          setState(() {
+                            vaild_data();
+                          });
+                        },
+                        child: const Text(
+                          'Update',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 19,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
         ),
       ),
     );
@@ -1382,7 +1478,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
       constanst.step.toString(),
       _prodnm.text.toString(),
       constanst.select_cat_id,
-      mainfile,
+      file,
       widget.prod_id.toString(),
     );
     /* 'userId':userId,'userToken':userToken,'business_name':business_name,'business_type':business_type,'location':location,'longitude':longitude,'longitude':latitude,'other_mobile1':other_mobile1,'country':country,
@@ -1406,6 +1502,9 @@ class _UpdatePOstState extends State<UpdatePOst> {
         msg: res['message'],
       );
     }
+    setState(() {
+
+    });
     return _isloading1;
   }
 
@@ -1434,7 +1533,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
       "11",
       _prodnm.text.toString(),
       constanst.select_cat_id,
-      mainfile,
+      file,
       widget.prod_id.toString(),
     );
     /* 'userId':userId,'userToken':userToken,'business_name':business_name,'business_type':business_type,'location':location,'longitude':longitude,'longitude':latitude,'other_mobile1':other_mobile1,'country':country,
@@ -1458,6 +1557,9 @@ class _UpdatePOstState extends State<UpdatePOst> {
         msg: res['message'],
       );
     }
+    setState(() {
+
+    });
     return _isloading1;
   }
 
@@ -1516,18 +1618,15 @@ class _UpdatePOstState extends State<UpdatePOst> {
   }
 
   void takephoto(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles = pickedfile!;
-
-      file = null;
-      mainfile = await _cropImage(
-        imagefile: io.File(_imagefiles!.path),
-      );
-
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
+      //_imagefiles = pickedfile!;
+    if(pickedfile != null && pickedfile.path != null) {
+      file = await _cropImage(imagefile: io.File(pickedfile.path));
+      if(file != null){
+        constanst.imagesList.add(file!);
+      }
+    }
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage({required io.File imagefile}) async {
@@ -1613,17 +1712,16 @@ class _UpdatePOstState extends State<UpdatePOst> {
   }
 
   void takephoto1(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles1 = pickedfile!;
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
 
-      file1 = await _cropImage1(
-        imagefile: io.File(_imagefiles1!.path),
-      );
+    //  _imagefiles1 = pickedfile!;
+    if(pickedfile != null && pickedfile.path != null){
+      file1 = await _cropImage1(imagefile: io.File(pickedfile.path));
+      if(file1 != null){
       constanst.imagesList.add(file1!);
+      }
+    }
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage1({required io.File imagefile}) async {
@@ -1709,17 +1807,15 @@ class _UpdatePOstState extends State<UpdatePOst> {
   }
 
   void takephoto2(ImageSource imageSource, FilterQuality quality) async {
-    final pickedfile =
-        await _picker.getImage(source: imageSource, imageQuality: 50);
-    setState(() async {
-      _imagefiles2 = pickedfile!;
-
-      file2 = await _cropImage2(
-        imagefile: io.File(_imagefiles2!.path),
-      );
+    final pickedfile = await _picker.getImage(source: imageSource, imageQuality: 50);
+    //  _imagefiles2 = pickedfile!;
+    if(pickedfile != null && pickedfile.path != null){
+      file2 = await _cropImage2(imagefile: io.File(pickedfile.path),);
+      if(file2 != null){
       constanst.imagesList.add(file2!);
+      }
+    }
       Navigator.of(context).pop();
-    });
   }
 
   Future<io.File?> _cropImage2({required io.File imagefile}) async {
@@ -2008,24 +2104,25 @@ class _UpdatePOstState extends State<UpdatePOst> {
             _loc.text.isNotEmpty &&
             _proddetail.text.isNotEmpty) {
           _onLoading();
-
-          await update_SalePost().then((value) {
-            Navigator.of(dialogContext!).pop();
-            if (value) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainScreen(0),
-                ),
-              );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainScreen(0),
-                ),
-              );
-            }
+          update_SalePost().then((value) {
+            setState(() {
+              Navigator.of(dialogContext!).pop();
+              if (value) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(0),
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(0),
+                  ),
+                );
+              }
+            });
           });
         }
       } else {
@@ -2046,30 +2143,26 @@ class _UpdatePOstState extends State<UpdatePOst> {
             widget.prod_id.toString(),
           );
           update_SalePost().then((value) {
-            Navigator.of(dialogContext!).pop();
-            if (value) {
-              Navigator.of(context)
-                  .push(
-                    MaterialPageRoute(
-                      builder: (_) => MainScreen(0),
+            setState(() {
+              Navigator.of(dialogContext!).pop();
+              if (value) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => MainScreen(0),),).then(
+                      (value) => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => MainScreen(0),
                     ),
-                  )
-                  .then(
-                    (value) => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => MainScreen(0),
-                      ),
-                    ),
-                  );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainScreen(0),
-                ),
-              );
-            }
-            Navigator.of(dialogContext!).pop();
+                  ),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(0),
+                  ),
+                );
+              }
+              Navigator.of(dialogContext!).pop();
+            });
           });
         }
       }
@@ -2410,27 +2503,38 @@ class _UpdatePOstState extends State<UpdatePOst> {
 
               image.add(record);
             }
+            print("image:-${image.length}");
+            print("image:-${image[0]}");
             if (image.length == 1) {
-              main_product1 = image[0].subImageUrl.toString();
-              image1_id = image[0].productImageId.toString();
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
+            }
+            if (image.length == 2) {
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
+
+              main_product1 = image[1].subImageUrl.toString();
+              image1_id = image[1].productImageId.toString();
               file1 = io.File(main_product1);
             }
+            if (image.length >= 3) {
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
 
-            if (image.length == 2) {
-              main_product1 = image[0].subImageUrl.toString();
-              image1_id = image[0].productImageId.toString();
-
+              main_product1 = image[1].subImageUrl.toString();
+              image1_id = image[1].productImageId.toString();
               file1 = io.File(main_product1);
 
-              main_product2 = image[1].subImageUrl.toString();
-              image2_id = image[1].productImageId.toString();
-
+              main_product2 = image[2].subImageUrl.toString();
+              image2_id = image[2].productImageId.toString();
               file2 = io.File(main_product2);
             }
           }
         }
-
-        file = io.File(main_product);
+        //file = io.File(main_product);
         if (color_array != null) {
           for (var data in color_array) {
             constanst.selectcolor_id.add(
@@ -2487,6 +2591,7 @@ class _UpdatePOstState extends State<UpdatePOst> {
     if (res['status'] == 1) {
       commonPostdetail = CommonPostdetail.fromJson(res);
       if (res['result'] != null) {
+        print("lol2:-${res['result']}");
         jsonArray = res['result'];
         for (var data in jsonArray) {
           _prod_cate.text = data['CategoryName'];
@@ -2524,36 +2629,45 @@ class _UpdatePOstState extends State<UpdatePOst> {
 
           sub_image = data['subproductImage'];
 
+          print("lol:-${sub_image}");
           if (sub_image != null) {
             for (var data in sub_image) {
               postdetail.SubproductImage record = postdetail.SubproductImage(
                 productImageId: data['productImageId'],
                 subImageUrl: data['sub_image_url'],
               );
-
               image.add(record);
             }
+            print("datachecjk:-${image.length}");
             if (image.length == 1) {
-              main_product1 = image[0].subImageUrl.toString();
-              image1_id = image[0].productImageId.toString();
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
+            }
+            if (image.length == 2) {
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
+
+              main_product1 = image[1].subImageUrl.toString();
+              image1_id = image[1].productImageId.toString();
               file1 = io.File(main_product1);
             }
+            if (image.length >= 3) {
+              main_product = image[0].subImageUrl.toString();
+              image_id = image[0].productImageId.toString();
+              file = io.File(main_product);
 
-            if (image.length == 2) {
-              main_product1 = image[0].subImageUrl.toString();
-              image1_id = image[0].productImageId.toString();
-
+              main_product1 = image[1].subImageUrl.toString();
+              image1_id = image[1].productImageId.toString();
               file1 = io.File(main_product1);
 
-              main_product2 = image[1].subImageUrl.toString();
-              image2_id = image[1].productImageId.toString();
-
+              main_product2 = image[2].subImageUrl.toString();
+              image2_id = image[2].productImageId.toString();
               file2 = io.File(main_product2);
             }
           }
         }
-
-        file = io.File(main_product);
         if (color_array != null) {
           for (var data in color_array) {
             constanst.selectcolor_id.add(
@@ -2649,15 +2763,15 @@ class _UpdatePOstState extends State<UpdatePOst> {
       pref.getString('user_id').toString(),
       pref.getString('api_token').toString(),
     );
-    var jsonArray;
     if (res['status'] == 1) {
+      return true;
     } else {
       Fluttertoast.showToast(
         msg: res['message'],
       );
     }
     setState(() {});
-    return jsonArray;
+    return false;
   }
 
   add_salesubimage(String prod_id) async {
@@ -2782,7 +2896,9 @@ class _selectcolorState extends State<selectcolor> {
             ),
           ),
           const SizedBox(height: 5),
-          FutureBuilder(builder: (context, snapshot) {
+          FutureBuilder<List<color.Result>?>(
+            future:constanst.color_data ,
+              builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
               return const Center(
@@ -2987,7 +3103,9 @@ class _selectcategoryState extends State<selectcategory> {
             ),
           ),
           const SizedBox(height: 5),
-          FutureBuilder(builder: (context, snapshot) {
+          FutureBuilder<List<cat.Result>?>(
+            future: constanst.cat_data,
+              builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
               return const Center(
@@ -3140,7 +3258,9 @@ class _selectTypeState extends State<selectType> {
             ),
           ),
           const SizedBox(height: 5),
-          FutureBuilder(builder: (context, snapshot) {
+          FutureBuilder<List<type.Result>?>(
+            future: constanst.cat_typedata,
+              builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
               return const Center(
@@ -3298,7 +3418,9 @@ class _selectGradeState extends State<selectGrade> {
             ),
           ),
           const SizedBox(height: 5),
-          FutureBuilder(builder: (context, snapshot) {
+          FutureBuilder<List<grade.Result>?>(
+            future: constanst.cat_gradedata,
+              builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting &&
                 snapshot.hasData == null) {
               return const Center(

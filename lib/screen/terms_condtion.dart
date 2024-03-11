@@ -93,13 +93,26 @@ class _AppTermsConditionState extends State<AppTermsCondition> {
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
                   padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Align(child: Html(data: link)),
-                      )
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Html(data: link,
+                      style: {
+                        "p": Style(
+                          fontSize: FontSize(12),
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.24,
+                          fontFamily: 'Metropolis',
+                        ),
+                        "body": Style(
+                          fontSize: FontSize(12),
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.24,
+                          fontFamily: 'Metropolis',
+                        ),
+                      },
+                    ),
                   )),
             ])
                 : Center(

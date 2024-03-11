@@ -29,6 +29,7 @@ import '../widget/MainScreen.dart';
 import 'Buyer_sell_detail.dart';
 import 'Follower_Following.dart';
 import 'Review.dart';
+import 'other_user_profile.dart';
 
 class bussinessprofile extends StatefulWidget {
   const bussinessprofile({Key? key}) : super(key: key);
@@ -70,7 +71,6 @@ class _bussinessprofileState extends State<bussinessprofile>
       Premises_Type,
       business_type,
       is_follow,
-
       abot_buss,
       pan_number,
       product_name,
@@ -80,13 +80,18 @@ class _bussinessprofileState extends State<bussinessprofile>
   String? First_currency_sign = "",
       Second_currency_sign = "",
       Third_currency_sign = "";
-  int? view_count, like, reviews_count, following_count, followers_count,is_prime;
+  int? view_count,
+      like,
+      reviews_count,
+      following_count,
+      followers_count,
+      is_prime;
   bool? isload;
   GetSalePostList salePostList = GetSalePostList();
   GetSalePostList buyPostList = GetSalePostList();
   int offset = 0, post_count = 0;
   int count = 0;
-  String? profileid;
+  String profileid = "";
   String? packageName;
   PackageInfo? packageInfo;
   List<homepost.PostColor> colors = [];
@@ -97,10 +102,17 @@ class _bussinessprofileState extends State<bussinessprofile>
   @override
   void initState() {
     _parentController = TabController(length: 2, vsync: this);
-    _childController = TabController(length: 2, vsync: this);
+    _childController = TabController(length: 2, vsync: this, initialIndex: buypostlist_data.isEmpty ? 1 : 0);
     scrollercontroller.addListener(_scrollercontroller);
     checknetowork();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _parentController.dispose();
+    _childController.dispose();
+    super.dispose();
   }
 
   Future<void> checknetowork() async {
@@ -129,6 +141,7 @@ class _bussinessprofileState extends State<bussinessprofile>
     return WillPopScope(
       onWillPop: () => _onbackpress(context),
       child: Scaffold(
+       backgroundColor: const Color(0xFFFFFFFF),
         appBar: AppBar(
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -180,39 +193,48 @@ class _bussinessprofileState extends State<bussinessprofile>
                             child: Row(
                               children: [
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   // Align children in the center horizontally
                                   children: [
                                     Container(
                                       width: 110.0,
                                       height: 110.0,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff7c94b6),
+                                      decoration: ShapeDecoration(
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                              image_url.toString()),
+                                            image_url.toString(),
+                                          ),
                                           fit: BoxFit.cover,
                                         ),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(50.0)),
-                                        border: Border.all(
-                                          color: const Color(0xffFFC107),
-                                          width: 2.0,
+                                        shape: OvalBorder(
+                                          side: BorderSide(
+                                            width: 3,
+                                            strokeAlign: BorderSide.strokeAlignOutside,
+                                            color: (is_prime == 0) ? const Color(0xFF005C94) :  const Color(0xFFFFC107),
+                                          ),
                                         ),
                                       ),
                                     ),
                                     Container(
-                                      // Adjust alignment and padding of the "Premium" label
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
+                                      width: 54,
+                                      height: 17,
+                                      alignment: Alignment.center,
+                                      //padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      transform: Matrix4.translationValues(0.0, -10.0, 0.0),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: const Color(0xffFFC107),
+                                        borderRadius: BorderRadius.circular(40),
+                                        color: (is_prime == 0) ? const Color(0xFF005C94) :  const Color(0xFFFFC107),
                                       ),
-                                      child:  Text(
-                                        (is_prime == 0) ? "Free":
-                                        'Premium',
-                                        style: const TextStyle(fontSize: 9),
+                                      child: Text(
+                                        (is_prime == 0) ? "Free" : 'Premium',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: (is_prime == 0) ? Colors.white : Colors.black,
+                                          fontSize: 10,
+                                          fontFamily:
+                                          'assets/fonst/Metropolis-SemiBold.otf',
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: -0.24,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -293,14 +315,16 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                   child: GestureDetector(
                                                     onTap: () => launchUrl(
                                                       Uri.parse(
-                                                          'tel:$countryCode + $usermbl'),
+                                                          'tel:$countryCode$usermbl'
+                                                              //'$countryCode + $usermbl'
+                                                      ),
                                                       mode: LaunchMode
                                                           .externalApplication,
                                                     ),
-                                                    child: Text(
+                                                    child: Text('$countryCode$usermbl',
                                                       softWrap: true,
-                                                      countryCode.toString() +
-                                                          usermbl.toString(),
+                                                      // countryCode.toString() +
+                                                      //     usermbl.toString(),
                                                       style: const TextStyle(
                                                         fontSize: 16.0,
                                                         fontWeight:
@@ -365,8 +389,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                               Image(
                                                                   image: AssetImage(
                                                                       'assets/verify.png')),
-                                                              Text(
-                                                                  'Verified'),
+                                                              Text('Verified'),
                                                             ],
                                                           )
                                                         : verify_status == "3"
@@ -441,7 +464,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                             color: Colors.black,
                                             fontFamily:
                                                 'assets/fonst/Metropolis-SemiBold.otf')),
-                                    const Text('Followers',
+                                    const Text(' Followers',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w400,
@@ -455,7 +478,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  const follower(
+                                    builder: (context) => const follower(
                                       initialIndex: 1,
                                     ),
                                   ),
@@ -470,7 +493,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                           color: Colors.black,
                                           fontFamily:
                                               'assets/fonst/Metropolis-SemiBold.otf')),
-                                  const Text('Following',
+                                  const Text(' Following',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w400,
@@ -481,213 +504,184 @@ class _bussinessprofileState extends State<bussinessprofile>
                               ),
                             ),
                           ])),
-                  Container(
-                      margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                      height: 60,
-                      child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(children: [
-                            Container(
-                                padding: const EdgeInsets.all(5.0),
-                                margin: const EdgeInsets.fromLTRB(2.0, 0.0, 2.0, 0.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26),
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(18)),
-                                ),
-                                child: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 4.2,
-                                    height: 25,
-                                    child: GestureDetector(
-                                      // onTap: () => launchUrl(
-                                      //   Uri.parse('mailto:$other_email_url!'),
-                                      //   mode: LaunchMode.externalApplication,
-                                      // ),
-                                      child: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: const [
-                                          ImageIcon(
-                                              AssetImage('assets/sms.png')),
-                                          Text(' Chat',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 14,
-                                                  color: Colors.black)),
-                                        ],
-                                      ),
-                                    ))),
-                            Container(
-                                padding: const EdgeInsets.all(5.0),
-                                margin: const EdgeInsets.fromLTRB(
-                                    5.0, 0.0, 5.0, 0.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26),
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(18)),
-                                ),
-                                child: SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.8,
-                                    height: 25,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        launchUrl(
-                                          Uri.parse('https://wa.me/$bussmbl'),
-                                          mode: LaunchMode.externalApplication,
-                                        );
+                  SizedBox(
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.all(5.0),
+                            margin:
+                                const EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 0.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black26,width: 1),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                            ),
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 3.8,
+                                height: 25,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchUrl(
+                                      Uri.parse('https://wa.me/$bussmbl'),
+                                      mode: LaunchMode.externalApplication,
+                                    );
 
-                                        // print("WHATSAPP LINK  ===  ${'https://wa.me/$bussmbl'}");
-                                      },
-                                      child: Row(
-                                        children: [
-                                          Image.asset(('assets/whatsapp.png')),
-                                          const Text('WhatsApp',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily:
-                                                      'assets/fonst/Metropolis-Black.otf',
-                                                  fontSize: 14,
-                                                  color: Colors.black)),
-                                        ],
-                                      ),
-                                    ))),
-                            Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                    onTap: () => launchUrl(
-                                          Uri.parse(facebook_url!),
-                                          mode: LaunchMode.externalApplication,
-                                        ),
-                                    child: Image.asset(
-                                      'assets/facebook.png',
-                                      width: 30,
-                                      height: 30,
-                                    )),
-                                IconButton(
-                                    onPressed: () => launchUrl(
-                                          Uri.parse(instagram_url!),
-                                          mode: LaunchMode.externalApplication,
-                                        ),
-                                    icon: Image.asset('assets/instagram.png')),
-                                IconButton(
-                                    onPressed: () => launchUrl(
-                                          Uri.parse(linkedin_url!),
-                                          mode: LaunchMode.externalApplication,
-                                        ),
-                                    icon: Image.asset('assets/linkdin.png')),
-                                IconButton(
-                                    onPressed: () => launchUrl(
-                                          Uri.parse(youtube_url!),
-                                          mode: LaunchMode.externalApplication,
-                                        ),
-                                    icon: Image.asset('assets/youtube.png')),
-                                IconButton(
-                                    onPressed: () => launchUrl(
-                                          Uri.parse(twitter_url!),
-                                          mode: LaunchMode.externalApplication,
-                                        ),
-                                    icon: Image.asset('assets/Twitter.png')),
-                              ],
-                            )
-                          ]))),
+                                    // print("WHATSAPP LINK  ===  ${'https://wa.me/$bussmbl'}");
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset(('assets/whatsapp.png')),
+                                      const Text('WhatsApp',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf',
+                                              fontSize: 14,
+                                              color: Colors.black)),
+                                    ],
+                                  ),
+                                ))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              iconSize: 26,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => launchUrl(
+                                      Uri.parse(instagram_url!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
+                                icon: Image.asset(
+                                  'assets/facebook.png',
+                                  width: 26, height: 26,
+                                )),
+                            IconButton(
+                                iconSize: 26,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => launchUrl(
+                                      Uri.parse(instagram_url!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
+                                icon: Image.asset('assets/instagram.png',width: 26, height: 26,)),
+                            IconButton(
+                                iconSize: 26,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => launchUrl(
+                                      Uri.parse(linkedin_url!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
+                                icon: Image.asset('assets/linkdin.png',width: 26, height: 26,)),
+                            IconButton(
+                              iconSize: 26,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => launchUrl(
+                                      Uri.parse(youtube_url!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
+                                icon: Image.asset('assets/youtube.png',width: 26, height: 26,)),
+                            IconButton(
+                                iconSize: 26,
+                                padding: const EdgeInsets.all(0),
+                                onPressed: () => launchUrl(
+                                      Uri.parse(twitter_url!),
+                                      mode: LaunchMode.externalApplication,
+                                    ),
+                                icon: Image.asset('assets/Twitter.png',width: 26, height: 26,)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                   const Divider(
                     color: Colors.black26,
                     height: 2.0,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+                  SizedBox(
+                    height: 47,
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin:
-                              const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
-                          height: 40,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 6.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {},
-                                    child: like == 0
-                                        ? GestureDetector(
-                                            child: Image.asset(
-                                              'assets/like.png',
-                                              height: 20,
-                                              width: 20,
-                                            ),
-                                            onTap: () {
-                                              Profilelike();
-                                              like = 1;
-                                              int add = int.parse(like_count!);
-                                              add++;
-                                              like_count = add.toString();
+                          width: MediaQuery.of(context).size.width / 6.0,
+                          margin: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                  onTap: () {},
+                                  child: like == 0
+                                      ? GestureDetector(
+                                          child: Image.asset(
+                                            'assets/like.png',
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                          onTap: () {
+                                            Profilelike();
+                                            like = 1;
+                                            int add = int.parse(like_count!);
+                                            add++;
+                                            like_count = add.toString();
 
-                                              setState(() {});
-                                            },
-                                          )
-                                        : GestureDetector(
-                                            child: Image.asset(
-                                              'assets/like1.png',
-                                              height: 20,
-                                              width: 20,
-                                            ),
-                                            onTap: () {
-                                              Profilelike();
+                                            setState(() {});
+                                          },
+                                        )
+                                      : GestureDetector(
+                                          child: Image.asset(
+                                            'assets/like1.png',
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                          onTap: () {
+                                            Profilelike();
 
-                                              like = 0;
-                                              int add = int.parse(like_count!);
-                                              add--;
-                                              like_count = add.toString();
+                                            like = 0;
+                                            int add = int.parse(like_count!);
+                                            add--;
+                                            like_count = add.toString();
 
-                                              setState(() {});
-                                            },
-                                          )),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    ViewItem(context);
-                                  },
-                                  child: Text('Like ($like_count)',
-                                      style: const TextStyle(
-                                        fontSize: 11.0,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      )),
-                                )
-                              ],
-                            ),
+                                            setState(() {});
+                                          },
+                                        )),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  ViewItem(context: context,tabIndex: 0);
+                                },
+                                child: Text('Like ($like_count)',
+                                    style: const TextStyle(
+                                      fontSize: 11.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    )),
+                              )
+                            ],
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
-                          height: 40,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 3.8,
+                          width: MediaQuery.of(context).size.width / 3.8,
+                          margin:
+                              const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                          child: GestureDetector(
+                            onTap: () async{
+                              print("profileid:-$profileid");
+                              var rev_count = await Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => Review(profileid)));
+                              if(rev_count != null){
+                                reviews_count = int.parse(rev_count.toString());
+                              }
+                              setState(() {});
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  review(profileid!)));
-                                    },
-                                    child: Image.asset(
-                                      'assets/star.png',
-                                      color: Colors.black,
-                                    )),
+                                Image.asset(
+                                  'assets/star.png',
+                                  color: Colors.black,
+                                ),
                                 const SizedBox(
                                   width: 2,
                                 ),
@@ -702,23 +696,20 @@ class _bussinessprofileState extends State<bussinessprofile>
                             ),
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                          height: 40,
-                          child: SizedBox(
+                        GestureDetector(
+                          onTap: () {
+                            ViewItem(context: context,tabIndex: 1);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
                             width: MediaQuery.of(context).size.width / 4.3,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      ViewItem(context);
-                                    },
-                                    child: const Icon(
-                                      Icons.remove_red_eye_outlined,
-                                      color: Colors.black54,
-                                    )),
+                                const Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  color: Colors.black54,
+                                ),
                                 Text('Views ($view_count)',
                                     style: const TextStyle(
                                       fontSize: 11.0,
@@ -732,39 +723,38 @@ class _bussinessprofileState extends State<bussinessprofile>
                         ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                          height: 40,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 5.5,
+                          width: MediaQuery.of(context).size.width / 5.5,
+                          child: GestureDetector(
+                            onTap: () {
+                              sharecount();
+                              shareImage(
+                                url: image_url.toString(),
+                                UserName: username.toString(),
+                                companyName: business_name.toString(),
+                                number: bussmbl.toString(),
+                                location: address.toString(),
+                                gst: gst_number.toString(),
+                                email: b_email.toString(),
+                                natureOfBusiness: business_type.toString(),
+                              );
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      sharecount();
-                                      shareImage(
-                                          url: image_url.toString(),
-                                          title: business_name.toString());
-                                    },
-                                    child: Image.asset(
-                                      'assets/Send.png',
-                                      height: 15,
-                                    )),
+                                Image.asset(
+                                  'assets/Send.png',
+                                  height: 15,
+                                ),
                                 const SizedBox(
                                   width: 2,
                                 ),
-                                GestureDetector(
-                                  child: const Text('Share',
-                                      style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      )),
-                                  onTap: () {
-                                    ViewItem(context);
-                                  },
-                                )
+                                const Text('Share',
+                                    style: TextStyle(
+                                      fontSize: 11.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ))
                               ],
                             ),
                           ),
@@ -777,6 +767,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                     height: 2.0,
                   ),
                   TabBar(
+                    indicatorSize: TabBarIndicatorSize.tab,
                     controller: _parentController,
                     tabs: [
                       Tab(text: 'Product Catalogue ($post_count)'),
@@ -979,12 +970,6 @@ class _bussinessprofileState extends State<bussinessprofile>
                                           Align(
                                               alignment: Alignment.topLeft,
                                               child: GestureDetector(
-                                                // onTap: () => launchUrl(
-                                                //   Uri.parse(
-                                                //       website.toString()),
-                                                //   mode: LaunchMode
-                                                //       .externalApplication,
-                                                // ),
                                                 onTap: () {
                                                   final urlString =
                                                       website.toString();
@@ -995,7 +980,6 @@ class _bussinessprofileState extends State<bussinessprofile>
                                                               'https://')
                                                       ? 'https://$urlString'
                                                       : urlString;
-
                                                   launch(formattedUrl,
                                                           forceSafariVC: false,
                                                           forceWebView: false,
@@ -1044,43 +1028,45 @@ class _bussinessprofileState extends State<bussinessprofile>
                                       ),
                                     )),
                                 Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 60,
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(children: [
-                                          const Align(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 60,
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      children: [
+                                        const Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text('Our Products',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf',
+                                                  fontSize: 12,
+                                                  color: Colors.black26)),
+                                        ),
+                                        Align(
                                             alignment: Alignment.topLeft,
-                                            child: Text('Our Products',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf',
-                                                    fontSize: 12,
-                                                    color: Colors.black26)),
-                                          ),
-                                          Align(
-                                              alignment: Alignment.topLeft,
-                                              child: SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: Text(
-                                                    product_name.toString(),
-                                                    softWrap: true,
-                                                    style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontFamily:
-                                                            'assets/fonst/Metropolis-Black.otf',
-                                                        fontSize: 13,
-                                                        color: Colors.black)),
-                                              )),
-                                        ]))),
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Text(
+                                                  product_name.toString(),
+                                                  softWrap: true,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf',
+                                                      fontSize: 13,
+                                                      color: Colors.black)),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 Card(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -1324,7 +1310,7 @@ class _bussinessprofileState extends State<bussinessprofile>
                                       ),
                                     )),
                               ],
-                            )))
+                            ),),),
                       ],
                     ),
                   ),
@@ -1474,6 +1460,7 @@ class _bussinessprofileState extends State<bussinessprofile>
           ),
         ),
         child: TabBar(
+          indicatorSize: TabBarIndicatorSize.tab,
           controller: _childController,
           physics: const AlwaysScrollableScrollPhysics(),
           // give the indicator a decoration (color and border radius)
@@ -1532,193 +1519,192 @@ class _bussinessprofileState extends State<bussinessprofile>
 
   Widget Buyer_post() {
     return buypostlist_data.isNotEmpty
-        ? Container(
-            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-            width: MediaQuery.of(context).size.width,
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return GridView.builder(
-                  padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-                    childAspectRatio: MediaQuery.of(context).size.height /
-                        1300, //MediaQuery.of(context).size.aspectRatio * 1.3,
-                    mainAxisSpacing: 3.0,
-                    crossAxisCount: 2,
-                  ),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: scrollercontroller,
-                  itemCount: buypostlist_data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    homepost.Result result = buypostlist_data[index];
-                    return GestureDetector(
-                      onTap: (() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Buyer_sell_detail(
-                                prod_id: result.productId.toString(),
-                                post_type: result.postType.toString(),
-                              ),
-                            ));
-                      }),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(children: [
-                          Stack(fit: StackFit.passthrough, children: <Widget>[
-                            Container(
-                              height: 165,
-                              width: 175,
-                              margin: const EdgeInsets.all(5.0),
-                              decoration: const BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
-                                child: Image(
-                                  image: NetworkImage(
-                                      result.mainproductImage.toString()),
-                                  fit: BoxFit.cover,
-                                  height: 150,
-                                  width: 170,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 10,
-                              left: 10,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5.0, vertical: 5.0),
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                // color: Color.fromARGB(0,255, 255, 255),
-                                child: Text(
-                                    '₹${result.productPrice}',
-                                    style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.white)),
-                              ),
-                            ),
-                            result.isPaidPost == 'Paid'
-                                ? Positioned(
-                                    top: -10,
-                                    left: -30,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      /*decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),*/
-                                      // color: Color.fromARGB(0,255, 255, 255),
-                                      //child: Text('Paid', style: TextStyle(color: Colors.white)),
-                                      child: Image.asset(
-                                        'assets/PaidPost.png',
-                                        height: 50,
-                                        width: 100,
-                                      ),
-                                    ),
-                                  )
-                                : Container()
-                          ]),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)),
-                              ),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.productType} | ${result.productGrade}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.state},${result.country}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                      result.postType.toString(),
-                                      style: const TextStyle(
-                                          fontSize: 13.0,
-                                          fontFamily: 'Metropolis',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1)),
-                                    ),
-                                  )),
-                            ],
-                          )
-                        ]),
+        ? GridView.builder(
+      padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // crossAxisCount: 2,
+            // mainAxisSpacing: 5,
+            // crossAxisSpacing: 5,
+            // childAspectRatio: .90,
+             childAspectRatio: MediaQuery.of(context).size.height / 1300,
+            //MediaQuery.of(context).size.aspectRatio * 1.3,
+            mainAxisSpacing: 3.0,
+            crossAxisCount: 2,
+          ),
+          physics: const AlwaysScrollableScrollPhysics(),
+          controller: scrollercontroller,
+          itemCount: buypostlist_data.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            homepost.Result result = buypostlist_data[index];
+            return GestureDetector(
+              onTap: (() {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Buyer_sell_detail(
+                        prod_id: result.productId.toString(),
+                        post_type: result.postType.toString(),
                       ),
-                    );
-                  },
-                );
-              }
-
-            }))
+                    ));
+              }),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.05),
+                ),
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.05),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Color(0x3FA6A6A6),
+                        blurRadius: 16.32,
+                        offset: Offset(0, 3.26),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Column(children: [
+                    Stack(fit: StackFit.passthrough, children: <Widget>[
+                      Container(
+                        height: 165,
+                        width: 175,
+                        margin: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          //color: Colors.black26,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(13.05))),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(13.05),
+                          /*shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.circular(10.0)),*/
+                          child: Image(
+                            image: NetworkImage(
+                                result.mainproductImage.toString()),
+                            fit: BoxFit.cover,
+                            height: 150,
+                            width: 170,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        left: 10,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5.0, vertical: 5.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 0, 148, 95),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0))),
+                          // color: Color.fromARGB(0,255, 255, 255),
+                          child: Text('₹${result.productPrice}',
+                              style: const TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf',
+                                  color: Colors.white)),
+                        ),
+                      ),
+                      result.isPaidPost == 'Paid'
+                          ? Positioned(
+                        top: -10,
+                        left: -30,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          /*decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),*/
+                          // color: Color.fromARGB(0,255, 255, 255),
+                          //child: Text('Paid', style: TextStyle(color: Colors.white)),
+                          child: Image.asset(
+                            'assets/PaidPost.png',
+                            height: 50,
+                            width: 100,
+                          ),
+                        ),
+                      )
+                          : Container()
+                    ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(result.postName.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontFamily:
+                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis)),
+                        ),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                  '${result.productType} | ${result.productGrade}',
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            )),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                  '${result.state},${result.country}',
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            )),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                result.postType.toString(),
+                                style: const TextStyle(
+                                    fontSize: 13.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(0, 148, 95, 1)),
+                              ),
+                            )),
+                      ],
+                    )
+                  ]),
+                ),
+              ),
+            );
+          },
+        )
         : const Center(
             child: Text('Buy Post not Found',
                 style: TextStyle(color: Color.fromARGB(255, 0, 91, 148))),
@@ -1754,13 +1740,6 @@ class _bussinessprofileState extends State<bussinessprofile>
       }
     }
   }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
 
   void _onLoading() {
     BuildContext dialogContext = context;
@@ -1801,7 +1780,7 @@ class _bussinessprofileState extends State<bussinessprofile>
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed
@@ -1819,192 +1798,192 @@ class _bussinessprofileState extends State<bussinessprofile>
 
   Widget Sale_post() {
     return salepostlist_data.isNotEmpty
-        ? Container(
-            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0),
-            width: MediaQuery.of(context).size.width,
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return GridView.builder(
-                  padding: const EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-                    childAspectRatio: MediaQuery.of(context).size.height /
-                        1300, //MediaQuery.of(context).size.aspectRatio * 1.3,
-                    mainAxisSpacing: 3.0,
-                    crossAxisCount: 2,
-                  ),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: scrollercontroller,
-                  itemCount: salepostlist_data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    homepost.Result result = salepostlist_data[index];
-                    return GestureDetector(
-                      onTap: (() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Buyer_sell_detail(
-                                prod_id: result.productId.toString(),
-                                post_type: result.postType.toString(),
-                              ),
-                            ));
-                      }),
-                      child: Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(children: [
-                          Stack(fit: StackFit.passthrough, children: <Widget>[
-                            Container(
-                              height: 165,
-                              width: 175,
-                              margin: const EdgeInsets.all(5.0),
-                              decoration: const BoxDecoration(
-                                  //color: Colors.black26,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
-                                child: Image(
-                                  image: NetworkImage(
-                                      result.mainproductImage.toString()),
-                                  fit: BoxFit.cover,
-                                  height: 150,
-                                  width: 170,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 10,
-                              left: 10,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5.0, vertical: 5.0),
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 0, 148, 95),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0))),
-                                // color: Color.fromARGB(0,255, 255, 255),
-                                child: Text(
-                                    '₹${result.productPrice}',
-                                    style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.white)),
-                              ),
-                            ),
-                            result.isPaidPost == 'Paid'
-                                ? Positioned(
-                                    top: -10,
-                                    left: -30,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      /*decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),*/
-                                      // color: Color.fromARGB(0,255, 255, 255),
-                                      //child: Text('Paid', style: TextStyle(color: Colors.white)),
-                                      child: Image.asset(
-                                        'assets/PaidPost.png',
-                                        height: 50,
-                                        width: 100,
-                                      ),
-                                    ),
-                                  )
-                                : Container()
-                          ]),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(result.postName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)),
-                              ),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.productType} | ${result.productGrade}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                        '${result.state},${result.country}',
-                                        style: const TextStyle(
-                                          fontSize: 13.0,
-                                          color: Colors.grey,
-                                          fontFamily: 'Metropolis',
-                                        ),
-                                        softWrap: false,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis),
-                                  )),
-                              Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(top: 10.0, left: 10.0),
-                                    child: Text(
-                                      result.postType.toString(),
-                                      style: const TextStyle(
-                                          fontSize: 13.0,
-                                          fontFamily: 'Metropolis',
-                                          fontWeight: FontWeight.w600,
-                                          color: Color.fromRGBO(0, 148, 95, 1)),
-                                    ),
-                                  )),
-                            ],
-                          )
-                        ]),
+        ? GridView.builder(
+      padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // crossAxisCount: 2,
+            // mainAxisSpacing: 5,
+            // crossAxisSpacing: 5,
+            // childAspectRatio: .90,
+            childAspectRatio: MediaQuery.of(context).size.height /
+                1300, //MediaQuery.of(context).size.aspectRatio * 1.3,
+            mainAxisSpacing: 3.0,
+            crossAxisCount: 2,
+          ),
+          physics: const AlwaysScrollableScrollPhysics(),
+          controller: scrollercontroller,
+          itemCount: salepostlist_data.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            homepost.Result result = salepostlist_data[index];
+            return GestureDetector(
+              onTap: (() {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Buyer_sell_detail(
+                        prod_id: result.productId.toString(),
+                        post_type: result.postType.toString(),
                       ),
-                    );
-                  },
-                );
-              }
-            }))
+                    ));
+              }),
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.05),
+                ),
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.05),
+                    ),
+                    shadows: const [
+                      BoxShadow(
+                        color: Color(0x3FA6A6A6),
+                        blurRadius: 16.32,
+                        offset: Offset(0, 3.26),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
+                  child: Column(children: [
+                    Stack(fit: StackFit.passthrough, children: <Widget>[
+                      Container(
+                        height: 165,
+                        width: 175,
+                        margin: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          //color: Colors.black26,
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(13.05))),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(13.05),
+                          /*shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.circular(10.0)),*/
+                          child: Image(
+                            image: NetworkImage(
+                                result.mainproductImage.toString()),
+                            fit: BoxFit.cover,
+                            height: 150,
+                            width: 170,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        left: 10,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5.0, vertical: 5.0),
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 0, 148, 95),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0))),
+                          // color: Color.fromARGB(0,255, 255, 255),
+                          child: Text('₹${result.productPrice}',
+                              style: const TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w800,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf',
+                                  color: Colors.white)),
+                        ),
+                      ),
+                      result.isPaidPost == 'Paid'
+                          ? Positioned(
+                        top: -10,
+                        left: -30,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          /*decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),*/
+                          // color: Color.fromARGB(0,255, 255, 255),
+                          //child: Text('Paid', style: TextStyle(color: Colors.white)),
+                          child: Image.asset(
+                            'assets/PaidPost.png',
+                            height: 50,
+                            width: 100,
+                          ),
+                        ),
+                      )
+                          : Container()
+                    ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(result.postName.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontFamily:
+                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis)),
+                        ),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                  '${result.productType} | ${result.productGrade}',
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            )),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                  '${result.state},${result.country}',
+                                  style: const TextStyle(
+                                    fontSize: 13.0,
+                                    color: Colors.grey,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis),
+                            )),
+                        Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, left: 10.0),
+                              child: Text(
+                                result.postType.toString(),
+                                style: const TextStyle(
+                                    fontSize: 13.0,
+                                    fontFamily: 'Metropolis',
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromRGBO(0, 148, 95, 1)),
+                              ),
+                            )),
+                      ],
+                    )
+                  ]),
+                ),
+              ),
+            );
+          },
+        )
         : const Center(
             child: Text('Sale Post not Found',
                 style: TextStyle(color: Color.fromARGB(255, 0, 91, 148))),
@@ -2161,10 +2140,10 @@ class _bussinessprofileState extends State<bussinessprofile>
               productStatus: data['product_status'],
               /* postColor: data['PostColor'],*/
               mainproductImage: data['mainproductImage']);
-
           buypostlist_data.add(record);
         }
-
+        _childController.dispose();
+        _childController = TabController(length: 2, vsync: this, initialIndex: buypostlist_data.isEmpty ? 1 : 0);
         isload = true;
         if (mounted) {
           setState(() {});
@@ -2196,8 +2175,9 @@ class _bussinessprofileState extends State<bussinessprofile>
     return jsonArray;
   }
 
-  ViewItem(BuildContext context) {
+  ViewItem({required BuildContext context,int tabIndex = 0}) {
     return showModalBottomSheet(
+      backgroundColor: Colors.white,
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
@@ -2213,7 +2193,7 @@ class _bussinessprofileState extends State<bussinessprofile>
             builder: (BuildContext context, ScrollController scrollController) {
               return StatefulBuilder(
                 builder: (context, setState) {
-                  return const ViewWidget();
+                  return ViewWidget(tabIndex: tabIndex,);
                 },
               );
             })).then(
@@ -2284,7 +2264,17 @@ class _bussinessprofileState extends State<bussinessprofile>
     packageName = packageInfo!.packageName;
   }
 
-  void shareImage({required String url, required String title}) async {
+  void shareImage({
+    required String url,
+    required String UserName,
+    required String companyName,
+    required String number,
+    required String location,
+    required String natureOfBusiness,
+    required String email,
+    String? gst,
+
+  }) async {
     final imageurl = url;
     final uri = Uri.parse(imageurl);
     final response = await http.get(uri);
@@ -2293,7 +2283,8 @@ class _bussinessprofileState extends State<bussinessprofile>
     final path = '${temp.path}/image.jpg';
     File(path).writeAsBytesSync(bytes);
     await Share.shareFiles([path],
-        text: title +
+        text: UserName + "\n" + companyName + "\n" + number + "\n" + email + "\n" + location + "\n" + natureOfBusiness + "\n" +
+             (gst != null && gst.isNotEmpty ? 'GST NO:-' : '') + gst.toString() +
             "\t" +
             "\n" +
             "\n" +
@@ -2303,7 +2294,8 @@ class _bussinessprofileState extends State<bussinessprofile>
 }
 
 class ViewWidget extends StatefulWidget {
-  const ViewWidget({Key? key}) : super(key: key);
+  int tabIndex = 0;
+  ViewWidget({Key? key,required this.tabIndex,}) : super(key: key);
 
   @override
   State<ViewWidget> createState() => _ViewState();
@@ -2321,7 +2313,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     // TODO: implement initState
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 3, vsync: this,initialIndex: widget.tabIndex);
     get_like();
     get_view();
     get_share();
@@ -2331,8 +2323,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     Get_likeUser common = Get_likeUser();
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res =
-        await get_profileliked_user(pref.getString('user_id').toString());
+    var res = await get_profileliked_user(pref.getString('user_id').toString());
 
     if (res['status'] == 1) {
       common = Get_likeUser.fromJson(res);
@@ -2348,8 +2339,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     Get_viewUser common = Get_viewUser();
     SharedPreferences pref = await SharedPreferences.getInstance();
 
-    var res =
-        await get_profileviewd_user(pref.getString('user_id').toString());
+    var res = await get_profileviewd_user(pref.getString('user_id').toString());
     if (res['status'] == 1) {
       common = Get_viewUser.fromJson(res);
       dataList1 = common.data ?? [];
@@ -2377,8 +2367,6 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
     setState(() {});
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return isload == true
@@ -2391,6 +2379,7 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                 height: 5,
               ),
               TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
                 controller: _tabController,
                 tabs: const [
                   Tab(text: 'Like'),
@@ -2403,79 +2392,148 @@ class _ViewState extends State<ViewWidget> with SingleTickerProviderStateMixin {
                   controller: _tabController,
                   children: [
                     ListView.builder(
+                        padding: const EdgeInsets.all(15),
                         shrinkWrap: true,
                         itemCount: dataList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text(dataList[index].username.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf')),
-                            leading: CircleAvatar(
-                              radius: 16.0,
-                              backgroundImage: NetworkImage(
-                                  dataList[index].imageUrl.toString()),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 240, 238, 238),
-                            ),
-                          );
-                        }),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: dataList1.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: dataList1[index].username != null
-                                ? Text(dataList1[index].username.toString(),
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      other_user_profile(int.parse(dataList[index].userId.toString())),
+                                ),);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: dataList[index].imageUrl != null
+                                            ? NetworkImage(
+                                          dataList[index].imageUrl.toString(),
+                                        )
+                                            : const AssetImage('assets/more.png')
+                                        as ImageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      shape: const OvalBorder(),
+                                    ),
+
+                                  ),
+                                  const SizedBox(width: 9,),
+                                  Text(
+                                    dataList[index].username ?? "Unknown",
                                     style: const TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                         fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'))
-                                : const Text('unknow',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf')),
-                            leading: CircleAvatar(
-                              radius: 16.0,
-                              backgroundImage: dataList1[index].imageUrl != null
-                                  ? NetworkImage(
-                                      dataList1[index].imageUrl.toString())
-                                  : const AssetImage('assets/more.png')
-                                      as ImageProvider,
-                              backgroundColor:
-                                  const Color.fromARGB(255, 240, 238, 238),
+                                        'assets/fonst/Metropolis-Black.otf'),),
+                                ],
+                              ),
                             ),
                           );
                         }),
                     ListView.builder(
+                        padding: const EdgeInsets.all(15),
+                        shrinkWrap: true,
+                        itemCount: dataList1.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      other_user_profile(int.parse(dataList1[index].userId.toString())),
+                                ),);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: dataList1[index].imageUrl != null
+                                            ? NetworkImage(
+                                          dataList1[index].imageUrl.toString(),
+                                        )
+                                            : const AssetImage('assets/more.png')
+                                        as ImageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      shape: const OvalBorder(),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 9,),
+                                  Text(
+                                    dataList1[index].username ?? "Unknown",
+                                    style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                    ListView.builder(
+                        padding: const EdgeInsets.all(15),
                         shrinkWrap: true,
                         itemCount: dataList2.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text(dataList2[index].username.toString(),
-                                style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf')),
-                            leading: CircleAvatar(
-                              radius: 16.0,
-                              backgroundImage: NetworkImage(
-                                  dataList2[index].imageUrl.toString()),
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      other_user_profile(int.parse(dataList2[index].userId.toString())),
+                                ),);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: dataList2[index].imageUrl != null
+                                            ? NetworkImage(
+                                          dataList2[index].imageUrl.toString(),
+                                        )
+                                            : const AssetImage('assets/more.png')
+                                        as ImageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      shape: const OvalBorder(),
+                                    ),
 
-                              //File imageFile = File(pickedFile.path);
-
-                              backgroundColor:
-                                  const Color.fromARGB(255, 240, 238, 238),
+                                  ),
+                                  const SizedBox(width: 9,),
+                                  Text(
+                                    dataList2[index].username ?? "Unknown",
+                                    style: const TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),),
+                                ],
+                              ),
                             ),
                           );
                         }),

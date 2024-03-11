@@ -550,7 +550,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ),
                               ),
                             ),
-                            FutureBuilder(builder: (context, snapshot) {
+                            FutureBuilder(
+                              future: constanst.cat_data,
+                                builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                       ConnectionState.waiting &&
                                   snapshot.hasData == null) {

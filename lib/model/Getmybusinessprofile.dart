@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_void_to_null, unnecessary_question_mark
 
+import 'dart:io';
 class Getmybusinessprofile {
   int? status;
   Profile? profile;
@@ -399,7 +400,7 @@ class Amounts2021 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =    <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['id'] =  id;
     data['name'] =  name;
     data['created_at'] =  createdAt;
@@ -443,9 +444,7 @@ class Doc {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     documentUrl = json['document_url'];
-    doctype = json['doctype'] != null
-        ?    Amounts2021.fromJson(json['doctype'])
-        : null;
+    doctype = json['doctype'] != null ? Amounts2021.fromJson(json['doctype']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -486,7 +485,7 @@ class User {
   String? emailCodeDateTime;
   String? smsCode;
   String? smsCodeDateTime;
-  Null? forgotpasswordDateTime;
+  String? forgotpasswordDateTime;
   String? verifyEmail;
   String? verifySms;
   String? categoryId;
@@ -637,4 +636,11 @@ class User {
     data['category_name'] =  categoryName;
     return data;
   }
+}
+
+class SelectFilesLable{
+  String? lable;
+  String? id;
+
+  SelectFilesLable({this.lable,this.id});
 }

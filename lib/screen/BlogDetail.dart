@@ -223,11 +223,23 @@ class _BlogDetailState extends State<BlogDetail> {
                       Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child:
-                          Align(
-
-                            alignment: Alignment.topLeft,
-
-                            child: Html(data: long_text),
+                          Html(data: long_text,
+                            style: {
+                              "p": Style(
+                                fontSize: FontSize(12),
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: -0.24,
+                                fontFamily: 'Metropolis',
+                              ),
+                              "body": Style(
+                                fontSize: FontSize(12),
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: -0.24,
+                                fontFamily: 'Metropolis',
+                              ),
+                            },
                           )),
 
                     ],

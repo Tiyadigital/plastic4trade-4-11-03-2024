@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../widget/FilterScreen.dart';
 import '../widget/HomeAppbar.dart';
+import 'other_user_profile.dart';
 
 class premum_member extends StatefulWidget {
   const premum_member({Key? key}) : super(key: key);
@@ -87,10 +88,6 @@ class _DirectoryState extends State<premum_member> {
 
   @override
   Widget build(BuildContext context) {
-    return init();
-  }
-
-  Widget init() {
     return Scaffold(
       backgroundColor: const Color(0xFFDADADA),
       appBar: CustomeApp('PremiumMember'),
@@ -101,6 +98,7 @@ class _DirectoryState extends State<premum_member> {
           children: [
             Container(
                 decoration: const BoxDecoration(
+                  //color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40.0),
                         bottomRight: Radius.circular(40.0),
@@ -111,28 +109,45 @@ class _DirectoryState extends State<premum_member> {
                 child: Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                     child: Card(
+                      color: Colors.white,
                         //margin: EdgeInsets.all(10),
                         shape: const StadiumBorder(
                             side: BorderSide(
                                 style: BorderStyle.solid, color: Colors.white)),
-                        child: Row(
-                          // mainAxisAlignment:
-                          //     MainAxisAlignment.spaceEvenly,
-                          children: const [
-                            Padding(
-                                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                child: ImageIcon(
-                                    AssetImage('assets/location.png'))),
-                            Text(
-                              'Ahmedabad',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontFamily:
-                                      'assets/fonst/Metropolis-Black.otf'),
-                            )
-                          ],
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(63.05),
+                            ),
+                            shadows: [
+                              BoxShadow(
+                                color: Color(0x3FA6A6A6),
+                                blurRadius: 16.32,
+                                offset: Offset(0, 3.26),
+                                spreadRadius: 0,
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            // mainAxisAlignment:
+                            //     MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  child: ImageIcon(
+                                      AssetImage('assets/location.png'))),
+                              Text(
+                                'Ahmedabad',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                              )
+                            ],
+                          ),
                         )))),
             SizedBox(
                 height: 45,
@@ -142,21 +157,37 @@ class _DirectoryState extends State<premum_member> {
                     shape: const StadiumBorder(
                         side: BorderSide(
                             style: BorderStyle.solid, color: Colors.white)),
-                    child: Row(
-                      // mainAxisAlignment:
-                      //     MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Padding(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: ImageIcon(AssetImage('assets/search.png'))),
-                        Text('Search',
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontFamily:
-                                    'assets/fonst/Metropolis-Black.otf'))
-                      ],
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(63.05),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3FA6A6A6),
+                            blurRadius: 16.32,
+                            offset: Offset(0, 3.26),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Row(
+                        // mainAxisAlignment:
+                        //     MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                              child: ImageIcon(AssetImage('assets/search.png'))),
+                          Text('Search',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontFamily:
+                                      'assets/fonst/Metropolis-Black.otf'))
+                        ],
+                      ),
                     ))),
             GestureDetector(
                 onTap: () {
@@ -168,10 +199,10 @@ class _DirectoryState extends State<premum_member> {
                     // padding: EdgeInsets.only(right: 5),
                     decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 0, 91, 148)),
+                        color: Colors.white),
                     child: const Icon(
                       Icons.filter_alt,
-                      color: Colors.white,
+                      color: Colors.black,
                     )))
           ],
         ),
@@ -212,14 +243,16 @@ class _DirectoryState extends State<premum_member> {
 
             padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0),
             width: MediaQuery.of(context).size.width,
-            child: FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return ListView.builder(
+            child:
+            // FutureBuilder(
+            //     //future: load_category(),
+            //     builder: (context, snapshot) {
+            //   if (snapshot.hasError) {
+            //     return Text('Error: ${snapshot.error}');
+            //   } else {
+            //     //List<dynamic> users = snapshot.data as List<dynamic>;
+            //     return
+                  ListView.builder(
                   //gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   // crossAxisCount: 2,
                   // mainAxisSpacing: 5,
@@ -234,13 +267,32 @@ class _DirectoryState extends State<premum_member> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                        onTap: (() {}),
+                        onTap: (() {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) =>
+                                  other_user_profile(1)));
+                        }),
                         child: Card(
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
-                            margin: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8),
+                            //margin: const EdgeInsets.all(8.0),
+                            decoration: ShapeDecoration(
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13.05),
+                              ),
+                              shadows: [
+                                BoxShadow(
+                                  color: Color(0x3FA6A6A6),
+                                  blurRadius: 16.32,
+                                  offset: Offset(0, 3.26),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
                             child: Column(children: [
                               SizedBox(
                                 // margin: EdgeInsets.all(10.0),
@@ -327,9 +379,11 @@ class _DirectoryState extends State<premum_member> {
                           ),
                         ));
                   },
-                );
-              }
-            })));
+                ),
+            //   }
+            // }
+            // )
+        ));
   }
 
   Widget horiztallist() {
@@ -337,19 +391,21 @@ class _DirectoryState extends State<premum_member> {
         height: 50,
         margin: const EdgeInsets.fromLTRB(10.0, 2.0, 0, 0),
         //margin: EdgeInsets.fromLTRB(10, 2.0, 0.0, 0),
-        child: FutureBuilder(
-
-            //future: load_subcategory(),
-            builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              snapshot.hasData == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            //List<dynamic> users = snapshot.data as List<dynamic>;
-            return ListView.builder(
+        child:
+        // FutureBuilder(
+        //   future: ,
+        //     //future: load_subcategory(),
+        //     builder: (context, snapshot) {
+        //   if (snapshot.connectionState == ConnectionState.none &&
+        //       snapshot.hasData == null) {
+        //     return const Center(child: CircularProgressIndicator());
+        //   }
+        //   if (snapshot.hasError) {
+        //     return Text('Error: ${snapshot.error}');
+        //   } else {
+        //     //List<dynamic> users = snapshot.data as List<dynamic>;
+        //     return
+              ListView.builder(
                 shrinkWrap: false,
                 physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
@@ -379,8 +435,9 @@ class _DirectoryState extends State<premum_member> {
                             color: Colors.black,
                             fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                       ));
-                });
-          }
-        }));
+                }),
+        //   }
+        // })
+    );
   }
 }

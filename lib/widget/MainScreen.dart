@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, must_be_immutable, non_constant_identifier_names
+// ignore_for_file: use_build_context_synchronously, must_be_immutable, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:Plastic4trade/screen/BussinessProfile.dart';
 import 'package:Plastic4trade/screen/More.dart';
@@ -6,12 +6,10 @@ import 'package:Plastic4trade/screen/News.dart';
 import 'package:Plastic4trade/screen/other_user_profile.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
-import '../api/firebase_api.dart';
 import '../screen/Blog.dart';
 import '../screen/BuyerPost.dart';
 import '../screen/Buyer_sell_detail.dart';
@@ -40,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
   bool load = false;
   DateTime? currentBackPressTime;
   String notificationMessge = 'Notification Waiting ';
-  List<Widget> pagelist = const  <Widget>[
+  List<Widget> pagelist = const <Widget>[
     HomePage(),
     SalePost(),
     BuyerPost(),
@@ -52,15 +50,12 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     checknetowork();
   }
 
   @override
   Widget build(BuildContext context) {
-    return init(context);
-  }
-
-  Widget init(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 218, 218, 218),
       appBar: CustomeApp(title),
@@ -77,145 +72,128 @@ class _MainScreenState extends State<MainScreen> {
 
     if (connectivityResult == ConnectivityResult.none) {
       Fluttertoast.showToast(msg: 'Internet Connection not available');
-
     } else {
       get_notification();
 
-      var result = await FirebaseApi.setupInteractedMessage();
-
       constanst.isFromNotification = true;
-      if(constanst.notificationtype=="profile like"){
-
+      if (constanst.notificationtype == "profile like") {
         Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => other_user_profile(int.parse(constanst.notiuser.toString()),
-            )));
-      }else if(constanst.notificationtype=="follower_profile_like"){
-
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    other_user_profile(int.parse(constanst.notiuser.toString()))));
-      }else if(constanst.notificationtype=="profile_review"){
+            MaterialPageRoute(builder: (context) => other_user_profile(int.parse(constanst.notiuser.toString()))));
+      } else if (constanst.notificationtype == "follower_profile_like") {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-              const bussinessprofile()));
-
-      }else if(constanst.notificationtype=="Business profile dislike"){
+            builder: (context) => other_user_profile(
+              int.parse(
+                constanst.notiuser.toString(),
+              ),
+            ),
+          ),
+        );
+      } else if (constanst.notificationtype == "profile_review") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    other_user_profile(int.parse(constanst.notiuser.toString()))));
-      }else if(constanst.notificationtype=="post like"){
-
-        if ( constanst.notypost_type.toString() == "SalePost") {
+          context,
+          MaterialPageRoute(
+            builder: (context) => const bussinessprofile(),
+          ),
+        );
+      } else if (constanst.notificationtype == "Business profile dislike") {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => other_user_profile(
+              int.parse(
+                constanst.notiuser.toString(),
+              ),
+            ),
+          ),
+        );
+      } else if (constanst.notificationtype == "post like") {
+        if (constanst.notypost_type.toString() == "SalePost") {
           if (constanst.notipostid.toString().isNotEmpty) {
             Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Buyer_sell_detail(
+                    post_type: 'SalePost', prod_id: constanst.notipostid),
+              ),
+            );
+          }
+        } else {
+          if (constanst.notypost_type.toString() == "BuyPost") {
+            if (constanst.notipostid.toString().isNotEmpty) {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        Buyer_sell_detail(
-                            post_type: 'SalePost', prod_id: constanst.notipostid)));
-
-          }
-        } else  {
-          if ( constanst.notypost_type.toString() == "BuyPost") {
-            if (constanst.notipostid
-                .toString()
-                .isNotEmpty) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Buyer_sell_detail(
-                              post_type: 'BuyPost', prod_id: constanst.notipostid)));
+                  builder: (context) => Buyer_sell_detail(
+                      post_type: 'BuyPost', prod_id: constanst.notipostid),
+                ),
+              );
             }
           }
         }
-
-
-      }else if(constanst.notificationtype=="unfollowuser") {
-
+      } else if (constanst.notificationtype == "unfollowuser") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    follower()));
-      } else if(constanst.notificationtype=="followuser") {
-
+          context,
+          MaterialPageRoute(
+            builder: (context) => const follower(),
+          ),
+        );
+      } else if (constanst.notificationtype == "followuser") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const follower()));
-      }else if(constanst.notificationtype=="profile_review") {
+          context,
+          MaterialPageRoute(
+            builder: (context) => const follower(),
+          ),
+        );
+      } else if (constanst.notificationtype == "profile_review") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    other_user_profile(int.parse(constanst.notiuser.toString()))));
-      }else if(constanst.notificationtype=="live_price") {
+          context,
+          MaterialPageRoute(
+            builder: (context) => other_user_profile(
+              int.parse(
+                constanst.notiuser.toString(),
+              ),
+            ),
+          ),
+        );
+      } else if (constanst.notificationtype == "live_price") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const LivepriceScreen()));
-      }else if(constanst.notificationtype=="quick_news_notification") {
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LivepriceScreen(),
+          ),
+        );
+      } else if (constanst.notificationtype == "quick_news_notification") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    MainScreen(3)));
-      }else if(constanst.notificationtype=="news") {
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainScreen(3),
+          ),
+        );
+      } else if (constanst.notificationtype == "news") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    MainScreen(3)));
-      }else if(constanst.notificationtype=="blog") {
+            context, MaterialPageRoute(builder: (context) => MainScreen(3)));
+      } else if (constanst.notificationtype == "blog") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const Blog()));
-      }else if(constanst.notificationtype=="video") {
+            context, MaterialPageRoute(builder: (context) => const Blog()));
+      } else if (constanst.notificationtype == "video") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const Videos()));
-      }else if(constanst.notificationtype=="banner") {
+            context, MaterialPageRoute(builder: (context) => const Videos()));
+      } else if (constanst.notificationtype == "banner") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    MainScreen(0)));
-      }else if(constanst.notificationtype=="tutorial_video") {
+            context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+      } else if (constanst.notificationtype == "tutorial_video") {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Tutorial_Videos()));
+      } else if (constanst.notificationtype == "exhibition") {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const Exhibition()));
+      } else if (constanst.notificationtype == "quicknews") {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const Tutorial_Videos()));
-      }else if(constanst.notificationtype=="exhibition") {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const Exhibition()));
-      }else if(constanst.notificationtype=="quicknews") {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    MainScreen(3)));
+            context, MaterialPageRoute(builder: (context) => MainScreen(3)));
       }
-
-
     }
   }
 
@@ -224,31 +202,20 @@ class _MainScreenState extends State<MainScreen> {
       widget.select_idx = index;
       if (widget.select_idx == 0) {
         title = 'Home';
-      } else if (widget.select_idx == 1) {
+      }
+      else if (widget.select_idx == 1) {
         title = 'Saller';
-      } else if (widget.select_idx == 2) {
+      }
+      else if (widget.select_idx == 2) {
         title = 'Buyer';
-      } else if (widget.select_idx == 3) {
+      }
+      else if (widget.select_idx == 3) {
         title = 'News';
-      } else if (widget.select_idx == 4) {
+      }
+      else if (widget.select_idx == 4) {
         title = 'More';
       }
     });
-  }
-
-  Future<bool> _onbackpress(BuildContext context) async {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      // Show a toast or snackbar message to inform the user to tap again to exit
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Tap again to exit')),
-      );
-      return Future.value(false);
-    }
-    SystemNavigator.pop(); // Close the app
-    return Future.value(true);
   }
 
   Future<void> get_notification() async {
@@ -259,9 +226,7 @@ class _MainScreenState extends State<MainScreen> {
 
     var jsonarray;
     if (res['status'] == 1) {
-
       constanst.notification_count = res['NotificationCount'];
-      setState(() {});
       if (mounted) {
         setState(() {});
       }
@@ -269,6 +234,5 @@ class _MainScreenState extends State<MainScreen> {
       Fluttertoast.showToast(msg: res['message']);
     }
     return jsonarray;
-
   }
 }

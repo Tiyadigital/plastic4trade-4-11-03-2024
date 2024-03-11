@@ -1,8 +1,16 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable, prefer_typing_uninitialized_variables
 
-import 'package:Plastic4trade/common/premium_page_list.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:info_popup/info_popup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../api/api_interface.dart';
+import '../model/premium_plan_model.dart';
 import 'Videos.dart';
+import 'dart:io';
+
 
 class Premiun extends StatefulWidget {
   const Premiun({Key? key}) : super(key: key);
@@ -11,1151 +19,373 @@ class Premiun extends StatefulWidget {
   State<Premiun> createState() => _PremiunState();
 }
 
-class Choice {
-  const Choice({required this.title, required this.icon});
-
-  final String title;
-  final String icon;
-}
-
-const List<Choice> choices = <Choice>[
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-  Choice(title: 'IFB YELLOW ABS', icon: 'assets/image 3.png'),
-];
-
-class _PremiunState extends State<Premiun> with SingleTickerProviderStateMixin {
+class _PremiunState extends State<Premiun> with TickerProviderStateMixin {
   var init_page = 0;
   late TabController _tabController;
-  PageController? _pageController;
-
-  //late TabController _tabController1;
+  late PageController _pageController;
+  bool? load;
+  ShowPremiumPlan showPremiumPlan = ShowPremiumPlan();
+  List<Plan> showPremiumPlanList = <Plan>[];
 
   @override
   void initState() {
-    _tabController =
-        TabController(length: 5, vsync: this, initialIndex: init_page);
-    _pageController =
-        PageController(initialPage: init_page, viewportFraction: 0.8);
-    /*init_page=0;*/
-    // _tabController1 = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: showPremiumPlanList.length, vsync: this, initialIndex: init_page);
+    _pageController = PageController(initialPage: init_page, viewportFraction: 0.8);
     super.initState();
+    checknetowork();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  Future<void> checknetowork() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
+    } else {
+      fetch_premium_plan();
+    }
+  }
+
+  Future fetch_premium_plan() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    var res = await getPremiumPlan(
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
+    if (res['status'] == 1) {
+      if (res['plan'] != null) {
+        showPremiumPlan = ShowPremiumPlan.fromJson(res);
+        showPremiumPlanList = showPremiumPlan.plan ?? [];
+        _tabController.dispose();
+        _tabController = TabController(length: showPremiumPlanList.length, vsync: this, initialIndex: init_page);
+        load = true;
+      } else {
+        load = true;
+      }
+    } else {
+      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+    }
+    setState(() {});
+    return load;
   }
 
   @override
   Widget build(BuildContext context) {
-    return init();
-  }
-
-  Widget init() {
     return DefaultTabController(
-        length: 5,
+        length: showPremiumPlanList.length,
         initialIndex: init_page,
         child: Scaffold(
           backgroundColor: const Color(0xFFDADADA),
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            elevation: 0,
-            title: const Text('Premium',
-                softWrap: false,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Metropolis',
-                )),
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-            ),
-            actions: [
-              GestureDetector(
+          appBar: PreferredSize(
+            preferredSize: Size(MediaQuery.of(context).size.width , 100),
+            child: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              centerTitle: false,
+              title: const Text('Premium',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'Metropolis',
+                    fontWeight: FontWeight.w600,
+                    height: 0.05,
+                    letterSpacing: -0.24,
+                  )),
+              leading: InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const YoutubeViewer('i9t8rSVLUxg'),
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
-                child: SizedBox(
-                  width: 40,
-                  child: Image.asset(
-                    'assets/Play.png',
-                  ),
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 25,
+                  color: Colors.black,
                 ),
               ),
-            ],
-            bottom: TabBar(
-              controller: _tabController,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              isScrollable: true,
-              onTap: (value) {
-                setState(() {
-                  init_page = value;
-                  _pageController?.jumpToPage(init_page);
-                });
-              },
-              tabs: const [
-                Tab(
-                    child: Text('Free',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))),
-                Tab(
-                    child: Text('Basic',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))),
-                Tab(
-                    child: Text('Standard',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))),
-                Tab(
-                    child: Text('Premium',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))),
-                Tab(
-                    child: Text('Gold',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w600))),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const YoutubeViewer('i9t8rSVLUxg'),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 13),
+                    child: SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: Image.asset(
+                        'assets/Play.png',
+                      ),
+                    ),
+                  ),
+                ),
               ],
+              bottom: TabBar(
+                controller: _tabController,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                isScrollable: true,
+                onTap: (value) {
+                  setState(() {
+                    init_page = value;
+                    _pageController.jumpToPage(init_page);
+                  });
+                },
+                tabs: showPremiumPlanList.map((e) => _buildCommanTab(title: e.name.toString())).toList(),
+              ),
             ),
           ),
           body: TabBarView(
-            children: [
-              demo(init_page),
-              demo(init_page),
-              demo(init_page),
-              demo(init_page),
-              demo(init_page),
-            ],
+            children: showPremiumPlanList.map((e) => demo(init_page)).toList(),
+            //[demo(init_page),],
           ),
         ));
   }
 
-  Widget tab() {
-    return SingleChildScrollView(
-      child: Container(
-        // color: Colors.white,
-        margin: const EdgeInsets.all(15),
-        width: 150,
-        height: 500,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
-        ),
-        child: Container(
-            margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-            child: Column(children: [
-              Stack(
-                children: [
-                  Image.asset('assets/Premium1.png'),
-                  const Positioned(top: 55, left: 155, child: Text('Free')),
-                  const Positioned(
-                      bottom: 25, left: 25, child: Text('₹0/Month')),
-                  const Positioned(
-                      bottom: 25,
-                      right: 25,
-                      child: Text('0/M                  '))
-                ],
-              ),
-              FutureBuilder(
-                  //future: load_category(),
-                  builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  //List<dynamic> users = snapshot.data as List<dynamic>;
-                  return ListView.builder(
-                    // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-
-                    /*  childAspectRatio:MediaQuery.of(context).size.height/330,
-                               mainAxisSpacing: 1.0,
-                               crossAxisCount: 1,
-                             ),*/
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      //Choice record = choices[index];
-                      return GestureDetector(
-                          onTap: (() {}),
-                          child: Card(
-                            elevation: 2,
-                            child: Container(
-                              margin: const EdgeInsets.all(8.0),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('Free Post')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('Domestic Live Price')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('International Live Price')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('International News')
-                                  ],
-                                ),
-                                Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.cancel,
-                                      color: Colors.red,
-                                    ),
-                                    Text('Chat Functionality')
-                                  ],
-                                )
-                                //SizedBox(height: 5.0,)
-                              ]),
-                            ),
-                          ));
-                    },
-                  );
-                }
-              })
-            ])),
-      ),
-    );
+  Widget _buildCommanTab({required String title}){
+    return  Tab(
+        child: Text(title,
+          style: const TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+          fontFamily: 'Metropolis',
+          fontWeight: FontWeight.w600,
+          height: 0.09,)));
   }
 
   Widget demo(initPage) {
-    return SingleChildScrollView(
-      child: _buildCarousel(context),
-    );
-  }
-
-  Widget _buildCarousel(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(
-          // height: 100,
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: 5,
-            pageSnapping: false,
-            itemBuilder: (BuildContext context, int itemIndex) {
-              return _buildCarouselItem(context, itemIndex);
-            },
-            onPageChanged: (value) {
-              setState(() {
-                init_page = value;
-                _tabController.animateTo(init_page);
-              });
-            },
-          ),
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: showPremiumPlanList.length,
+      pageSnapping: false,
+      itemBuilder: (BuildContext context, int itemIndex) {
+        return
+          load == true ? _buildCarouselItem(context, itemIndex) : Center(
+        child: Platform.isAndroid
+        ? const CircularProgressIndicator(
+        value: null,
+        strokeWidth: 2.0,
+        color: Color.fromARGB(255, 0, 91, 148),
         )
-      ],
+            : Platform.isIOS
+        ? const CupertinoActivityIndicator(
+        color: Color.fromARGB(255, 0, 91, 148),
+        radius: 20,
+        animating: true,
+        )
+            : Container());
+      },
+      onPageChanged: (value) {
+        setState(() {
+           init_page = value;
+          _tabController.animateTo(init_page);
+        });
+      },
     );
   }
 
   Widget _buildCarouselItem(BuildContext context, int itemIndex) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-      decoration: const BoxDecoration(
+      margin: const EdgeInsets.only(top: 17,bottom: 50,left: 8,right: 8),
+      decoration: ShapeDecoration(
         color: Colors.white,
-
-        // border: Border.all(color: Colors.red),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3FA6A6A6),
+            blurRadius: 16.32,
+            offset: Offset(0, 3.26),
+            spreadRadius: 0,
+          )
+        ],
       ),
-      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Image.asset('assets/Premium1.png'),
-              Positioned(
-                  top: 28,
-                  left: 98,
-                  child: Text('Free',
-                      style: const TextStyle(
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black,
-                              fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                          .copyWith(fontSize: 41, color: Colors.white))),
-              Positioned(
-                  bottom: 18,
-                  left: 25,
-                  child: Text(
-                      '${priceInInr[itemIndex]}${itemIndex == 0 ? "" : "₹/Month"}',
-                      style: const TextStyle(
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black,
-                              fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                          .copyWith(fontSize: 15, color: Colors.white))),
-              Positioned(
-                bottom: 18,
-                right: 25,
-                child: Text(
-                  '${priceInUsd[itemIndex]}${itemIndex == 0 ? "" : "\$/Month"}',
-                  style: const TextStyle(
-                          fontSize: 26.0,
+          Padding(
+            padding: const EdgeInsets.all(7.0),
+            child: Stack(
+              children: [
+                (showPremiumPlanList[itemIndex].name!.toLowerCase() == "free") ?  ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    child: Image.asset('assets/Premium1.png',fit: BoxFit.cover,height: 131,width: MediaQuery.of(context).size.width,)) : ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    child: Image.asset('assets/Premium2.png',fit: BoxFit.cover,height: 131,width: MediaQuery.of(context).size.width,)),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 25),
+                    Align(
+                     alignment: Alignment.center,
+                        child: Text(showPremiumPlanList[itemIndex].name ?? "",
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 41,
+                            fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                          ),
+                        )),
+                  ],
+                ),
+                Positioned(
+                    bottom: 10,
+                    left: 15,
+                    child: Text(
+                        '₹${showPremiumPlanList[itemIndex].priceInr}/${showPremiumPlanList[itemIndex].timeDurationInText ?? "Month"}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf',
                           fontWeight: FontWeight.w700,
-                          color: Colors.black,
-                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                      .copyWith(fontSize: 15, color: Colors.white),
+                          height: 0,
+                        ),
+                    )),
+                Positioned(
+                  bottom: 10,
+                  right: 15,
+                  child: Text(
+                    '\$${showPremiumPlanList[itemIndex].priceDoller}/${showPremiumPlanList[itemIndex].timeDurationInText ??"Month"}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListView.builder(
+            padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15,top: 10),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: showPremiumPlanList[itemIndex].services!.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              //Choice record = choices[index];
+              return _buildShowPlanList(services: showPremiumPlanList[itemIndex].services![index]);
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 13),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(MediaQuery.of(context).size.width * 0.9, 46),
+                backgroundColor: const Color(0xFF292D32),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50), // button's shape
                 ),
               ),
-            ],
-          ),
-          FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return SizedBox(
-                  child: ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      //Choice record = choices[index];
-                      return GestureDetector(
-                        onTap: (() {}),
-                        child: Container(
-                          margin: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green.shade600,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  const Text(
-                                    'Free Post',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green.shade600,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  const Text(
-                                    'Domestic Live Price',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green.shade600,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  const Text(
-                                    'International Live Price',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green.shade600,
-                                  ),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  const Text(
-                                    'International News',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Chat Functionality',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Business Profile View',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Chat Functionality',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Reversible (Open Contact)',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Notification Ads',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Paid Post',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Business Directory',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.cancel,
-                                        color: Colors.red,
-                                      ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        'Time Duration: Monthly',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-SemiBold.otf'),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Icon(
-                                        Icons.info_outline,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height / 20,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                margin: const EdgeInsets.only(bottom: 10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(width: 1),
-                                    borderRadius: BorderRadius.circular(50.0),
-                                    color:
-                                        const Color.fromARGB(255, 0, 91, 148)),
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text('Free',
-                                      style: TextStyle(
-                                          fontSize: 19.0,
-                                          fontWeight: FontWeight.w800,
-                                          color: Colors.white,
-                                          fontFamily:
-                                              'assets/fonst/Metropolis-Black.otf')),
-                                ),
-                              ),
-                              //SizedBox(height: 5.0,)
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }
-            },
+              onPressed: () {},
+              child:  Text(showPremiumPlanList[itemIndex].name!.toLowerCase() == "free" ? "Free" : "Buy Now",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w800,
+                      height: 0,
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
+            ),
           ),
         ],
       ),
     );
   }
-}
 
-class YourWidget extends StatefulWidget {
-  var init_pages;
-
-  YourWidget({Key? key, @required this.init_pages}) : super(key: key);
-
-  @override
-  State<YourWidget> createState() => _YourWidgetState();
-}
-
-class _YourWidgetState extends State<YourWidget>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  List<String> items = [
-    'Manufacturer',
-    'Traders',
-    'Importer',
-    'Exporter',
-    'Wholesaler',
-    'Distributor',
-    'Retailer',
-    'Machinery',
-    'Job Work',
-  ];
-  List<IconData> itemsCheck = [
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined,
-    Icons.circle_outlined
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    // TODO: implement initState
-    _tabController = TabController(length: 5, vsync: this);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 5,
-        initialIndex: widget.init_pages,
-        child: Scaffold(
-          backgroundColor: const Color(0xFFDADADA),
-          appBar: AppBar(
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            elevation: 0,
-            title: Text(widget.init_pages.toString(),
-                softWrap: false,
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Metropolis',
-                )),
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-            ),
-            actions: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const YoutubeViewer('i9t8rSVLUxg')));
-                  },
-                  child: SizedBox(
-                      width: 40,
-                      child: Image.asset(
-                        'assets/Play.png',
-                      ))),
-            ],
-            bottom: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              tabs: [
-                Tab(text: widget.init_pages.toString()),
-                const Tab(text: 'Basic'),
-                const Tab(text: 'Standard'),
-                const Tab(text: 'Premium'),
-                const Tab(text: 'Gold'),
+  Widget _buildShowPlanList({required Services services}){
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children:  [
+                (services.value!.toUpperCase() == "NO") ?
+                const Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                  size: 20,
+                ) : Icon(
+                  Icons.check_circle,
+                  color: Colors.green.shade600,
+                  size: 20,
+                ),
+                const SizedBox(
+                  width: 7,
+                ),
+                Text(
+                  '${services.title}',
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.24,
+                      fontFamily:
+                      'assets/fonst/Metropolis-SemiBold.otf'),
+                ),
               ],
             ),
-          ),
-          body: TabBarView(
-            children: [
-              demo(widget.init_pages),
-              demo(widget.init_pages),
-              demo(widget.init_pages),
-              demo(widget.init_pages),
-              demo(widget.init_pages),
-            ],
-          ),
-        ));
-  }
-
-  Widget tab() {
-    return SingleChildScrollView(
-      child: Container(
-        // color: Colors.white,
-        margin: const EdgeInsets.all(15),
-        width: 150,
-        height: 500,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
+           // (services.description != null && services.description != "" && services.description != "null" && services.description!.isNotEmpty) ?
+            (services.value!.toUpperCase() == "NO")?
+            InfoPopupWidget(
+            contentMaxWidth: MediaQuery.of(context).size.width/ 2,
+            contentTitle: 'Business directory is very useful feature for the buyers and sellers both they can find any kind of plastic suppliers from this feature. it will also help them to grow business in new areas by contacting other buyers',
+            arrowTheme: InfoPopupArrowTheme(
+            color: Colors.black.withOpacity(0.6000000238418579),
+            arrowDirection: ArrowDirection.down,
+            ),
+            contentTheme: InfoPopupContentTheme(
+            infoContainerBackgroundColor: Colors.black.withOpacity(0.6000000238418579),
+            infoTextStyle: const TextStyle(color: Colors.white,
+            fontSize: 11,
+            fontFamily: 'assets/fonst/Metropolis-Black.otf',
+            fontWeight: FontWeight.w600,
+            ),
+            contentPadding: const EdgeInsets.all(10),
+            contentBorderRadius: const BorderRadius.all(Radius.circular(10)),
+            infoTextAlign: TextAlign.justify,
+            ),
+            dismissTriggerBehavior: PopupDismissTriggerBehavior.anyWhere,
+            areaBackgroundColor: Colors.transparent,
+            indicatorOffset: Offset.zero,
+            contentOffset: Offset.zero,
+            onControllerCreated: (controller) {
+            print('Info Popup Controller Created');
+            },
+            onAreaPressed: (InfoPopupController controller) {
+            print('Area Pressed');
+            },
+            infoPopupDismissed: () {
+            print('Info Popup Dismissed');
+            },
+            onLayoutMounted: (Size size) {
+            print('Info Popup Layout Mounted');
+            },
+            child: const Icon(
+            Icons.info_outline,
+            color: Colors.black,
+            size: 20,
+            ),
+            ) : const SizedBox()
+          ],
         ),
-        child: Container(
-            margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
-            child: Column(children: [
-              Stack(
-                children: [
-                  Image.asset('assets/Premium1.png'),
-                  const Positioned(top: 55, left: 155, child: Text('Free')),
-                  const Positioned(
-                      bottom: 25, left: 25, child: Text('₹0/Month')),
-                  const Positioned(
-                      bottom: 25, right: 25, child: Text('0/Month'))
-                ],
-              ),
-              FutureBuilder(
-                  //future: load_category(),
-                  builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  //List<dynamic> users = snapshot.data as List<dynamic>;
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      // crossAxisCount: 2,
-                      // mainAxisSpacing: 5,
-                      // crossAxisSpacing: 5,
-                      // childAspectRatio: .90,
-
-                      childAspectRatio:
-                          MediaQuery.of(context).size.height / 330,
-                      mainAxisSpacing: 1.0,
-                      crossAxisCount: 1,
-                    ),
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: 1,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      //Choice record = choices[index];
-                      return GestureDetector(
-                          onTap: (() {}),
-                          child: Card(
-                            elevation: 2,
-                            child: Container(
-                              margin: const EdgeInsets.all(8.0),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('Free Post')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('Domestic Live Price')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('International Live Price')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green.shade600,
-                                    ),
-                                    const Text('International News')
-                                  ],
-                                ),
-                                Row(
-                                  children: const [
-                                    Icon(
-                                      Icons.cancel,
-                                      color: Colors.red,
-                                    ),
-                                    Text('Chat Functionality')
-                                  ],
-                                )
-                                //SizedBox(height: 5.0,)
-                              ]),
-                            ),
-                          ));
-                    },
-                  );
-                }
-              })
-            ])),
-      ),
-    );
-  }
-
-  Widget demo(initPage) {
-    return SingleChildScrollView(
-      child: _buildCarousel(context),
-    );
-  }
-
-  Widget _buildCarousel(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      //crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        //Text('Carousel $carouselIndex'),
-        SizedBox(
-          // you may want to use an aspect ratio here for tablet support
-          height: MediaQuery.of(context).size.height,
-          child: PageView.builder(
-            // store this controller in a State to save the carousel scroll position
-            controller: PageController(
-                viewportFraction: 0.8, initialPage: widget.init_pages),
-            itemCount: 5,
-            pageSnapping: false,
-            //padEnds: false,
-            itemBuilder: (BuildContext context, int itemIndex) {
-              return _buildCarouselItem(context, itemIndex);
-            },
-            onPageChanged: (value) {
-              setState(() {
-                widget.init_pages = value;
-                //_tabController.addListener(() {
-
-                _tabController.animateTo(widget.init_pages);
-                //});
-              });
-            },
-          ),
-        )
+        const SizedBox(
+          height: 10,
+        ),
       ],
     );
-  }
-
-  Widget _buildCarouselItem(BuildContext context, int itemIndex) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        //padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-        margin: const EdgeInsets.fromLTRB(0, 10.0, 0.0, 10.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-          ),
-          // child: Container(
-          //   margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
-
-          child: Column(children: [
-            Stack(
-              children: [
-                Image.asset('assets/Premium1.png'),
-                const Positioned(top: 55, left: 155, child: Text('Free')),
-                const Positioned(bottom: 25, left: 25, child: Text('₹0/Month')),
-                const Positioned(bottom: 25, right: 25, child: Text('0/Month'))
-              ],
-            ),
-            FutureBuilder(
-                //future: load_category(),
-                builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                //List<dynamic> users = snapshot.data as List<dynamic>;
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    // crossAxisCount: 2,
-                    // mainAxisSpacing: 5,
-                    // crossAxisSpacing: 5,
-                    // childAspectRatio: .90,
-
-                    childAspectRatio: MediaQuery.of(context).size.height / 530,
-                    mainAxisSpacing: 1.0,
-                    crossAxisCount: 1,
-                  ),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: 1,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    //Choice record = choices[index];
-                    return GestureDetector(
-                      onTap: (() {}),
-                      child: Container(
-                        margin: const EdgeInsets.all(8.0),
-                        child: Column(children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
-                              ),
-                              Text(widget.init_pages.toString())
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
-                              ),
-                              const Text('Domestic Live Price')
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
-                              ),
-                              const Text('International Live Price')
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.check_circle,
-                                color: Colors.green.shade600,
-                              ),
-                              const Text('International News')
-                            ],
-                          ),
-                          Row(
-                            children: const [
-                              Icon(
-                                Icons.cancel,
-                                color: Colors.red,
-                              ),
-                              Text('Chat Functionality')
-                            ],
-                          )
-                          //SizedBox(height: 5.0,)
-                        ]),
-                      ),
-                    );
-                  },
-                );
-              }
-            })
-          ]),
-        ));
   }
 }

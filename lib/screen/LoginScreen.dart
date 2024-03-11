@@ -23,7 +23,7 @@ import '../utill/constant.dart';
 import 'RegisterScreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -62,10 +62,12 @@ class _LoginScreenState extends State<LoginScreen> {
               appId: "1:929685037367:web:9b8d8a76c75d902292fab2",
               messagingSenderId: "929685037367",
               projectId: "plastic4trade-55372"));
-    } else {
+    }
+    else {
       if (Platform.isAndroid) {
         await Firebase.initializeApp();
-      } else if (Platform.isIOS) {
+      }
+      else if (Platform.isIOS) {
         await Firebase.initializeApp();
       }
     }
@@ -91,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return WillPopScope(
       onWillPop: () => _onbackpress(context),
       child: Scaffold(
+        backgroundColor: const Color(0xFFFFFFFF),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -358,8 +361,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Register()));
+                                        builder: (context) => const Register()));
                               },
                               child: const Text('Create an account',
                                   style: TextStyle(
@@ -371,9 +373,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           ],
                         ),
+
                       ],
                     ),
                   ),
+                 Align (
+                     alignment: Alignment.bottomCenter,
+                     child :(Platform.isAndroid) ? Container() : Center(
+                    child: TextButton(
+                        onPressed: () async{
+                          SharedPreferences pref = await SharedPreferences.getInstance();
+                          constanst.isWithoutLogin = true;
+                          pref.setBool('isWithoutLogin', true);
+                          setState(() {});
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                              fontSize: 13.0,
+                              fontFamily:
+                              'assets/fonst/Metropolis-Black.otf',
+                              color: Color.fromARGB(255, 0, 91, 148)),
+                        )),
+                  )),
                   Expanded(
                     child: Align(
                       alignment: Alignment.bottomRight,
@@ -402,7 +426,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res['status'] == 1) {
       login = Login.fromJson(res);
       Fluttertoast.showToast(msg: res['message']);
-
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      constanst.isWithoutLogin = false;
+      pref.setBool('isWithoutLogin', false);
+      setState(() {});
       constanst.api_token = login.result!.userToken.toString();
       constanst.userid = login.result!.userid.toString();
       constanst.step = login.result!.stepCounter!;
@@ -468,8 +495,10 @@ class _LoginScreenState extends State<LoginScreen> {
       pref.setString('userImage', login.result!.userImage.toString());
       pref.setBool('islogin', true);
       _isloading = true;
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen(0)));
+      Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => MainScreen(0)),
+          ModalRoute.withName('/')
+      );
     } else {
       _isloading = false;
     }
@@ -481,11 +510,12 @@ class _LoginScreenState extends State<LoginScreen> {
       _onLoading();
       setlogin().then((value) {
         Navigator.of(dialogContext!).pop();
-        if (value!) {
+        if(value != null ){
+        if (value) {
           _isloading = false;
         } else {
           _isloading = false;
-        }
+        }}
       });
     } else if (_usernm.text.isEmpty && _userpass.text.isEmpty) {
       _color2 = Colors.red;

@@ -25,7 +25,9 @@ import '../model/RegisterUserPhoneno.dart';
 import '../utill/constant.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  const Register({super.key}
+      //{super.key}
+      );
 
   @override
   State<Register> createState() => _RegisterState();
@@ -134,6 +136,7 @@ class _RegisterState extends State<Register> {
     init(context);
     return Material(
       child: Scaffold(
+        backgroundColor: const Color(0xFFFFFFFF),
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Form(
@@ -1098,6 +1101,8 @@ class _RegisterState extends State<Register> {
                                                           Fluttertoast.showToast(
                                                               msg:
                                                                   'Please Enter Your Email');
+
+
                                                           setState(() {});
                                                         }
                                                       }
@@ -1888,7 +1893,7 @@ class _RegisterState extends State<Register> {
       });
     } else if (_userpass.text.isNotEmpty) {
       if (_userpass.text.length < 6) {
-        Fluttertoast.showToast(msg: 'Password must be 6 charecter');
+        Fluttertoast.showToast(msg: 'Password must be 6 character');
       } else if (_userpass.text != _usercpass.text) {
         Fluttertoast.showToast(
             msg: "Password and Confirm Password Doesn't Match");
@@ -1996,6 +2001,8 @@ class _RegisterState extends State<Register> {
         _pref.getString('api_token').toString(),
         _pref.getString('user_id').toString(),
         device_name);
+
+    print("RESPONSE  ==  $res");
 
     if (res['status'] == 1) {
       email_otp = 1;
@@ -2153,9 +2160,11 @@ class _RegisterState extends State<Register> {
       _pref.setString('step', register.result!.stepCounter.toString());
       constanst.step = int.parse(register.result!.stepCounter.toString());
       _pref.setBool('islogin', true);
+      _pref.setBool('isWithoutLogin', false);
       constanst.api_token = register.result!.userToken.toString();
       constanst.userid = register.result!.userid.toString();
       constanst.step = register.result!.stepCounter!;
+      constanst.isWithoutLogin == false;
 
       if (Platform.isAndroid) {
         const androidId = AndroidId();

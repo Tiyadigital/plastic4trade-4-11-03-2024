@@ -86,6 +86,7 @@ class _ExhibitionState extends State<Exhibition>
                     ),
                   ),
                   child: TabBar(
+                    indicatorSize: TabBarIndicatorSize.tab,
                     controller: _tabController,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(
@@ -162,563 +163,523 @@ class _ExhibitionState extends State<Exhibition>
   }
 
   Widget upcoming_exhibition() {
-    return Container(
-        padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
-        width: MediaQuery.of(context).size.width,
-        child: FutureBuilder(builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: getupexbitiondata.length,
-              shrinkWrap: true,
-              controller: scrollercontroller,
-              itemBuilder: (context, index) {
-                getnews.Data result = getupexbitiondata[index];
-                DateFormat format = DateFormat("yyyy-MM-dd");
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+    physics: const AlwaysScrollableScrollPhysics(),
+    itemCount: getupexbitiondata.length,
+    shrinkWrap: true,
+    controller: scrollercontroller,
+    itemBuilder: (context, index) {
+      getnews.Data result = getupexbitiondata[index];
+      DateFormat format = DateFormat("yyyy-MM-dd");
 
-                var currentDate = format.parse(result.startDate.toString());
+      var currentDate = format.parse(result.startDate.toString());
 
-                DateTime? dt1 = DateTime.parse(currentDate.toString());
+      DateTime? dt1 = DateTime.parse(currentDate.toString());
 
-                create_formattedDate =
-                    dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
+      create_formattedDate =
+          dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
 
-                end_formattedDate =
-                    dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
-                return GestureDetector(
-                    onTap: (() {
-print("EX ID = ${result.id.toString()}");
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ExhitionDetail(blog_id: result.id.toString()),
-                          ));
-                    }),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(children: [
-                        Container(
-                          margin: const EdgeInsets.all(10.0),
-                          height: 150,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
-                              errorBuilder: (context, object, trace) {
-                                return Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color.fromARGB(255, 223, 220, 220),
-                                  ),
-                                );
-                              },
-                              image: NetworkImage(result.imageUrl ?? ''),
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.fill,
-                            ),
+      end_formattedDate =
+          dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
+      return GestureDetector(
+          onTap: (() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ExhitionDetail(blog_id: result.id.toString()),
+              ),
+            );
+          }),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13.05)),
+            child: Container(
+              decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(13.05),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x3FA6A6A6),
+                      blurRadius: 16.32,
+                      offset: Offset(0, 3.26),
+                      spreadRadius: 0,
+                    )]),
+              child: Column(children: [
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  height: 150,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(13.05),
+                    child: Image(
+                      errorBuilder: (context, object, trace) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromARGB(255, 223, 220, 220),
+                          ),
+                        );
+                      },
+                      image: NetworkImage(result.imageUrl ?? ''),
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          result.title.toString(),
+                          maxLines: 2,
+                          softWrap: true,
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
                           ),
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(width: 4),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                // child: Flexible(
-                                child: Text(
-                                  result.title.toString(),
-                                  maxLines: 2,
-                                  softWrap: true,
-                                  style: const TextStyle(
-                                    fontSize: 14.0,
-                                    fontFamily: 'Metropolis',
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Row(
+                        const SizedBox(height: 3),
+                        Row(
+                          children: [
+                            const Icon(
+                                Icons.calendar_month_outlined,
+                                size: 20),
+                            Text(
+                              "${create_formattedDate!} - ${end_formattedDate!}",
+                              style: const TextStyle(
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf')
+                                  .copyWith(fontSize: 11),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const ImageIcon(
+                                AssetImage('assets/location.png'),
+                                size: 15),
+                            Text(
+                              result.location.toString(),
+                              style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 13.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-Black.otf')
+                                  .copyWith(fontSize: 11),
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 3),
+                        Text(result.metaDescription.toString(),
+                            maxLines: 2,
+                            softWrap: true,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: 'Metropolis',
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            )),
+                        const SizedBox(height: 7),
+                        const Divider(height: 2.0, thickness: 2),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(
+                               // width: MediaQuery.of(context).size.width /2.6,
+                                height: 18,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                  //mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    result.isLike == "0"
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Exhibitionlike(
+                                                  result.id.toString());
+                                              result.isLike = '1';
+                                              int like = int.parse(result
+                                                  .likeCounter
+                                                  .toString());
+                                              like = like + 1;
+                                              result.likeCounter =
+                                                  like.toString();
+                                              setState(() {});
+                                            },
+                                            child: Image.asset(
+                                              'assets/like.png',
+                                              width: 30,
+                                              height: 28,
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              Exhibitionlike(
+                                                  result.id.toString());
+                                              result.isLike = '0';
+                                              int like = int.parse(result
+                                                  .likeCounter
+                                                  .toString());
+                                              like = like - 1;
+                                              result.likeCounter =
+                                                  like.toString();
+                                              //getnewsdata.clear();
+                                              // get_News();
+                                              setState(() {});
+                                            },
+                                            child: Image.asset(
+                                              'assets/like1.png',
+                                              width: 30,
+                                              height: 28,
+                                            )),
+                                    Text(
+                                        'Interested (${result.likeCounter})',
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          fontFamily: 'Metropolis',
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ))
+                                  ],
+                                )),
+                            SizedBox(
+                              //width: MediaQuery.of(context).size.width / 3.5,
+                              height: 18,
+                              child: Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                              Icons.calendar_month_outlined,
-                                              size: 20),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            "${create_formattedDate!} - ${end_formattedDate!}",
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(fontSize: 11),
-                                          )
-                                        ],
+                                  GestureDetector(
+                                      onTap: () {},
+                                      child: const ImageIcon(
+                                        AssetImage('assets/show.png'),
+                                        color: Colors.black,
+                                        size: 20,
                                       )),
-                                  Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15.0),
-                                      child: Row(
-                                        children: [
-                                          const ImageIcon(
-                                              AssetImage('assets/location.png'),
-                                              size: 15),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            result.location.toString(),
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(fontSize: 11),
-                                          )
-                                        ],
-                                      ))
-                                ],
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: Flexible(
-                                  child: Text(result.metaDescription.toString(),
-                                      maxLines: 2,
-                                      softWrap: true,
+                                  const SizedBox(width: 2),
+                                  Text(result.viewCounter.toString(),
                                       style: const TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                       ))
-                                  // )
-
-                                  ),
-                              const Divider(height: 2.0, thickness: 2),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.6,
-                                      height: 18,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        //mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          result.isLike == "0"
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    Exhibitionlike(
-                                                        result.id.toString());
-                                                    result.isLike = '1';
-                                                    int like = int.parse(result
-                                                        .likeCounter
-                                                        .toString());
-                                                    like = like + 1;
-                                                    result.likeCounter =
-                                                        like.toString();
-                                                    setState(() {});
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/like.png',
-                                                    width: 30,
-                                                    height: 28,
-                                                  ),
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () {
-                                                    Exhibitionlike(
-                                                        result.id.toString());
-                                                    result.isLike = '0';
-                                                    int like = int.parse(result
-                                                        .likeCounter
-                                                        .toString());
-                                                    like = like - 1;
-                                                    result.likeCounter =
-                                                        like.toString();
-                                                    //getnewsdata.clear();
-                                                    // get_News();
-                                                    setState(() {});
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/like1.png',
-                                                    width: 30,
-                                                    height: 28,
-                                                  )),
-                                          Text(
-                                              'Interested (${result.likeCounter})',
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                fontFamily: 'Metropolis',
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ))
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    height: 18,
-                                    child: Row(
-                                      //mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () {},
-                                            child: const ImageIcon(
-                                              AssetImage('assets/show.png'),
-                                              color: Colors.black,
-                                              size: 20,
-                                            )),
-                                        const SizedBox(width: 2),
-                                        Text(result.viewCounter.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontFamily: 'Metropolis',
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black,
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          5.0,
-                                      height: 18,
-                                      child: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () {
-                                                shareImage(
-                                                    url: result.imageUrl
-                                                        .toString(),
-                                                    title: result.title
-                                                        .toString());
-                                              },
-                                              child: const ImageIcon(AssetImage(
-                                                  'assets/Send.png'))),
-                                          const SizedBox(width: 2),
-                                          const Text('Share',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontFamily: 'Metropolis',
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ))
-                                        ],
-                                      )),
-                                  Container(
-                                    height: 15,
-                                  ),
                                 ],
                               ),
-                              Container(
-                                height: 15,
-                              ),
-                            ]),
+                            ),
+                            SizedBox(
+                                //width: MediaQuery.of(context).size.width / 5.0,
+                                height: 18,
+                                child: Row(
+                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          shareImage(
+                                              url: result.imageUrl
+                                                  .toString(),
+                                              title: result.title
+                                                  .toString());
+                                        },
+                                        child: const ImageIcon(AssetImage(
+                                            'assets/Send.png'))),
+                                    const SizedBox(width: 2),
+                                    const Text('Share',
+                                        style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontFamily: 'Metropolis',
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ))
+                                  ],
+                                )),
+                          ],
+                        ),
+                        Container(
+                          height: 15,
+                        ),
                       ]),
-                    ));
-              },
-            );
-          }
-        }));
+                ),
+              ]),
+            ),
+          ));
+    },
+                );
   }
 
   Widget past_exhibition() {
-    return Container(
-        padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0),
-        //margin: EdgeInsets.only(bottom: 10),
-        width: MediaQuery.of(context).size.width,
-        child: FutureBuilder(
-            //future: load_category(),
-            builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: getpastexbitiondata.length,
-              shrinkWrap: true,
-              controller: scrollercontroller,
-              itemBuilder: (context, index) {
-                getnews.Data result = getpastexbitiondata[index];
-                DateFormat format = DateFormat("yyyy-MM-dd");
-
-                var curretDate = format.parse(result.startDate.toString());
-
-                DateTime? dt1 = DateTime.parse(curretDate.toString());
-
-                create_formattedDate =
-                    dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
-
-                end_formattedDate =
-                    dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
-                return GestureDetector(
-                    onTap: (() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ExhitionDetail(blog_id: result.id.toString()),
-                          ));
-                    }),
-                    child: Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(children: [
-                        Container(
-                          margin: const EdgeInsets.all(10.0),
-                          height: 150,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            /*shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0)),*/
-                            child: Image(
-                              errorBuilder: (context, object, trace) {
-                                return Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color.fromARGB(255, 223, 220, 220),
-                                  ),
-                                );
-                              },
-                              image: NetworkImage(result.imageUrl ?? ''
-                                  //data[index]['member_image'] ?? '',
-                                  ),
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+    physics: const AlwaysScrollableScrollPhysics(),
+    itemCount: getpastexbitiondata.length,
+    shrinkWrap: true,
+    controller: scrollercontroller,
+    itemBuilder: (context, index) {
+      getnews.Data result = getpastexbitiondata[index];
+      DateFormat format = DateFormat("yyyy-MM-dd");
+      var curretDate = format.parse(result.startDate.toString());
+      DateTime? dt1 = DateTime.parse(curretDate.toString());
+      create_formattedDate =
+          dt1 != null ? DateFormat('dd MMMM yyyy').format(dt1) : "";
+      end_formattedDate =
+          dt1 != null ? DateFormat('dd MMMM yyyy ').format(dt1) : "";
+      return GestureDetector(
+        onTap: (() {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ExhitionDetail(blog_id: result.id.toString()),
+              ));
+        }),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(13.05)),
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.05),
+                ),
+                shadows: [
+                BoxShadow(
+                color: Color(0x3FA6A6A6),
+            blurRadius: 16.32,
+            offset: Offset(0, 3.26),
+            spreadRadius: 0,
+          )]),
+            child: Column(
+                children: [
+              Container(
+                margin: const EdgeInsets.all(10.0),
+                height: 150,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(13.05),
+                  /*shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(10.0)),*/
+                  child: Image(
+                    errorBuilder: (context, object, trace) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromARGB(255, 223, 220, 220),
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(width: 4),
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: Flexible(
-                                  child: Text(result.title.toString(),
-                                      maxLines: 2,
-                                      softWrap: true,
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ))
-                                  // )
-
-                                  ),
-                              Row(
+                      );
+                    },
+                    image: NetworkImage(result.imageUrl ?? ''
+                        //data[index]['member_image'] ?? '',
+                        ),
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(result.title.toString(),
+                          maxLines: 2,
+                          softWrap: true,
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          )),
+                      const SizedBox(height: 3),
+                      Row(
+                        children: [
+                          const Icon(
+                              Icons.calendar_month_outlined,
+                              size: 15),
+                          Text(
+                            "${create_formattedDate!} - ${end_formattedDate!}",
+                            style: const TextStyle(
+                                fontSize: 11.0,
+                                fontWeight: FontWeight.w500,
+                                fontFamily:
+                                'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(fontSize: 11),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      Row(
+                        children: [
+                          const ImageIcon(
+                              AssetImage('assets/location.png'),
+                              size: 15),
+                          Text(
+                            result.location.toString(),
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 11.0,
+                                fontWeight: FontWeight.w500,
+                                fontFamily:
+                                'assets/fonst/Metropolis-Black.otf')
+                                .copyWith(fontSize: 11),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      Text(result.metaDescription.toString(),
+                          maxLines: 2,
+                          softWrap: true,
+                          style: const TextStyle(
+                            fontSize: 12.0,
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          )),
+                      const SizedBox(height: 7),
+                      const Divider(height: 2.0, thickness: 2),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                             // width: MediaQuery.of(context).size.width / 2.7,
+                              height: 18,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                //mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                              Icons.calendar_month_outlined,
-                                              size: 20),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            "${create_formattedDate!} - ${end_formattedDate!}",
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(fontSize: 11),
-                                          )
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15.0),
-                                      child: Row(
-                                        children: [
-                                          const ImageIcon(
-                                              AssetImage('assets/location.png'),
-                                              size: 15),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            result.location.toString(),
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(fontSize: 11),
-                                          )
-                                        ],
-                                      ))
-                                ],
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: Flexible(
-                                  child: Text(result.metaDescription.toString(),
-                                      maxLines: 2,
-                                      softWrap: true,
+                                  result.isLike == "0"
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            Exhibitionlike(
+                                                result.id.toString());
+                                            result.isLike = '1';
+                                            int like = int.parse(result
+                                                .likeCounter
+                                                .toString());
+                                            like = like + 1;
+                                            result.likeCounter =
+                                                like.toString();
+                                            /*getnewsdata.clear();
+                                      get_News();*/
+                                            setState(() {});
+                                          },
+                                          child: Image.asset(
+                                            'assets/like.png',
+                                            width: 30,
+                                            height: 28,
+                                          ),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () {
+                                            Exhibitionlike(
+                                                result.id.toString());
+                                            result.isLike = '0';
+                                            int like = int.parse(result
+                                                .likeCounter
+                                                .toString());
+                                            like = like - 1;
+                                            result.likeCounter =
+                                                like.toString();
+                                            //getnewsdata.clear();
+                                            // get_News();
+                                            setState(() {});
+                                          },
+                                          child: Image.asset(
+                                            'assets/like1.png',
+                                            width: 30,
+                                            height: 28,
+                                          )),
+                                  Text(
+                                      'Interested (${result.likeCounter})',
                                       style: const TextStyle(
                                         fontSize: 12.0,
                                         fontFamily: 'Metropolis',
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                       ))
-                                  // )
-
-                                  ),
-                              const Divider(height: 2.0, thickness: 2),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.7,
-                                      height: 18,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        //mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          result.isLike == "0"
-                                              ? GestureDetector(
-                                                  onTap: () {
-                                                    Exhibitionlike(
-                                                        result.id.toString());
-                                                    result.isLike = '1';
-                                                    int like = int.parse(result
-                                                        .likeCounter
-                                                        .toString());
-                                                    like = like + 1;
-                                                    result.likeCounter =
-                                                        like.toString();
-                                                    /*getnewsdata.clear();
-                                            get_News();*/
-                                                    setState(() {});
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/like.png',
-                                                    width: 30,
-                                                    height: 28,
-                                                  ),
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () {
-                                                    Exhibitionlike(
-                                                        result.id.toString());
-                                                    result.isLike = '0';
-                                                    int like = int.parse(result
-                                                        .likeCounter
-                                                        .toString());
-                                                    like = like - 1;
-                                                    result.likeCounter =
-                                                        like.toString();
-                                                    //getnewsdata.clear();
-                                                    // get_News();
-                                                    setState(() {});
-                                                  },
-                                                  child: Image.asset(
-                                                    'assets/like1.png',
-                                                    width: 30,
-                                                    height: 28,
-                                                  )),
-                                          Text(
-                                              'Interested (${result.likeCounter})',
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                fontFamily: 'Metropolis',
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ))
-                                        ],
-                                      )),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.5,
-                                    height: 18,
-                                    child: Row(
-                                      //mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () {},
-                                            child: const ImageIcon(
-                                              AssetImage('assets/show.png'),
-                                              color: Colors.black,
-                                              size: 20,
-                                            )),
-                                        const SizedBox(width: 2),
-                                        Text(result.viewCounter.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontFamily: 'Metropolis',
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black,
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          5.0,
-                                      height: 18,
-                                      child: Row(
-                                        //mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () {
-                                                shareImage(
-                                                    url: result.imageUrl
-                                                        .toString(),
-                                                    title: result.title
-                                                        .toString());
-                                              },
-                                              child: const ImageIcon(AssetImage(
-                                                  'assets/Send.png'))),
-                                          const SizedBox(width: 2),
-                                          const Text('Share',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                fontFamily: 'Metropolis',
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black,
-                                              ))
-                                        ],
-                                      )),
-                                  Container(
-                                    height: 15,
-                                  ),
                                 ],
-                              ),
-                              Container(
-                                height: 15,
-                              ),
-                            ]),
-                      ]),
-                    ));
-              },
-            );
-          }
-        }));
+                              )),
+                          SizedBox(
+                            //width: MediaQuery.of(context).size.width / 3.5,
+                            height: 18,
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {},
+                                    child: const ImageIcon(
+                                      AssetImage('assets/show.png'),
+                                      color: Colors.black,
+                                      size: 20,
+                                    )),
+                                const SizedBox(width: 2),
+                                Text(result.viewCounter.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 12.0,
+                                      fontFamily: 'Metropolis',
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                              //width: MediaQuery.of(context).size.width / 5.0,
+                              height: 18,
+                              child: Row(
+                                //mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        shareImage(
+                                            url: result.imageUrl
+                                                .toString(),
+                                            title:
+                                                result.title.toString());
+                                      },
+                                      child: const ImageIcon(
+                                          AssetImage('assets/Send.png'))),
+                                  const SizedBox(width: 2),
+                                  const Text('Share',
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontFamily: 'Metropolis',
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ))
+                                ],
+                              )),
+                        ],
+                      ),
+                      Container(
+                        height: 15,
+                      ),
+                    ]),
+              ),
+            ]),
+          ),
+        ),
+      );
+    },
+                );
   }
 
   Widget horiztallist() {
@@ -727,19 +688,21 @@ print("EX ID = ${result.id.toString()}");
         color: Colors.white,
         //margin: EdgeInsets.only(top: 5.0),
         //margin: EdgeInsets.fromLTRB(10, 2.0, 0.0, 0),
-        child: FutureBuilder(
-
-            //future: load_subcategory(),
-            builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              snapshot.hasData == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            //List<dynamic> users = snapshot.data as List<dynamic>;
-            return ListView.builder(
+        child:
+        // FutureBuilder(
+        //
+        //     //future: load_subcategory(),
+        //     builder: (context, snapshot) {
+        //   if (snapshot.connectionState == ConnectionState.none &&
+        //       snapshot.hasData == null) {
+        //     return const Center(child: CircularProgressIndicator());
+        //   }
+        //   if (snapshot.hasError) {
+        //     return Text('Error: ${snapshot.error}');
+        //   } else {
+        //     //List<dynamic> users = snapshot.data as List<dynamic>;
+        //     return
+              ListView.builder(
                 shrinkWrap: false,
                 physics: const ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
@@ -808,9 +771,10 @@ print("EX ID = ${result.id.toString()}");
                               ),*/
                         )
                       ]));
-                });
-          }
-        }));
+                }),
+        //   }
+        // })
+    );
   }
 
   Future<void> get_UpcomingExhibition(String offset) async {
@@ -1008,7 +972,7 @@ print("EX ID = ${result.id.toString()}");
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed

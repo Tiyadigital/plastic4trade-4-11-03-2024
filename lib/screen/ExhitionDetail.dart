@@ -262,9 +262,23 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
                               )),
                           Padding(
                               padding: const EdgeInsets.only(top: 10),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Html(data: long_text),
+                              child: Html(data: long_text,
+                                style: {
+                                  "p": Style(
+                                    fontSize: FontSize(12),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.24,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                  "body": Style(
+                                    fontSize: FontSize(12),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: -0.24,
+                                    fontFamily: 'Metropolis',
+                                  ),
+                                },
                               )),
                         ],
                       )),
@@ -290,7 +304,6 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
 
   Future<void> get_ExhitionDetail() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    Fluttertoast.showToast(msg: widget.blog_id.toString());
     var res = await getexbitiondetail(pref.getString('user_id').toString(),
         pref.getString('api_token').toString(), widget.blog_id.toString());
 
@@ -311,8 +324,7 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
         var curretDate = format.parse(blog_date.toString());
 
         DateTime? dt1 = DateTime.parse(curretDate.toString());
-        create_formattedDate =
-            dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
+        create_formattedDate = dt1 != null ? DateFormat('dd MMMM, yyyy').format(dt1) : "";
 
         isload = true;
         setState(() {});
@@ -327,9 +339,10 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     var res = await exbitionlike_like(
-        blogid.toString(),
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString());
+      blogid.toString(),
+      pref.getString('user_id').toString(),
+      pref.getString('api_token').toString(),
+    );
     if (res['status'] == 1) {
     } else {
       Fluttertoast.showToast(msg: res['message']);
@@ -360,7 +373,6 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          // <-- SEE HERE
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
         ),
@@ -368,7 +380,7 @@ class _ExhitionDetailState extends State<ExhitionDetail> {
       builder: (context) => DraggableScrollableSheet(
           expand: false,
           initialChildSize:
-              0.60, // Initial height as a fraction of screen height
+              0.60,
           builder: (BuildContext context, ScrollController scrollController) {
             return StatefulBuilder(
               builder: (context, setState) {
@@ -433,7 +445,9 @@ class _ViewLikesState extends State<ViewLikes>
                 width: 150,
                 height: 5,
               ),
-              const SizedBox(height: 25,),
+              const SizedBox(
+                height: 25,
+              ),
               const Text("Likes"),
               Expanded(
                 child: ListView.builder(

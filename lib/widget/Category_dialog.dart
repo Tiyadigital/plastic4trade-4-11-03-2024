@@ -75,11 +75,12 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                 // color: Color.fromARGB(255, 0, 91, 148)
               ),
               child: TextButton(
-                onPressed: () {
-                  constanst.appopencount1=2;
+                onPressed: () async{
+                 // constanst.appopencount1=2;
 
-                  log("APP COUNT == ${constanst.appopencount1}");
-
+                  print("APP COUNT == ${constanst.appopencount1}");
+                  SharedPreferences pref = await SharedPreferences.getInstance();
+                  pref.setBool('is_category_skip', true);
                   Navigator.pop(context);
                   if(constanst.isprofile){
                     Navigator.push(
@@ -130,7 +131,10 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                     }else if(constanst.redirectpage=="add_grade"){
 
                     }
+
                   }
+
+                  setState(() {});
                 },
                 child: const Text('Skip',
                     style: TextStyle(
@@ -180,6 +184,7 @@ class _BussinessPro_dialogState extends State<Category_dialog> {
                           builder: (context) => const Grade(),
                         ));
                   }
+                  setState(() {});
                 },
                 child: const Text('Proceed',
                     style: TextStyle(

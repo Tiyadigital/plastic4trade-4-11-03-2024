@@ -1,15 +1,15 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
-
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_interface.dart';
 import 'package:Plastic4trade/model/Get_Filter_live_Price.dart' as filter;
 import 'package:Plastic4trade/utill/constant.dart';
-
 
 class live_priceFilterScreen extends StatefulWidget {
   const live_priceFilterScreen({Key? key}) : super(key: key);
@@ -19,17 +19,25 @@ class live_priceFilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<live_priceFilterScreen> {
-  int? _radioValue = 0;
-  int? _managerValue = 0;
   String? assignedName;
   bool gender = false;
-  bool? iscategory,iscompany,iscountry,isstate,ispost_type,islocation,isload;
-  String category_id = '',grade_id='',type_id='',bussinesstype='',post_type='';
-  List<filter.Category> category_data= [];
-  List<filter.Company> company_data= [];
-  List<filter.State> state_data= [];
-  List<filter.Country> country_data= [];
-  List<String> select_categotyId=[];
+  bool? iscategory,
+      iscompany,
+      iscountry,
+      isstate,
+      ispost_type,
+      islocation,
+      isload;
+  String category_id = '',
+      grade_id = '',
+      type_id = '',
+      bussinesstype = '',
+      post_type = '';
+  List<filter.Category> category_data = [];
+  List<filter.Company> company_data = [];
+  List<filter.State> state_data = [];
+  List<filter.Country> country_data = [];
+  List<String> select_categotyId = [];
 
   String? location, search;
 
@@ -38,7 +46,6 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
   Color _color3 = Colors.black;
   Color _color4 = Colors.black;
   Color _color5 = Colors.black;
-
 
   @override
   void initState() {
@@ -60,7 +67,7 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
     }
   }
 
-  clear(){
+  clear() {
     category_data.clear();
     company_data.clear();
     country_data.clear();
@@ -69,7 +76,6 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
     constanst.Type_itemsCheck.clear();
     constanst.Grade_itemsCheck.clear();
     constanst.bussiness_type_itemsCheck.clear();
-
   }
 
   get_Filterdata() async {
@@ -78,14 +84,12 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
 
     var res = await getfilterdata_liveprice();
     var jsonarray;
-    print(res);
     if (res['status'] == 1) {
       getfilter = filter.Get_Filter_live_Price.fromJson(res);
 
       for (var item in res['category']) {
         category_data.add(filter.Category.fromJson(item));
       }
-
 
       for (var item in res['company']) {
         company_data.add(filter.Company.fromJson(item));
@@ -114,75 +118,70 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
       for (int i = 0; i < company_data.length; i++) {
         constanst.bussiness_type_itemsCheck.add(Icons.circle_outlined);
       }
-      isload=true;
+      isload = true;
       //category_data=res['category'];
-    
-      
+
       setState(() {});
     } else {
       Fluttertoast.showToast(msg: res['message']);
     }
     return jsonarray;
-
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30))
+        ),
         child: Column(
           children: [
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Image.asset(
               'assets/hori_line.png',
               width: 150,
               height: 5,
             ),
-            SizedBox(height: 10),
-            Center(
+            const SizedBox(height: 10),
+            const Center(
               child: Text('Filter',
                   style: TextStyle(
                       fontSize: 17.0,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
-                      fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                      fontFamily: 'assets/fonst/Metropolis-Black.otf')),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             //-------CircularCheckBox()
-            Divider(color: Colors.grey),
+            const Divider(color: Colors.grey),
             IntrinsicHeight(
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width * 0.35,
-
                       alignment: Alignment.center,
                       child: ScreenA()),
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width / 60,
-                    child: VerticalDivider(
+                    child: const VerticalDivider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                       width: MediaQuery.of(context).size.width * 0.60,
-                      height: MediaQuery.of(context).size.height/1.50,
-                    //color: Colors.blue,
-                    //alignment: Alignment.center,
-                    child: isload==true?ScreenB():Container()
-
-
-
-
-                    ),
-
+                      height: MediaQuery.of(context).size.height / 1.50,
+                      //color: Colors.blue,
+                      //alignment: Alignment.center,
+                      child: isload == true ? ScreenB() : Container()),
                 ],
               ),
             ),
 
-            Divider(color: Colors.grey),
+            const Divider(color: Colors.grey),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -190,12 +189,13 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
                 Container(
                   width: MediaQuery.of(context).size.width / 2.3,
                   height: 60,
-                  margin: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                      border: Border.all(width: 1,color: Color.fromARGB(255, 0, 91, 148)),
-                      borderRadius: BorderRadius.circular(50.0),
-                     // color: Color.fromARGB(255, 0, 91, 148)
-                    ),
+                    border: Border.all(
+                        width: 1, color: const Color.fromARGB(255, 0, 91, 148)),
+                    borderRadius: BorderRadius.circular(50.0),
+                    // color: Color.fromARGB(255, 0, 91, 148)
+                  ),
                   child: TextButton(
                     onPressed: () {
                       constanst.select_categotyId.clear();
@@ -205,44 +205,35 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
                       constanst.select_categotyType.clear();
                       constanst.select_state.clear();
                       constanst.select_country.clear();
-                      constanst.date="";
-                        Navigator.pop(context);
+                      constanst.date = "";
+                      Navigator.pop(context);
                     },
-                    child: Text('Cancel',
+                    child: const Text('Cancel',
                         style: TextStyle(
                             fontSize: 19.0,
                             fontWeight: FontWeight.w800,
                             color: Color.fromARGB(255, 0, 91, 148),
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                            fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                   ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 2.3,
                   height: 60,
-                  margin: EdgeInsets.all(5.0),
+                  margin: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
                       border: Border.all(width: 1),
                       borderRadius: BorderRadius.circular(50.0),
-                      color: Color.fromARGB(255, 0, 91, 148)
-                  ),
+                      color: const Color.fromARGB(255, 0, 91, 148)),
                   child: TextButton(
                     onPressed: () {
-
-                        Navigator.pop(context);
-                        /*Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Exhibitor()));*/
-
-
-
+                      Navigator.pop(context);
                     },
-                    child: Text('Apply',
+                    child: const Text('Apply',
                         style: TextStyle(
                             fontSize: 19.0,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
-                            fontFamily: 'assets\fonst\Metropolis-Black.otf')),
+                            fontFamily: 'assets/fonst/Metropolis-Black.otf')),
                   ),
                 ),
               ],
@@ -257,501 +248,483 @@ class _FilterScreenState extends State<live_priceFilterScreen> {
     return Column(children: [
       SizedBox(
         height: 50,
-        child:
-            Align(child: TextButton(onPressed: () {
-              iscategory=true;iscompany=false;iscountry=false;isstate=false;ispost_type=false;islocation=false;
-              _color1=Color.fromARGB(255, 0, 91, 148);
-               _color2 = Colors.black;
-               _color3 = Colors.black;
-               _color4 = Colors.black;
-               _color5 = Colors.black;
+        child: Align(
+            child: TextButton(
+                onPressed: () {
+                  iscategory = true;
+                  iscompany = false;
+                  iscountry = false;
+                  isstate = false;
+                  ispost_type = false;
+                  islocation = false;
+                  _color1 = const Color.fromARGB(255, 0, 91, 148);
+                  _color2 = Colors.black;
+                  _color3 = Colors.black;
+                  _color4 = Colors.black;
+                  _color5 = Colors.black;
 
-              setState(() {});
-            }, child: Text('Category',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color1),))),
+                  setState(() {});
+                },
+                child: Text(
+                  'Category',
+                  style: const TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                      .copyWith(fontWeight: FontWeight.w500, color: _color1),
+                ))),
       ),
-      Divider(color: Colors.grey),
+      const Divider(color: Colors.grey),
       SizedBox(
         height: 50,
-        child:
-        Align(child: TextButton(onPressed: () {
-          iscategory=false;iscompany=true;iscountry=false;isstate=false;ispost_type=false;islocation=false;
-          _color2=Color.fromARGB(255, 0, 91, 148);
-          _color1 = Colors.black;
-          _color3 = Colors.black;
-          _color4 = Colors.black;
-          _color5 = Colors.black;
+        child: Align(
+            child: TextButton(
+                onPressed: () {
+                  iscategory = false;
+                  iscompany = true;
+                  iscountry = false;
+                  isstate = false;
+                  ispost_type = false;
+                  islocation = false;
+                  _color2 = const Color.fromARGB(255, 0, 91, 148);
+                  _color1 = Colors.black;
+                  _color3 = Colors.black;
+                  _color4 = Colors.black;
+                  _color5 = Colors.black;
 
-          setState(() {});
-        }, child: Text('Company',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color2),))),
+                  setState(() {});
+                },
+                child: Text(
+                  'Company',
+                  style: const TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                      .copyWith(fontWeight: FontWeight.w500, color: _color2),
+                ))),
       ),
-      Divider(color: Colors.grey),
+      const Divider(color: Colors.grey),
       SizedBox(
         height: 50,
-        child:
-        Align(child: TextButton(onPressed: () {
-          iscategory=false;iscompany=false;iscountry=true;isstate=false;ispost_type=false;islocation=false;
-          _color3=Color.fromARGB(255, 0, 91, 148);
-          _color1 = Colors.black;
-          _color2 = Colors.black;
-          _color4 = Colors.black;
-          _color5 = Colors.black;
+        child: Align(
+            child: TextButton(
+                onPressed: () {
+                  iscategory = false;
+                  iscompany = false;
+                  iscountry = true;
+                  isstate = false;
+                  ispost_type = false;
+                  islocation = false;
+                  _color3 = const Color.fromARGB(255, 0, 91, 148);
+                  _color1 = Colors.black;
+                  _color2 = Colors.black;
+                  _color4 = Colors.black;
+                  _color5 = Colors.black;
 
-          setState(() {});
-        }, child: Text('Country',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color3),))),
+                  setState(() {});
+                },
+                child: Text(
+                  'Country',
+                  style: const TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                      .copyWith(fontWeight: FontWeight.w500, color: _color3),
+                ))),
       ),
-      Divider(color: Colors.grey),
+      const Divider(color: Colors.grey),
       SizedBox(
         height: 50,
-        child:
-        Align(child: TextButton(onPressed: () {
-          iscategory=false;iscompany=false;iscountry=false;isstate=true;ispost_type=false;islocation=false;
-          _color4=Color.fromARGB(255, 0, 91, 148);
-          _color1 = Colors.black;
-          _color2 = Colors.black;
-          _color3 = Colors.black;
-          _color5 = Colors.black;
+        child: Align(
+            child: TextButton(
+                onPressed: () {
+                  iscategory = false;
+                  iscompany = false;
+                  iscountry = false;
+                  isstate = true;
+                  ispost_type = false;
+                  islocation = false;
+                  _color4 = const Color.fromARGB(255, 0, 91, 148);
+                  _color1 = Colors.black;
+                  _color2 = Colors.black;
+                  _color3 = Colors.black;
+                  _color5 = Colors.black;
 
-          setState(() {});
-        }, child: Text('State',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color4),))),
+                  setState(() {});
+                },
+                child: Text(
+                  'State',
+                  style: const TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                      .copyWith(fontWeight: FontWeight.w500, color: _color4),
+                ))),
       ),
-      Divider(color: Colors.grey),
+      const Divider(color: Colors.grey),
       SizedBox(
         height: 50,
-        child:
-        Align(child: TextButton(onPressed: () {
-          iscategory=false;iscompany=false;iscountry=false;isstate=false;ispost_type=true;islocation=false;
-          _color5=Color.fromARGB(255, 0, 91, 148);
-          _color1 = Colors.black;
-          _color2 = Colors.black;
-          _color3 = Colors.black;
-          _color4 = Colors.black;
+        child: Align(
+            child: TextButton(
+                onPressed: () {
+                  iscategory = false;
+                  iscompany = false;
+                  iscountry = false;
+                  isstate = false;
+                  ispost_type = true;
+                  islocation = false;
+                  _color5 = const Color.fromARGB(255, 0, 91, 148);
+                  _color1 = Colors.black;
+                  _color2 = Colors.black;
+                  _color3 = Colors.black;
+                  _color4 = Colors.black;
 
-          setState(() {});
-        }, child: GestureDetector(
-            onTap: () async {
-              final date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(1960),
-                  initialDate: DateTime.now(),
-                  lastDate: DateTime(2100));
-              if (date != null) {
-                setState(() {
-                  String data1 = DateFormat()
-                      .add_yMd()
-                      .format(date);
-                  data1=data1.replaceAll("/",'-');
-                  constanst.date=data1;
-                  print(constanst.date);
-
-
-                });
-              }
-            },
-            child: Text('Date',style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black,fontFamily: 'assets\fonst\Metropolis-Black.otf').copyWith(fontWeight: FontWeight.w500,color:_color5),)))),
+                  setState(() {});
+                },
+                child: GestureDetector(
+                    onTap: () async {
+                      final date = await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1960),
+                          initialDate: DateTime.now(),
+                          lastDate: DateTime(2100));
+                      if (date != null) {
+                        setState(() {
+                          String data1 = DateFormat().add_yMd().format(date);
+                          data1 = data1.replaceAll("/", '-');
+                          constanst.date = data1;
+                        });
+                      }
+                    },
+                    child: Text(
+                      'Date',
+                      style: const TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                              fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                          .copyWith(
+                              fontWeight: FontWeight.w500, color: _color5),
+                    )))),
       ),
-      Divider(color: Colors.grey),
-
+      const Divider(color: Colors.grey),
       SizedBox(
-        height: MediaQuery.of(context).size.height/6.5,
+        height: MediaQuery.of(context).size.height / 6.5,
       )
     ]);
   }
 
   Widget ScreenB() {
     return SizedBox(
-
-      child:iscategory==true?category():iscompany==true?Company():iscountry==true?Country():isstate==true?State():Container()
-    );
+        child: iscategory == true
+            ? category()
+            : iscompany == true
+                ? Company()
+                : iscountry == true
+                    ? Country()
+                    : isstate == true
+                        ? State()
+                        : Container());
   }
 
-  Widget category(){
-    return  ListView.builder(
+  Widget category() {
+    return ListView.builder(
         shrinkWrap: true,
         itemCount: category_data.length,
         // physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          filter.Category category =category_data[index];
+          filter.Category category = category_data[index];
           return GestureDetector(
             onTap: () {
-              gender=true;
-              if (constanst.category_itemsCheck[index] == Icons.circle_outlined) {
-                if(constanst
-                    .select_categotyId.length<=2) {
+              gender = true;
+              if (constanst.category_itemsCheck[index] ==
+                  Icons.circle_outlined) {
+                if (constanst.select_categotyId.length <= 2) {
                   constanst.category_itemsCheck[index] =
                       Icons.check_circle_outline;
 
-                  category_id =
-                      category
-                          .id
-                          .toString();
-                  constanst
-                      .select_categotyId
-                      .add(
-                      category_id);
+                  category_id = category.id.toString();
+                  constanst.select_categotyId.add(category_id);
                 } else {
-                  Fluttertoast.showToast(msg: 'You Can Select Maximum 3 Category');
+                  Fluttertoast.showToast(
+                      msg: 'You Can Select Maximum 3 Category');
                 }
-                setState(() {
-
-                });
-                //print('sdrsr $category_id');
-                print(constanst.select_categotyId);
+                setState(() {});
 
               } else {
-                constanst.category_itemsCheck[index] =
-                    Icons.circle_outlined;
-                category_id =
-                    category
-                        .id
-                        .toString();
-                constanst
-                    .select_categotyId
-                    .remove(
-                    category_id);
-                print('remove $category_id');
-                print(constanst.select_categotyId);
-                setState(() {
-
-                });
+                constanst.category_itemsCheck[index] = Icons.circle_outlined;
+                category_id = category.id.toString();
+                constanst.select_categotyId.remove(category_id);
+                setState(() {});
               }
             },
             child: Container(
-              width: MediaQuery.of(context).size.width*4.0,
-              decoration: BoxDecoration(
-                  color: Colors.transparent
-              ),
-              child:
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: constanst.category_itemsCheck[index] == Icons.circle_outlined
-                              ? Icon(Icons.circle_outlined,
+              width: MediaQuery.of(context).size.width * 4.0,
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Row(
+                children: [
+                  IconButton(
+                      icon: constanst.category_itemsCheck[index] ==
+                              Icons.circle_outlined
+                          ? const Icon(Icons.circle_outlined,
                               color: Colors.black45)
-                              : Icon(Icons.check_circle,
+                          : Icon(Icons.check_circle,
                               color: Colors.green.shade600),
-                          onPressed: () {
-                            //setState(() {
-                              gender=true;
-                              if (constanst.category_itemsCheck[index] == Icons.circle_outlined) {
-                                if(constanst
-                                    .select_categotyId.length<=2) {
-                                  constanst.category_itemsCheck[index] =
-                                      Icons.check_circle_outline;
+                      onPressed: () {
+                        //setState(() {
+                        gender = true;
+                        if (constanst.category_itemsCheck[index] ==
+                            Icons.circle_outlined) {
+                          if (constanst.select_categotyId.length <= 2) {
+                            constanst.category_itemsCheck[index] =
+                                Icons.check_circle_outline;
 
-                                  category_id =
-                                      category
-                                          .id
-                                          .toString();
-                                  constanst
-                                      .select_categotyId
-                                      .add(
-                                      category_id);
-                                } else {
-                                  Fluttertoast.showToast(msg: 'You Can Select Maximum 3 Category');
-                                }
-                                setState(() {
-
-                                });
-                                //print('sdrsr $category_id');
-                                print(constanst.select_categotyId);
-
-                              } else {
-                                constanst.category_itemsCheck[index] =
-                                    Icons.circle_outlined;
-                                category_id =
-                                    category
-                                        .id
-                                        .toString();
-                                constanst
-                                    .select_categotyId
-                                    .remove(
-                                    category_id);
-                                print('remove $category_id');
-                                print(constanst.select_categotyId);
-                                setState(() {
-
-                                });
-                              }
-                           //});
-                          }),
-                      Text(category.categoryName.toString(),
-                          style: TextStyle(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontFamily: 'assets\fonst\Metropolis-Black.otf'),
-                          softWrap: false,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
-                    ],
-                  ),
-
+                            category_id = category.id.toString();
+                            constanst.select_categotyId.add(category_id);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: 'You Can Select Maximum 3 Category');
+                          }
+                          setState(() {});
+                          //print('sdrsr $category_id');
+                        } else {
+                          constanst.category_itemsCheck[index] =
+                              Icons.circle_outlined;
+                          category_id = category.id.toString();
+                          constanst.select_categotyId.remove(category_id);
+                          setState(() {});
+                        }
+                        //});
+                      }),
+                  Text(category.categoryName.toString(),
+                      style: const TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                      softWrap: false,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                ],
+              ),
             ),
           );
         });
   }
 
-  Widget Company(){
-    return   ListView.builder(
+  Widget Company() {
+    return ListView.builder(
         shrinkWrap: true,
         itemCount: company_data.length,
         // physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          filter.Company category =company_data[index];
+          filter.Company category = company_data[index];
           return GestureDetector(
             onTap: () {
               setState(() {
-                gender=true;
+                gender = true;
                 if (constanst.Type_itemsCheck[index] == Icons.circle_outlined) {
                   constanst.Type_itemsCheck[index] = Icons.check_circle_outline;
-                  type_id =
-                      category
-                          .id.toString();
-                  constanst
-                      .select_typeId
-                      .add(
-                      type_id);
-
+                  type_id = category.id.toString();
+                  constanst.select_typeId.add(type_id);
                 } else {
-                  constanst.Type_itemsCheck[index] =
-                      Icons.circle_outlined;
-                  type_id =
-                      category
-                          .id
-                          .toString();
-                  constanst
-                      .select_typeId
-                      .remove(
-                      type_id);
+                  constanst.Type_itemsCheck[index] = Icons.circle_outlined;
+                  type_id = category.id.toString();
+                  constanst.select_typeId.remove(type_id);
                 }
               });
             },
             child: Container(
-              width: MediaQuery.of(context).size.width*4.0,
-              decoration: BoxDecoration(
-                  color: Colors.transparent
-              ),
-              child:
-              Row(
+              width: MediaQuery.of(context).size.width * 4.0,
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Row(
                 children: [
                   IconButton(
-                      icon: constanst.Type_itemsCheck[index] == Icons.circle_outlined
-                          ? Icon(Icons.circle_outlined,
-                          color: Colors.black45)
+                      icon: constanst.Type_itemsCheck[index] ==
+                              Icons.circle_outlined
+                          ? const Icon(Icons.circle_outlined,
+                              color: Colors.black45)
                           : Icon(Icons.check_circle,
-                          color: Colors.green.shade600),
+                              color: Colors.green.shade600),
                       onPressed: () {
                         setState(() {
-                          gender=true;
-                          if (constanst.Type_itemsCheck[index] == Icons.circle_outlined) {
-                            constanst.Type_itemsCheck[index] = Icons.check_circle_outline;
-                            type_id =
-                                category
-                                    .id.toString();
-                            constanst
-                                .select_typeId
-                                .add(
-                                type_id);
-
+                          gender = true;
+                          if (constanst.Type_itemsCheck[index] ==
+                              Icons.circle_outlined) {
+                            constanst.Type_itemsCheck[index] =
+                                Icons.check_circle_outline;
+                            type_id = category.id.toString();
+                            constanst.select_typeId.add(type_id);
                           } else {
                             constanst.Type_itemsCheck[index] =
                                 Icons.circle_outlined;
-                            type_id =
-                                category
-                                    .id
-                                    .toString();
-                            constanst
-                                .select_typeId
-                                .remove(
-                                type_id);
+                            type_id = category.id.toString();
+                            constanst.select_typeId.remove(type_id);
                           }
                         });
                       }),
                   Text(category.companyName.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf'
-                         ),
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                       softWrap: false,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis),
                 ],
               ),
-
             ),
           );
-        });;
+        });
+    ;
   }
 
-  Widget Country(){
-    return   ListView.builder(
+  Widget Country() {
+    return ListView.builder(
         shrinkWrap: true,
         itemCount: country_data.length,
         // physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          filter.Country category =country_data[index];
+          filter.Country category = country_data[index];
           return GestureDetector(
             onTap: () {
               setState(() {
-                gender=true;
-                if (constanst.Grade_itemsCheck[index] == Icons.circle_outlined) {
-                  constanst.Grade_itemsCheck[index] = Icons.check_circle_outline;
-
-                  constanst
-                      .select_country
-                      .add(
-                      category.country.toString() );
-
-                } else {
+                gender = true;
+                if (constanst.Grade_itemsCheck[index] ==
+                    Icons.circle_outlined) {
                   constanst.Grade_itemsCheck[index] =
-                      Icons.circle_outlined;
+                      Icons.check_circle_outline;
 
-                  constanst
-                      .select_country
-                      .remove(
-                      category.country.toString() );
+                  constanst.select_country.add(category.country.toString());
+                } else {
+                  constanst.Grade_itemsCheck[index] = Icons.circle_outlined;
+
+                  constanst.select_country.remove(category.country.toString());
                 }
               });
             },
             child: Container(
-              width: MediaQuery.of(context).size.width*4.0,
-              decoration: BoxDecoration(
-                  color: Colors.transparent
-              ),
-              child:
-              Row(
+              width: MediaQuery.of(context).size.width * 4.0,
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Row(
                 children: [
                   IconButton(
-                      icon: constanst.Grade_itemsCheck[index] == Icons.circle_outlined
-                          ? Icon(Icons.circle_outlined,
-                          color: Colors.black45)
+                      icon: constanst.Grade_itemsCheck[index] ==
+                              Icons.circle_outlined
+                          ? const Icon(Icons.circle_outlined,
+                              color: Colors.black45)
                           : Icon(Icons.check_circle,
-                          color: Colors.green.shade600),
+                              color: Colors.green.shade600),
                       onPressed: () {
                         setState(() {
-                          gender=true;
-                          if (constanst.Grade_itemsCheck[index] == Icons.circle_outlined) {
-                            constanst.Grade_itemsCheck[index] = Icons.check_circle_outline;
+                          gender = true;
+                          if (constanst.Grade_itemsCheck[index] ==
+                              Icons.circle_outlined) {
+                            constanst.Grade_itemsCheck[index] =
+                                Icons.check_circle_outline;
 
-                            constanst
-                                .select_country
-                                .add(
-                                category.country.toString() );
-
+                            constanst.select_country
+                                .add(category.country.toString());
                           } else {
                             constanst.Grade_itemsCheck[index] =
                                 Icons.circle_outlined;
 
-                            constanst
-                                .select_country
-                                .remove(
-                                category.country.toString() );
+                            constanst.select_country
+                                .remove(category.country.toString());
                           }
                         });
                       }),
                   Text(category.country.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                       softWrap: false,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ],
               ),
-
             ),
           );
         });
   }
 
-  Widget State(){
-    return   ListView.builder(
+  Widget State() {
+    return ListView.builder(
         shrinkWrap: true,
-        itemCount:state_data.length,
+        itemCount: state_data.length,
         // physics: AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          filter.State category =state_data[index];
+          filter.State category = state_data[index];
           return GestureDetector(
             onTap: () {
               setState(() {
-                gender=true;
-                if (constanst.bussiness_type_itemsCheck[index] == Icons.circle_outlined) {
-                  constanst.bussiness_type_itemsCheck[index] = Icons.check_circle_outline;
+                gender = true;
+                if (constanst.bussiness_type_itemsCheck[index] ==
+                    Icons.circle_outlined) {
+                  constanst.bussiness_type_itemsCheck[index] =
+                      Icons.check_circle_outline;
 
-                  constanst
-                      .select_state
-                      .add(
-                      category.state.toString());
-                  setState(() {
-                  });
+                  constanst.select_state.add(category.state.toString());
+                  setState(() {});
                 } else {
-                  constanst.Grade_itemsCheck[index] =
-                      Icons.circle_outlined;
+                  constanst.Grade_itemsCheck[index] = Icons.circle_outlined;
 
-                  constanst
-                      .selectbusstype_id
-                      .remove(
-                      category.state.toString());
-                  setState(() {
-                  });
+                  constanst.selectbusstype_id.remove(category.state.toString());
+                  setState(() {});
                 }
               });
             },
             child: Container(
-              width: MediaQuery.of(context).size.width*4.0,
-              decoration: BoxDecoration(
-                  color: Colors.transparent
-              ),
-              child:
-              Row(
+              width: MediaQuery.of(context).size.width * 4.0,
+              decoration: const BoxDecoration(color: Colors.transparent),
+              child: Row(
                 children: [
                   IconButton(
-                      icon: constanst.bussiness_type_itemsCheck[index] == Icons.circle_outlined
-                          ? Icon(Icons.circle_outlined,
-                          color: Colors.black45)
+                      icon: constanst.bussiness_type_itemsCheck[index] ==
+                              Icons.circle_outlined
+                          ? const Icon(Icons.circle_outlined,
+                              color: Colors.black45)
                           : Icon(Icons.check_circle,
-                          color: Colors.green.shade600),
+                              color: Colors.green.shade600),
                       onPressed: () {
                         setState(() {
-                          gender=true;
-                          if (constanst.bussiness_type_itemsCheck[index] == Icons.circle_outlined) {
-                            constanst.bussiness_type_itemsCheck[index] = Icons.check_circle_outline;
+                          gender = true;
+                          if (constanst.bussiness_type_itemsCheck[index] ==
+                              Icons.circle_outlined) {
+                            constanst.bussiness_type_itemsCheck[index] =
+                                Icons.check_circle_outline;
 
-                            constanst
-                                .select_state
-                                .add(
-                                category.state.toString());
-
+                            constanst.select_state
+                                .add(category.state.toString());
                           } else {
                             constanst.Grade_itemsCheck[index] =
                                 Icons.circle_outlined;
 
-                            constanst
-                                .selectbusstype_id
-                                .remove(
-                                category.state.toString());
+                            constanst.selectbusstype_id
+                                .remove(category.state.toString());
                           }
                         });
                       }),
                   Text(category.state.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 17.0,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
-                          fontFamily: 'assets\fonst\Metropolis-Black.otf'),
+                          fontFamily: 'assets/fonst/Metropolis-Black.otf'),
                       softWrap: false,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis),
                 ],
               ),
-
             ),
           );
         });
   }
-
 }

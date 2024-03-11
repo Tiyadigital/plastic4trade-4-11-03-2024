@@ -8,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io' show Platform;
 
 import '../api/api_interface.dart';
-import '../model/getAbout_us.dart';
 
 class aboutplastic extends StatefulWidget {
   const aboutplastic({Key? key}) : super(key: key);
@@ -21,6 +20,7 @@ class _aboutplasticState extends State<aboutplastic> {
   bool? load;
 
   String? link;
+  String? linkForIos;
 
   Future<void> checknetowork() async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -41,10 +41,6 @@ class _aboutplasticState extends State<aboutplastic> {
 
   @override
   Widget build(BuildContext context) {
-    return init();
-  }
-
-  Widget init() {
     return Scaffold(
         backgroundColor: const Color(0xFFDADADA),
         appBar: AppBar(
@@ -74,31 +70,51 @@ class _aboutplasticState extends State<aboutplastic> {
             child: load == true
                 ? Column(children: [
                   Container(
+                      height: 110,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
-                      height: 150,
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 5.0),
                       child: Image.asset(
                         'assets/plastic4trade logo final.png',
                       )),
                   Container(
-                      decoration: const BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 5.0),
-                      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Align(child: Html(data: link)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.05),
+                        ),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x3FA6A6A6),
+                            blurRadius: 16.32,
+                            offset: Offset(0, 3.26),
+                            spreadRadius: 0,
                           )
                         ],
+                      ),
+                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                      child: Html(
+                        data: Platform.isIOS ? linkForIos : link,
+                        style: {
+                          "p": Style(
+                            //fontSize: FontSize(12),
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.24,
+                            fontFamily: 'Metropolis',
+                          ),
+                          "body": Style(
+                            //fontSize: FontSize(12),
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.24,
+                            fontFamily: 'Metropolis',
+                          ),
+                        },
                       )),
                 ])
                 : Center(
@@ -125,12 +141,9 @@ class _aboutplasticState extends State<aboutplastic> {
     if (res['status'] == 1) {
       if (res['result'] != null) {
         jsonArray = res['result'];
-
-
         link = jsonArray['staticDescription'];
-
+        if(Platform.isIOS){linkForIos = jsonArray['description_for_ios'];}
         load = true;
-
         if (mounted) {
           setState(() {});
         }

@@ -32,7 +32,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
     return Dialog(
       alignment: Alignment.bottomCenter,
       elevation: 0,
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35.0),
       ),
@@ -45,7 +45,7 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
               Navigator.of(context).pop();
             },
             child: Container(
-              margin: EdgeInsets.only(right: 15, top: 15),
+              margin: const EdgeInsets.only(right: 15, top: 15),
               child: const Align(
                 alignment: Alignment.topRight,
                 child: Icon(Icons.clear),
@@ -85,7 +85,6 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                       fontFamily: 'assets/fonst/Metropolis-Black.otf',
                       color: Color.fromARGB(255, 0, 91, 148))
                   .copyWith(fontSize: 14)),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -126,10 +125,10 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                                     )));
                       } else if (constanst.redirectpage == "add_post") {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => AddPost()));
+                            MaterialPageRoute(builder: (context) => const AddPost()));
                       } else if (constanst.redirectpage == "chat") {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Chat()));
+                            MaterialPageRoute(builder: (context) => const Chat()));
                       } else if (constanst.redirectpage == "live_price") {
                         Navigator.push(
                             context,
@@ -160,37 +159,12 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Bussinessinfo(),
+                              builder: (context) => const Bussinessinfo(),
                             ));
                       }
                     }
-                    /*else if(constanst.iscategory){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CategoryScreen(),
-                        ));
-                  }else if(constanst.istype){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Type(),
-                        ));
-                  }else if(constanst.isgrade){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Grade(),
-                        ));
-                  }else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddPost(),
-                        ));
-                  }*/
                   },
-                  child: Text('Proceed',
+                  child: const Text('Proceed',
                       style: TextStyle(
                           fontSize: 19.0,
                           fontWeight: FontWeight.w800,
@@ -206,11 +180,10 @@ class _BussinessPro_dialogState extends State<BussinessPro_dialog> {
   }
 
   getBussinessProfile() async {
-
-    GetmybusinessprofileController bt = await GetmybusinessprofileController();
-    SharedPreferences _pref = await SharedPreferences.getInstance();
+    GetmybusinessprofileController bt = GetmybusinessprofileController();
+    SharedPreferences pref = await SharedPreferences.getInstance();
     constanst.getmyprofile = bt.Getmybusiness_profile(
-        _pref.getString('user_id').toString(),
-        _pref.getString('api_token').toString());
+        pref.getString('user_id').toString(),
+        pref.getString('api_token').toString());
   }
 }

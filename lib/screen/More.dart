@@ -1,9 +1,8 @@
-// ignore_for_file: camel_case_types, non_constant_identifier_names
+// ignore_for_file: camel_case_types, non_constant_identifier_names, use_build_context_synchronously
 
-import 'dart:developer';
-import 'dart:io' show Platform;
 import 'dart:io';
 
+import 'package:Plastic4trade/common/popUpDailog.dart';
 import 'package:Plastic4trade/screen/Aboutplastic.dart';
 import 'package:Plastic4trade/screen/Adwithus.dart';
 import 'package:Plastic4trade/screen/Blog.dart';
@@ -20,8 +19,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 import '../api/api_interface.dart';
 import '../utill/constant.dart';
@@ -59,8 +61,7 @@ const List<Choice> choices = <Choice>[
   Choice(title: 'Interests', icon: 'assets/bag-tick.png', id: '3'),
   Choice(title: 'Manage Buy Posts', icon: 'assets/bag-2.png', id: '4'),
   Choice(title: 'Favourites', icon: 'assets/heart-circle.png', id: '5'),
-  Choice(
-      title: 'Followers/Followings', icon: 'assets/profile-2user.png', id: '6'),
+  Choice(title: 'Followers/Followings', icon: 'assets/profile-2user.png', id: '6'),
   Choice(title: 'Blog', icon: 'assets/document-text.png', id: '7'),
   Choice(title: 'News', icon: 'assets/clipboard-text.png', id: '8'),
   Choice(title: 'Videos', icon: 'assets/video.png', id: '9'),
@@ -80,14 +81,24 @@ class _moreState extends State<more> {
   String? username, business_name, image_url;
   String? whatsappUrl, facebookUrl,instagramUrl,linkedinUrl,youtubeUrl,telegramUrl,twitterUrl;
   bool? isload;
+  String dummyImage = "https://image.pngaaa.com/892/6640892-middle.png";
   final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   @override
   void initState() {
     // TODO: implement initState
-    getPackage();
-    getProfiless();
-    getSocialMedia();
+
+    if(constanst.isWithoutLogin == true){
+      getPackage();
+      getUnknownProfile();
+      getSocialMedia();
+    }else{
+      getPackage();
+      getProfiless();
+      getSocialMedia();
+    }
+
+
     super.initState();
   }
 
@@ -95,7 +106,7 @@ class _moreState extends State<more> {
   Widget build(BuildContext context) {
     if (constanst.isFromNotification) {
       constanst.isFromNotification = false;
-      redirectToBussinessProfileScreen(context);
+      // redirectToBussinessProfileScreen(context);
     }
     return init();
   }
@@ -107,14 +118,13 @@ class _moreState extends State<more> {
         backgroundColor: const Color(0xFFDADADA),
         body: isload == true
             ? SingleChildScrollView(
-                child: Container(
+                child: Padding(
                   padding: const EdgeInsets.only(bottom: 3.0),
                   child: Column(
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        padding:
-                            const EdgeInsets.fromLTRB(15.0, 10.0, 5.0, 5.0),
+                        padding: const EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 5.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -123,122 +133,137 @@ class _moreState extends State<more> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.all(5.0),
-                                    height: 90,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        constanst.redirectpage = "edit_profile";
-
-                                        if (constanst.appopencount ==
-                                            constanst.appopencount1) {
-                                          if (!constanst.isprofile) {
-                                            redirectToBussinessProfileScreen(
-                                                context);
-                                          } else if (constanst.isprofile) {
-                                            showInformationDialog(context);
-                                          }
-                                        } else {
-                                          if (constanst.isprofile) {
-                                            showInformationDialog(context);
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: const [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.all(5.0),
+                                      height: 90,
+                                      color: Colors.white,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          constanst.redirectpage = "edit_profile";
+                                          if (constanst.appopencount == constanst.appopencount1) {
+                                            if (!constanst.isprofile) {
+                                              // redirectToBussinessProfileScreen(context);
+                                            }
+                                            else if (constanst.isprofile) {
+                                              showInformationDialog(context);
+                                            }
                                           } else {
-                                            redirectToBussinessProfileScreen(
-                                                context);
+                                            if (constanst.isprofile) {
+                                              showInformationDialog(context);
+                                            } else {
+                                              // redirectToBussinessProfileScreen(context);
+                                            }
                                           }
-                                        }
-                                      },
-                                      child: Row(
-                                        children: [
-                                          image_url != null
-                                              ? Container(
-                                                  width: 70.0,
-                                                  height: 70.0,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xff7c94b6),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                        image_url.toString(),
+                                        },
+                                        child: Row(
+                                          children: [
+                                            image_url != null
+                                                ? Container(
+                                                    width: 70.0,
+                                                    height: 70.0,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          const Color(0xff7c94b6),
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(
+                                                          (constanst.isWithoutLogin == true) ? dummyImage : image_url.toString(),
+                                                        ),
+                                                        fit: BoxFit.cover,
                                                       ),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(50.0),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(
-                                                  width: 70.0,
-                                                  height: 70.0,
-                                                  decoration: BoxDecoration(
-                                                    /*color: const Color(
-                                                                0xff7c94b6),*/
-                                                    image: DecorationImage(
-                                                      image: AssetImage(
-                                                        'assets/plastic4trade logo final 1 (2).png'
-                                                            .toString(),
+                                                      borderRadius:
+                                                          const BorderRadius.all(
+                                                        Radius.circular(50.0),
                                                       ),
-                                                      fit: BoxFit.cover,
                                                     ),
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                      Radius.circular(50.0),
+                                                  )
+                                                : Container(
+                                                    width: 70.0,
+                                                    height: 70.0,
+                                                    decoration: BoxDecoration(
+                                                      /*color: const Color(
+                                                                  0xff7c94b6),*/
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                          'assets/plastic4trade logo final 1 (2).png'
+                                                              .toString(),
+                                                        ),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      borderRadius:
+                                                          const BorderRadius.all(
+                                                        Radius.circular(50.0),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                          Container(
-                                            padding: const EdgeInsets.only(
-                                                left: 20.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              // or CrossAxisAlignment.center
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  username!,
-                                                  style: const TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                // or CrossAxisAlignment.center
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    username!,
+                                                    style: const TextStyle(
+                                                      fontSize: 16.0,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: Colors.black,
+                                                      fontFamily:
+                                                          'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: business_name != null
-                                                      ? Text(
-                                                          business_name!,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16.0,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
-                                                          ),
-                                                        )
-                                                      : Container(),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 0.0),
+                                                    child: business_name != null
+                                                        ? Text(
+                                                            business_name!,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 16.0,
+                                                              fontWeight:
+                                                                  FontWeight.w400,
+                                                              color: Colors.black,
+                                                              fontFamily:
+                                                                  'assets/fonts/Metropolis-Black.otf', // Fix the typo in 'fonts'
+                                                            ),
+                                                          )
+                                                        : Container(),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             category(),
+
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -251,25 +276,28 @@ class _moreState extends State<more> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: const EdgeInsets.fromLTRB(
-                                    5.0, 10.0, 8.0, 0.0),
+                                    5.0, 0.0, 8.0, 0.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Card(
                                       elevation: 2,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(13.5),
                                       ),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ContactUs(),
-                                            ),
-                                          );
-                                        },
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(Radius.circular(13.5)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0x3FA6A6A6),
+                                              blurRadius: 16.32,
+                                              offset: Offset(0, 3.26),
+                                              spreadRadius: 0,
+                                            )
+                                          ],
+                                        ),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -339,7 +367,7 @@ class _moreState extends State<more> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: const EdgeInsets.fromLTRB(
-                                    5.0, 10.0, 8.0, 0.0),
+                                    5.0, 0.0, 8.0, 0.0),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -347,60 +375,76 @@ class _moreState extends State<more> {
                                         elevation: 2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(13.05),
                                         ),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                height: 55,
-                                                child: Center(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: const [
-                                                      Align(
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 20.0),
-                                                          child: Text(
-                                                            'Advertise with us',
-                                                            style: TextStyle(
-                                                                fontSize: 14.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-SemiBold.otf'),
+                                        child: Container(
+                                          decoration: ShapeDecoration(
+                                            color: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(13.05),
+                                            ),
+                                            shadows: [
+                                              BoxShadow(
+                                                color: Color(0x3FA6A6A6),
+                                                blurRadius: 16.32,
+                                                offset: Offset(0, 3.26),
+                                                spreadRadius: 0,
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  height: 55,
+                                                  child: Center(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: const [
+                                                        Align(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    left: 20.0),
+                                                            child: Text(
+                                                              'Advertise with us',
+                                                              style: TextStyle(
+                                                                  fontSize: 14.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontFamily:
+                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const Adwithus(),
-                                                    ),
-                                                  );
-                                                },
-                                                icon: Image.asset(
-                                                    'assets/forward.png'),
-                                              )
-                                            ]),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const Adwithus(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: Image.asset(
+                                                      'assets/forward.png'),
+                                                )
+                                              ]),
+                                        ),
                                       )
                                     ]),
                               ),
@@ -418,7 +462,7 @@ class _moreState extends State<more> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: const EdgeInsets.fromLTRB(
-                                    5.0, 5.0, 8.0, 0.0),
+                                    5.0, 0.0, 8.0, 0.0),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -426,60 +470,76 @@ class _moreState extends State<more> {
                                         elevation: 2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(13.05),
                                         ),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                height: 55,
-                                                child: Center(
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: const [
-                                                        Align(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 20.0),
-                                                            child: Text(
-                                                              'About Plastic4trade',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontFamily:
-                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                        child: Container(
+                                          decoration: ShapeDecoration(
+                                            color: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(13.05),
+                                            ),
+                                            shadows: [
+                                              BoxShadow(
+                                                color: Color(0x3FA6A6A6),
+                                                blurRadius: 16.32,
+                                                offset: Offset(0, 3.26),
+                                                spreadRadius: 0,
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  height: 55,
+                                                  child: Center(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: const [
+                                                          Align(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 20.0),
+                                                              child: Text(
+                                                                'About Plastic4trade',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontFamily:
+                                                                        'assets/fonst/Metropolis-SemiBold.otf'),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ]),
+                                                        ]),
+                                                  ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const aboutplastic(),
-                                                    ),
-                                                  );
-                                                },
-                                                icon: Image.asset(
-                                                    'assets/forward.png'),
-                                              )
-                                            ]),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const aboutplastic(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: Image.asset(
+                                                      'assets/forward.png'),
+                                                )
+                                              ]),
+                                        ),
                                       )
                                     ]),
                               ),
@@ -497,7 +557,7 @@ class _moreState extends State<more> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: const EdgeInsets.fromLTRB(
-                                    5.0, 5.0, 8.0, 0.0),
+                                    5.0, 0.0, 8.0, 0.0),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -505,72 +565,88 @@ class _moreState extends State<more> {
                                         elevation: 2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(13.05),
                                         ),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                height: 55,
-                                                child: Center(
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: const [
-                                                        Align(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 20.0),
-                                                            child: Text(
-                                                              'Notification Settings',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontFamily:
-                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                        child: Container(
+                                          decoration: ShapeDecoration(
+                                            color: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(13.05),
+                                            ),
+                                            shadows: const [
+                                              BoxShadow(
+                                                color: Color(0x3FA6A6A6),
+                                                blurRadius: 16.32,
+                                                offset: Offset(0, 3.26),
+                                                spreadRadius: 0,
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  height: 55,
+                                                  child: Center(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: const [
+                                                          Align(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 20.0),
+                                                              child: Text(
+                                                                'Notification Settings',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontFamily:
+                                                                        'assets/fonst/Metropolis-SemiBold.otf'),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ]),
+                                                        ]),
+                                                  ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const Notificationsetting(),
-                                                    ),
-                                                  );
-                                                },
-                                                icon: Image.asset(
-                                                    'assets/forward.png'),
-                                              )
-                                            ]),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const Notificationsetting(),
+                                                      ),
+                                                    );
+                                                  },
+                                                  icon: Image.asset(
+                                                      'assets/forward.png'),
+                                                )
+                                              ]),
+                                        ),
                                       )
                                     ]),
                               ),
                             ),
-                            GestureDetector(
+                            (constanst.isWithoutLogin) ? Container() : GestureDetector(
                               onTap: () {
                                 showlogoutDialog(context);
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 padding: const EdgeInsets.fromLTRB(
-                                    5.0, 5.0, 8.0, 0.0),
+                                    5.0, 0.0, 8.0, 0.0),
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -578,169 +654,177 @@ class _moreState extends State<more> {
                                         elevation: 2,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(13.05),
                                         ),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                height: 55,
-                                                child: Center(
-                                                  child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: const [
-                                                        Align(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 20.0),
-                                                            child: Text(
-                                                              'Logout',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontFamily:
-                                                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                                        child: Container(
+                                          decoration: ShapeDecoration(
+                                            color: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(13.05),
+                                            ),
+                                            shadows: [
+                                              BoxShadow(
+                                                color: Color(0x3FA6A6A6),
+                                                blurRadius: 16.32,
+                                                offset: Offset(0, 3.26),
+                                                spreadRadius: 0,
+                                              )
+                                            ],
+                                          ),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  height: 55,
+                                                  child: Center(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: const [
+                                                          Align(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 20.0),
+                                                              child: Text(
+                                                                'Logout',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontFamily:
+                                                                        'assets/fonst/Metropolis-SemiBold.otf'),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ]),
+                                                        ]),
+                                                  ),
                                                 ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  showlogoutDialog(context);
-                                                },
-                                                icon: Image.asset(
-                                                    'assets/forward.png'),
-                                              )
-                                            ]),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    showlogoutDialog(context);
+                                                  },
+                                                  icon: Image.asset(
+                                                      'assets/forward.png'),
+                                                )
+                                              ]),
+                                        ),
                                       )
                                     ]),
                               ),
                             ),
                             const SizedBox(
-                              height: 50,
+                              height: 35,
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: const Center(
-                                child: Text(
-                                  'Follow Plastic4trade',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.italic,
-                                      fontFamily:
-                                          'assets/fonst/Metropolis-Black.otf',
-                                      color: Colors.black),
-                                ),
+                            const Center(
+                              child: Text(
+                                'Follow Plastic4trade',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf',
+                                    color: Colors.black),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(whatsappUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/whatsapp.png'),
+                                    icon: Image.asset('assets/whatsapp.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(facebookUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/facebook.png'),
+                                    icon: Image.asset('assets/facebook.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: ()=> launchUrl(
                                       Uri.parse(instagramUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/instagram.png'),
+                                    icon: Image.asset('assets/instagram.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(linkedinUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/linkdin.png'),
+                                    icon: Image.asset('assets/linkdin.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(youtubeUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/youtube.png'),
+                                    icon: Image.asset('assets/youtube.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(telegramUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/Telegram.png'),
+                                    icon: Image.asset('assets/Telegram.png',height: 26,width: 26),
                                   ),
                                   IconButton(
                                     onPressed: () => launchUrl(
                                       Uri.parse(twitterUrl!),
                                       mode: LaunchMode.externalApplication,
                                     ),
-                                    icon: Image.asset('assets/Twitter.png'),
+                                    icon: Image.asset('assets/Twitter.png',height: 26,width: 26),
                                   ),
                                 ],
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding:
-                                  const EdgeInsets.fromLTRB(5.0, 5.0, 8.0, 0.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'App Version $version  -1.4 ',
-                                    style: const TextStyle(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'App Version $version',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily:
+                                          'assets/fonst/Metropolis-Black.otf',
+                                      color: Colors.black,
+                                      fontSize: 13),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    if (Platform.isAndroid) {
+                                      _openGooglePlayStore();
+                                    } else if (Platform.isIOS) {
+                                      _launchAppStore();
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Check Latest Update',
+                                    style: TextStyle(
+                                      color: Color(0xFF005C94),
                                         fontWeight: FontWeight.w400,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf',
-                                        color: Colors.black,
+                                        fontFamily: 'assets/fonst/Metropolis-Black.otf',
                                         fontSize: 13),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      if (Platform.isAndroid) {
-                                        _openGooglePlayStore();
-                                      } else if (Platform.isIOS) {
-                                        _launchAppStore();
-                                      }
-                                    },
-                                    child: const Text(
-                                      'Check Latest Update',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily:
-                                              'assets/fonst/Metropolis-Black.otf',
-                                          fontSize: 13),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -853,20 +937,25 @@ class _moreState extends State<more> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black26),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(5),
+              GestureDetector(
+                onTap: () {
+                  shareApp(url: "https://play.google.com/store/apps/details?id=$packageName",);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black26),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'App Share ',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                      fontSize: 10),
+                  child: const Text(
+                    'App Share ',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                        fontSize: 10),
+                  ),
                 ),
               ),
             ],
@@ -904,7 +993,44 @@ class _moreState extends State<more> {
     return await showDialog(
       context: context,
       builder: (context) {
-        return logout(context);
+        return CommanDialog(
+            content: "Are you sure want to\n log out?",
+            title: "Log Out",
+            onPressed: () async {
+            clear();
+            if (Platform.isAndroid) {
+            const androidId = AndroidId();
+            constanst.android_device_id = (await androidId.getId())!;
+
+            logout_android_device(
+            context, constanst.android_device_id);
+            SharedPreferences preferences =
+            await SharedPreferences.getInstance();
+            await preferences.clear();
+            Navigator.of(context).pop();
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+            ),
+            );
+            } else if (Platform.isIOS) {
+            final iosinfo = await deviceInfo.iosInfo;
+            constanst.devicename = iosinfo.name;
+            constanst.ios_device_id = iosinfo.identifierForVendor!;
+            logout_android_device(context, constanst.ios_device_id);
+            SharedPreferences preferences =
+            await SharedPreferences.getInstance();
+            await preferences.clear();
+            Navigator.of(context).pop();
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+            ),
+            );
+            }
+        });
       },
     );
   }
@@ -918,6 +1044,18 @@ class _moreState extends State<more> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void shareApp({required String url}) async {
+    // final imageurl = url;
+    // final uri = Uri.parse(imageurl);
+    // final response = await http.get(uri);
+    // final bytes = response.bodyBytes;
+    // final temp = await getTemporaryDirectory();
+    // final path = '${temp.path}/image.jpg';
+    // File(path).writeAsBytesSync(bytes);
+    await Share.share(
+         'Hey check out my app at: \nhttps://play.google.com/store/apps/details?id=${packageName!}');
   }
 
   void _launchAppStore() async {
@@ -1020,15 +1158,13 @@ class _moreState extends State<more> {
 
                       logout_android_device(
                           context, constanst.android_device_id);
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
+                      SharedPreferences preferences = await SharedPreferences.getInstance();
                       await preferences.clear();
                       Navigator.of(context).pop();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              (Route<dynamic> route) => false
                       );
                     } else if (Platform.isIOS) {
                       final iosinfo = await deviceInfo.iosInfo;
@@ -1039,11 +1175,10 @@ class _moreState extends State<more> {
                           await SharedPreferences.getInstance();
                       await preferences.clear();
                       Navigator.of(context).pop();
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
+                       (Route<dynamic> route) => false
                       );
                     }
                   },
@@ -1077,16 +1212,18 @@ class _moreState extends State<more> {
 
   Widget category() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 5.0, 10.0, 0),
-      child: FutureBuilder(
+      padding: const EdgeInsets.fromLTRB(5.0, 5.0, 10.0, 5),
+      child:
+      FutureBuilder(
+        future: TickerFuture.complete() ,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            return GridView.builder(
+            return
+              GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: MediaQuery.of(context).size.aspectRatio * 4.0,
-                mainAxisSpacing: 8.0,
                 crossAxisCount: 2,
               ),
               physics: const NeverScrollableScrollPhysics(),
@@ -1095,45 +1232,57 @@ class _moreState extends State<more> {
               itemBuilder: (context, index) {
                 Choice record = choices[index];
                 return GestureDetector(
-                  onTap: (() {
+                  onTap: (() async{
+                    SharedPreferences pref = await SharedPreferences.getInstance();
                     if (record.id == '1') {
-                      if (constanst.appopencount == constanst.appopencount1) {
-                        if (!constanst.isgrade &&
-                            !constanst.istype &&
-                            !constanst.iscategory &&
-                            !constanst.isprofile &&
-                            constanst.step == 11) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Bussinessinfo(),
-                            ),
-                          );
-                        } else if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Bussinessinfo(),
-                            ),
-                          );
+
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+                        if (constanst.appopencount == constanst.appopencount1) {
+                          if (!constanst.isgrade &&
+                              !constanst.istype &&
+                              !constanst.iscategory &&
+                              !constanst.isprofile &&
+                              constanst.step == 11) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Bussinessinfo(),
+                              ),
+                            );
+                          } else if (constanst.isprofile) {
+                            showInformationDialog(context);
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Bussinessinfo(),
+                              ),
+                            );
+                          }
                         }
-                      } else {
-                        if (constanst.isprofile) {
-                          showInformationDialog(context);
-                        } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Bussinessinfo(),
-                            ),
-                          );
+                        else {
+                          if (constanst.isprofile) {
+                            showInformationDialog(context);
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Bussinessinfo(),
+                              ),
+                            );
+                          }
                         }
                       }
-                    } else if (record.id == '2') {
+
+                    }
+                    else if (record.id == '2') {
                       constanst.redirectpage = "Manage_Sell_Posts";
 
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
                       if (constanst.appopencount == constanst.appopencount1) {
                         if (!constanst.isgrade &&
                             !constanst.istype &&
@@ -1163,9 +1312,15 @@ class _moreState extends State<more> {
                                 Title: "Manage_Sell_Posts"),
                           ),
                         );
-                      }
-                    } else if (record.id == '3') {
+                      }}
+                    }
+                    else if (record.id == '3') {
                       constanst.redirectpage = "update_category";
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+
+
                       if (constanst.appopencount == constanst.appopencount1) {
                         if (!constanst.isgrade &&
                             !constanst.istype &&
@@ -1217,9 +1372,15 @@ class _moreState extends State<more> {
                             );
                           }
                         }
-                      }
-                    } else if (record.id == '4') {
+                      }}
+                    }
+                    else if (record.id == '4') {
                       constanst.redirectpage = "Manage_Buy_Posts";
+
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+
                       if (constanst.appopencount == constanst.appopencount1) {
                         if (!constanst.isgrade &&
                             !constanst.istype &&
@@ -1249,15 +1410,27 @@ class _moreState extends State<more> {
                                 const managebuypost(Title: "Manage_Buy_Posts"),
                           ),
                         );
-                      }
-                    } else if (record.id == '5') {
+                      }}
+                    }
+                    else if (record.id == '5') {
+
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Favourite(),
                         ),
-                      );
-                    } else if (record.id == '6') {
+                      );}
+                    }
+                    else if (record.id == '6') {
+                      if(pref.getBool('isWithoutLogin') == true){
+                        showLoginDialog(context);
+                      }else{
+
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1265,64 +1438,76 @@ class _moreState extends State<more> {
                             initialIndex: 1,
                           ),
                         ),
-                      );
-                    } else if (record.id == '7') {
+                      );}
+                    }
+                    else if (record.id == '7') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Blog(),
                         ),
                       );
-                    } else if (record.id == '8') {
+                    }
+                    else if (record.id == '8') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => MainScreen(3),
                         ),
                       );
-                    } else if (record.id == '9') {
+                    }
+                    else if (record.id == '9') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Videos(),
                         ),
                       );
-                    } else if (record.id == '12') {
+                    }
+                    else if (record.id == '12') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Tutorial_Videos(),
                         ),
                       );
-                    } else if (record.id == '11') {
+                    }
+                    else if (record.id == '11') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Directory1(),
                         ),
                       );
-                    } else if (record.id == '10') {
+                    }
+                    else if (record.id == '10') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Exhibition(),
                         ),
                       );
-                    } else if (record.id == '13') {
+                    }
+                    else if (record.id == '13') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const Exhibitor(),
                         ),
                       );
-                    } else if (record.id == '14') {
+                    }
+                    else if (record.id == '14') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const premum_member(),
                         ),
                       );
-                    } else if (record.id == '16') {
+                    }
+                    else if (record.id == '15') {
+                      shareApp(url: "https://play.google.com/store/apps/details?id=$packageName",);
+                    }
+                    else if (record.id == '16') {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1333,41 +1518,58 @@ class _moreState extends State<more> {
                   }),
                   child: Card(
                     elevation: 2,
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(13.05),
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 15.0, 0.0, 0.0),
-                              child: Image(
-                                image: AssetImage(record.icon),
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.05),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: Color(0x3FA6A6A6),
+                            blurRadius: 16.32,
+                            offset: Offset(0, 3.26),
+                            spreadRadius: 0,
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    20.0, 15.0, 0.0, 0.0),
+                                child: Image(
+                                  image: AssetImage(record.icon),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
-                            child: Text(
-                              record.title,
-                              style: const TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                  fontFamily:
-                                      'assets/fonst/Metropolis-SemiBold.otf'),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(20.0, 5.0, 0.0, 0.0),
+                              child: Text(
+                                record.title,
+                                style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-SemiBold.otf'),
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -1375,7 +1577,7 @@ class _moreState extends State<more> {
             );
           }
         },
-      ),
+     ),
     );
   }
 
@@ -1403,10 +1605,15 @@ class _moreState extends State<more> {
     setState(() {});
   }
 
+  getUnknownProfile(){
+    username = "Unknown";
+    business_name = "Unknown";
+      isload = true;
+    setState(() {});
+  }
+
   getSocialMedia() async{
     var res = await getSocialLinks();
-
-
 
     if(res['status'] == 1){
       whatsappUrl = res['result']['site_whatsapp_url'];
@@ -1521,5 +1728,4 @@ setState(() {});
     constanst.date = "";
     constanst.image_url = "";
   }
-
 }

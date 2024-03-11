@@ -12,9 +12,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
+import '../common/popUpDailog.dart';
 import '../model/GetSalePostList.dart';
 import '../widget/HomeAppbar.dart';
 import 'AddPost.dart';
+import 'Buyer_sell_detail.dart';
 import 'GradeScreen.dart';
 import 'Videos.dart';
 
@@ -171,19 +173,21 @@ class _managesellpostState extends State<managesellpost> {
     return isload == true
         ? Padding(
             padding: const EdgeInsets.all(15),
-            child: FutureBuilder(
-
-                //future: load_subcategory(),
-                builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.hasData == null) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-
-                return ListView.builder(
+            child:
+            // FutureBuilder(
+            //
+            //     //future: load_subcategory(),
+            //     builder: (context, snapshot) {
+            //   if (snapshot.connectionState == ConnectionState.none &&
+            //       snapshot.hasData == null) {
+            //     return const Center(child: CircularProgressIndicator());
+            //   }
+            //   if (snapshot.hasError) {
+            //     return Text('Error: ${snapshot.error}');
+            //   } else {
+            //
+            //     return
+                  ListView.builder(
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: salepostlist_data.length,
@@ -197,7 +201,13 @@ class _managesellpostState extends State<managesellpost> {
 
                       return GestureDetector(
                         onTap: () {
-                          setState(() {});
+                          setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (BuildContext context) => Buyer_sell_detail(
+                                  prod_id: record.productId.toString(),
+                                  post_type: record.postType,)));
+                          });
                         },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10),
@@ -426,13 +436,14 @@ class _managesellpostState extends State<managesellpost> {
                                                     items: _dropDownItem(),
                                                     //hint: Text('Enter team'),
                                                     onChanged: (value) {
-                                                      selectedItemValue[index] =
-                                                          value!;
+                                                      //selectedItemValue[index] = value!;
+                                                      selectedItemValue [index] = value.toString();
                                                       setState(() {
-                                                        set_prod_status(
-                                                            record.productId
-                                                                .toString(),
-                                                            value);
+                                                        set_prod_status(record.productId.toString(), value.toString());
+                                                        // set_prod_status(
+                                                        //     record.productId
+                                                        //         .toString(),
+                                                        //     value);
                                                       });
                                                     },
                                                     isExpanded: true,
@@ -471,16 +482,32 @@ class _managesellpostState extends State<managesellpost> {
                                       SizedBox(
                                           child: GestureDetector(
                                         onTap: () {
-                                          if (salepostlist_data.length == 1) {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    'Minimum 1 Sale Post or Buy Post Is Required');
-                                          } else {
-                                            delete_confirm(
-                                                context,
-                                                record.productId.toString(),
-                                                index);
-                                          }
+                                          // if (salepostlist_data.length == 1) {
+                                          //   Fluttertoast.showToast(
+                                          //       msg:
+                                          //           'Minimum 1 Sale Post or Buy Post Is Required');
+                                          // } else {
+                                          setState(() { });
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CommanDialog(
+                                                  title: "Delete Post",
+                                                  content: "Are you sure want to delete post?",
+                                                  onPressed: (){
+                                                    delete_salepost(record.productId.toString());
+                                                    salepostlist_data.removeAt(index);
+                                                    Navigator.of(context).pop(false);
+
+                                                  },
+                                                );
+                                              }
+                                          );
+                                            // delete_confirm(
+                                            //     context,
+                                            //     record.productId.toString(),
+                                            //     index);
+                                          // }
                                         },
                                         child: Image.asset(
                                           'assets/delete1.png',
@@ -496,10 +523,12 @@ class _managesellpostState extends State<managesellpost> {
                           ]),
                         ),
                       );
-                    });
+                    }),
 
-              }
-            }))
+            //   }
+            // }
+            // )
+    )
         :Center(
         child: Platform.isAndroid
             ? const CircularProgressIndicator(
@@ -638,7 +667,7 @@ class _managesellpostState extends State<managesellpost> {
     return jsonArray;
   }
 
-  delete_salepost(String prodId, int index) async {
+  delete_salepost(String prodId) async {
 
     SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -666,7 +695,7 @@ class _managesellpostState extends State<managesellpost> {
           return AlertDialog(
               title: const Text('Delete Post'),
               content:
-                  const Text('Are you sure you want to delete this post ?'),
+                  const Text('Are you sure you want to delete this post?'),
               actions: <Widget>[
                 TextButton(
                     onPressed: () {
@@ -674,7 +703,7 @@ class _managesellpostState extends State<managesellpost> {
                           msg: 'Product Delete Successfully');
                       salepostlist_data.removeAt(index);
                       setState(() {});
-                      delete_salepost(prodId, index);
+                      delete_salepost(prodId);
                       Navigator.of(context).pop(false);
                     },
                     child: const Text('Yes')),

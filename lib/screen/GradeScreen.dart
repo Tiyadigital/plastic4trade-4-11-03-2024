@@ -175,25 +175,26 @@ class _TypeState extends State<Grade> {
                                 ),
                               ),
                             ),
-                            FutureBuilder(
-                              //future: load_subcategory(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                        ConnectionState.waiting &&
-                                    snapshot.hasData == null) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                } else {
-                                  if (constanst.cat_grade_data.isEmpty) {
-                                    return const Padding(
-                                      padding: EdgeInsets.only(top: 20),
-                                      child: Center(
-                                          child: CircularProgressIndicator()),
-                                    );
-                                  } else {
-                                    return ListView.builder(
+                            // FutureBuilder(
+                            //   //future: load_subcategory(),
+                            //   builder: (context, snapshot) {
+                            //     if (snapshot.connectionState ==
+                            //             ConnectionState.waiting &&
+                            //         snapshot.hasData == null) {
+                            //       return const Center(
+                            //           child: CircularProgressIndicator());
+                            //     } else if (snapshot.hasError) {
+                            //       return Text('Error: ${snapshot.error}');
+                            //     } else {
+                            //       if (constanst.cat_grade_data.isEmpty) {
+                            //         return const Padding(
+                            //           padding: EdgeInsets.only(top: 20),
+                            //           child: Center(
+                            //               child: CircularProgressIndicator()),
+                            //         );
+                            //       } else {
+                            //         return
+                                      ListView.builder(
                                         shrinkWrap: true,
                                         itemCount:
                                             constanst.cat_grade_data.length,
@@ -367,11 +368,11 @@ class _TypeState extends State<Grade> {
                                               ),
                                             ),
                                           );
-                                        });
-                                  }
-                                }
-                              },
-                            ),
+                                        }),
+                            //       }
+                            //     }
+                            //   },
+                            // ),
                             Container(
                               width: MediaQuery.of(context).size.width * 1.2,
                               height: 60,

@@ -17,7 +17,7 @@ import 'package:Plastic4trade/model/Getbusiness_document_types.dart'
 
 class constanst {
   static String usernm = "";
-  static String count = "0";
+  static String count = "";
   static String Bussiness_nature = "";
   static String Bussiness_nature_name = "";
   static String Product_Capcity_name = "";
@@ -48,6 +48,8 @@ class constanst {
   static int? select_grade_idx;
   static String Product_color = "";
   static int? select_prodcolor_idx;
+
+  static bool isWithoutLogin = false;
 
   static String select = "";
   static String api_token = "";

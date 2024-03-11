@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names, prefer_typing_uninitialized_variables, avoid_print
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io' as io;
 import 'dart:io' show Platform;
 
@@ -34,7 +35,7 @@ class _ChartDetailState extends State<ChartDetail> {
   bool isimage = false;
   io.File? file;
   TextEditingController textMessage = TextEditingController();
-  String? customUserId, imageurl;
+  String? customUserId, imageurl, userName;
   var jsonData;
   Map<String, dynamic>? data;
   List<Map<String, dynamic>>? data1;
@@ -44,11 +45,6 @@ class _ChartDetailState extends State<ChartDetail> {
   _ChartDetailState();
 
   List<MapEntry<String, dynamic>>? messageList;
-
-  @override
-  Widget build(BuildContext context) {
-    return init();
-  }
 
   final scrollController = ScrollController();
 
@@ -76,7 +72,8 @@ class _ChartDetailState extends State<ChartDetail> {
     });
   }
 
-  Widget init() {
+@override
+Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFDADADA),
       appBar: AppBar(
@@ -155,25 +152,26 @@ class _ChartDetailState extends State<ChartDetail> {
         FirebaseDatabase.instance.ref().child('users');
 
     DatabaseReference receiverRef = messagesRef.child('$senderId-$receiverId');
-    DatabaseReference newMessageRef = receiverRef.push();
+    // DatabaseReference newMessageRef = receiverRef.push();
 
-    newMessageRef.set({
+    receiverRef.set({
       "count": "0",
       'mediaName': '',
       'mediaType': 'text',
       'messageText': messageText,
       "messageTime": DateTime.now().millisecondsSinceEpoch,
       "senderId": senderId,
-      "userImage1": "",
-      "userImage2": "",
-      "userName1": "",
-      "userName2": "",
+      "userImage1": widget.user_image,
+      "userImage2": imageurl,
+      "userName1": widget.user_name,
+      "userName2": userName,
     }).catchError(
       (error) => print('Failed to send message: $error'),
     );
   }
 
-  getUserList() async {
+  Future getUserList() async {
+    messageList = [];
     SharedPreferences pref = await SharedPreferences.getInstance();
 
     if (Platform.isAndroid) {
@@ -202,24 +200,26 @@ class _ChartDetailState extends State<ChartDetail> {
 
     customUserId = pref.getString('user_id').toString();
     imageurl = pref.getString('userImage').toString();
+    userName = pref.getString('name').toString();
+    return messageList;
     return messageList;
   }
 
-  List<Message> extractMessages() {
-    List<Message> messages = [];
-    data?.forEach((key, value) {
-      messages.add(
-        Message(
-          messageText: value['messageText'],
-          messageTime: value['messageTime'],
-          senderId: value['senderId'],
-          mediaType: value['mediaType'],
-          mediaName: value['mediaName'],
-        ),
-      );
-    });
-    return messages;
-  }
+  // List<Message> extractMessages() {
+  //   List<Message> messages = [];
+  //   data?.forEach((key, value) {
+  //     messages.add(
+  //       Message(
+  //         messageText: value['messageText'],
+  //         messageTime: value['messageTime'],
+  //         senderId: value['senderId'],
+  //         mediaType: value['mediaType'],
+  //         mediaName: value['mediaName'],
+  //       ),
+  //     );
+  //   });
+  //   return messages;
+  // }
 
   Stream<List<MapEntry<String, dynamic>>> getMessageStream() {
     messageList?.clear();
@@ -261,13 +261,14 @@ class _ChartDetailState extends State<ChartDetail> {
                 String childData = childSnapshot.key.toString();
 
                 List<String> parts = childData.split('-');
+                print("parts:- $parts");
+                print("customUserId:- $customUserId");
+                print("user_id:-${widget.user_id}");
                 if (parts.length == 2) {
-                  if (parts[0].toString() == customUserId &&
-                      parts[1].toString() == widget.user_id) {
+                  if (parts[0].toString() == customUserId && parts[1].toString() == widget.user_id) {
                     dynamic myVariable = childSnapshot.value;
-
                     data = myVariable!.cast<String, dynamic>();
-                    messageList = data!.entries.toList();
+                    messageList!.addAll(data!.entries.toList());
                     messageList!.sort(
                       (a, b) => a.value["messageTime"].compareTo(
                         b.value["messageTime"],
@@ -287,290 +288,305 @@ class _ChartDetailState extends State<ChartDetail> {
                   }
                 }
               }
-              return ListView.builder(
-                reverse: true,
-                controller: scrollController,
-                itemCount: messageList?.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  List<dynamic> reversedList =
-                      List.from(messageList?.reversed as Iterable);
 
-                  final entry = reversedList[index];
-                  final messageText = entry.value['messageText'];
-                  final messageTime = entry.value['messageTime'];
-                  final senderId = entry.value['senderId'];
+              print("UserData ==> $messageList");
+              if (messageList != null && messageList!.isNotEmpty) {
+                return ListView.builder(
+                  reverse: true,
+                  controller: scrollController,
+                  itemCount: messageList?.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    List<dynamic> reversedList =
+                        List.from(messageList?.reversed as Iterable);
 
-                  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-                    int.parse(messageTime.toString()),
-                  );
+                    final entry = reversedList[index];
+                    final messageText = entry.value['messageText'];
+                    final messageTime = entry.value['messageTime'];
+                    final senderId = entry.value['senderId'];
 
-                  String formattedDateTime =
-                      DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
-                  var datetime =
-                      getTextForDate(DateTime.parse(formattedDateTime));
-                  return Container(
-                    margin: const EdgeInsets.only(top: 5, right: 8, left: 8),
-                    decoration: const BoxDecoration(),
-                    child: senderId.toString() == widget.user_id
-                        ? Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CircleAvatar(
-                                radius: 10.0,
-                                backgroundImage: NetworkImage(
-                                  widget.user_image.toString(),
+                    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+                      int.parse(messageTime.toString()),
+                    );
+
+                    String formattedDateTime =
+                        DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+                    var datetime =
+                        getTextForDate(DateTime.parse(formattedDateTime));
+                    return Container(
+                      margin: const EdgeInsets.only(top: 5, right: 8, left: 8),
+                      decoration: const BoxDecoration(),
+                      child: senderId.toString() == widget.user_id
+                          ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  radius: 10.0,
+                                  backgroundImage: NetworkImage(
+                                    widget.user_image.toString(),
+                                  ),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 240, 238, 238),
                                 ),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 240, 238, 238),
-                              ),
-                              const SizedBox(width: 5),
-                              messageText.toString().startsWith(
-                                      'https://firebasestorage.googleapis.com')
-                                  ? Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
-                                      ),
-                                      padding: const EdgeInsets.only(
-                                        left: 15,
-                                        top: 5,
-                                        bottom: 5.0,
-                                        right: 7.0,
-                                      ),
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xfff9f9f9),
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(15),
-                                          bottomLeft: Radius.circular(15),
-                                          bottomRight: Radius.circular(15),
+                                const SizedBox(width: 5),
+                                messageText.toString().startsWith(
+                                        'https://firebasestorage.googleapis.com')
+                                    ? Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
                                         ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.user_name.toString(),
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(
-                                              color: const Color.fromARGB(
-                                                  255, 0, 91, 148),
-                                            ),
-                                          ),
-                                          Image.network(
-                                            messageText.toString(),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                datetime,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 9,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  : Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                .6,
-                                      ),
-                                      padding: const EdgeInsets.only(
-                                        left: 15,
-                                        top: 5,
-                                        bottom: 5.0,
-                                        right: 7.0,
-                                      ),
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xfff9f9f9),
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(15),
-                                          bottomLeft: Radius.circular(15),
-                                          bottomRight: Radius.circular(15),
+                                        padding: const EdgeInsets.only(
+                                          left: 15,
+                                          top: 5,
+                                          bottom: 5.0,
+                                          right: 7.0,
                                         ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.user_name.toString(),
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(
-                                              color: const Color.fromARGB(
-                                                  255, 0, 91, 148),
-                                            ),
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xfff9f9f9),
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(15),
+                                            bottomLeft: Radius.circular(15),
+                                            bottomRight: Radius.circular(15),
                                           ),
-                                          Text(
-                                            messageText.toString(),
-                                            maxLines: null,
-                                            style: const TextStyle(
-                                                fontSize: 13.0,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf'),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                datetime,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 9,
-                                                ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              widget.user_name.toString(),
+                                              style: const TextStyle(
+                                                      fontSize: 13.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                color: const Color.fromARGB(
+                                                    255, 0, 91, 148),
                                               ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                            ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              messageText.toString().startsWith(
-                                        'https://firebasestorage.googleapis.com',
+                                            ),
+                                            Image.network(
+                                              messageText.toString(),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  datetime,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 9,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       )
-                                  ? Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: const BoxDecoration(
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(10.0),
+                                    : Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .6,
                                         ),
-                                      ),
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.4,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.network(
-                                            messageText.toString(),
+                                        padding: const EdgeInsets.only(
+                                          left: 15,
+                                          top: 5,
+                                          bottom: 5.0,
+                                          right: 7.0,
+                                        ),
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xfff9f9f9),
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(15),
+                                            bottomLeft: Radius.circular(15),
+                                            bottomRight: Radius.circular(15),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                datetime,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 9,
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  : Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: const BoxDecoration(
-                                        color: Color.fromARGB(255, 0, 91, 148),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(10.0),
-                                          bottomLeft: Radius.circular(10.0),
                                         ),
-                                      ),
-                                      constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width *
-                                                0.6,
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            messageText.toString(),
-                                            maxLines: null,
-                                            style: const TextStyle(
-                                                    fontSize: 13.0,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily:
-                                                        'assets/fonst/Metropolis-Black.otf')
-                                                .copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w400,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              widget.user_name.toString(),
+                                              style: const TextStyle(
+                                                      fontSize: 13.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                color: const Color.fromARGB(
+                                                    255, 0, 91, 148),
+                                              ),
                                             ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                datetime,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
+                                            Text(
+                                              messageText.toString(),
+                                              maxLines: null,
+                                              style: const TextStyle(
+                                                  fontSize: 13.0,
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 9,
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf'),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  datetime,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 9,
+                                                  ),
                                                 ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                              ],
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                messageText.toString().startsWith(
+                                          'https://firebasestorage.googleapis.com',
+                                        )
+                                    ? Container(
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: const BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 0, 91, 148),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(10.0),
+                                            bottomLeft: Radius.circular(10.0),
+                                          ),
+                                        ),
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Image.network(
+                                              messageText.toString(),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  datetime,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 9,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : Container(
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: const BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 0, 91, 148),
+                                          shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(10.0),
+                                            bottomLeft: Radius.circular(10.0),
+                                          ),
+                                        ),
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              messageText.toString(),
+                                              maxLines: null,
+                                              style: const TextStyle(
+                                                      fontSize: 13.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily:
+                                                          'assets/fonst/Metropolis-Black.otf')
+                                                  .copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
                                               ),
-                                            ],
-                                          )
-                                        ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  datetime,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 9,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                              const SizedBox(width: 5),
-                              CircleAvatar(
-                                radius: 10.0,
-                                backgroundImage: NetworkImage(
-                                  imageurl.toString(),
+                                const SizedBox(width: 5),
+                                CircleAvatar(
+                                  radius: 10.0,
+                                  backgroundImage: NetworkImage(
+                                    imageurl.toString(),
+                                  ),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 240, 238, 238),
                                 ),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 240, 238, 238),
-                              ),
-                            ],
-                          ),
-                  );
-                },
-              );
+                              ],
+                            ),
+                    );
+                  },
+                );
+              } else {
+                return const Text('No data available');
+              }
             } else {
               return const Text('No data available');
             }
@@ -604,250 +620,265 @@ class _ChartDetailState extends State<ChartDetail> {
   Widget addchat() {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Stack(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(
-                    10,
-                    10,
-                    0,
-                    5,
-                  ),
-                  height: 60,
-                  width: double.infinity,
-                  // color: Colors.white,
-                  child: Row(
-                    children: <Widget>[
-                      isimage
-                          ? GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isimage = false;
-                                  //ViewItem(context);
-                                });
-                              },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  //color: Color.fromARGB(255, 0, 91, 148),
-                                  color: const Color(0xFFDADADA),
-                                  borderRadius: BorderRadius.circular(60),
-                                ),
-                                child: const Icon(
-                                  Icons.cancel_rounded,
-                                  color: Colors.red,
-                                  size: 45,
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isimage = true;
-                                  //ViewItem(context);
-                                });
-                              },
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 0, 91, 148),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: textMessage,
-                          keyboardType: TextInputType.multiline,
-                          textCapitalization: TextCapitalization.sentences,
-                          minLines: 1,
-                          maxLines: null,
-                          onChanged: ((value) {
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(
+                10,
+                10,
+                0,
+                5,
+              ),
+              height: 60,
+              width: double.infinity,
+              // color: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  isimage
+                      ? GestureDetector(
+                          onTap: () {
                             setState(() {
-                              istext = true;
-                              if (value.toString().isEmpty) {
-                                istext = false;
-                              }
+                              isimage = false;
+                              //ViewItem(context);
                             });
-                          }),
-                          decoration: InputDecoration(
-                            hintText: "Type your message here",
-                            hintMaxLines: 1,
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 10),
-                            hintStyle: const TextStyle(
-                              fontSize: 16,
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              //color: Color.fromARGB(255, 0, 91, 148),
+                              color: const Color(0xFFDADADA),
+                              borderRadius: BorderRadius.circular(60),
                             ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                                width: 0.2,
-                              ),
+                            child: const Icon(
+                              Icons.cancel_rounded,
+                              color: Colors.red,
+                              size: 45,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black26,
-                                width: 0.2,
-                              ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isimage = true;
+                              //ViewItem(context);
+                            });
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 0, 91, 148),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 20,
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      istext
-                          ? FloatingActionButton(
-                              onPressed: () {
-                                sendMessage(widget.user_id.toString(),
-                                    customUserId.toString(), textMessage.text);
-                                setState(() {
-                                  messageList?.clear();
-                                  getUserList();
-                                });
-                                setState(() {
-                                  textMessage.text = '';
-                                  istext = false;
-                                });
-                              },
-                              // backgroundColor: Colors.blue,
-                              elevation: 0,
-                              child: const Icon(
-                                Icons.send,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            )
-                          : FloatingActionButton(
-                              onPressed: () {},
-                              // backgroundColor: Colors.blue,
-                              elevation: 0,
-                              child: const Icon(
-                                Icons.keyboard_voice,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ),
-                    ],
+                  const SizedBox(
+                    width: 10,
                   ),
-                ),
-                Visibility(
-                  visible: isimage,
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 15,
+                  Expanded(
+                    child: TextField(
+                      controller: textMessage,
+                      keyboardType: TextInputType.multiline,
+                      textCapitalization: TextCapitalization.sentences,
+                      minLines: 1,
+                      maxLines: null,
+                      onChanged: ((value) {
+                        setState(() {
+                          istext = true;
+                          if (value.toString().isEmpty) {
+                            istext = false;
+                          }
+                        });
+                      }),
+                      decoration: InputDecoration(
+                        hintText: "Type your message here",
+                        hintMaxLines: 1,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 10),
+                        hintStyle: const TextStyle(
+                          fontSize: 16,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                            color: Colors.white,
+                            width: 0.2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                            color: Colors.black26,
+                            width: 0.2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  istext
+                      ? GestureDetector(
+                        onTap: (){
+                          if (messageList == null) {
+                            setUserData(
+                                widget.user_id.toString(),
+                                customUserId.toString(),
+                                textMessage.text);
+                          }
+
+                          sendMessage(widget.user_id.toString(),
+                              customUserId.toString(), textMessage.text);
+                          setState(() {
+                            messageList?.clear();
+                            getUserList();
+                          });
+                          setState(() {
+                            textMessage.text = '';
+                            istext = false;
+                          });
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 0, 91, 148),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(
+                            Icons.send,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      )
+                      : GestureDetector(
+                        onTap: (){},
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 0, 91, 148),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(
+                            Icons.keyboard_voice,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ),
+                ],
+              ),
+            ),
+            Visibility(
+              visible: isimage,
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                GestureDetector(
-                                    child: Image.asset(
-                                      "assets/add_image.png",
-                                      width: 150,
-                                      height: 120,
-                                    ),
-                                    onTap: () {
-                                      showDialog(
-                                        barrierColor: Colors.black26,
-                                        context: context,
-                                        builder: (context) {
-                                          isimage = false;
+                            GestureDetector(
+                                child: Image.asset(
+                                  "assets/add_image.png",
+                                  width: 150,
+                                  height: 120,
+                                ),
+                                onTap: () {
+                                  showDialog(
+                                    barrierColor: Colors.black26,
+                                    context: context,
+                                    builder: (context) {
+                                      isimage = false;
 
-                                          return bottomsheet();
-                                        },
-                                      );
-                                    }),
-                                const SizedBox(
-                                  width: 68,
-                                  child: Text(
-                                    'Image',
-                                    style: TextStyle(
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                GestureDetector(
-                                    child: Image.asset(
-                                      "assets/add_doc.png",
-                                      width: 150,
-                                      height: 120,
-                                    ),
-                                    onTap: () async {
-                                      FilePickerResult? result =
-                                          await FilePicker.platform.pickFiles();
-
-                                      if (result != null) {
-                                        PlatformFile files = result.files.first;
-                                        setState(() {
-                                          isimage = isimage = false;
-                                        });
-
-                                        constanst.messages.add(
-                                          ChatMessage(
-                                              messageContent: "",
-                                              userType: "sender",
-                                              msgtype: "pdf",
-                                              fillname: files.name),
-                                        );
-                                      } else {}
-                                    }),
-                                const SizedBox(
-                                  width: 68,
-                                  child: Text(
-                                    'Attach Document',
-                                    style: TextStyle(
-                                        fontSize: 13.0,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
-                              ],
+                                      return bottomsheet();
+                                    },
+                                  );
+                                }),
+                            const SizedBox(
+                              width: 68,
+                              child: Text(
+                                'Image',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                textAlign: TextAlign.center,
+                              ),
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 15,
+                        Column(
+                          children: [
+                            GestureDetector(
+                                child: Image.asset(
+                                  "assets/add_doc.png",
+                                  width: 150,
+                                  height: 120,
+                                ),
+                                onTap: () async {
+                                  FilePickerResult? result =
+                                      await FilePicker.platform.pickFiles();
+
+                                  if (result != null) {
+                                    PlatformFile files = result.files.first;
+                                    setState(() {
+                                      isimage = isimage = false;
+                                    });
+
+                                    constanst.messages.add(
+                                      ChatMessage(
+                                          messageContent: "",
+                                          userType: "sender",
+                                          msgtype: "pdf",
+                                          fillname: files.name),
+                                    );
+                                  } else {}
+                                }),
+                            const SizedBox(
+                              width: 68,
+                              child: Text(
+                                'Attach Document',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily:
+                                        'assets/fonst/Metropolis-Black.otf'),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                    const SizedBox(
+                      height: 15,
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

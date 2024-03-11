@@ -1,7 +1,7 @@
 class Getcoderecord {
   int? status;
   String? message;
-  List<Result>? result;
+  List<CoderecordResult>? result;
 
   Getcoderecord({this.status, this.message, this.result});
 
@@ -9,9 +9,9 @@ class Getcoderecord {
     status = json['status'];
     message = json['message'];
     if (json['result'] != null) {
-      result = <Result>[];
+      result = <CoderecordResult>[];
       json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+        result!.add(new CoderecordResult.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class Getcoderecord {
   }
 }
 
-class Result {
+class CoderecordResult {
   int? id;
   String? codeId;
   String? categoryId;
@@ -42,8 +42,9 @@ class Result {
   String? notificationStatus;
   String? createdAt;
   String? updatedAt;
+  String? sign;
 
-  Result(
+  CoderecordResult(
       {this.id,
         this.codeId,
         this.categoryId,
@@ -51,15 +52,17 @@ class Result {
         this.companyId,
         this.country,
         this.state,
+        this.sign,
         this.price,
         this.currency,
         this.changed,
         this.priceDate,
         this.notificationStatus,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        });
 
-  Result.fromJson(Map<String, dynamic> json) {
+  CoderecordResult.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     codeId = json['code_id'];
     categoryId = json['category_id'];
@@ -74,6 +77,7 @@ class Result {
     notificationStatus = json['notification_status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    sign = json['sign'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +96,7 @@ class Result {
     data['notification_status'] = this.notificationStatus;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['sign'] = this.sign;
     return data;
   }
 }

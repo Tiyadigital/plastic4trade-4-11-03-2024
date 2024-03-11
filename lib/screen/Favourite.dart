@@ -10,6 +10,7 @@ import 'package:Plastic4trade/model/GetFavoriteList.dart' as fav;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_interface.dart';
+import 'Buyer_sell_detail.dart';
 
 class Favourite extends StatefulWidget {
   const Favourite({Key? key}) : super(key: key);
@@ -68,159 +69,197 @@ class _FavouriteState extends State<Favourite> {
   }
 
   Widget fav_list() {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0),
-        child: FutureBuilder(
-            //future: load_category(),
-            builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Align(
-              alignment: Alignment.center,
-              child: Text('Error: ${snapshot.error}'),
-            );
-          } else if (snapshot.hasData) {
-            return const Text('Data Not Found ');
-          } else {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: MediaQuery.of(context).size.height / 1150,
-                mainAxisSpacing: 3.0,
-                crossAxisCount: 2,
+    return favlist.isNotEmpty ? GridView.builder(
+      padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: MediaQuery.of(context).size.height / 1300,
+        mainAxisSpacing: 3.0,
+        crossAxisCount: 2,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: favlist.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        fav.Result record = favlist[index];
+        return GestureDetector(
+          onTap: (() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Buyer_sell_detail(
+                  prod_id: record.productId.toString(),
+                  post_type: record.postType.toString(),
+                ),
               ),
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: favlist.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                fav.Result record = favlist[index];
-                return GestureDetector(
-                  onTap: (() {}),
-                  child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Column(children: [
-                      Stack(fit: StackFit.passthrough, children: <Widget>[
-                        Container(
-                          height: 150,
-                          margin: const EdgeInsets.all(5.0),
-                          child: Image(
-                            errorBuilder: (context, object, trace) {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 223, 220, 220),
-                                ),
-                              );
-                            },
-                            image: NetworkImage(record.mainproductImage ?? ''
-                                //data[index]['member_image'] ?? '',
-                                ),
-                            width: MediaQuery.of(context).size.width,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 5.0),
-                            decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 0, 148, 95),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
-                            // color: Color.fromARGB(0,255, 255, 255),
-                            child: Text('₹${record.productPrice}',
-                                style: const TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w800,
-                                    fontFamily:
-                                        'assets/fonst/Metropolis-Black.otf',
-                                    color: Colors.white)),
-                          ),
-                        ),
-                        Positioned(
-                          top: 5,
-                          right: 5,
-                          child: Container(
-                            color: const Color.fromARGB(0, 255, 255, 255),
-                            child: Center(
-                                child: GestureDetector(
-                              child: Image.asset(
-                                'assets/fav.png',
-                                height: 30,
-                                width: 30,
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  getremove_product(
-                                      record.productId.toString());
-                                  favlist.removeAt(index);
-                                });
-                              },
-                            )),
-                          ),
-                        ),
-                      ]),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 10.0),
-                                child: Text(record.productName.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-SemiBold.otf'),
-                                    softWrap: false,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis)),
-                          ),
-                          Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 10.0),
-                                child: Text(
-                                    '${record.productType} | ${record.productGrade}',
-                                    style: const TextStyle(
-                                      fontSize: 13.0,
-                                      color: Colors.grey,
-                                      fontFamily: 'Metropolis',
-                                    ),
-                                    softWrap: false,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis),
-                              )),
-                          Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, left: 10.0),
-                                child: Text('${record.state},${record.country}',
-                                    style: const TextStyle(
-                                      fontSize: 13.0,
-                                      color: Colors.grey,
-                                      fontFamily: 'Metropolis',
-                                    ),
-                                    softWrap: false,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis),
-                              )),
-                        ],
-                      )
-                    ]),
-                  ),
-                );
-              },
             );
-          }
-        }));
+          }),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(13.05)),
+            child: Container(
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.05),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x3FA6A6A6),
+                    blurRadius: 16.32,
+                    offset: Offset(0, 3.26),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: Column(children: [
+                Stack(fit: StackFit.passthrough, children: <Widget>[
+                  Container(
+                    height: 165,
+                    width: 175,
+                    margin: const EdgeInsets.all(5.0),
+                    decoration: const BoxDecoration(
+                      //color: Colors.black26,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(13.05),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(13.05),
+                      child: Image(
+                        image: NetworkImage(record.mainproductImage ?? ''
+                          //data[index]['member_image'] ?? '',
+                        ),
+                        fit: BoxFit.cover,
+                        height: 150,
+                        width: 170,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 5.0),
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 0, 148, 95),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(10.0))),
+                      // color: Color.fromARGB(0,255, 255, 255),
+                      child: Text('₹${record.productPrice}',
+                          style: const TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w800,
+                              fontFamily:
+                              'assets/fonst/Metropolis-Black.otf',
+                              color: Colors.white)),
+                    ),
+                  ),
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Container(
+                      color: const Color.fromARGB(0, 255, 255, 255),
+                      child: Center(
+                          child: GestureDetector(
+                            child: Image.asset(
+                              'assets/fav.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                getremove_product(
+                                    record.productId.toString());
+                                favlist.removeAt(index);
+                              });
+                            },
+                          )),
+                    ),
+                  ),
+                ]),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5.0, left: 10.0),
+                          child: Text(record.productName.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontFamily:
+                                  'assets/fonst/Metropolis-SemiBold.otf'),
+                              softWrap: false,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis)),
+                    ),
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5.0, left: 10.0),
+                          child: Text(
+                              '${record.productType} | ${record.productGrade}',
+                              style: const TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.grey,
+                                fontFamily: 'Metropolis',
+                              ),
+                              softWrap: false,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
+                        )),
+                    Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 5.0, left: 10.0),
+                          child: Text('${record.state},${record.country}',
+                              style: const TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.grey,
+                                fontFamily: 'Metropolis',
+                              ),
+                              softWrap: false,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis),
+                        )),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 5.0, left: 10.0),
+                        child: Text(
+                          record.postType.toString(),
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                            fontFamily: 'Metropolis',
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(0, 148, 95, 1),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ]),
+            ),
+          ),
+        );
+      },
+    ) : const Center(
+      child: Text(
+        'Favourite Post not Found',
+        style: TextStyle(
+          color: Color.fromARGB(255, 0, 91, 148),
+        ),
+      ),
+    );
   }
 
   Future<void> get_fav() async {
@@ -253,6 +292,7 @@ class _FavouriteState extends State<Favourite> {
           favlist.add(record);
         }
         isload = true;
+
         if (mounted) {
           setState(() {});
         }

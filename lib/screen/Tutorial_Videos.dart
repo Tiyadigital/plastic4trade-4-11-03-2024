@@ -1,5 +1,8 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
+import 'package:Plastic4trade/screen/Bussinessverification.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -9,9 +12,6 @@ import 'package:Plastic4trade/api/api_interface.dart';
 import 'package:Plastic4trade/model/GetVideoList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'package:flutter/gestures.dart';
-import 'package:Plastic4trade/model/GetVideoList.dart' as video;
 import '../widget/HomeAppbar.dart';
 
 class Tutorial_Videos extends StatefulWidget {
@@ -20,9 +20,6 @@ class Tutorial_Videos extends StatefulWidget {
   @override
   State<Tutorial_Videos> createState() => _YourWidgetState();
 }
-
-
-
 
 class _YourWidgetState extends State<Tutorial_Videos> {
   int? _radioValue = 0;
@@ -44,57 +41,59 @@ class _YourWidgetState extends State<Tutorial_Videos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(240, 218, 218, 218),
+        backgroundColor: const Color.fromARGB(240, 218, 218, 218),
         appBar: CustomeApp('Tutorial_Video'),
-        body:load? Container(
-    margin: EdgeInsets.fromLTRB( 10.0,10.0,10.0,0.0),
-    child: SingleChildScrollView(
-            child: FutureBuilder(
-
-            //future: load_subcategory(),
-            builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              snapshot.hasData == null) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            //List<dynamic> users = snapshot.data as List<dynamic>;
-            return ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: videolist.length,
-                //padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
-                itemBuilder: (context, index) {
-                  //Choice record = choices[index];
-                  return Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          color: Colors.white),
-                      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                      child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(children: [
-                            YoutubeViewer(videolist[index]),
-                            SizedBox(height: 10,),
-                            Text(
-                              videocontent[index].toString(),
-                              style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets\fonst\Metropolis-Black.otf')
-                                  .copyWith(fontSize: 15),
-                            )
-                          ])));
-                });
-          }
-        }))):Center(
+        body:load? SingleChildScrollView(
+                child:
+              //   FutureBuilder (
+              //   future: ,
+              //   //future: load_subcategory(),
+              //   builder: (context, snapshot) {
+              // if (snapshot.connectionState == ConnectionState.none &&
+              //     snapshot.hasData == null) {
+              //   return const Center(child: CircularProgressIndicator());
+              // }
+              // if (snapshot.hasError) {
+              //   return Text('Error: ${snapshot.error}');
+              // } else {
+              //   //List<dynamic> users = snapshot.data as List<dynamic>;
+              //   return
+                  ListView.builder(
+                    padding: const EdgeInsets.all(15),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: videolist.length,
+                    //padding: EdgeInsets.fromLTRB(3.0, 0, 3.0, 0),
+                    itemBuilder: (context, index) {
+                      //Choice record = choices[index];
+                      return Container(
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(14)),
+                              color: Colors.white),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(children: [
+                                YoutubeViewer(videolist[index]),
+                                const SizedBox(height: 10,),
+                                Text(
+                                  videocontent[index].toString(),
+                                  style: const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500,fontFamily: 'assets/fonst/Metropolis-Black.otf')
+                                      .copyWith(fontSize: 15),
+                                )
+                              ])));
+                    }),
+            //   }
+            // })
+        ):Center(
             child: Platform.isAndroid
-                ? CircularProgressIndicator(
+                ? const CircularProgressIndicator(
               value: null,
               strokeWidth: 2.0,
               color: Color.fromARGB(255, 0, 91, 148),
             )
                 : Platform.isIOS
-                ? CupertinoActivityIndicator(
+                ? const CupertinoActivityIndicator(
               color: Color.fromARGB(255, 0, 91, 148),
               radius: 20,
               animating: true,
@@ -159,15 +158,16 @@ class _YourWidgetState extends State<Tutorial_Videos> {
 class YoutubeViewer extends StatefulWidget {
   final String videoID;
 
-  const YoutubeViewer(this.videoID, {super.key});
+  const YoutubeViewer(this.videoID,
+     // {super.key}
+      );
   // const YoutubeViewer({super.key});
 
   @override
   _YoutubeViewerState createState() => _YoutubeViewerState();
 }
 
-class _YoutubeViewerState extends State<YoutubeViewer>
-    with AutomaticKeepAliveClientMixin {
+class _YoutubeViewerState extends State<YoutubeViewer> with AutomaticKeepAliveClientMixin {
   late final YoutubePlayerController controller;
   bool isPlaying = false;
 
@@ -215,7 +215,7 @@ class _YoutubeViewerState extends State<YoutubeViewer>
 
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(20), // Image border
+      borderRadius: BorderRadius.circular(14), // Image border
       child: player,
       // Positioned.fill(
       //   child: PointerInterceptor(

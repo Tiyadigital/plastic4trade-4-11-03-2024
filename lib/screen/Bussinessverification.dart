@@ -1,11 +1,13 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, unrelated_type_equality_checks, camel_case_types, prefer_typing_uninitialized_variables
 
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:Plastic4trade/model/Getbusiness_document_types.dart'
     as doc_type;
 import 'package:Plastic4trade/model/Getmybusinessprofile.dart';
+import 'package:Plastic4trade/common/popUpDailog.dart';
 import 'package:Plastic4trade/model/Getmybusinessprofile.dart' as profile;
 import 'package:Plastic4trade/model/getannualcapacity.dart' as cat;
 import 'package:Plastic4trade/model/getannualturnovermaster.dart' as cat1;
@@ -58,6 +60,10 @@ class _BussinessverificationState extends State<Bussinessverification> {
   bool isReady = false;
 
   List<Doc> get_doctype = [];
+  List<File> select_doctype = [];
+  List<SelectFilesLable> selectFilesLable = [];
+  String? selectFilesLableName;
+  String? docId;
   DateTime dateTime = DateTime.now();
   String? _select_premises;
   String? firstyear_currency, secondyear_currency, thirdyear_currency;
@@ -105,12 +111,6 @@ class _BussinessverificationState extends State<Bussinessverification> {
     return null;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    return initwidget(size);
-  }
-
   void _onLoading() {
     dialogContext = context;
 
@@ -152,7 +152,8 @@ class _BussinessverificationState extends State<Bussinessverification> {
     );
   }
 
-  Widget initwidget(size) {
+@override
+Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         setState(
@@ -398,6 +399,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                           controller: _pannumber,
                                           textCapitalization:
                                               TextCapitalization.characters,
+                                          maxLength: 10,
                                           style: const TextStyle(
                                               fontSize: 15.0,
                                               fontWeight: FontWeight.w400,
@@ -416,6 +418,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                           decoration: InputDecoration(
                                             // labelText: 'Your phone *',
                                             // labelStyle: TextStyle(color: Colors.red),
+                                            counterText: "",
                                             filled: true,
                                             fillColor: Colors.white,
                                             hintText: 'Pan Number',
@@ -706,63 +709,51 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                       BorderRadius.circular(
                                                           15.0),
                                                   color: Colors.white),
-                                              child: Column(
-                                                children: [
-                                                  DropdownButton(
-                                                    value: firstyear_currency,
-                                                    hint: Text(
-                                                      'Currency',
-                                                      style: const TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              color: Colors
-                                                                  .black45),
-                                                    ),
-                                                    dropdownColor: Colors.white,
-                                                    icon: const Icon(
-                                                        Icons.arrow_drop_down),
-                                                    iconSize: 15,
-                                                    isExpanded: true,
-                                                    underline: const SizedBox(),
-                                                    items: listrupes.map(
-                                                      (valueItem) {
-                                                        return DropdownMenuItem(
-                                                          value: valueItem,
-                                                          child: Text(
-                                                            valueItem,
-                                                            style: const TextStyle(
-                                                                fontSize: 15.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontFamily:
-                                                                    'assets/fonst/Metropolis-Black.otf'),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ).toList(),
-                                                    onChanged: (value) {
-                                                      setState(
-                                                        () {
-                                                          firstyear_currency =
-                                                              null;
-
-                                                          firstyear_currency =
-                                                              value.toString();
-                                                        },
-                                                      );
+                                              child: DropdownButtonFormField(
+                                                hint:
+                                                firstyear_currency != null && firstyear_currency!.isNotEmpty && firstyear_currency != "null"
+                                                    ? Text(
+                                                  secondyear_currency.toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.black,
+                                                      fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.black),)
+                                                    : Text('Currency',
+                                                  style: const TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: Colors.black,
+                                                      fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
+                                                      color: Colors.black45),),
+                                                //value: firstyear_currency,
+                                                dropdownColor: Colors.white,
+                                                icon: const Icon(Icons.arrow_drop_down),
+                                                iconSize: 15,
+                                                isExpanded: true,
+                                                //underline: const SizedBox(),
+                                                items: listrupes.map(
+                                                  (valueItem) {
+                                                    return DropdownMenuItem(
+                                                      value: valueItem,
+                                                      child: Text(
+                                                        valueItem,
+                                                        style: const TextStyle(
+                                                            fontSize: 15.0,
+                                                            fontWeight: FontWeight.w400,
+                                                            color: Colors.black,
+                                                            fontFamily: 'assets/fonst/Metropolis-Black.otf'),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).toList(),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                      firstyear_currency = null;
+                                                      firstyear_currency = value.toString();
                                                     },
-                                                  )
-                                                ],
+                                                  );
+                                                },
                                               ),
                                             ),
                                             const SizedBox(
@@ -793,38 +784,19 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                     hint:
                                                         firstyear_amount != null
                                                             ? Text(
-                                                                firstyear_amount
-                                                                    .toString(),
+                                                                firstyear_amount.toString(),
                                                                 style: const TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontFamily:
-                                                                            'assets/fonst/Metropolis-Black.otf')
-                                                                    .copyWith(
-                                                                        color: Colors
-                                                                            .black),
-                                                              )
-                                                            : Text(
-                                                                'Amount',
+                                                                        fontSize: 15.0,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        color: Colors.black,
+                                                                        fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.black),)
+                                                            : Text('Amount',
                                                                 style: const TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontFamily:
-                                                                            'assets/fonst/Metropolis-Black.otf')
-                                                                    .copyWith(
-                                                                        color: Colors
-                                                                            .black45),
-                                                              ),
+                                                                        fontSize: 15.0,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        color: Colors.black,
+                                                                        fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
+                                                                        color: Colors.black45),),
                                                     dropdownColor: Colors.white,
                                                     icon: const Icon(
                                                         Icons.arrow_drop_down),
@@ -924,29 +896,30 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
-                                                  DropdownButton(
-                                                    value: secondyear_currency,
-                                                    hint: Text(
-                                                      'Currency',
+                                                  DropdownButtonFormField(
+                                                   // value: secondyear_currency,
+                                                    hint:
+                                                    secondyear_currency != null && secondyear_currency!.isNotEmpty && secondyear_currency != "null"
+                                                        ? Text(
+                                                      secondyear_currency.toString(),
                                                       style: const TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              color: Colors
-                                                                  .black45),
-                                                    ),
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.black),)
+                                                        : Text('Currency',
+                                                      style: const TextStyle(
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
+                                                          color: Colors.black45),),
                                                     dropdownColor: Colors.white,
                                                     icon: const Icon(
                                                         Icons.arrow_drop_down),
                                                     iconSize: 15,
                                                     isExpanded: true,
-                                                    underline: const SizedBox(),
+                                                    //underline: const SizedBox(),
                                                     items: listrupes.map(
                                                       (valueItem) {
                                                         return DropdownMenuItem(
@@ -1139,29 +1112,30 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                   color: Colors.white),
                                               child: Column(
                                                 children: [
-                                                  DropdownButton(
-                                                    value: thirdyear_currency,
-                                                    hint: Text(
-                                                      'Currency',
+                                                  DropdownButtonFormField(
+                                                   // value: thirdyear_currency,
+                                                    hint:
+                                                    thirdyear_currency != null && thirdyear_currency!.isNotEmpty && thirdyear_currency != "null"
+                                                        ? Text(
+                                                      thirdyear_currency.toString(),
                                                       style: const TextStyle(
-                                                              fontSize: 15.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              color: Colors
-                                                                  .black45),
-                                                    ),
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(color: Colors.black),)
+                                                        : Text('Currency',
+                                                      style: const TextStyle(
+                                                          fontSize: 15.0,
+                                                          fontWeight: FontWeight.w400,
+                                                          color: Colors.black,
+                                                          fontFamily: 'assets/fonst/Metropolis-Black.otf').copyWith(
+                                                          color: Colors.black45),),
                                                     dropdownColor: Colors.white,
                                                     icon: const Icon(
                                                         Icons.arrow_drop_down),
                                                     iconSize: 15,
                                                     isExpanded: true,
-                                                    underline: const SizedBox(),
+                                                    //underline: const SizedBox(),
                                                     items: listrupes.map(
                                                       (valueItem) {
                                                         return DropdownMenuItem(
@@ -1388,6 +1362,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                                             .isSelected =
                                                                         false;
                                                                     //category1 = true;
+
                                                                   },
                                                                 );
                                                               },
@@ -1472,8 +1447,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                                           },
                                                         ),
                                                         Text(
-                                                          sampleData1
-                                                              .last.buttonText,
+                                                          sampleData1.last.buttonText,
                                                           style: const TextStyle(
                                                                   fontSize:
                                                                       13.0,
@@ -1610,17 +1584,36 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                               'assets/add_document.png'),
                                         ),
                                       ),
+                                      const Padding(padding: EdgeInsets.symmetric(vertical: 5,horizontal: 25),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              'Only PDF | JPG allowed',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11,
+                                                fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Maximum Upload Size 1MB',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11,
+                                                fontFamily: 'assets/fonst/Metropolis-Black.otf',
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      if (filename != null)
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             15.0, 0.0, 15.0, 10),
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: document_display(
-                                                  size, imageName),
-                                            ),
-                                          ],
-                                        ),
+                                        child: document_display(),
                                       ),
                                       SizedBox(
                                         height: (get_doctype.isEmpty)
@@ -1635,7 +1628,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               15.0, 0.0, 15.0, 0),
-                                          child: uploadedImage(size),
+                                          child: uploadedImage(MediaQuery.of(context).size),
                                         ),
                                       ),
                                       Container(
@@ -1654,16 +1647,12 @@ class _BussinessverificationState extends State<Bussinessverification> {
                                         ),
                                         child: TextButton(
                                           onPressed: () {
+                                            setState(() {},);
                                             if (_errorText != null) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      'Please Enter Registration Date');
+                                              Fluttertoast.showToast(msg: 'Please Enter Registration Date');
                                             } else {
                                               vaild_data();
                                             }
-                                            setState(
-                                              () {},
-                                            );
                                           },
                                           child: const Text(
                                             'Update',
@@ -1736,9 +1725,11 @@ class _BussinessverificationState extends State<Bussinessverification> {
           _selectedFile = file;
           imageName = _doctype.text;
 
-          log("SELECTED FILE === $_selectedFile");
+          select_doctype.add(_selectedFile!);
+          selectFilesLable.add(SelectFilesLable(id: docId,lable: imageName));
         });
       }
+      print("SELECTED FILE === $_selectedFile");
     } catch (e) {
       log("ERROR START === $e");
     }
@@ -1760,74 +1751,101 @@ class _BussinessverificationState extends State<Bussinessverification> {
     return result;
   }
 
-  Widget document_display(size, label) {
-    return Column(
-      children: [
-        if (filename != null)
-          Stack(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  getFilePreview();
-                },
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.all(8.0),
-                    height: 45,
-                    width: size.width,
-                    child: Text(
-                      label,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
+  Widget document_display() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: selectFilesLable.length,
+      itemBuilder: (context, index) {
+        return Stack(
+          children: [
+            GestureDetector(
+              onTap: () {
+                getFilePreview(file: select_doctype[index]);
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(8.0),
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  child: Text("${selectFilesLable[index].lable}",
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
-              Positioned(
-                  top: -6,
-                  right: -5,
-                  child: GestureDetector(
-                    onTap: () {
-                      filename = null;
-                      _selectedFile = null;
-                      setState(() {});
-                    },
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                      size: 25,
-                    ),
-                  ))
-            ],
-          ),
-      ],
+            ),
+            const Positioned(
+                top: 15,
+                left: 15,
+                child: Icon(
+                  Icons.note,
+                  color: Color(0xFF005C94),
+                  size: 35,
+                )),
+            Positioned(
+                top: 15,
+                right: 15,
+                child: GestureDetector(
+                  onTap: () {
+                    select_doctype.removeAt(index);
+                    selectFilesLable.removeAt(index);
+                    setState(() {});
+                  },
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    size: 35,
+                  ),
+                ))
+          ],
+        );
+      }
     );
   }
 
-  Widget? getFilePreview() {
+  Widget? getFilePreview({required File file}) {
     // Check the file extension
-    String extension = filename!.path.split('.').last.toLowerCase();
-
+    String extension = file.path.split('.').last.toLowerCase();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: Container(
-              height: 500,
-              width: 225,
-              padding: const EdgeInsets.all(16.0),
-              child: (extension == 'jpg' || extension == 'png')
-                  ? Image.file(filename!, fit: BoxFit.cover)
-                  : (extension == 'pdf')
-                      ? const Icon(Icons.picture_as_pdf,
-                          size: 50, color: Colors.red)
-                      : const Icon(Icons.insert_drive_file,
-                          size: 50, color: Colors.blue)),
+          child: Stack(
+            children: [
+              Container(
+                  height: 500,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(16.0),
+                  child: (extension == 'jpg' || extension == 'png')
+                      ? Image.file(file,)
+                      : (extension == 'pdf')
+                          ? const Icon(Icons.picture_as_pdf,
+                              size: 50, color: Colors.red)
+                          : const Icon(Icons.insert_drive_file,
+                              size: 50, color: Colors.blue)),
+              Positioned(
+            right: 0.0,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+              child: Align(
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  radius: 20.0,
+                  backgroundColor: Colors.transparent.withOpacity(0.1),
+                  child: const Icon(Icons.close, color: Colors.white),
+                ),
+              ),
+            ),),
+            ],
+          ),
         );
       },
     );
@@ -1850,6 +1868,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
           itemCount: get_doctype.length,
           itemBuilder: (context, gridIndex) {
             final doc = get_doctype[gridIndex];
+            print("doc:-${doc.toJson()}");
             return Stack(
               children: [
                 GestureDetector(
@@ -1870,12 +1889,12 @@ class _BussinessverificationState extends State<Bussinessverification> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       alignment: Alignment.center,
                       height: 55,
                       width: size.width / 2 - 12, // Adjust the width as needed
-
                       child: Text(
-                        doc.docType!,
+                        doc.doctype!.name.toString(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -1884,32 +1903,43 @@ class _BussinessverificationState extends State<Bussinessverification> {
                     ),
                   ),
                 ),
+                const Positioned(
+                    top: 20,
+                    left: 5,
+                    child: Icon(
+                      Icons.note,
+                      color: Color(0xFF005C94),
+                      size: 20,
+                    )),
                 Positioned(
-                  top: -6,
-                  right: -5,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isload = false; // Show the circular progress indicator
-                      });
-
-                      remove_document(doc.id.toString()).then((value) {
-                        Future.delayed(const Duration(seconds: 2), () {
-                          // After 2 seconds, refresh the page
-                          setState(() {
-                            isload = true; // Hide the circular progress indicator
-                            getProfiless();
-                          });
+                    top: 20,
+                    right: 4,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          //isload = false; // Show the circular progress indicator
                         });
-                      });
-                    },
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.red,
-                      size: 25,
-                    ),
-                  ),
-                ),
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return CommanDialog(
+                              title: "Delete Document",
+                              content: "Are you sure want to\n delete Document?",
+                              onPressed: (){
+                                Navigator.of(context).pop();
+                                get_doctype.removeAt(index);
+                                remove_document(doc.id.toString());
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                    ))
               ],
             );
           },
@@ -1923,11 +1953,30 @@ class _BussinessverificationState extends State<Bussinessverification> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: Container(
-            height: 500,
-            width: 225,
-            padding: const EdgeInsets.all(16.0),
-            child: Image.network(imageUrl), // Replace with your image widget
+          child: Stack(
+            children: [
+              Container(
+                height: 500,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(16.0),
+                child: Image.network(imageUrl), // Replace with your image widget
+              ),
+              Positioned(
+                right: 0.0,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Colors.transparent.withOpacity(0.1),
+                      child: const Icon(Icons.close, color: Colors.white),
+                    ),
+                  ),
+                ),),
+            ],
           ),
         );
       },
@@ -1939,20 +1988,39 @@ class _BussinessverificationState extends State<Bussinessverification> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: SizedBox(
-            height: size.height * 0.8,
-            width: size.width * 0.8,
-            child: PDFView(
-              filePath: pdfUrl,
-              autoSpacing: true,
-              swipeHorizontal: true,
-              onRender: (pages) {
-                setState(() {
-                  pages = pages;
-                  isReady = true;
-                });
-              },
-            ),
+          child: Stack(
+            children: [
+              SizedBox(
+                height: size.height * 0.8,
+                width: size.width * 0.8,
+                child: PDFView(
+                  filePath: pdfUrl,
+                  autoSpacing: true,
+                  swipeHorizontal: true,
+                  onRender: (pages) {
+                    setState(() {
+                      pages = pages;
+                      isReady = true;
+                    });
+                  },
+                ),
+              ),
+              Positioned(
+                right: 0.0,
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      radius: 20.0,
+                      backgroundColor: Colors.transparent.withOpacity(0.1),
+                      child: const Icon(Icons.close, color: Colors.white),
+                    ),
+                  ),
+                ),),
+            ],
           ),
         );
       },
@@ -1961,6 +2029,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
 
   ViewItem1(BuildContext context) {
     return showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       useRootNavigator: false,
@@ -2025,9 +2094,8 @@ class _BussinessverificationState extends State<Bussinessverification> {
       (value) {
         if (constanst.select_document_type_idx != "") {
           _doctype.text = constanst.Document_type_name;
-
-          setState(
-            () {
+          docId = constanst.select_document_type_id;
+          setState(() {
               _color5 = Colors.green.shade600;
             },
           );
@@ -2036,60 +2104,60 @@ class _BussinessverificationState extends State<Bussinessverification> {
     );
   }
 
-  Widget prem_dropdown(List listitem, String hint) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 10.0),
-        child: Container(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-          decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.grey),
-              borderRadius: BorderRadius.circular(15.0),
-              color: Colors.white),
-          child: DropdownButton(
-            value: _select_premises,
-            hint: Text(
-              hint,
-              style: const TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                      fontFamily: 'assets/fonst/Metropolis-Black.otf')
-                  .copyWith(color: Colors.black45),
-            ),
-            dropdownColor: Colors.white,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 30,
-            isExpanded: true,
-            underline: const SizedBox(),
-            items: listitem.map(
-              (valueItem) {
-                return DropdownMenuItem(
-                  value: valueItem,
-                  child: Text(
-                    valueItem,
-                    style: const TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                      fontFamily: 'assets/fonst/Metropolis-Black.otf',
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
-            onChanged: (value) {
-              setState(
-                () {
-                  _select_premises = value.toString();
-                },
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget prem_dropdown(List listitem, String hint) {
+  //   return Center(
+  //     child: Padding(
+  //       padding: const EdgeInsets.fromLTRB(25.0, 0.0, 25.0, 10.0),
+  //       child: Container(
+  //         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+  //         decoration: BoxDecoration(
+  //             border: Border.all(width: 1, color: Colors.grey),
+  //             borderRadius: BorderRadius.circular(15.0),
+  //             color: Colors.white),
+  //         child: DropdownButton(
+  //           value: _select_premises,
+  //           hint: Text(
+  //             hint,
+  //             style: const TextStyle(
+  //                     fontSize: 15.0,
+  //                     fontWeight: FontWeight.w400,
+  //                     color: Colors.black,
+  //                     fontFamily: 'assets/fonst/Metropolis-Black.otf')
+  //                 .copyWith(color: Colors.black45),
+  //           ),
+  //           dropdownColor: Colors.white,
+  //           icon: const Icon(Icons.arrow_drop_down),
+  //           iconSize: 30,
+  //           isExpanded: true,
+  //           underline: const SizedBox(),
+  //           items: listitem.map(
+  //             (valueItem) {
+  //               return DropdownMenuItem(
+  //                 value: valueItem,
+  //                 child: Text(
+  //                   valueItem,
+  //                   style: const TextStyle(
+  //                     fontSize: 15.0,
+  //                     fontWeight: FontWeight.w400,
+  //                     color: Colors.black,
+  //                     fontFamily: 'assets/fonst/Metropolis-Black.otf',
+  //                   ),
+  //                 ),
+  //               );
+  //             },
+  //           ).toList(),
+  //           onChanged: (value) {
+  //             setState(
+  //               () {
+  //                 _select_premises = value.toString();
+  //               },
+  //             );
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget doc_type_dropdown(String hint) {
     return Center(
@@ -2165,8 +2233,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
         Fluttertoast.showToast(msg: 'Please Add Document');
       } else {
         _onLoading();
-        update_BusinessVerification().then(
-          (value) {
+        update_BusinessVerification().then((value) {
             Navigator.of(dialogContext!).pop(); // loader
             if (value) {
               Navigator.push(
@@ -2294,14 +2361,13 @@ class _BussinessverificationState extends State<Bussinessverification> {
           name: data['name'],
         );
         constanst.doc_typess.add(record);
+      //  print("constanst.doc_typess3:- ${constanst.doc_typess.last.id}");
         isload = true;
       }
       for (int i = 0; i < constanst.doc_typess.length; i++) {
         constanst.Document_type_itemsCheck.add(Icons.circle_outlined);
       }
-      setState(
-        () {},
-      );
+      setState(() {},);
     } else {
       isload = true;
       WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
@@ -2314,24 +2380,27 @@ class _BussinessverificationState extends State<Bussinessverification> {
 
   Future<bool> update_BusinessVerification() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-
+    selectFilesLableName = selectFilesLable.map((e) => e.id).join(",");
     var res = await updateBusinessVerification(
-        pref.getString('user_id').toString(),
-        pref.getString('api_token').toString(),
-        _useresiger.text,
-        _pannumber.text,
-        _exno.text,
-        _select_premises.toString(),
-        _usergst.text,
-        firstyear_currency.toString(),
-        firstyear_amountID.toString(),
-        secondyear_currency.toString(),
-        secondyear_amountID.toString(),
-        thirdyear_currency.toString(),
-        thirdyear_amountID.toString(),
-        constanst.select_document_type_id.toString(),
-        constanst.select_product_cap_id.toString(),
-        _selectedFile);
+        userId: pref.getString('user_id').toString(),
+        userToken: pref.getString('api_token').toString(),
+        registrationDate: _useresiger.text,
+        panNumber: _pannumber.text,
+        exportImportNumber: _exno.text,
+        premises: _select_premises.toString(),
+        gstTaxVat: _usergst.text,
+        currency_20_21: firstyear_currency.toString(),
+        amount_20_21: firstyear_amountID.toString(),
+        currency_21_22: secondyear_currency.toString(),
+        amount_21_22: secondyear_amountID.toString(),
+        currency_22_23: thirdyear_currency.toString(),
+        amount_22_23: thirdyear_amountID.toString(),
+        docType: constanst.select_document_type_id.toString(),
+        productionCapacity: constanst.select_product_cap_id.toString(),
+        filesList: select_doctype,
+        selectFilesLables: selectFilesLableName.toString(),
+        //_selectedFiles,,
+    );
 
     if (res['status'] == 1) {
       WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
@@ -2350,7 +2419,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
   }
 
   getProfiless() async {
-    getprofile = Getmybusinessprofile();
+    //getprofile = Getmybusinessprofile();
 
     SharedPreferences pref = await SharedPreferences.getInstance();
 
@@ -2410,19 +2479,32 @@ class _BussinessverificationState extends State<Bussinessverification> {
       constanst.select_product_cap_id = res['profile']['annualcapacity'] != null
           ? res['profile']['annualcapacity']['id'].toString()
           : "";
-
+     if(getprofile.profile!.premises != null){
+       sampleData1.clear();
+       if(getprofile.profile!.premises == "Rent"){
+       sampleData1.add(RadioModel(true, "Rent")) ;
+       sampleData1.add(RadioModel(false, "Own")) ;
+       }else if(getprofile.profile!.premises == "Own"){
+         sampleData1.add(RadioModel(false, "Rent")) ;
+         sampleData1.add(RadioModel(true, "Own")) ;
+       }
+       _select_premises = getprofile.profile!.premises;
+     }
+     print("res['doc']:- ${res['doc']}");
       if (res['doc'] != null && res['doc'] != []) {
         var jsonArray = res['doc'];
 
         for (var data in jsonArray) {
           Doc record = Doc(
             id: data['id'],
-            docType: data['doctype']['name'].toString(),
+            docType: data['doc_type'].toString(),
             documentUrl: data['document_url'],
+            doctype: Amounts2021.fromJson(data['doctype']),
           );
           get_doctype.add(record);
         }
       }
+
 
       isload = true;
     } else {
@@ -2441,12 +2523,13 @@ class _BussinessverificationState extends State<Bussinessverification> {
   }
 
   Future<void> remove_document(String docId) async {
+    isload = false;
     var res = await remove_docu(docId);
-
     if (res['status'] == 1) {
       if (mounted) {
-        setState(
-          () {},
+        setState(() {
+
+          },
         );
       }
     } else {
@@ -2455,6 +2538,7 @@ class _BussinessverificationState extends State<Bussinessverification> {
         msg: res['message'],
       );
     }
+    isload = true;
   }
 }
 
@@ -2475,10 +2559,6 @@ class _typeState extends State<type> {
 
   @override
   Widget build(BuildContext context) {
-    setState(
-      () {},
-    );
-
     return Column(
       children: [
         const SizedBox(height: 5),
@@ -2613,19 +2693,9 @@ class document_type extends StatefulWidget {
 }
 
 class _document_typeState extends State<document_type> {
-  @override
-  void initState() {
-    super.initState();
-
-    // TODO: implement initState
-  }
 
   @override
   Widget build(BuildContext context) {
-    setState(
-      () {},
-    );
-
     return Column(
       children: [
         const SizedBox(height: 5),
@@ -2675,6 +2745,7 @@ class _document_typeState extends State<document_type> {
                             record.id.toString();
                         constanst.Document_type_name = record.name.toString();
                       }
+
                     },
                   );
                 },

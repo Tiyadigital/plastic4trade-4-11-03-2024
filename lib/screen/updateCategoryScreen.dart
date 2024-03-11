@@ -227,158 +227,174 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(10),),
                               ),*/
-                              child: Column(
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 5.0),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'Where would you like to do your business?',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black,
-                                            fontFamily:
-                                                'assets/fonst/Metropolis-Black.otf'),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 5.0),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Where would you like to do your business?',
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                              fontFamily:
+                                                  'assets/fonst/Metropolis-Black.otf'),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          height: 30,
-                                          width: 120,
-                                          child: Row(
-                                            children: [
-                                              GestureDetector(
-                                                child: Row(
-                                                  children: [
-                                                    sampleData.first
-                                                                .isSelected ==
-                                                            true
-                                                        ? Icon(
-                                                            Icons.check_circle,
-                                                            color: Colors
-                                                                .green.shade600)
-                                                        : const Icon(
-                                                            Icons
-                                                                .circle_outlined,
-                                                            color:
-                                                                Colors.black38),
-                                                    Text(
-                                                      sampleData
-                                                          .first.buttonText,
-                                                      style: const TextStyle(
-                                                              fontSize: 13.0,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontFamily:
-                                                                  'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              fontSize: 17),
-                                                    ),
-                                                  ],
-                                                ),
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (sampleData
-                                                            .first.isSelected ==
-                                                        false) {
-                                                      sampleData.first
-                                                          .isSelected = true;
-
-                                                      /* sampleData1.last.isSelected =
-                                                      false;*/
-                                                      category1 = true;
-                                                      location_interest =
-                                                          'Domestic';
-                                                      constanst
-                                                          .select_inserestlocation
-                                                          .add(
-                                                        location_interest
-                                                            .toString(),
-                                                      );
-                                                    } else {
-                                                      sampleData.first
-                                                          .isSelected = false;
-                                                      constanst
-                                                          .select_inserestlocation
-                                                          .remove('Domestic');
-                                                    }
-                                                  });
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 150,
-                                          height: 30,
-                                          child: GestureDetector(
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 30,
+                                            width: 120,
                                             child: Row(
                                               children: [
-                                                sampleData.last.isSelected ==
-                                                        true
-                                                    ? Icon(Icons.check_circle,
-                                                        color: Colors
-                                                            .green.shade600)
-                                                    : const Icon(
-                                                        Icons.circle_outlined,
-                                                        color: Colors.black38),
-                                                Text(
-                                                  sampleData.last.buttonText,
-                                                  style: const TextStyle(
-                                                          fontSize: 13.0,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontFamily:
-                                                              'assets/fonst/Metropolis-Black.otf')
-                                                      .copyWith(fontSize: 17),
+                                                GestureDetector(
+                                                  child: Row(
+                                                    children: [
+                                                      sampleData.first
+                                                                  .isSelected ==
+                                                              true
+                                                          ? Icon(
+                                                              Icons.check_circle,
+                                                              color: Colors
+                                                                  .green.shade600)
+                                                          : const Icon(
+                                                              Icons
+                                                                  .circle_outlined,
+                                                              color:
+                                                                  Colors.black38),
+                                                      Text(
+                                                        sampleData
+                                                            .first.buttonText,
+                                                        style: const TextStyle(
+                                                                fontSize: 13.0,
+                                                                color:
+                                                                    Colors.black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')
+                                                            .copyWith(
+                                                                fontSize: 17),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (sampleData
+                                                              .first.isSelected ==
+                                                          false) {
+                                                        sampleData.first
+                                                            .isSelected = true;
+
+                                                        /* sampleData1.last.isSelected =
+                                                        false;*/
+                                                        category1 = true;
+                                                        location_interest =
+                                                            'Domestic';
+                                                        constanst
+                                                            .select_inserestlocation
+                                                            .add(
+                                                          location_interest
+                                                              .toString(),
+                                                        );
+                                                      } else {
+                                                        sampleData.first
+                                                            .isSelected = false;
+                                                        constanst
+                                                            .select_inserestlocation
+                                                            .remove('Domestic');
+                                                      }
+                                                    });
+                                                  },
                                                 )
                                               ],
                                             ),
-                                            onTap: () {
-                                              setState(() {
-                                                if (sampleData
-                                                        .last.isSelected ==
-                                                    false) {
-                                                  sampleData.last.isSelected =
-                                                      true;
-                                                  /* sampleData1.last.isSelected =
-                                                      false;*/
-                                                  category1 = true;
-                                                  location_interest =
-                                                      'International';
-                                                  constanst
-                                                      .select_inserestlocation
-                                                      .add(
-                                                    location_interest
-                                                        .toString(),
-                                                  );
-                                                } else {
-                                                  sampleData.last.isSelected =
-                                                      false;
-                                                  constanst
-                                                      .select_inserestlocation
-                                                      .remove('International');
-                                                }
-                                                //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
-                                              });
-                                            },
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                          SizedBox(
+                                            width: 150,
+                                            height: 30,
+                                            child: GestureDetector(
+                                              child: Row(
+                                                children: [
+                                                  sampleData.last.isSelected ==
+                                                          true
+                                                      ? Icon(Icons.check_circle,
+                                                          color: Colors
+                                                              .green.shade600)
+                                                      : const Icon(
+                                                          Icons.circle_outlined,
+                                                          color: Colors.black38),
+                                                  Text(
+                                                    sampleData.last.buttonText,
+                                                    style: const TextStyle(
+                                                            fontSize: 13.0,
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontFamily:
+                                                                'assets/fonst/Metropolis-Black.otf')
+                                                        .copyWith(fontSize: 17),
+                                                  )
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                setState(() {
+                                                  if (sampleData
+                                                          .last.isSelected ==
+                                                      false) {
+                                                    sampleData.last.isSelected =
+                                                        true;
+                                                    /* sampleData1.last.isSelected =
+                                                        false;*/
+                                                    category1 = true;
+                                                    location_interest =
+                                                        'International';
+                                                    constanst
+                                                        .select_inserestlocation
+                                                        .add(
+                                                      location_interest
+                                                          .toString(),
+                                                    );
+                                                  } else {
+                                                    sampleData.last.isSelected =
+                                                        false;
+                                                    constanst
+                                                        .select_inserestlocation
+                                                        .remove('International');
+                                                  }
+                                                  //Fluttertoast.showToast(msg: 'hell $sampleData.last.isSelected');
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -402,163 +418,179 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(10),),
                               ),*/
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        8.0, 8.0, 0.0, 0.0),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'You’re like to do?',
-                                        style: const TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    'assets/fonst/Metropolis-Black.otf')
-                                            .copyWith(
-                                                fontWeight: FontWeight.w400),
+                              child: Container(
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.05),
+                                  ),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Color(0x3FA6A6A6),
+                                      blurRadius: 16.32,
+                                      offset: Offset(0, 3.26),
+                                      spreadRadius: 0,
+                                    )
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          8.0, 8.0, 0.0, 0.0),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'You’re like to do?',
+                                          style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                  fontFamily:
+                                                      'assets/fonst/Metropolis-Black.otf')
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w400),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          height: 30,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3.5,
-                                          child: Row(
-                                            children: [
-                                              GestureDetector(
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 30,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                3.5,
+                                            child: Row(
+                                              children: [
+                                                GestureDetector(
+                                                  child: Row(
+                                                    children: [
+                                                      sampleData1.first
+                                                                  .isSelected ==
+                                                              true
+                                                          ? Icon(
+                                                              Icons.check_circle,
+                                                              color: Colors
+                                                                  .green.shade600)
+                                                          : const Icon(
+                                                              Icons
+                                                                  .circle_outlined,
+                                                              color:
+                                                                  Colors.black38),
+                                                      Text(
+                                                        'Buy Post',
+                                                        style: const TextStyle(
+                                                                fontSize: 13.0,
+                                                                color:
+                                                                    Colors.black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontFamily:
+                                                                    'assets/fonst/Metropolis-Black.otf')
+                                                            .copyWith(
+                                                                fontSize: 17),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (sampleData1
+                                                              .first.isSelected ==
+                                                          false) {
+                                                        sampleData1.first
+                                                            .isSelected = true;
+                                                        /* sampleData1.last.isSelected =
+                                                        false;*/
+                                                        category2 = true;
+                                                        post_type = 'BuyPost';
+                                                        constanst
+                                                            .select_categotyType
+                                                            .add(
+                                                          post_type.toString(),
+                                                        );
+                                                      } else {
+                                                        sampleData1.first
+                                                            .isSelected = false;
+                                                        constanst
+                                                            .select_categotyType
+                                                            .remove('BuyPost');
+                                                      }
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              height: 30,
+                                              child: GestureDetector(
                                                 child: Row(
                                                   children: [
-                                                    sampleData1.first
-                                                                .isSelected ==
+                                                    sampleData1.last.isSelected ==
                                                             true
-                                                        ? Icon(
-                                                            Icons.check_circle,
+                                                        ? Icon(Icons.check_circle,
                                                             color: Colors
                                                                 .green.shade600)
                                                         : const Icon(
-                                                            Icons
-                                                                .circle_outlined,
+                                                            Icons.circle_outlined,
                                                             color:
                                                                 Colors.black38),
                                                     Text(
-                                                      'Buy Post',
+                                                      'Sell Post',
                                                       style: const TextStyle(
                                                               fontSize: 13.0,
-                                                              color:
-                                                                  Colors.black,
+                                                              color: Colors.black,
                                                               fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                                  FontWeight.w500,
                                                               fontFamily:
                                                                   'assets/fonst/Metropolis-Black.otf')
-                                                          .copyWith(
-                                                              fontSize: 17),
+                                                          .copyWith(fontSize: 17),
                                                     )
                                                   ],
                                                 ),
                                                 onTap: () {
                                                   setState(() {
                                                     if (sampleData1
-                                                            .first.isSelected ==
+                                                            .last.isSelected ==
                                                         false) {
-                                                      sampleData1.first
-                                                          .isSelected = true;
+                                                      sampleData1
+                                                          .last.isSelected = true;
+                                                      setState(() {});
                                                       /* sampleData1.last.isSelected =
-                                                      false;*/
+                                                        false;*/
                                                       category2 = true;
-                                                      post_type = 'BuyPost';
+                                                      post_type = 'SellPost';
                                                       constanst
                                                           .select_categotyType
                                                           .add(
                                                         post_type.toString(),
                                                       );
                                                     } else {
-                                                      sampleData1.first
+                                                      sampleData1.last
                                                           .isSelected = false;
                                                       constanst
                                                           .select_categotyType
-                                                          .remove('BuyPost');
+                                                          .remove('SellPost');
                                                     }
                                                   });
                                                 },
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                2.5,
-                                            height: 30,
-                                            child: GestureDetector(
-                                              child: Row(
-                                                children: [
-                                                  sampleData1.last.isSelected ==
-                                                          true
-                                                      ? Icon(Icons.check_circle,
-                                                          color: Colors
-                                                              .green.shade600)
-                                                      : const Icon(
-                                                          Icons.circle_outlined,
-                                                          color:
-                                                              Colors.black38),
-                                                  Text(
-                                                    'Sell Post',
-                                                    style: const TextStyle(
-                                                            fontSize: 13.0,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontFamily:
-                                                                'assets/fonst/Metropolis-Black.otf')
-                                                        .copyWith(fontSize: 17),
-                                                  )
-                                                ],
-                                              ),
-                                              onTap: () {
-                                                setState(() {
-                                                  if (sampleData1
-                                                          .last.isSelected ==
-                                                      false) {
-                                                    sampleData1
-                                                        .last.isSelected = true;
-                                                    setState(() {});
-                                                    /* sampleData1.last.isSelected =
-                                                      false;*/
-                                                    category2 = true;
-                                                    post_type = 'SellPost';
-                                                    constanst
-                                                        .select_categotyType
-                                                        .add(
-                                                      post_type.toString(),
-                                                    );
-                                                  } else {
-                                                    sampleData1.last
-                                                        .isSelected = false;
-                                                    constanst
-                                                        .select_categotyType
-                                                        .remove('SellPost');
-                                                  }
-                                                });
-                                              },
                                             ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -580,7 +612,7 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                             ),
                           ),
                           FutureBuilder(
-
+                             future: constanst.cat_data,
                               //future: load_subcategory(),
                               builder: (context, snapshot) {
                             if (snapshot.connectionState ==
@@ -661,175 +693,191 @@ class _UpdateCategoryScreenState extends State<UpdateCategoryScreen> {
                                               ),
                                               margin: const EdgeInsets.fromLTRB(
                                                   25.0, 5.0, 25.0, 5.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          constanst
-                                                                  .select_cat_idx =
-                                                              index;
-
-                                                          constanst
-                                                                  .select_cat_idx =
-                                                              index;
-                                                          if (!constanst
-                                                              .select_cat_id
-                                                              .contains(
-                                                            record.categoryId
-                                                                .toString(),
-                                                          )) {
-                                                            constanst.itemsCheck[
-                                                                    index] =
-                                                                Icons
-                                                                    .check_circle_outline;
+                                              child: Container(
+                                                decoration: ShapeDecoration(
+                                                  color: Colors.white,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(13.05),
+                                                  ),
+                                                  shadows: [
+                                                    BoxShadow(
+                                                      color: Color(0x3FA6A6A6),
+                                                      blurRadius: 16.32,
+                                                      offset: Offset(0, 3.26),
+                                                      spreadRadius: 0,
+                                                    )
+                                                  ],
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topLeft,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            constanst
+                                                                    .select_cat_idx =
+                                                                index;
 
                                                             constanst
-                                                                .select_categotyId
-                                                                .add(
+                                                                    .select_cat_idx =
+                                                                index;
+                                                            if (!constanst
+                                                                .select_cat_id
+                                                                .contains(
                                                               record.categoryId
                                                                   .toString(),
-                                                            );
+                                                            )) {
+                                                              constanst.itemsCheck[
+                                                                      index] =
+                                                                  Icons
+                                                                      .check_circle_outline;
 
-                                                            constanst
-                                                                    .select_cat_id =
-                                                                constanst
-                                                                    .select_categotyId
-                                                                    .join(",");
-
-                                                            setState(() {});
-                                                          } else {
-                                                            constanst.itemsCheck[
-                                                                    index] =
-                                                                Icons
-                                                                    .check_circle_outline;
-
-                                                            constanst
-                                                                .select_categotyId
-                                                                .remove(
-                                                              record.categoryId
-                                                                  .toString(),
-                                                            );
-
-                                                            constanst
-                                                                    .select_cat_id =
-                                                                constanst
-                                                                    .select_categotyId
-                                                                    .join(",");
-
-                                                            setState(() {});
-                                                          }
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          GestureDetector(
-                                                            child: IconButton(
-                                                              icon: constanst
-                                                                      .select_categotyId
-                                                                      .contains(
-                                                                record
-                                                                    .categoryId
+                                                              constanst
+                                                                  .select_categotyId
+                                                                  .add(
+                                                                record.categoryId
                                                                     .toString(),
-                                                              )
-                                                                  ? Icon(
-                                                                      Icons
-                                                                          .check_circle,
-                                                                      color: Colors
-                                                                          .green
-                                                                          .shade600)
-                                                                  : const Icon(
-                                                                      Icons
-                                                                          .circle_outlined,
-                                                                      color: Colors
-                                                                          .black45),
-                                                              onPressed: () {
-                                                                setState(() {
-                                                                  constanst
-                                                                          .select_cat_idx =
-                                                                      index;
+                                                              );
 
+                                                              constanst
+                                                                      .select_cat_id =
                                                                   constanst
-                                                                          .select_cat_idx =
-                                                                      index;
-                                                                  if (!constanst
-                                                                      .select_cat_id
-                                                                      .contains(
-                                                                    record
-                                                                        .categoryId
-                                                                        .toString(),
-                                                                  )) {
-                                                                    constanst.itemsCheck[
-                                                                            index] =
+                                                                      .select_categotyId
+                                                                      .join(",");
+
+                                                              setState(() {});
+                                                            } else {
+                                                              constanst.itemsCheck[
+                                                                      index] =
+                                                                  Icons
+                                                                      .check_circle_outline;
+
+                                                              constanst
+                                                                  .select_categotyId
+                                                                  .remove(
+                                                                record.categoryId
+                                                                    .toString(),
+                                                              );
+
+                                                              constanst
+                                                                      .select_cat_id =
+                                                                  constanst
+                                                                      .select_categotyId
+                                                                      .join(",");
+
+                                                              setState(() {});
+                                                            }
+                                                          });
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            GestureDetector(
+                                                              child: IconButton(
+                                                                icon: constanst
+                                                                        .select_categotyId
+                                                                        .contains(
+                                                                  record
+                                                                      .categoryId
+                                                                      .toString(),
+                                                                )
+                                                                    ? Icon(
                                                                         Icons
-                                                                            .check_circle_outline;
+                                                                            .check_circle,
+                                                                        color: Colors
+                                                                            .green
+                                                                            .shade600)
+                                                                    : const Icon(
+                                                                        Icons
+                                                                            .circle_outlined,
+                                                                        color: Colors
+                                                                            .black45),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    constanst
+                                                                            .select_cat_idx =
+                                                                        index;
 
                                                                     constanst
-                                                                        .select_categotyId
-                                                                        .add(
+                                                                            .select_cat_idx =
+                                                                        index;
+                                                                    if (!constanst
+                                                                        .select_cat_id
+                                                                        .contains(
                                                                       record
                                                                           .categoryId
                                                                           .toString(),
-                                                                    );
+                                                                    )) {
+                                                                      constanst.itemsCheck[
+                                                                              index] =
+                                                                          Icons
+                                                                              .check_circle_outline;
 
-                                                                    constanst.select_cat_id = constanst
-                                                                        .select_categotyId
-                                                                        .join(
-                                                                            ",");
-                                                                    setState(
-                                                                        () {});
-                                                                  } else {
-                                                                    constanst.itemsCheck[
-                                                                            index] =
-                                                                        Icons
-                                                                            .check_circle_outline;
+                                                                      constanst
+                                                                          .select_categotyId
+                                                                          .add(
+                                                                        record
+                                                                            .categoryId
+                                                                            .toString(),
+                                                                      );
 
-                                                                    constanst
-                                                                        .select_categotyId
-                                                                        .remove(
-                                                                      record
-                                                                          .categoryId
-                                                                          .toString(),
-                                                                    );
+                                                                      constanst.select_cat_id = constanst
+                                                                          .select_categotyId
+                                                                          .join(
+                                                                              ",");
+                                                                      setState(
+                                                                          () {});
+                                                                    } else {
+                                                                      constanst.itemsCheck[
+                                                                              index] =
+                                                                          Icons
+                                                                              .check_circle_outline;
 
-                                                                    constanst.select_cat_id = constanst
-                                                                        .select_categotyId
-                                                                        .join(
-                                                                            ",");
-                                                                    setState(
-                                                                        () {});
-                                                                  }
-                                                                });
-                                                              },
+                                                                      constanst
+                                                                          .select_categotyId
+                                                                          .remove(
+                                                                        record
+                                                                            .categoryId
+                                                                            .toString(),
+                                                                      );
+
+                                                                      constanst.select_cat_id = constanst
+                                                                          .select_categotyId
+                                                                          .join(
+                                                                              ",");
+                                                                      setState(
+                                                                          () {});
+                                                                    }
+                                                                  });
+                                                                },
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Text(
-                                                            record.categoryName
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                    fontSize:
-                                                                        13.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    fontFamily:
-                                                                        'assets/fonst/Metropolis-Black.otf',
-                                                                    color: Colors
-                                                                        .black)
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        17),
-                                                          )
-                                                        ],
+                                                            Text(
+                                                              record.categoryName
+                                                                  .toString(),
+                                                              style: const TextStyle(
+                                                                      fontSize:
+                                                                          13.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontFamily:
+                                                                          'assets/fonst/Metropolis-Black.otf',
+                                                                      color: Colors
+                                                                          .black)
+                                                                  .copyWith(
+                                                                      fontSize:
+                                                                          17),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),

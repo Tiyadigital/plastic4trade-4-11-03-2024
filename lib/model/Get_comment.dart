@@ -4,13 +4,16 @@ class Get_comment {
   List<Data>? data;
   String? commentAvg;
   int? commentCount;
+  int? isUerCommented;
 
   Get_comment(
       {this.status,
         this.message,
         this.data,
         this.commentAvg,
-        this.commentCount});
+        this.commentCount,
+        this.isUerCommented,
+      });
 
   Get_comment.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -23,6 +26,7 @@ class Get_comment {
     }
     commentAvg = json['comment_avg'];
     commentCount = json['comment_count'];
+    isUerCommented = json['is_user_commented'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +38,7 @@ class Get_comment {
     }
     data['comment_avg'] = this.commentAvg;
     data['comment_count'] = this.commentCount;
+    data['is_user_commented'] = this.isUerCommented;
     return data;
   }
 }
@@ -46,7 +51,7 @@ class Data {
   String? comImage;
   String? rating;
   String? commentDatetime;
-  Null? likeCounter;
+  String? likeCounter;
   String? createdAt;
   String? updatedAt;
   String? userImage;
@@ -128,9 +133,9 @@ class Subcomment {
   String? profileId;
   String? comment;
   int? commentId;
-  Null? rating;
+  String? rating;
   String? commentDatetime;
-  Null? likeCounter;
+  String? likeCounter;
   String? createdAt;
   String? updatedAt;
   String? userImageUrl;
@@ -162,7 +167,7 @@ class Subcomment {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     userImageUrl = json['user_image_url'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    if(json['user'] != null) user = User.fromJson(json['user']);
   }
 
   Map<String, dynamic> toJson() {
@@ -197,7 +202,7 @@ class User {
   String? userToken;
   String? signupDate;
   String? isBlock;
-  Null? blockDate;
+  String? blockDate;
   String? registerStatus;
   String? createdAt;
   String? updatedAt;
@@ -205,7 +210,7 @@ class User {
   String? emailCodeDateTime;
   String? smsCode;
   String? smsCodeDateTime;
-  Null? forgotpasswordDateTime;
+  String? forgotpasswordDateTime;
   String? verifyEmail;
   String? verifySms;
   String? categoryId;

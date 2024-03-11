@@ -6,7 +6,10 @@ import '../model/chat_user.dart';
 
 class ProfileDialog extends StatelessWidget {
   late Size mq;
-   ProfileDialog({super.key, required this.user});
+   ProfileDialog(
+       {
+         //super.key,
+     required this.user});
 
   final ChatUser user;
   @override

@@ -21,8 +21,7 @@ class follower extends StatefulWidget {
   State<follower> createState() => _followerState();
 }
 
-class _followerState extends State<follower>
-    with SingleTickerProviderStateMixin {
+class _followerState extends State<follower> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List<getfllow.Result> getfollowdata = [];
   List<getfllowing.Result> getfllowingdata = [];
@@ -85,6 +84,7 @@ class _followerState extends State<follower>
                       ),
                     ),
                     child: TabBar(
+                      indicatorSize: TabBarIndicatorSize.tab,
                       controller: _tabController,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(
@@ -220,18 +220,21 @@ class _followerState extends State<follower>
         Expanded(
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.none &&
-                    snapshot.hasData == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return ListView.builder(
+            child:
+            // FutureBuilder(
+            //   future: ,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.none &&
+            //         snapshot.hasData == null) {
+            //       return const Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     }
+            //     if (snapshot.hasError) {
+            //       return Text('Error: ${snapshot.error}');
+            //     } else {
+            //       return
+                    ListView.builder(
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: getfollowdata.length,
@@ -251,117 +254,132 @@ class _followerState extends State<follower>
                               ),
                             ),
                             elevation: 5,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      5.0, 0, 5.0, 0.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    radius: 25,
-                                    backgroundImage: result.image.toString() !=
-                                            ''
-                                        ? NetworkImage(
-                                            result.image.toString(),
-                                          ) as ImageProvider
-                                        : const AssetImage(
-                                            'assets/plastic4trade logo final 1 (2).png'),
-                                  ),
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13.05),
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    result.name.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x3FA6A6A6),
+                                    blurRadius: 16.32,
+                                    offset: Offset(0, 3.26),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8.0, 0, 5.0, 0.0),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 25,
+                                      backgroundImage: result.image.toString() !=
+                                              ''
+                                          ? NetworkImage(
+                                              result.image.toString(),
+                                            ) as ImageProvider
+                                          : const AssetImage(
+                                              'assets/plastic4trade logo final 1 (2).png'),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: result.isFollowing == 1
-                                      ? Container(
-                                          padding: const EdgeInsets.all(5.0),
-                                          decoration: const BoxDecoration(
-                                            color:
-                                                Color.fromARGB(255, 0, 91, 148),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(50),
+                                  Expanded(
+                                    child: Text(
+                                      result.name.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf'),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: result.isFollowing == 1
+                                        ? Container(
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: const BoxDecoration(
+                                              color:
+                                                  Color.fromARGB(255, 0, 91, 148),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(50),
+                                              ),
                                             ),
-                                          ),
-                                          height: 25,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              6.5,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setfollowUnfollow(
-                                                '1',
-                                                result.id.toString(),
-                                              );
-                                              followstatus = 'followed';
-                                              setState(() {});
-                                            },
-                                            child: const Text(
-                                              'followed',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.w500),
-                                              textAlign: TextAlign.center,
+                                            height: 25,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                6.5,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setfollowUnfollow(
+                                                  '1',
+                                                  result.id.toString(),
+                                                );
+                                                followstatus = 'followed';
+                                                setState(() {});
+                                              },
+                                              child: const Text(
+                                                'followed',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w500),
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      : Container(
-                                          padding: const EdgeInsets.all(5.0),
-                                          decoration: const BoxDecoration(
-                                            color:
-                                                Color.fromARGB(255, 0, 91, 148),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(50),
+                                          )
+                                        : Container(
+                                            padding: const EdgeInsets.all(5.0),
+                                            decoration: const BoxDecoration(
+                                              color:
+                                                  Color.fromARGB(255, 0, 91, 148),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(50),
+                                              ),
                                             ),
-                                          ),
-                                          height: 25,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              6.5,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setfollowUnfollow(
-                                                '1',
-                                                result.id.toString(),
-                                              );
+                                            height: 25,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                6.5,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setfollowUnfollow(
+                                                  '1',
+                                                  result.id.toString(),
+                                                );
 
-                                              result.isFollowing == 1;
-                                              setState(() {});
-                                            },
-                                            child: const Text(
-                                              'follow',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.w500),
-                                              textAlign: TextAlign.center,
+                                                result.isFollowing == 1;
+                                                setState(() {});
+                                              },
+                                              child: const Text(
+                                                'follow',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w500),
+                                                textAlign: TextAlign.center,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
+            //     }
+            //   },
+            // ),
           ),
         ),
       ],
@@ -430,19 +448,22 @@ class _followerState extends State<follower>
         Expanded(
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.none &&
-                    snapshot.hasData == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-
-                  return ListView.builder(
+            child:
+            // FutureBuilder(
+            //   future: ,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.none &&
+            //         snapshot.hasData == null) {
+            //       return const Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     }
+            //     if (snapshot.hasError) {
+            //       return Text('Error: ${snapshot.error}');
+            //     } else {
+            //
+            //       return
+                    ListView.builder(
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: getfllowingdata.length,
@@ -462,81 +483,97 @@ class _followerState extends State<follower>
                               ),
                             ),
                             elevation: 5,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      5.0, 0, 5.0, 0.0),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    radius: 25,
-                                    backgroundImage: result.image.toString() !=
-                                            ''
-                                        ? NetworkImage(
-                                            result.image.toString(),
-                                          ) as ImageProvider
-                                        : const AssetImage(
-                                            'assets/plastic4trade logo final 1 (2).png'),
-                                  ),
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13.05),
                                 ),
-                                Expanded(
-                                  child: Text(
-                                    result.name.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontFamily:
-                                            'assets/fonst/Metropolis-Black.otf'),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(5.0),
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 0, 91, 148),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(50),
-                                      ),
+                                shadows: [
+                                  BoxShadow(
+                                    color: Color(0x3FA6A6A6),
+                                    blurRadius: 16.32,
+                                    offset: Offset(0, 3.26),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        8.0, 0, 5.0, 0.0),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 25,
+                                      backgroundImage: result.image.toString() !=
+                                              ''
+                                          ? NetworkImage(
+                                              result.image.toString(),
+                                            ) as ImageProvider
+                                          : const AssetImage(
+                                              'assets/plastic4trade logo final 1 (2).png'),
                                     ),
-                                    height: 25,
-                                    width:
-                                        MediaQuery.of(context).size.width / 6.5,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        getfllowingdata.removeAt(index);
-                                        totalfollowing = getfllowingdata.length;
-                                        setfollowUnfollow(
-                                          '0',
-                                          result.id.toString(),
-                                        );
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      result.name.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontFamily:
+                                              'assets/fonst/Metropolis-Black.otf'),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      decoration: const BoxDecoration(
+                                        color: Color.fromARGB(255, 0, 91, 148),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(50),
+                                        ),
+                                      ),
+                                      height: 25,
+                                      width:
+                                          MediaQuery.of(context).size.width / 6.5,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          getfllowingdata.removeAt(index);
+                                          totalfollowing = getfllowingdata.length;
+                                          setfollowUnfollow(
+                                            '0',
+                                            result.id.toString(),
+                                          );
 
-                                        setState(() {});
-                                      },
-                                      child: const Text(
-                                        'Unfollow',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w500),
-                                        textAlign: TextAlign.center,
+                                          setState(() {});
+                                        },
+                                        child: const Text(
+                                          'Unfollow',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w500),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       );
                     },
-                  );
-                }
-              },
-            ),
+                  ),
+            //     }
+            //   },
+            // ),
           ),
         ),
       ],
@@ -696,7 +733,7 @@ class _followerState extends State<follower>
       },
     );
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 1), () {
       Navigator.of(dialogContext)
           .pop(); // Use dialogContext to close the dialog
       // Dialog closed
