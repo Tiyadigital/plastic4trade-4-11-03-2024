@@ -26,7 +26,8 @@ class _aboutplasticState extends State<aboutplastic> {
     final connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: 'Internet Connection not available');
+      Fluttertoast.showToast(
+          timeInSecForIosWeb: 2, msg: 'Internet Connection not available');
     } else {
       get_aboutus();
     }
@@ -69,54 +70,57 @@ class _aboutplasticState extends State<aboutplastic> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: load == true
                 ? Column(children: [
-                  Container(
-                      height: 110,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 5.0),
-                      child: Image.asset(
-                        'assets/plastic4trade logo final.png',
-                      )),
-                  Container(
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13.05),
+                    Container(
+                        height: 110,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x3FA6A6A6),
-                            blurRadius: 16.32,
-                            offset: Offset(0, 3.26),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      margin: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                      padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                      child: Html(
-                        data: Platform.isIOS ? linkForIos : link,
-                        style: {
-                          "p": Style(
-                            //fontSize: FontSize(12),
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.24,
-                            fontFamily: 'Metropolis',
+                        padding: const EdgeInsets.all(10),
+                        margin:
+                            const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 5.0),
+                        child: Image.asset(
+                          'assets/plastic4trade logo final.png',
+                        )),
+                    Container(
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13.05),
                           ),
-                          "body": Style(
-                            //fontSize: FontSize(12),
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.24,
-                            fontFamily: 'Metropolis',
-                          ),
-                        },
-                      )),
-                ])
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x3FA6A6A6),
+                              blurRadius: 16.32,
+                              offset: Offset(0, 3.26),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        margin:
+                            const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                        padding:
+                            const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                        child: Html(
+                          data: Platform.isIOS ? linkForIos : link,
+                          style: {
+                            "p": Style(
+                              //fontSize: FontSize(12),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.24,
+                              fontFamily: 'Metropolis',
+                            ),
+                            "body": Style(
+                              //fontSize: FontSize(12),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.24,
+                              fontFamily: 'Metropolis',
+                            ),
+                          },
+                        )),
+                  ])
                 : Center(
                     child: Platform.isAndroid
                         ? const CircularProgressIndicator(
@@ -130,19 +134,19 @@ class _aboutplasticState extends State<aboutplastic> {
                                 radius: 20,
                                 animating: true,
                               )
-                            : Container())
-        ));
+                            : Container())));
   }
 
   Future<void> get_aboutus() async {
-
     var res = await getStaticPage();
     var jsonArray;
     if (res['status'] == 1) {
       if (res['result'] != null) {
         jsonArray = res['result'];
         link = jsonArray['staticDescription'];
-        if(Platform.isIOS){linkForIos = jsonArray['description_for_ios'];}
+        if (Platform.isIOS) {
+          linkForIos = jsonArray['description_for_ios'];
+        }
         load = true;
         if (mounted) {
           setState(() {});
@@ -151,8 +155,12 @@ class _aboutplasticState extends State<aboutplastic> {
         load = true;
       }
     } else {
-      Fluttertoast.showToast(timeInSecForIosWeb: 2,msg: res['message']);
+      Fluttertoast.showToast(timeInSecForIosWeb: 2, msg: res['message']);
     }
     return jsonArray;
   }
 }
+
+
+
+// for testing
